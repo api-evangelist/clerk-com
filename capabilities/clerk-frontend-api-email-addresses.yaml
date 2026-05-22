@@ -1,0 +1,151 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Email Addresses
+  description: 'Clerk Email Addresses capability. 6 operations. Lead operation: Get Email Addresses.'
+  tags:
+  - Clerk
+  - Email Addresses
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-email-addresses
+    baseUri: ''
+    description: Clerk clerk-frontend-api Email Addresses business capability.
+    resources:
+    - name: v1-me-email-addresses
+      path: /v1/me/email_addresses
+      operations:
+      - name: getEmailAddresses
+        method: GET
+        description: Get Email Addresses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+      - name: createEmailAddresses
+        method: POST
+        description: Create Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-email-addresses-email-id-attempt-verification
+      path: /v1/me/email_addresses/{email_id}/attempt_verification
+      operations:
+      - name: verifyEmailAddress
+        method: POST
+        description: Attempt Email Address Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_id
+          in: path
+          type: string
+          description: The email_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-email-addresses-email-id-prepare-verification
+      path: /v1/me/email_addresses/{email_id}/prepare_verification
+      operations:
+      - name: sendVerificationEmail
+        method: POST
+        description: Prepare Email Address Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_id
+          in: path
+          type: string
+          description: The email_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-email-addresses-email-id
+      path: /v1/me/email_addresses/{email_id}
+      operations:
+      - name: getEmailAddress
+        method: GET
+        description: Get Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_id
+          in: path
+          type: string
+          description: The email_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+      - name: DeleteEmailAddress
+        method: DELETE
+        description: Delete Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_id
+          in: path
+          type: string
+          description: The email_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false

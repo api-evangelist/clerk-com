@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-samlconnection-schema.json",
+  "title": "Clerk SAMLConnection",
+  "description": "Clerk SAMLConnection object.",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": [
+        "saml_connection"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string",
+      "deprecated": true
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "idp_entity_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "idp_sso_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "idp_certificate": {
+      "type": "string",
+      "nullable": true
+    },
+    "idp_metadata_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "idp_metadata": {
+      "type": "string",
+      "nullable": true
+    },
+    "acs_url": {
+      "type": "string"
+    },
+    "sp_entity_id": {
+      "type": "string"
+    },
+    "sp_metadata_url": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "attribute_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user_id": {
+          "type": "string"
+        },
+        "email_address": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "email_address",
+        "first_name",
+        "last_name"
+      ]
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "user_count": {
+      "type": "integer"
+    },
+    "sync_user_attributes": {
+      "type": "boolean"
+    },
+    "allow_subdomains": {
+      "type": "boolean"
+    },
+    "allow_idp_initiated": {
+      "type": "boolean"
+    },
+    "disable_additional_identifications": {
+      "type": "boolean"
+    },
+    "allow_organization_account_linking": {
+      "type": "boolean"
+    },
+    "force_authn": {
+      "type": "boolean",
+      "description": "Enable or deactivate ForceAuthn"
+    },
+    "enterprise_connection_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation.\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update.\n"
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "name",
+    "idp_entity_id",
+    "idp_sso_url",
+    "idp_certificate",
+    "acs_url",
+    "sp_entity_id",
+    "sp_metadata_url",
+    "active",
+    "provider",
+    "user_count",
+    "sync_user_attributes",
+    "allow_subdomains",
+    "allow_idp_initiated",
+    "disable_additional_identifications",
+    "allow_organization_account_linking",
+    "authenticatable",
+    "force_authn",
+    "created_at",
+    "updated_at"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "domain"
+      ]
+    },
+    {
+      "required": [
+        "domains"
+      ]
+    }
+  ]
+}

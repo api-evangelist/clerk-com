@@ -1,0 +1,155 @@
+apiCommonsPlans: 0.1
+provider:
+  id: clerk-com
+  name: Clerk
+  url: https://clerk.com
+  pricingUrl: https://clerk.com/pricing
+description: |
+  Clerk's commercial offering. Pricing surfaces a Hobby (free) tier scoped by Monthly Retained Users (MRUs),
+  a Pro/Business/Enterprise ladder, and stand-alone add-ons for B2B SaaS, administration features, and a
+  Billing add-on metered as a percentage of billing volume. All prices below come from the Clerk pricing
+  page snapshot taken on 2026-05-22 and are subject to change.
+sources:
+  - https://clerk.com/pricing
+currency: USD
+plans:
+  - id: hobby
+    name: Hobby
+    description: Free tier for prototypes, side projects, and early-stage development.
+    price: 0
+    billingPeriod: month
+    includedQuotas:
+      - dimension: monthly_retained_users
+        included: 50000
+        unit: MRU
+      - dimension: dashboard_seats
+        included: 3
+        unit: seat
+      - dimension: applications
+        included: unlimited
+        unit: application
+    features:
+      - Basic authentication
+      - Social SSO
+      - Pre-built UI components
+      - Email + SMS verification
+      - Sessions
+    constraints:
+      - Clerk branding shown on hosted pages
+      - No SOC2 report
+      - Standard community support
+  - id: pro
+    name: Pro
+    description: Production tier for growing apps.
+    price: 20
+    priceMonthlyAnnualBilled: 20
+    priceMonthlyMonthlyBilled: 25
+    billingPeriod: month
+    includedQuotas:
+      - dimension: monthly_retained_users
+        included: 50000
+        unit: MRU
+      - dimension: dashboard_seats
+        included: 3
+        unit: seat
+    overages:
+      - dimension: monthly_retained_users
+        tiers:
+          - upTo: 100000
+            unitPrice: 0.020
+          - upTo: 1000000
+            unitPrice: 0.018
+          - upTo: 10000000
+            unitPrice: 0.014
+          - upTo: unlimited
+            unitPrice: 0.012
+    features:
+      - Removes Clerk branding
+      - MFA (TOTP, SMS, Backup Codes)
+      - Passkeys
+      - Custom email templates
+      - Custom session duration
+      - Allowlist / blocklist
+  - id: business
+    name: Business
+    description: Business tier with compliance and priority support.
+    price: 250
+    priceMonthlyAnnualBilled: 250
+    priceMonthlyMonthlyBilled: 300
+    billingPeriod: month
+    includedQuotas:
+      - dimension: dashboard_seats
+        included: 10
+        unit: seat
+      - dimension: log_retention_days
+        included: 30
+        unit: day
+    features:
+      - All Pro features
+      - SOC2 Type II report included
+      - Priority support
+      - 30-day application logs retention
+  - id: enterprise
+    name: Enterprise
+    description: Negotiated annual contract for large customers.
+    price: contact_sales
+    billingPeriod: annual
+    features:
+      - 99.99% uptime SLA
+      - HIPAA-eligible configuration
+      - Dedicated support and CSM
+      - Custom SSO and SCIM at scale
+      - Customer-specific compliance documentation
+addOns:
+  - id: b2b-authentication-enhanced
+    name: B2B Authentication Enhanced
+    description: Required for B2B SaaS workloads beyond a starter quota of organizations and members.
+    price: 85
+    priceMonthlyAnnualBilled: 85
+    priceMonthlyMonthlyBilled: 100
+    billingPeriod: month
+    overages:
+      - dimension: monthly_retained_organizations
+        tiers:
+          - upTo: 1000
+            unitPrice: 1.00
+          - upTo: 'higher tiers scale down (see clerk.com/pricing)'
+    features:
+      - Unlimited organization members
+      - Custom roles and role sets
+      - Domain auto-join
+      - SCIM directory sync
+  - id: administration-enhanced
+    name: Administration Enhanced
+    description: Extra admin tooling on top of Pro/Business.
+    price: 85
+    priceMonthlyAnnualBilled: 85
+    priceMonthlyMonthlyBilled: 100
+    billingPeriod: month
+    features:
+      - Unlimited user impersonations (Actor Tokens)
+      - Advanced audit logs
+  - id: billing
+    name: Billing Add-on
+    description: Use Clerk to manage subscriptions, plans, and payment flows. Stripe fees apply separately.
+    pricingModel: percent_of_billing_volume
+    price: 0.007
+    units: ratio_of_processed_billing_volume
+    features:
+      - Subscription management
+      - Plans, checkouts, payment methods
+      - Pricing tables UI component
+  - id: api-keys-and-m2m
+    name: API Keys & M2M Tokens
+    description: Machine identity surface, free up to 1000 monthly creations.
+    pricingModel: per_unit
+    freeAllocation:
+      dimension: api_key_creations
+      included: 1000
+      period: month
+    unitPrice: 0.001
+    units: per_api_key_creation
+notes:
+  - All quoted "billed annually" prices require annual commitment; monthly billing is more expensive.
+  - SCIM directory sync, custom domains, and enterprise connections are included with the B2B add-on.
+  - Billing add-on fees stack on top of Stripe processing fees.

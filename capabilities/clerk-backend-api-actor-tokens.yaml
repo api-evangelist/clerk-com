@@ -1,0 +1,54 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Actor Tokens
+  description: 'Clerk Actor Tokens capability. 2 operations. Lead operation: Create Actor Token.'
+  tags:
+  - Clerk
+  - Actor Tokens
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-actor-tokens
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Actor Tokens business capability.
+    resources:
+    - name: actor-tokens
+      path: /actor_tokens
+      operations:
+      - name: CreateActorToken
+        method: POST
+        description: Create Actor Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: actor-tokens-actor-token-id-revoke
+      path: /actor_tokens/{actor_token_id}/revoke
+      operations:
+      - name: RevokeActorToken
+        method: POST
+        description: Revoke Actor Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: actor_token_id
+          in: path
+          type: string
+          description: The ID of the actor token to be revoked.
+          required: true

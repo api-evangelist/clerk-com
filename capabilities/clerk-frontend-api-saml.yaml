@@ -1,0 +1,54 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — SAML
+  description: 'Clerk SAML capability. 2 operations. Lead operation: SAML Metadata.'
+  tags:
+  - Clerk
+  - SAML
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-saml
+    baseUri: ''
+    description: Clerk clerk-frontend-api SAML business capability.
+    resources:
+    - name: v1-saml-metadata-saml-connection-id-xml
+      path: /v1/saml/metadata/{saml_connection_id}.xml
+      operations:
+      - name: samlMetadata
+        method: GET
+        description: SAML Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: saml_connection_id
+          in: path
+          type: string
+          description: The ID of the SAML Connection
+          required: true
+    - name: v1-saml-acs-saml-connection-id
+      path: /v1/saml/acs/{saml_connection_id}
+      operations:
+      - name: acs
+        method: POST
+        description: SAML ACS
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: saml_connection_id
+          in: path
+          type: string
+          description: The ID of the SAML Connection
+          required: true

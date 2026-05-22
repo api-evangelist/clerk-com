@@ -1,0 +1,86 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Membership Requests
+  description: 'Clerk Membership Requests capability. 3 operations. Lead operation: Get Organization Membership Requests.'
+  tags:
+  - Clerk
+  - Membership Requests
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-membership-requests
+    baseUri: ''
+    description: Clerk clerk-frontend-api Membership Requests business capability.
+    resources:
+    - name: v1-organizations-organization-id-membership-requests
+      path: /v1/organizations/{organization_id}/membership_requests
+      operations:
+      - name: listOrganizationMembershipRequests
+        method: GET
+        description: Get Organization Membership Requests
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: status
+          in: query
+          type: string
+          description: ''
+          required: false
+    - name: v1-organizations-organization-id-membership-requests-request-id-accept
+      path: /v1/organizations/{organization_id}/membership_requests/{request_id}/accept
+      operations:
+      - name: acceptOrganizationMembershipRequest
+        method: POST
+        description: Accept Organization Membership Request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: request_id
+          in: path
+          type: string
+          description: The request ID.
+          required: true
+    - name: v1-organizations-organization-id-membership-requests-request-id-reject
+      path: /v1/organizations/{organization_id}/membership_requests/{request_id}/reject
+      operations:
+      - name: rejectOrganizationMembershipRequest
+        method: POST
+        description: Reject Organization Membership Request
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: request_id
+          in: path
+          type: string
+          description: The request ID.
+          required: true

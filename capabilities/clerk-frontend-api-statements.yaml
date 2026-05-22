@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Statements
+  description: 'Clerk Statements capability. 4 operations. Lead operation: List User Statements.'
+  tags:
+  - Clerk
+  - Statements
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-statements
+    baseUri: ''
+    description: Clerk clerk-frontend-api Statements business capability.
+    resources:
+    - name: v1-me-billing-statements
+      path: /v1/me/billing/statements
+      operations:
+      - name: GetUserStatements
+        method: GET
+        description: List User Statements
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-billing-statements-statementid
+      path: /v1/me/billing/statements/{statementID}
+      operations:
+      - name: GetUserStatement
+        method: GET
+        description: Get User Statement
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: statementID
+          in: path
+          type: string
+          description: The ID of the statement to retrieve
+          required: true
+    - name: v1-organizations-organizationid-billing-statements
+      path: /v1/organizations/{organizationID}/billing/statements
+      operations:
+      - name: GetOrganizationStatements
+        method: GET
+        description: List Organization Statements
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+    - name: v1-organizations-organizationid-billing-statements-statementid
+      path: /v1/organizations/{organizationID}/billing/statements/{statementID}
+      operations:
+      - name: GetOrganizationStatement
+        method: GET
+        description: Get Organization Statement
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: statementID
+          in: path
+          type: string
+          description: The ID of the statement to retrieve
+          required: true

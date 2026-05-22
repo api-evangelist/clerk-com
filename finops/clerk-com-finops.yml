@@ -1,0 +1,100 @@
+finopsFramework: FOCUS 1.0
+provider:
+  id: clerk-com
+  name: Clerk
+  url: https://clerk.com
+description: |
+  FinOps surface alignment for Clerk's commercial offering, mapped to the FOCUS billing data spec.
+  Captures the metered dimensions, billing accounts, and cost-allocation hooks a Clerk customer can use
+  to attribute identity infrastructure spend to teams, environments, or products.
+sources:
+  - https://clerk.com/pricing
+  - https://clerk.com/docs
+
+billingHierarchy:
+  - level: BillingAccount
+    description: Top-level Clerk account, mapped 1:1 with the workspace on dashboard.clerk.com.
+  - level: Application
+    description: A Clerk application (production or development instance) — primary cost-bearing unit.
+  - level: Environment
+    description: Each application has separate production and development instances; only production MRUs are billed.
+
+services:
+  - id: authentication-core
+    name: Authentication Core
+    pricingModel: tiered
+    meter: monthly_retained_users
+    unit: MRU
+    description: Per-application MRU consumption against included tier and overage prices.
+  - id: b2b-saas
+    name: B2B SaaS / Organizations
+    pricingModel: tiered_plus_unit
+    meter: monthly_retained_organizations
+    unit: MRO
+    description: Add-on metered separately when the B2B Authentication Enhanced add-on is active.
+  - id: billing-add-on
+    name: Billing
+    pricingModel: percent_of_billing_volume
+    meter: billing_volume
+    unit: USD
+    rate: 0.007
+    description: 0.7% of processed billing volume in addition to Stripe processing fees.
+  - id: m2m-api-keys
+    name: M2M API Keys
+    pricingModel: per_unit_after_free
+    meter: api_key_creations
+    unit: creation
+    freeAllocation: 1000
+    rate: 0.001
+    description: Machine identity issuance metering.
+
+focusMapping:
+  description: |
+    Map Clerk's billing dimensions onto canonical FOCUS columns so an organization can ingest Clerk
+    spend into FinOps tooling alongside cloud, SaaS, and AI infra spend.
+  columns:
+    - focusField: BillingAccountId
+      source: clerk_account_id
+      description: The Clerk workspace / billing account.
+    - focusField: SubAccountId
+      source: clerk_application_id
+      description: The Clerk application (production instance).
+    - focusField: ServiceName
+      values:
+        - Authentication Core
+        - B2B SaaS / Organizations
+        - Billing Add-on
+        - M2M API Keys
+        - Administration Enhanced
+    - focusField: ChargeCategory
+      mapping:
+        Usage: tiered MRU / MRO / API-key creations
+        Purchase: monthly plan baseline (Pro, Business, B2B Enhanced)
+        Tax: jurisdiction-dependent surcharge applied by Clerk's billing partner
+    - focusField: PricingUnit
+      mapping:
+        MRU: monthly_retained_user
+        MRO: monthly_retained_organization
+        creation: api_key_creation
+        ratio: billing_volume_percentage
+    - focusField: BilledCost
+      source: invoice_line_total
+    - focusField: EffectiveCost
+      source: invoice_line_total_minus_credits
+    - focusField: ChargePeriodStart
+      source: billing_period_start
+    - focusField: ChargePeriodEnd
+      source: billing_period_end
+
+costAllocation:
+  recommendations:
+    - Tag each Clerk application with environment (`prod`, `dev`, `staging`) and product-line metadata using `public_metadata` on the application or via Clerk dashboard naming conventions.
+    - Use one Clerk application per discrete product surface so MRU consumption is naturally attributed.
+    - For multi-tenant B2B SaaS, attribute MRO usage to revenue-generating tenants by joining Clerk's organization metadata with internal billing systems.
+    - Track API key creations as a leading indicator of automation/agent spend and forecast against the $0.001 marginal rate.
+
+optimizations:
+  - Move from monthly to annual billing to capture the documented per-month discount (Pro $20 vs $25, Business $250 vs $300, B2B add-on $85 vs $100).
+  - Audit retained users via the Backend API (`GET /users`) and proactively delete inactive accounts so they do not roll over as MRUs in the next billing cycle.
+  - Disable the Billing add-on if Stripe is already in use directly — 0.7% surcharge is non-trivial at scale.
+  - Consolidate development experimentation onto a single Hobby instance; only promote to Pro per production launch.

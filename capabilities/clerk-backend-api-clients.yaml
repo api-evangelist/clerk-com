@@ -1,0 +1,65 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Clients
+  description: 'Clerk Clients capability. 3 operations. Lead operation: List All Clients.'
+  tags:
+  - Clerk
+  - Clients
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-clients
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Clients business capability.
+    resources:
+    - name: clients
+      path: /clients
+      operations:
+      - name: GetClientList
+        method: GET
+        description: List All Clients
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: clients-verify
+      path: /clients/verify
+      operations:
+      - name: VerifyClient
+        method: POST
+        description: Verify a Client
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: clients-client-id
+      path: /clients/{client_id}
+      operations:
+      - name: GetClient
+        method: GET
+        description: Get a Client
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: client_id
+          in: path
+          type: string
+          description: Client ID.
+          required: true

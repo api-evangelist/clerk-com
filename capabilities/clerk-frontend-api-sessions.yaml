@@ -1,0 +1,268 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Sessions
+  description: 'Clerk Sessions capability. 12 operations. Lead operation: Remove Client''s Sessions.'
+  tags:
+  - Clerk
+  - Sessions
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-sessions
+    baseUri: ''
+    description: Clerk clerk-frontend-api Sessions business capability.
+    resources:
+    - name: v1-client-sessions
+      path: /v1/client/sessions
+      operations:
+      - name: removeClientSessionsAndRetainCookie
+        method: DELETE
+        description: Remove Client's Sessions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-client-sessions-session-id
+      path: /v1/client/sessions/{session_id}
+      operations:
+      - name: getSession
+        method: GET
+        description: Get Session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+    - name: v1-client-sessions-session-id-touch
+      path: /v1/client/sessions/{session_id}/touch
+      operations:
+      - name: touchSession
+        method: POST
+        description: Touch Session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-end
+      path: /v1/client/sessions/{session_id}/end
+      operations:
+      - name: endSession
+        method: POST
+        description: End Session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+    - name: v1-client-sessions-session-id-remove
+      path: /v1/client/sessions/{session_id}/remove
+      operations:
+      - name: removeSession
+        method: POST
+        description: Remove Session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+    - name: v1-client-sessions-session-id-tokens
+      path: /v1/client/sessions/{session_id}/tokens
+      operations:
+      - name: createSessionToken
+        method: POST
+        description: Create Session Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-tokens-template-name
+      path: /v1/client/sessions/{session_id}/tokens/{template_name}
+      operations:
+      - name: createSessionTokenWithTemplate
+        method: POST
+        description: Create Session Token with JWT Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: The user session ID.
+          required: true
+        - name: template_name
+          in: path
+          type: string
+          description: the template name
+          required: true
+    - name: v1-client-sessions-session-id-verify
+      path: /v1/client/sessions/{session_id}/verify
+      operations:
+      - name: startSessionReverification
+        method: POST
+        description: Start a New Session Reverification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: the user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-verify-prepare-first-factor
+      path: /v1/client/sessions/{session_id}/verify/prepare_first_factor
+      operations:
+      - name: prepareSessionReverificationFirstFactor
+        method: POST
+        description: Prepare Session Reverification First Factor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: session_id
+          in: path
+          type: string
+          description: the user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-verify-attempt-first-factor
+      path: /v1/client/sessions/{session_id}/verify/attempt_first_factor
+      operations:
+      - name: attemptSessionReverificationFirstFactor
+        method: POST
+        description: Attempt Session Reverification First Factor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: session_id
+          in: path
+          type: string
+          description: the user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-verify-prepare-second-factor
+      path: /v1/client/sessions/{session_id}/verify/prepare_second_factor
+      operations:
+      - name: prepareSessionReverificationSecondFactor
+        method: POST
+        description: Prepare Session Reverification Second Factor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: the user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sessions-session-id-verify-attempt-second-factor
+      path: /v1/client/sessions/{session_id}/verify/attempt_second_factor
+      operations:
+      - name: attemptSessionReverificationSecondFactor
+        method: POST
+        description: Attempt Session Reverification Second Factor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: session_id
+          in: path
+          type: string
+          description: the user session ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

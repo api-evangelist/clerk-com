@@ -1,0 +1,76 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Redirect URLs
+  description: 'Clerk Redirect URLs capability. 4 operations. Lead operation: List All Redirect URLs.'
+  tags:
+  - Clerk
+  - Redirect URLs
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-redirect-urls
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Redirect URLs business capability.
+    resources:
+    - name: redirect-urls
+      path: /redirect_urls
+      operations:
+      - name: ListRedirectURLs
+        method: GET
+        description: List All Redirect URLs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: CreateRedirectURL
+        method: POST
+        description: Create a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: redirect-urls-id
+      path: /redirect_urls/{id}
+      operations:
+      - name: GetRedirectURL
+        method: GET
+        description: Retrieve a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID of the redirect URL
+          required: true
+      - name: DeleteRedirectURL
+        method: DELETE
+        description: Delete a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The ID of the redirect URL
+          required: true

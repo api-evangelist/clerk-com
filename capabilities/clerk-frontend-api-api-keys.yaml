@@ -1,0 +1,120 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — API Keys
+  description: 'Clerk API Keys capability. 4 operations. Lead operation: Get API Keys.'
+  tags:
+  - Clerk
+  - API Keys
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-api-keys
+    baseUri: ''
+    description: Clerk clerk-frontend-api API Keys business capability.
+    resources:
+    - name: api-keys
+      path: /api_keys
+      operations:
+      - name: getApiKeys
+        method: GET
+        description: Get API Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: type
+          in: query
+          type: string
+          description: ''
+          required: false
+        - name: subject
+          in: query
+          type: string
+          description: ''
+          required: true
+        - name: include_invalid
+          in: query
+          type: string
+          description: ''
+          required: false
+        - name: limit
+          in: query
+          type: number
+          description: ''
+          required: false
+        - name: offset
+          in: query
+          type: number
+          description: ''
+          required: false
+        - name: query
+          in: query
+          type: string
+          description: ''
+          required: false
+      - name: createApiKey
+        method: POST
+        description: Create an API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-keys-apikeyid
+      path: /api_keys/{apiKeyID}
+      operations:
+      - name: updateApiKey
+        method: PATCH
+        description: Update an API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiKeyID
+          in: path
+          type: string
+          description: ''
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-keys-apikeyid-revoke
+      path: /api_keys/{apiKeyID}/revoke
+      operations:
+      - name: revokeApiKey
+        method: POST
+        description: Revoke an API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: apiKeyID
+          in: path
+          type: string
+          description: ''
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

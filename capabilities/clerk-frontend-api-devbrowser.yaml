@@ -1,0 +1,31 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — DevBrowser
+  description: 'Clerk DevBrowser capability. 1 operations. Lead operation: Create a Dev Browser Token.'
+  tags:
+  - Clerk
+  - DevBrowser
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-devbrowser
+    baseUri: ''
+    description: Clerk clerk-frontend-api DevBrowser business capability.
+    resources:
+    - name: v1-dev-browser
+      path: /v1/dev_browser
+      operations:
+      - name: createDevBrowser
+        method: POST
+        description: Create a Dev Browser Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.

@@ -1,0 +1,56 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — TOTP
+  description: 'Clerk TOTP capability. 3 operations. Lead operation: Create TOTP.'
+  tags:
+  - Clerk
+  - TOTP
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-totp
+    baseUri: ''
+    description: Clerk clerk-frontend-api TOTP business capability.
+    resources:
+    - name: v1-me-totp
+      path: /v1/me/totp
+      operations:
+      - name: postTOTP
+        method: POST
+        description: Create TOTP
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteTOTP
+        method: DELETE
+        description: Delete TOTP
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-totp-attempt-verification
+      path: /v1/me/totp/attempt_verification
+      operations:
+      - name: verifyTOTP
+        method: POST
+        description: Attempt TOTP Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

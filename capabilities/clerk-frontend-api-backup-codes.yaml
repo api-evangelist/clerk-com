@@ -1,0 +1,31 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Backup Codes
+  description: 'Clerk Backup Codes capability. 1 operations. Lead operation: Create Backup Codes.'
+  tags:
+  - Clerk
+  - Backup Codes
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-backup-codes
+    baseUri: ''
+    description: Clerk clerk-frontend-api Backup Codes business capability.
+    resources:
+    - name: v1-me-backup-codes
+      path: /v1/me/backup_codes
+      operations:
+      - name: createBackupCodes
+        method: POST
+        description: Create Backup Codes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.

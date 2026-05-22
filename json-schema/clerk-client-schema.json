@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-client-schema.json",
+  "title": "Clerk Client",
+  "description": "Clerk Client object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "client"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "description": "String representing the identifier of the session.\n"
+    },
+    "session_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "session"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "actor": {
+            "type": "object",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "revoked",
+              "ended",
+              "expired",
+              "removed",
+              "abandoned",
+              "replaced",
+              "pending"
+            ]
+          },
+          "last_active_organization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_active_at": {
+            "type": "integer"
+          },
+          "latest_activity": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "object": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "device_type": {
+                "type": "string"
+              },
+              "is_mobile": {
+                "type": "boolean"
+              },
+              "browser_name": {
+                "type": "string"
+              },
+              "browser_version": {
+                "type": "string"
+              },
+              "ip_address": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "object",
+              "is_mobile"
+            ]
+          },
+          "expire_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of expiration.\n"
+          },
+          "abandon_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of abandonment.\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of last update.\n"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation.\n"
+          },
+          "tasks": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key"
+              ]
+            }
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "user_id",
+          "client_id",
+          "status",
+          "last_active_at",
+          "expire_at",
+          "abandon_at",
+          "updated_at",
+          "created_at"
+        ]
+      }
+    },
+    "sign_in_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "sign_up_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "last_active_session_id": {
+      "nullable": true,
+      "type": "string",
+      "description": "Last active session_id.\n"
+    },
+    "last_authentication_strategy": {
+      "nullable": true,
+      "type": "string",
+      "description": "The authentication strategy that was last used to authenticate the user on this client.\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update.\n"
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation.\n"
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "session_ids",
+    "sessions",
+    "sign_in_id",
+    "sign_up_id",
+    "last_active_session_id",
+    "last_authentication_strategy",
+    "updated_at",
+    "created_at"
+  ]
+}

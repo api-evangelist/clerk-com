@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-organizationmembership-schema.json",
+  "title": "Clerk OrganizationMembership",
+  "description": "A user's membership in an organization",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "organization_membership"
+      ]
+    },
+    "role": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "public_metadata": {
+      "type": "object",
+      "description": "Metadata saved on the organization membership, accessible from both Frontend and Backend APIs",
+      "additionalProperties": true
+    },
+    "private_metadata": {
+      "type": "object",
+      "description": "Metadata saved on the organization membership, accessible only from the Backend API",
+      "additionalProperties": true
+    },
+    "organization": {
+      "type": "object",
+      "nullable": false,
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "organization"
+              ]
+            },
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "slug": {
+              "type": "string"
+            },
+            "image_url": {
+              "type": "string"
+            },
+            "has_image": {
+              "type": "boolean"
+            },
+            "members_count": {
+              "type": "integer"
+            },
+            "missing_member_with_elevated_permissions": {
+              "type": "boolean"
+            },
+            "pending_invitations_count": {
+              "type": "integer"
+            },
+            "max_allowed_memberships": {
+              "type": "integer"
+            },
+            "admin_delete_enabled": {
+              "type": "boolean"
+            },
+            "public_metadata": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "private_metadata": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "created_by": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Unix timestamp of creation.\n"
+            },
+            "updated_at": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Unix timestamp of last update.\n"
+            },
+            "last_active_at": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Unix timestamp of last activity.\n"
+            },
+            "role_set_key": {
+              "type": "string",
+              "description": "The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.\n",
+              "nullable": true
+            }
+          },
+          "required": [
+            "object",
+            "id",
+            "name",
+            "slug",
+            "has_image",
+            "max_allowed_memberships",
+            "admin_delete_enabled",
+            "public_metadata",
+            "created_at",
+            "updated_at"
+          ]
+        }
+      ]
+    },
+    "public_user_data": {
+      "description": "An organization membership with public user data populated",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "profile_image_url": {
+          "type": "string",
+          "nullable": true,
+          "deprecated": true
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "has_image": {
+          "type": "boolean"
+        },
+        "identifier": {
+          "type": "string",
+          "nullable": true
+        },
+        "username": {
+          "type": "string",
+          "nullable": true
+        },
+        "banned": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "user_id",
+        "first_name",
+        "last_name",
+        "profile_image_url",
+        "image_url",
+        "has_image"
+      ]
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation."
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update."
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "role",
+    "permissions",
+    "public_metadata",
+    "created_at",
+    "updated_at",
+    "organization"
+  ]
+}

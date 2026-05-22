@@ -1,0 +1,420 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-emailaddress-schema.json",
+  "title": "Clerk EmailAddress",
+  "description": "Clerk EmailAddress object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string",
+      "x-speakeasy-unknown-values": "allow",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "email_address"
+      ]
+    },
+    "email_address": {
+      "type": "string"
+    },
+    "reserved": {
+      "type": "boolean"
+    },
+    "verification": {
+      "type": "object",
+      "nullable": true,
+      "oneOf": [
+        {
+          "x-speakeasy-name-override": "OTP",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_otp"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified",
+                "failed",
+                "expired"
+              ]
+            },
+            "strategy": {
+              "x-speakeasy-unknown-values": "allow",
+              "type": "string",
+              "enum": [
+                "phone_code",
+                "email_code",
+                "reset_password_email_code"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "Admin",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_admin"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "verified"
+              ]
+            },
+            "strategy": {
+              "x-speakeasy-unknown-values": "allow",
+              "type": "string",
+              "enum": [
+                "admin"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "FromOAuth",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_from_oauth"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified"
+              ]
+            },
+            "strategy": {
+              "type": "string",
+              "pattern": "^from_oauth_(?:(?:token_)|(?:custom_))?[a-z]+$"
+            },
+            "error": {
+              "type": "object",
+              "nullable": true,
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "long_message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "meta": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "long_message",
+                    "code"
+                  ]
+                }
+              ]
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "Ticket",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_ticket"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified",
+                "expired"
+              ]
+            },
+            "strategy": {
+              "x-speakeasy-unknown-values": "allow",
+              "type": "string",
+              "enum": [
+                "ticket"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "SAML",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_saml"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified",
+                "failed",
+                "expired",
+                "transferable"
+              ]
+            },
+            "strategy": {
+              "type": "string",
+              "enum": [
+                "saml"
+              ]
+            },
+            "external_verification_redirect_url": {
+              "nullable": true,
+              "type": "string"
+            },
+            "error": {
+              "nullable": true,
+              "type": "object",
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "long_message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "meta": {
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "long_message",
+                    "code"
+                  ]
+                }
+              ]
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "EmailLink",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_email_link"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified",
+                "failed",
+                "expired"
+              ]
+            },
+            "strategy": {
+              "type": "string",
+              "enum": [
+                "email_link"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        }
+      ],
+      "discriminator": {
+        "propertyName": "object",
+        "mapping": {
+          "verification_otp": "#/components/schemas/verification_otp",
+          "verification_admin": "#/components/schemas/verification_admin",
+          "verification_from_oauth": "#/components/schemas/verification_from_oauth",
+          "verification_ticket": "#/components/schemas/verification_ticket",
+          "verification_saml": "#/components/schemas/verification_saml",
+          "verification_email_link": "#/components/schemas/verification_email_link"
+        }
+      }
+    },
+    "linked_to": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "pattern": "^oauth_[a-z]+$"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ]
+      }
+    },
+    "matches_sso_connection": {
+      "description": "Indicates whether this email address domain matches an active enterprise connection.\n",
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation\n"
+    }
+  },
+  "required": [
+    "object",
+    "email_address",
+    "verification",
+    "linked_to",
+    "reserved",
+    "created_at",
+    "updated_at"
+  ]
+}

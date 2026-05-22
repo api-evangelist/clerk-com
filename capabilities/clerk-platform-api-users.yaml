@@ -1,0 +1,159 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Platform Api — Users
+  description: 'Clerk Users capability. 4 operations. Lead operation: List Instance Users.'
+  tags:
+  - Clerk
+  - Users
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PARTNER_KEY: CLERK_PARTNER_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-platform-api-users
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-platform-api Users business capability.
+    resources:
+    - name: platform-applications-applicationid-instances-envorinsid-users
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/users
+      operations:
+      - name: PlatformListInstanceUsers
+        method: GET
+        description: List Instance Users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: query
+          in: query
+          type: string
+          description: 'A search query to filter users. Searches across email addresses, phone numbers,
+
+            usernames, web3 wallets, user IDs, first names, and last names.
+
+            '
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Field to order results by. Prefix with `+` for ascending or `-` for descending order.
+
+            Valid fields: `created_at`, `updated_at`, `last_sign_in_at`, `last_active_at`, `email_address`,
+
+            `first_name`, `las'
+          required: false
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page (1-500, default 10).
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Number of results to skip for pagination.
+          required: false
+    - name: platform-applications-applicationid-instances-envorinsid-users-userid
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/users/{userID}
+      operations:
+      - name: PlatformDeleteUser
+        method: DELETE
+        description: Delete a User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: userID
+          in: path
+          type: string
+          description: User ID.
+          required: true
+    - name: platform-applications-applicationid-instances-envorinsid-users-userid-ban
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/users/{userID}/ban
+      operations:
+      - name: PlatformBanUser
+        method: POST
+        description: Ban a User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: userID
+          in: path
+          type: string
+          description: User ID.
+          required: true
+    - name: platform-applications-applicationid-instances-envorinsid-users-userid-unban
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/users/{userID}/unban
+      operations:
+      - name: PlatformUnbanUser
+        method: POST
+        description: Unban a User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: userID
+          in: path
+          type: string
+          description: User ID.
+          required: true

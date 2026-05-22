@@ -1,0 +1,123 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Organization
+  description: 'Clerk Organization capability. 6 operations. Lead operation: Create Organization.'
+  tags:
+  - Clerk
+  - Organization
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-organization
+    baseUri: ''
+    description: Clerk clerk-frontend-api Organization business capability.
+    resources:
+    - name: v1-organizations
+      path: /v1/organizations
+      operations:
+      - name: createOrganization
+        method: POST
+        description: Create Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organization-id
+      path: /v1/organizations/{organization_id}
+      operations:
+      - name: getOrganization
+        method: GET
+        description: Get Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+      - name: updateOrganization
+        method: PATCH
+        description: Update Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteOrganization
+        method: DELETE
+        description: Delete Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization to delete
+          required: true
+    - name: v1-organizations-organization-id-logo
+      path: /v1/organizations/{organization_id}/logo
+      operations:
+      - name: updateOrganizationLogo
+        method: PUT
+        description: Update Organization Logo
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteOrganizationLogo
+        method: DELETE
+        description: Delete Organization Logo
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization.
+          required: true

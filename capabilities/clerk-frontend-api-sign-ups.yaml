@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Sign Ups
+  description: 'Clerk Sign Ups capability. 5 operations. Lead operation: Create Sign-up.'
+  tags:
+  - Clerk
+  - Sign Ups
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-sign-ups
+    baseUri: ''
+    description: Clerk clerk-frontend-api Sign Ups business capability.
+    resources:
+    - name: v1-client-sign-ups
+      path: /v1/client/sign_ups
+      operations:
+      - name: createSignUps
+        method: POST
+        description: Create Sign-up
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sign-ups-sign-up-id
+      path: /v1/client/sign_ups/{sign_up_id}
+      operations:
+      - name: getSignUps
+        method: GET
+        description: Get Sign-up
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sign_up_id
+          in: path
+          type: string
+          description: The sign up unique identifier.
+          required: true
+      - name: updateSignUps
+        method: PATCH
+        description: Update Sign-up
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sign_up_id
+          in: path
+          type: string
+          description: The sign up unique identifier.
+          required: true
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sign-ups-sign-up-id-prepare-verification
+      path: /v1/client/sign_ups/{sign_up_id}/prepare_verification
+      operations:
+      - name: prepareSignUpsVerification
+        method: POST
+        description: Prepare Sign-up Identification Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sign_up_id
+          in: path
+          type: string
+          description: The sign up unique identifier.
+          required: true
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-client-sign-ups-sign-up-id-attempt-verification
+      path: /v1/client/sign_ups/{sign_up_id}/attempt_verification
+      operations:
+      - name: attemptSignUpsVerification
+        method: POST
+        description: Attempt Sign-up Identification Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sign_up_id
+          in: path
+          type: string
+          description: The sign up unique identifier.
+          required: true
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Email Addresses
+  description: 'Clerk Email Addresses capability. 4 operations. Lead operation: Create an Email Address.'
+  tags:
+  - Clerk
+  - Email Addresses
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-email-addresses
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Email Addresses business capability.
+    resources:
+    - name: email-addresses
+      path: /email_addresses
+      operations:
+      - name: CreateEmailAddress
+        method: POST
+        description: Create an Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: email-addresses-email-address-id
+      path: /email_addresses/{email_address_id}
+      operations:
+      - name: GetEmailAddress
+        method: GET
+        description: Retrieve an Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_address_id
+          in: path
+          type: string
+          description: The ID of the email address to retrieve
+          required: true
+      - name: DeleteEmailAddress
+        method: DELETE
+        description: Delete an Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_address_id
+          in: path
+          type: string
+          description: The ID of the email address to delete
+          required: true
+      - name: UpdateEmailAddress
+        method: PATCH
+        description: Update an Email Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email_address_id
+          in: path
+          type: string
+          description: The ID of the email address to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

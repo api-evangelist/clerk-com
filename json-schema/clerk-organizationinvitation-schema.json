@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-organizationinvitation-schema.json",
+  "title": "Clerk OrganizationInvitation",
+  "description": "An organization invitation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "organization_invitation"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "email_address": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "inviter_id": {
+      "type": "string",
+      "nullable": true
+    },
+    "public_inviter_data": {
+      "description": "An organization inviter's public user data",
+      "type": "object",
+      "additionalProperties": false,
+      "nullable": true,
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "nullable": false
+        },
+        "first_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "last_name": {
+          "type": "string",
+          "nullable": true
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "has_image": {
+          "type": "boolean"
+        },
+        "identifier": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "first_name",
+        "last_name",
+        "image_url",
+        "has_image",
+        "identifier"
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "public_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "private_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "url": {
+      "type": "string",
+      "nullable": true
+    },
+    "expires_at": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "Unix timestamp of expiration."
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation."
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update."
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "email_address",
+    "role",
+    "role_name",
+    "public_metadata",
+    "url",
+    "expires_at",
+    "created_at",
+    "updated_at",
+    "inviter_id",
+    "public_inviter_data"
+  ]
+}

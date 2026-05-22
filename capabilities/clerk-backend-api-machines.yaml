@@ -1,0 +1,193 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Machines
+  description: 'Clerk Machines capability. 9 operations. Lead operation: Get a List of Machines for an Instance.'
+  tags:
+  - Clerk
+  - Machines
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-machines
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Machines business capability.
+    resources:
+    - name: machines
+      path: /machines
+      operations:
+      - name: ListMachines
+        method: GET
+        description: Get a List of Machines for an Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name.
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return machines in a particular order.
+
+            You can order the returned machines by their `name` or `created_at`.
+
+            To specify the direction, use the `+` or `-` symbols prepended to the property to '
+          required: false
+      - name: CreateMachine
+        method: POST
+        description: Create a Machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: machines-machine-id
+      path: /machines/{machine_id}
+      operations:
+      - name: GetMachine
+        method: GET
+        description: Retrieve a Machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine to retrieve
+          required: true
+      - name: UpdateMachine
+        method: PATCH
+        description: Update a Machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: DeleteMachine
+        method: DELETE
+        description: Delete a Machine
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine to delete
+          required: true
+    - name: machines-machine-id-secret-key
+      path: /machines/{machine_id}/secret_key
+      operations:
+      - name: GetMachineSecretKey
+        method: GET
+        description: Retrieve a Machine Secret Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine to retrieve the secret key for
+          required: true
+    - name: machines-machine-id-secret-key-rotate
+      path: /machines/{machine_id}/secret_key/rotate
+      operations:
+      - name: RotateMachineSecretKey
+        method: POST
+        description: Rotate a Machine's Secret Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine to rotate the secret key for
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: machines-machine-id-scopes
+      path: /machines/{machine_id}/scopes
+      operations:
+      - name: CreateMachineScope
+        method: POST
+        description: Create a Machine Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine that will have access to another machine
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: machines-machine-id-scopes-other-machine-id
+      path: /machines/{machine_id}/scopes/{other_machine_id}
+      operations:
+      - name: DeleteMachineScope
+        method: DELETE
+        description: Delete a Machine Scope
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: machine_id
+          in: path
+          type: string
+          description: The ID of the machine that has access to another machine
+          required: true
+        - name: other_machine_id
+          in: path
+          type: string
+          description: The ID of the machine that is being accessed
+          required: true

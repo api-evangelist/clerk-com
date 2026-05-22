@@ -1,0 +1,147 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Checkouts
+  description: 'Clerk Checkouts capability. 6 operations. Lead operation: Create Billing Checkout.'
+  tags:
+  - Clerk
+  - Checkouts
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-checkouts
+    baseUri: ''
+    description: Clerk clerk-frontend-api Checkouts business capability.
+    resources:
+    - name: v1-me-billing-checkouts
+      path: /v1/me/billing/checkouts
+      operations:
+      - name: CreateUserBillingCheckout
+        method: POST
+        description: Create Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-billing-checkouts-checkoutid
+      path: /v1/me/billing/checkouts/{checkoutID}
+      operations:
+      - name: GetUserBillingCheckout
+        method: GET
+        description: Get Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: checkoutID
+          in: path
+          type: string
+          description: The ID of the checkout
+          required: true
+    - name: v1-me-billing-checkouts-checkoutid-confirm
+      path: /v1/me/billing/checkouts/{checkoutID}/confirm
+      operations:
+      - name: ConfirmUserBillingCheckout
+        method: PATCH
+        description: Confirm Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: checkoutID
+          in: path
+          type: string
+          description: The ID of the checkout to confirm
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organizationid-billing-checkouts
+      path: /v1/organizations/{organizationID}/billing/checkouts
+      operations:
+      - name: CreateOrganizationBillingCheckout
+        method: POST
+        description: Create Organization Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organizationid-billing-checkouts-checkoutid
+      path: /v1/organizations/{organizationID}/billing/checkouts/{checkoutID}
+      operations:
+      - name: GetOrganizationBillingCheckout
+        method: GET
+        description: Get Organization Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: checkoutID
+          in: path
+          type: string
+          description: The ID of the checkout
+          required: true
+    - name: v1-organizations-organizationid-billing-checkouts-checkoutid-confirm
+      path: /v1/organizations/{organizationID}/billing/checkouts/{checkoutID}/confirm
+      operations:
+      - name: ConfirmOrganizationBillingCheckout
+        method: PATCH
+        description: Confirm Organization Billing Checkout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: checkoutID
+          in: path
+          type: string
+          description: The ID of the checkout to confirm
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

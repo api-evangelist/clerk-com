@@ -1,0 +1,141 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Web3 Wallets
+  description: 'Clerk Web3 Wallets capability. 6 operations. Lead operation: Get All Web3 Wallets.'
+  tags:
+  - Clerk
+  - Web3 Wallets
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-web3-wallets
+    baseUri: ''
+    description: Clerk clerk-frontend-api Web3 Wallets business capability.
+    resources:
+    - name: v1-me-web3-wallets
+      path: /v1/me/web3_wallets
+      operations:
+      - name: getWeb3Wallets
+        method: GET
+        description: Get All Web3 Wallets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+      - name: postWeb3Wallets
+        method: POST
+        description: Create Web3 Wallet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-web3-wallets-web3-wallet-id
+      path: /v1/me/web3_wallets/{web3_wallet_id}
+      operations:
+      - name: readWeb3Wallet
+        method: GET
+        description: Get Web3 Wallet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: web3_wallet_id
+          in: path
+          type: string
+          description: The web3 wallet ID.
+          required: true
+      - name: deleteWeb3Wallet
+        method: DELETE
+        description: Delete Web3 Wallet
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: web3_wallet_id
+          in: path
+          type: string
+          description: The web3 wallet ID.
+          required: true
+    - name: v1-me-web3-wallets-web3-wallet-id-prepare-verification
+      path: /v1/me/web3_wallets/{web3_wallet_id}/prepare_verification
+      operations:
+      - name: prepareWeb3WalletVerification
+        method: POST
+        description: Prepare Web3 Wallet Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: web3_wallet_id
+          in: path
+          type: string
+          description: The web3 wallet ID.
+          required: true
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-web3-wallets-web3-wallet-id-attempt-verification
+      path: /v1/me/web3_wallets/{web3_wallet_id}/attempt_verification
+      operations:
+      - name: attemptWeb3WalletVerification
+        method: POST
+        description: Attempt Web3 Wallet Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: web3_wallet_id
+          in: path
+          type: string
+          description: The web3 wallet ID.
+          required: true
+        - name: Origin
+          in: header
+          type: string
+          description: The origin of the request.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

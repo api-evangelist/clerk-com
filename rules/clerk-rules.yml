@@ -1,0 +1,82 @@
+extends: [[spectral:oas, all]]
+rules:
+  # Clerk uses bearer auth (sk_ secret keys) on all backend endpoints
+  clerk-security-required:
+    description: All non-health endpoints MUST declare bearer authentication.
+    severity: warn
+    given: $.paths[*][?(@property == 'get' || @property == 'post' || @property == 'patch' || @property == 'put' || @property == 'delete')]
+    then:
+      field: security
+      function: truthy
+
+  clerk-operation-id-camel-case:
+    description: operationId MUST be camelCase, matching Clerk SDK method naming.
+    severity: error
+    given: $.paths[*][*].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  clerk-summary-title-case:
+    description: Operation summaries MUST be Title Case.
+    severity: warn
+    given: $.paths[*][?(@property == 'get' || @property == 'post' || @property == 'patch' || @property == 'put' || @property == 'delete')].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  clerk-tags-required:
+    description: Every operation MUST be tagged so it appears in the Clerk docs sidebar.
+    severity: error
+    given: $.paths[*][?(@property == 'get' || @property == 'post' || @property == 'patch' || @property == 'put' || @property == 'delete')]
+    then:
+      field: tags
+      function: truthy
+
+  clerk-versioning-by-date:
+    description: API version SHOULD be a release date (YYYY-MM-DD) per Clerk's date-based versioning.
+    severity: info
+    given: $.info.version
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(\\d{4}-\\d{2}-\\d{2}|v\\d+|BETA)$"
+
+  clerk-id-prefix-convention:
+    description: Resource identifier examples SHOULD use Clerk's prefixed-ID convention (user_, sess_, org_, etc.).
+    severity: info
+    given: $.components.schemas[?(@property =~ /Id$/)].example
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z]+_[A-Za-z0-9]+$"
+
+  clerk-list-response-pagination:
+    description: List-style responses SHOULD include total_count and data fields for cursor/offset pagination.
+    severity: info
+    given: $.components.schemas[?(@property =~ /List$/)].properties
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [total_count, data]
+
+  clerk-no-snake-case-in-summary:
+    description: Operation summaries SHOULD NOT contain snake_case identifiers — those belong in descriptions, not headlines.
+    severity: info
+    given: $.paths[*][*].summary
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "_"
+
+  clerk-deprecation-must-document:
+    description: Deprecated operations MUST explain the replacement in the description.
+    severity: warn
+    given: $.paths[*][?(@.deprecated == true)]
+    then:
+      field: description
+      function: truthy

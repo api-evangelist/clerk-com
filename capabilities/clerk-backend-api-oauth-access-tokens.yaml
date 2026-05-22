@@ -1,0 +1,37 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — OAuth Access Tokens
+  description: 'Clerk OAuth Access Tokens capability. 1 operations. Lead operation: Verify an OAuth Access Token.'
+  tags:
+  - Clerk
+  - OAuth Access Tokens
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-oauth-access-tokens
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api OAuth Access Tokens business capability.
+    resources:
+    - name: oauth-applications-access-tokens-verify
+      path: /oauth_applications/access_tokens/verify
+      operations:
+      - name: verifyOAuthAccessToken
+        method: POST
+        description: Verify an OAuth Access Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

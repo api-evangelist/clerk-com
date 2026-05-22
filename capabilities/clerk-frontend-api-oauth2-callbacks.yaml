@@ -1,0 +1,66 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — OAuth2 Callbacks
+  description: 'Clerk OAuth2 Callbacks capability. 2 operations. Lead operation: OAuth Callback.'
+  tags:
+  - Clerk
+  - OAuth2 Callbacks
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-oauth2-callbacks
+    baseUri: ''
+    description: Clerk clerk-frontend-api OAuth2 Callbacks business capability.
+    resources:
+    - name: v1-oauth-callback
+      path: /v1/oauth_callback
+      operations:
+      - name: getOauthCallback
+        method: GET
+        description: OAuth Callback
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scope
+          in: query
+          type: string
+          description: returned scopes from OAuth provider.
+          required: false
+        - name: code
+          in: query
+          type: string
+          description: returned exchange code from OAuth provider.
+          required: false
+        - name: state
+          in: query
+          type: string
+          description: returned state from OAuth provider.
+          required: false
+        - name: error
+          in: query
+          type: string
+          description: returned error state from OAuth provider, if applicable
+          required: false
+      - name: postOauthCallback
+        method: POST
+        description: OAuth Post Callback
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

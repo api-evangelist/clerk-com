@@ -1,0 +1,116 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Organizations Memberships
+  description: 'Clerk Organizations Memberships capability. 6 operations. Lead operation: Get Organization Memberships.'
+  tags:
+  - Clerk
+  - Organizations Memberships
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-organizations-memberships
+    baseUri: ''
+    description: Clerk clerk-frontend-api Organizations Memberships business capability.
+    resources:
+    - name: v1-me-organization-memberships
+      path: /v1/me/organization_memberships
+      operations:
+      - name: getOrganizationMemberships
+        method: GET
+        description: Get Organization Memberships
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-organization-memberships-organization-id
+      path: /v1/me/organization_memberships/{organization_id}
+      operations:
+      - name: deleteOrganizationMemberships
+        method: DELETE
+        description: Delete Organization Membership
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization for which the membership will be deleted
+          required: true
+    - name: v1-me-organization-invitations
+      path: /v1/me/organization_invitations
+      operations:
+      - name: getUsersOrganizationInvitations
+        method: GET
+        description: Get Current User's Organization Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: The status of the organization invitations to filter by
+          required: false
+    - name: v1-me-organization-invitations-invitation-id-accept
+      path: /v1/me/organization_invitations/{invitation_id}/accept
+      operations:
+      - name: acceptOrganizationInvitation
+        method: POST
+        description: Accept Organization Invitation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: invitation_id
+          in: path
+          type: string
+          description: The ID of the organization invitation to accept
+          required: true
+    - name: v1-me-organization-suggestions
+      path: /v1/me/organization_suggestions
+      operations:
+      - name: getOrganizationSuggestions
+        method: GET
+        description: Get Organization Suggestions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: ''
+          required: false
+    - name: v1-me-organization-suggestions-suggestion-id-accept
+      path: /v1/me/organization_suggestions/{suggestion_id}/accept
+      operations:
+      - name: acceptOrganizationSuggestion
+        method: POST
+        description: Accept Organization Suggestion
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: suggestion_id
+          in: path
+          type: string
+          description: The ID of the organization suggestion to accept
+          required: true

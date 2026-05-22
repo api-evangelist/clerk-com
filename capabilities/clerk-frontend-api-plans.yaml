@@ -1,0 +1,54 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Plans
+  description: 'Clerk Plans capability. 2 operations. Lead operation: List Billing Plans.'
+  tags:
+  - Clerk
+  - Plans
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-plans
+    baseUri: ''
+    description: Clerk clerk-frontend-api Plans business capability.
+    resources:
+    - name: v1-billing-plans
+      path: /v1/billing/plans
+      operations:
+      - name: GetBillingPlanList
+        method: GET
+        description: List Billing Plans
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: payer_type
+          in: query
+          type: string
+          description: Filter plans by payer type
+          required: false
+    - name: v1-billing-plans-planidorslug
+      path: /v1/billing/plans/{planIdOrSlug}
+      operations:
+      - name: GetBillingPlan
+        method: GET
+        description: Get a Billing Plan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: planIdOrSlug
+          in: path
+          type: string
+          description: The ID or slug of the plan
+          required: true

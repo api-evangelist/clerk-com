@@ -1,0 +1,153 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Organization Roles
+  description: 'Clerk Organization Roles capability. 7 operations. Lead operation: Get a List of Organization Roles.'
+  tags:
+  - Clerk
+  - Organization Roles
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-organization-roles
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Organization Roles business capability.
+    resources:
+    - name: organization-roles
+      path: /organization_roles
+      operations:
+      - name: ListOrganizationRoles
+        method: GET
+        description: Get a List of Organization Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: 'Returns organization roles with ID, name, or key that match the given query.
+
+            Uses exact match for organization role ID and partial match for name and key.'
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return organization roles in a particular order.
+
+            At the moment, you can order the returned organization roles by their `created_at`, `name`, or `key`.
+
+            In order to specify the direction, you '
+          required: false
+      - name: CreateOrganizationRole
+        method: POST
+        description: Create an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organization-roles-organization-role-id
+      path: /organization_roles/{organization_role_id}
+      operations:
+      - name: GetOrganizationRole
+        method: GET
+        description: Retrieve an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_role_id
+          in: path
+          type: string
+          description: The ID of the organization role
+          required: true
+      - name: UpdateOrganizationRole
+        method: PATCH
+        description: Update an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_role_id
+          in: path
+          type: string
+          description: The ID of the organization role to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: DeleteOrganizationRole
+        method: DELETE
+        description: Delete an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_role_id
+          in: path
+          type: string
+          description: The ID of the organization role to delete
+          required: true
+    - name: organization-roles-organization-role-id-permissions-permission-id
+      path: /organization_roles/{organization_role_id}/permissions/{permission_id}
+      operations:
+      - name: AssignPermissionToOrganizationRole
+        method: POST
+        description: Assign a Permission to an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_role_id
+          in: path
+          type: string
+          description: The ID of the organization role
+          required: true
+        - name: permission_id
+          in: path
+          type: string
+          description: The ID of the permission to assign
+          required: true
+      - name: RemovePermissionFromOrganizationRole
+        method: DELETE
+        description: Remove a Permission from an Organization Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_role_id
+          in: path
+          type: string
+          description: The ID of the organization role
+          required: true
+        - name: permission_id
+          in: path
+          type: string
+          description: The ID of the permission to remove
+          required: true

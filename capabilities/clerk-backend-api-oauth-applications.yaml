@@ -1,0 +1,149 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — OAuth Applications
+  description: 'Clerk OAuth Applications capability. 7 operations. Lead operation: Get a List of OAuth Applications for an Instance.'
+  tags:
+  - Clerk
+  - OAuth Applications
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-oauth-applications
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api OAuth Applications business capability.
+    resources:
+    - name: oauth-applications
+      path: /oauth_applications
+      operations:
+      - name: ListOAuthApplications
+        method: GET
+        description: Get a List of OAuth Applications for an Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return OAuth applications in a particular order.
+
+            At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+
+            In order to specify the direction, you can use'
+          required: false
+        - name: name_query
+          in: query
+          type: string
+          description: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+          required: false
+      - name: CreateOAuthApplication
+        method: POST
+        description: Create an OAuth Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: oauth-applications-oauth-application-id
+      path: /oauth_applications/{oauth_application_id}
+      operations:
+      - name: GetOAuthApplication
+        method: GET
+        description: Retrieve an OAuth Application by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oauth_application_id
+          in: path
+          type: string
+          description: The ID of the OAuth application
+          required: true
+      - name: UpdateOAuthApplication
+        method: PATCH
+        description: Update an OAuth Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oauth_application_id
+          in: path
+          type: string
+          description: The ID of the OAuth application to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: DeleteOAuthApplication
+        method: DELETE
+        description: Delete an OAuth Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oauth_application_id
+          in: path
+          type: string
+          description: The ID of the OAuth application to delete
+          required: true
+    - name: oauth-applications-oauth-application-id-logo
+      path: /oauth_applications/{oauth_application_id}/logo
+      operations:
+      - name: UploadOAuthApplicationLogo
+        method: PUT
+        description: Upload a Logo for the OAuth Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oauth_application_id
+          in: path
+          type: string
+          description: The ID of the OAuth application for which to upload a logo
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: oauth-applications-oauth-application-id-rotate-secret
+      path: /oauth_applications/{oauth_application_id}/rotate_secret
+      operations:
+      - name: RotateOAuthApplicationSecret
+        method: POST
+        description: Rotate the Client Secret of the Given OAuth Application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oauth_application_id
+          in: path
+          type: string
+          description: The ID of the OAuth application for which to rotate the client secret
+          required: true

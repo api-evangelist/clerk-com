@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Phone Numbers
+  description: 'Clerk Phone Numbers capability. 4 operations. Lead operation: Create a Phone Number.'
+  tags:
+  - Clerk
+  - Phone Numbers
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-phone-numbers
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Phone Numbers business capability.
+    resources:
+    - name: phone-numbers
+      path: /phone_numbers
+      operations:
+      - name: CreatePhoneNumber
+        method: POST
+        description: Create a Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: phone-numbers-phone-number-id
+      path: /phone_numbers/{phone_number_id}
+      operations:
+      - name: GetPhoneNumber
+        method: GET
+        description: Retrieve a Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The ID of the phone number to retrieve
+          required: true
+      - name: DeletePhoneNumber
+        method: DELETE
+        description: Delete a Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The ID of the phone number to delete
+          required: true
+      - name: UpdatePhoneNumber
+        method: PATCH
+        description: Update a Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The ID of the phone number to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

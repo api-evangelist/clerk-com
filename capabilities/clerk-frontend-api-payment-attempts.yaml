@@ -1,0 +1,48 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Payment Attempts
+  description: 'Clerk Payment Attempts capability. 2 operations. Lead operation: List User Payment Attempts.'
+  tags:
+  - Clerk
+  - Payment Attempts
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-payment-attempts
+    baseUri: ''
+    description: Clerk clerk-frontend-api Payment Attempts business capability.
+    resources:
+    - name: v1-me-billing-payment-attempts
+      path: /v1/me/billing/payment_attempts
+      operations:
+      - name: GetUserPaymentAttempts
+        method: GET
+        description: List User Payment Attempts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-billing-payment-attempts-paymentattemptid
+      path: /v1/me/billing/payment_attempts/{paymentAttemptID}
+      operations:
+      - name: GetUserPaymentAttempt
+        method: GET
+        description: Get User Payment Attempt
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentAttemptID
+          in: path
+          type: string
+          description: The ID of the payment attempt to retrieve
+          required: true

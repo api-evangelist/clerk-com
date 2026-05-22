@@ -1,0 +1,143 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Waitlist Entries
+  description: 'Clerk Waitlist Entries capability. 6 operations. Lead operation: List All Waitlist Entries.'
+  tags:
+  - Clerk
+  - Waitlist Entries
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-waitlist-entries
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Waitlist Entries business capability.
+    resources:
+    - name: waitlist-entries
+      path: /waitlist_entries
+      operations:
+      - name: ListWaitlistEntries
+        method: GET
+        description: List All Waitlist Entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: Filter waitlist entries by `email_address` or `id`
+          required: false
+        - name: status
+          in: query
+          type: string
+          description: Filter waitlist entries by their status
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Specify the order of results. Supported values are:
+
+            - `created_at`
+
+            - `email_address`
+
+            - `invited_at`
+
+
+            Use `+` for ascending or `-` for descending order. Defaults to `-created_at`.'
+          required: false
+      - name: CreateWaitlistEntry
+        method: POST
+        description: Create a Waitlist Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: waitlist-entries-bulk
+      path: /waitlist_entries/bulk
+      operations:
+      - name: CreateBulkWaitlistEntries
+        method: POST
+        description: Create Multiple Waitlist Entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: waitlist-entries-waitlist-entry-id
+      path: /waitlist_entries/{waitlist_entry_id}
+      operations:
+      - name: DeleteWaitlistEntry
+        method: DELETE
+        description: Delete a Pending Waitlist Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: waitlist_entry_id
+          in: path
+          type: string
+          description: The ID of the waitlist entry to delete
+          required: true
+    - name: waitlist-entries-waitlist-entry-id-invite
+      path: /waitlist_entries/{waitlist_entry_id}/invite
+      operations:
+      - name: InviteWaitlistEntry
+        method: POST
+        description: Invite a Waitlist Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: waitlist_entry_id
+          in: path
+          type: string
+          description: The ID of the waitlist entry to invite
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: waitlist-entries-waitlist-entry-id-reject
+      path: /waitlist_entries/{waitlist_entry_id}/reject
+      operations:
+      - name: RejectWaitlistEntry
+        method: POST
+        description: Reject a Waitlist Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: waitlist_entry_id
+          in: path
+          type: string
+          description: The ID of the waitlist entry to reject
+          required: true

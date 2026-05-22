@@ -1,0 +1,100 @@
+apiCommonsRateLimits: 0.1
+provider:
+  id: clerk-com
+  name: Clerk
+  url: https://clerk.com
+  documentationUrl: https://clerk.com/docs/backend-requests/resources/rate-limits
+description: |
+  Clerk publishes rate limits scoped to the Backend API, the Frontend API, and special-purpose endpoints
+  (verifications, OAuth, sign-in, sign-up). Limits are enforced per instance (per publishable key) and
+  surface a `Retry-After` header on 429 responses. Values below reflect Clerk's documented production
+  limits and are subject to change.
+sources:
+  - https://clerk.com/docs/backend-requests/resources/rate-limits
+defaultEnforcement:
+  errorStatus: 429
+  headers:
+    retryAfter: Retry-After
+    limit: X-RateLimit-Limit
+    remaining: X-RateLimit-Remaining
+    reset: X-RateLimit-Reset
+policies:
+  - id: backend-api-default
+    name: Backend API default
+    applies:
+      api: clerk-backend-api
+      scope: per_instance
+    limits:
+      - window: 10s
+        max: 100
+        unit: request
+    notes: Default Backend API limit; enterprise plans receive higher caps.
+  - id: backend-api-bulk-write
+    name: Backend API bulk-write endpoints
+    applies:
+      api: clerk-backend-api
+      endpoints:
+        - "POST /users"
+        - "POST /invitations"
+        - "POST /organizations"
+        - "POST /organizations/{org}/invitations"
+    limits:
+      - window: 10s
+        max: 20
+        unit: request
+    notes: Tighter throttling on resource-creating operations to prevent abuse and email-flood patterns.
+  - id: frontend-api-default
+    name: Frontend API default
+    applies:
+      api: clerk-frontend-api
+      scope: per_client
+    limits:
+      - window: 10s
+        max: 50
+        unit: request
+  - id: sign-in-sign-up
+    name: Sign-in / Sign-up attempts
+    applies:
+      api: clerk-frontend-api
+      endpoints:
+        - "POST /v1/client/sign_ins"
+        - "POST /v1/client/sign_ups"
+    limits:
+      - window: 1m
+        max: 5
+        unit: attempt
+    notes: Anti-bruteforce throttle on credential submission paths.
+  - id: verification-codes
+    name: Verification code requests
+    applies:
+      api: clerk-frontend-api
+      endpoints:
+        - "POST /v1/client/sign_ins/{sid}/prepare_first_factor"
+        - "POST /v1/client/sign_ins/{sid}/prepare_second_factor"
+        - "POST /v1/client/sign_ups/{sid}/prepare_verification"
+    limits:
+      - window: 1h
+        max: 5
+        unit: code_request
+    notes: Email and SMS verification code throttle, per identifier.
+  - id: webhook-delivery
+    name: Webhook delivery
+    applies:
+      api: clerk-webhooks
+      scope: per_destination
+    limits:
+      - window: 1s
+        max: 20
+        unit: delivery
+    notes: Svix-backed delivery; retries follow exponential back-off.
+behaviorOnExceeded:
+  status: 429
+  body:
+    contentType: application/json
+    shape:
+      errors:
+        - code: rate_limit_exceeded
+          message: "Rate limit exceeded. Please retry after the time indicated in the Retry-After header."
+  recommendation: |
+    Clients should honor Retry-After and apply jitter on retries. Long-running batch jobs should funnel
+    through dedicated backend workers using the Backend API, not the Frontend API.

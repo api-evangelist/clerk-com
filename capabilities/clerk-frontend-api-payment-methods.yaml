@@ -1,0 +1,181 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Payment Methods
+  description: 'Clerk Payment Methods capability. 10 operations. Lead operation: List User Payment Methods.'
+  tags:
+  - Clerk
+  - Payment Methods
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-payment-methods
+    baseUri: ''
+    description: Clerk clerk-frontend-api Payment Methods business capability.
+    resources:
+    - name: v1-me-billing-payment-methods
+      path: /v1/me/billing/payment_methods
+      operations:
+      - name: GetUserPaymentMethods
+        method: GET
+        description: List User Payment Methods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: CreateUserPaymentMethod
+        method: POST
+        description: Create User Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-billing-payment-methods-initialize
+      path: /v1/me/billing/payment_methods/initialize
+      operations:
+      - name: InitializeUserPaymentMethod
+        method: POST
+        description: Initialize User Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-billing-payment-methods-paymentmethodid
+      path: /v1/me/billing/payment_methods/{paymentMethodID}
+      operations:
+      - name: DeleteUserPaymentMethod
+        method: DELETE
+        description: Delete User Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: paymentMethodID
+          in: path
+          type: string
+          description: The ID of the payment method to delete
+          required: true
+    - name: v1-me-billing-payers-default-payment-method
+      path: /v1/me/billing/payers/default_payment_method
+      operations:
+      - name: SetUserDefaultPaymentMethod
+        method: PUT
+        description: Set User Default Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-organizations-organizationid-billing-payment-methods
+      path: /v1/organizations/{organizationID}/billing/payment_methods
+      operations:
+      - name: GetOrganizationPaymentMethods
+        method: GET
+        description: List Organization Payment Methods
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+      - name: CreateOrganizationPaymentMethod
+        method: POST
+        description: Create Organization Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organizationid-billing-payment-methods-initialize
+      path: /v1/organizations/{organizationID}/billing/payment_methods/initialize
+      operations:
+      - name: InitializeOrganizationPaymentMethod
+        method: POST
+        description: Initialize Organization Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+    - name: v1-organizations-organizationid-billing-payment-methods-paymentmethodid
+      path: /v1/organizations/{organizationID}/billing/payment_methods/{paymentMethodID}
+      operations:
+      - name: DeleteOrganizationPaymentMethod
+        method: DELETE
+        description: Delete Organization Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: paymentMethodID
+          in: path
+          type: string
+          description: The ID of the payment method to delete
+          required: true
+    - name: v1-organizations-organizationid-billing-payers-default-payment-method
+      path: /v1/organizations/{organizationID}/billing/payers/default_payment_method
+      operations:
+      - name: SetOrganizationDefaultPaymentMethod
+        method: PUT
+        description: Set Organization Default Payment Method
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

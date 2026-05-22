@@ -1,0 +1,76 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Active Sessions
+  description: 'Clerk Active Sessions capability. 3 operations. Lead operation: Get Active Sessions.'
+  tags:
+  - Clerk
+  - Active Sessions
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-active-sessions
+    baseUri: ''
+    description: Clerk clerk-frontend-api Active Sessions business capability.
+    resources:
+    - name: v1-me-sessions-active
+      path: /v1/me/sessions/active
+      operations:
+      - name: getSessions
+        method: GET
+        description: Get Active Sessions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+    - name: v1-me-sessions-session-id-revoke
+      path: /v1/me/sessions/{session_id}/revoke
+      operations:
+      - name: revokeSession
+        method: POST
+        description: Revoke Given Session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: session_id
+          in: path
+          type: string
+          description: The session ID to be revoked.
+          required: true
+    - name: v1-me-sessions
+      path: /v1/me/sessions
+      operations:
+      - name: getUsersSessions
+        method: GET
+        description: Get Sessions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false

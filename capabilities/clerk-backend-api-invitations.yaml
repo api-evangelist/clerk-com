@@ -1,0 +1,99 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Invitations
+  description: 'Clerk Invitations capability. 4 operations. Lead operation: Create an Invitation.'
+  tags:
+  - Clerk
+  - Invitations
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-invitations
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Invitations business capability.
+    resources:
+    - name: invitations
+      path: /invitations
+      operations:
+      - name: CreateInvitation
+        method: POST
+        description: Create an Invitation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: ListInvitations
+        method: GET
+        description: List All Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter invitations based on their status
+          required: false
+        - name: query
+          in: query
+          type: string
+          description: Filter invitations based on their `email_address` or `id`
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return invitations in a particular order.
+
+            At the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.
+
+            In order to specify the directi'
+          required: false
+    - name: invitations-bulk
+      path: /invitations/bulk
+      operations:
+      - name: CreateBulkInvitations
+        method: POST
+        description: Create Multiple Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: invitations-invitation-id-revoke
+      path: /invitations/{invitation_id}/revoke
+      operations:
+      - name: RevokeInvitation
+        method: POST
+        description: Revokes an Invitation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: invitation_id
+          in: path
+          type: string
+          description: The ID of the invitation to be revoked
+          required: true

@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Role Sets
+  description: 'Clerk Role Sets capability. 7 operations. Lead operation: Get a List of Role Sets.'
+  tags:
+  - Clerk
+  - Role Sets
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-role-sets
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Role Sets business capability.
+    resources:
+    - name: role-sets
+      path: /role_sets
+      operations:
+      - name: ListRoleSets
+        method: GET
+        description: Get a List of Role Sets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: 'Returns role sets with ID, name, or key that match the given query.
+
+            Uses exact match for role set ID and partial match for name and key.'
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return role sets in a particular order.
+
+            At the moment, you can order the returned role sets by their `created_at`, `name`, or `key`.
+
+            In order to specify the direction, you can use the `+/-` '
+          required: false
+      - name: CreateRoleSet
+        method: POST
+        description: Create a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: role-sets-role-set-key-or-id
+      path: /role_sets/{role_set_key_or_id}
+      operations:
+      - name: GetRoleSet
+        method: GET
+        description: Retrieve a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_set_key_or_id
+          in: path
+          type: string
+          description: The key or ID of the role set
+          required: true
+      - name: UpdateRoleSet
+        method: PATCH
+        description: Update a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_set_key_or_id
+          in: path
+          type: string
+          description: The key or ID of the role set to update
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: role-sets-role-set-key-or-id-replace
+      path: /role_sets/{role_set_key_or_id}/replace
+      operations:
+      - name: ReplaceRoleSet
+        method: POST
+        description: Replace a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_set_key_or_id
+          in: path
+          type: string
+          description: The key or ID of the role set to replace
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: role-sets-role-set-key-or-id-roles
+      path: /role_sets/{role_set_key_or_id}/roles
+      operations:
+      - name: AddRolesToRoleSet
+        method: POST
+        description: Add Roles to a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_set_key_or_id
+          in: path
+          type: string
+          description: The key or ID of the role set
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: role-sets-role-set-key-or-id-roles-replace
+      path: /role_sets/{role_set_key_or_id}/roles/replace
+      operations:
+      - name: ReplaceRoleInRoleSet
+        method: POST
+        description: Replace a Role in a Role Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: role_set_key_or_id
+          in: path
+          type: string
+          description: The key or ID of the role set
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

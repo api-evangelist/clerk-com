@@ -1,0 +1,175 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Phone Numbers
+  description: 'Clerk Phone Numbers capability. 7 operations. Lead operation: Get Phone Numbers.'
+  tags:
+  - Clerk
+  - Phone Numbers
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-phone-numbers
+    baseUri: ''
+    description: Clerk clerk-frontend-api Phone Numbers business capability.
+    resources:
+    - name: v1-me-phone-numbers
+      path: /v1/me/phone_numbers
+      operations:
+      - name: getPhoneNumbers
+        method: GET
+        description: Get Phone Numbers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+      - name: postPhoneNumbers
+        method: POST
+        description: Create Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-phone-numbers-phone-number-id-attempt-verification
+      path: /v1/me/phone_numbers/{phone_number_id}/attempt_verification
+      operations:
+      - name: verifyPhoneNumber
+        method: POST
+        description: Attempt Phone Number Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The phone_number_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-phone-numbers-phone-number-id-prepare-verification
+      path: /v1/me/phone_numbers/{phone_number_id}/prepare_verification
+      operations:
+      - name: sendVerificationSMS
+        method: POST
+        description: Prepare Phone Number Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The phone_number_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-phone-numbers-phone-number-id
+      path: /v1/me/phone_numbers/{phone_number_id}
+      operations:
+      - name: ReadPhoneNumber
+        method: GET
+        description: Retrieve Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The phone_number_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+      - name: UpdatePhoneNumber
+        method: PATCH
+        description: Update Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The phone_number_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: DeletePhoneNumber
+        method: DELETE
+        description: Delete Phone Number
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: phone_number_id
+          in: path
+          type: string
+          description: The phone_number_id.
+          required: true
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false

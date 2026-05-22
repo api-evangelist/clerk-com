@@ -1,0 +1,37 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Redirect
+  description: 'Clerk Redirect capability. 1 operations. Lead operation: Redirect to a Validated URL.'
+  tags:
+  - Clerk
+  - Redirect
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-redirect
+    baseUri: ''
+    description: Clerk clerk-frontend-api Redirect business capability.
+    resources:
+    - name: v1-redirect
+      path: /v1/redirect
+      operations:
+      - name: redirectToUrl
+        method: GET
+        description: Redirect to a Validated URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: redirect_url
+          in: query
+          type: string
+          description: The URL to redirect to (optional). If empty or not provided, redirects to the default URL.
+          required: false

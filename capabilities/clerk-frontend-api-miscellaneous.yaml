@@ -1,0 +1,141 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Miscellaneous
+  description: 'Clerk Miscellaneous capability. 7 operations. Lead operation: Get Account Portal.'
+  tags:
+  - Clerk
+  - Miscellaneous
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-miscellaneous
+    baseUri: ''
+    description: Clerk clerk-frontend-api Miscellaneous business capability.
+    resources:
+    - name: v1-account-portal
+      path: /v1/account_portal
+      operations:
+      - name: getAccountPortal
+        method: GET
+        description: Get Account Portal
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-proxy-health
+      path: /v1/proxy-health
+      operations:
+      - name: getProxyHealth
+        method: GET
+        description: Get Proxy Health
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: domain_id
+          in: query
+          type: string
+          description: The ID of the domain
+          required: true
+        - name: Clerk-Proxy-Url
+          in: header
+          type: string
+          description: The URL of the proxy
+          required: true
+        - name: Clerk-Secret-Key
+          in: header
+          type: string
+          description: The secret key of the proxy
+          required: true
+        - name: X-Forwarded-For
+          in: header
+          type: string
+          description: The IP address of the client
+          required: true
+    - name: v1-client-sync
+      path: /v1/client/sync
+      operations:
+      - name: syncClient
+        method: GET
+        description: Sync Clients Across Multiple Domains
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: link_domain
+          in: query
+          type: string
+          description: The satellite domain which should be synced with its primary.
+          required: false
+        - name: redirect_url
+          in: query
+          type: string
+          description: The URL to redirect to after the syncing process has been completed.
+          required: false
+    - name: v1-client-link
+      path: /v1/client/link
+      operations:
+      - name: linkClient
+        method: GET
+        description: Link Clients Across Multiple Domains
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: __clerk_token
+          in: query
+          type: string
+          description: The token generated from a sync request.
+          required: false
+    - name: v1-dev-browser-set-first-party-cookie
+      path: /v1/dev_browser/set_first_party_cookie
+      operations:
+      - name: postDevBrowserInitSetCookie
+        method: POST
+        description: Post Dev Browser Init Set Cookie
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-dev-browser-init
+      path: /v1/dev_browser/init
+      operations:
+      - name: getDevBrowserInit
+        method: GET
+        description: Initialize Dev Browser for Development and Staging Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: origin
+          in: query
+          type: string
+          description: The origin of the request
+          required: false
+    - name: v1-clear-site-data
+      path: /v1/clear-site-data
+      operations:
+      - name: clearSiteData
+        method: GET
+        description: Set the Clear-Site-Data Header
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.

@@ -1,0 +1,151 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — User
+  description: 'Clerk User capability. 9 operations. Lead operation: Get User.'
+  tags:
+  - Clerk
+  - User
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-user
+    baseUri: ''
+    description: Clerk clerk-frontend-api User business capability.
+    resources:
+    - name: v1-me
+      path: /v1/me
+      operations:
+      - name: getUser
+        method: GET
+        description: Get User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: patchUser
+        method: PATCH
+        description: Update User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteUser
+        method: DELETE
+        description: Delete User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-metadata
+      path: /v1/me/metadata
+      operations:
+      - name: patchUserMetadata
+        method: PATCH
+        description: Merge and Update the Current User's Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-tokens
+      path: /v1/me/tokens
+      operations:
+      - name: createServiceToken
+        method: POST
+        description: Create a JWT for the requested user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: _clerk_session_id
+          in: query
+          type: string
+          description: The session_id associated with the requesting user.
+          required: false
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-profile-image
+      path: /v1/me/profile_image
+      operations:
+      - name: updateProfileImage
+        method: POST
+        description: Update Profile Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteProfileImage
+        method: DELETE
+        description: Delete Profile Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-change-password
+      path: /v1/me/change_password
+      operations:
+      - name: changePassword
+        method: POST
+        description: Update Password
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-me-remove-password
+      path: /v1/me/remove_password
+      operations:
+      - name: removePassword
+        method: POST
+        description: Delete Password
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

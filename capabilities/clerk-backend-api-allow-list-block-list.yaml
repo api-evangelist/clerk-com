@@ -1,0 +1,104 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Allow-list / Block-list
+  description: 'Clerk Allow-list / Block-list capability. 6 operations. Lead operation: List All Identifiers on the Allow-list.'
+  tags:
+  - Clerk
+  - Allow-list / Block-list
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-allow-list-block-list
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Allow-list / Block-list business capability.
+    resources:
+    - name: allowlist-identifiers
+      path: /allowlist_identifiers
+      operations:
+      - name: ListAllowlistIdentifiers
+        method: GET
+        description: List All Identifiers on the Allow-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: CreateAllowlistIdentifier
+        method: POST
+        description: Add Identifier to the Allow-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: allowlist-identifiers-identifier-id
+      path: /allowlist_identifiers/{identifier_id}
+      operations:
+      - name: DeleteAllowlistIdentifier
+        method: DELETE
+        description: Delete Identifier from Allow-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier_id
+          in: path
+          type: string
+          description: The ID of the identifier to delete from the allow-list
+          required: true
+    - name: blocklist-identifiers
+      path: /blocklist_identifiers
+      operations:
+      - name: ListBlocklistIdentifiers
+        method: GET
+        description: List All Identifiers on the Block-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: CreateBlocklistIdentifier
+        method: POST
+        description: Add Identifier to the Block-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: blocklist-identifiers-identifier-id
+      path: /blocklist_identifiers/{identifier_id}
+      operations:
+      - name: DeleteBlocklistIdentifier
+        method: DELETE
+        description: Delete Identifier from Block-list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: identifier_id
+          in: path
+          type: string
+          description: The ID of the identifier to delete from the block-list
+          required: true

@@ -1,0 +1,194 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Organization Invitations
+  description: 'Clerk Organization Invitations capability. 7 operations. Lead operation: Get a List of Organization Invitations for the Current Instance.'
+  tags:
+  - Clerk
+  - Organization Invitations
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-organization-invitations
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Organization Invitations business capability.
+    resources:
+    - name: organization-invitations
+      path: /organization_invitations
+      operations:
+      - name: ListInstanceOrganizationInvitations
+        method: GET
+        description: Get a List of Organization Invitations for the Current Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return organization invitations in a particular order.
+
+            At the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.
+
+            In order to specify'
+          required: false
+        - name: status
+          in: query
+          type: string
+          description: Filter organization invitations based on their status
+          required: false
+        - name: query
+          in: query
+          type: string
+          description: Filter organization invitations based on their `email_address`
+          required: false
+    - name: organizations-organization-id-invitations
+      path: /organizations/{organization_id}/invitations
+      operations:
+      - name: CreateOrganizationInvitation
+        method: POST
+        description: Create and Send an Organization Invitation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The ID of the organization for which to send the invitation
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: ListOrganizationInvitations
+        method: GET
+        description: Get a List of Organization Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: status
+          in: query
+          type: string
+          description: Filter organization invitations based on their status
+          required: false
+        - name: email_address
+          in: query
+          type: string
+          description: Returns organization invitations inviting the specified email address.
+          required: false
+        - name: order_by
+          in: query
+          type: string
+          description: 'Allows to return organization invitations in a particular order.
+
+            You can order the returned organization invitations either by their `created_at` or `email_address`.
+
+            In order to specify the direction,'
+          required: false
+    - name: organizations-organization-id-invitations-bulk
+      path: /organizations/{organization_id}/invitations/bulk
+      operations:
+      - name: CreateOrganizationInvitationBulk
+        method: POST
+        description: Bulk Create and Send Organization Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: organizations-organization-id-invitations-pending
+      path: /organizations/{organization_id}/invitations/pending
+      operations:
+      - name: ListPendingOrganizationInvitations
+        method: GET
+        description: Get a List of Pending Organization Invitations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+    - name: organizations-organization-id-invitations-invitation-id
+      path: /organizations/{organization_id}/invitations/{invitation_id}
+      operations:
+      - name: GetOrganizationInvitation
+        method: GET
+        description: Retrieve an Organization Invitation by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: invitation_id
+          in: path
+          type: string
+          description: The organization invitation ID.
+          required: true
+    - name: organizations-organization-id-invitations-invitation-id-revoke
+      path: /organizations/{organization_id}/invitations/{invitation_id}/revoke
+      operations:
+      - name: RevokeOrganizationInvitation
+        method: POST
+        description: Revoke a Pending Organization Invitation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: invitation_id
+          in: path
+          type: string
+          description: The organization invitation ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

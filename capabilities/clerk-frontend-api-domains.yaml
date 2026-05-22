@@ -1,0 +1,188 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Domains
+  description: 'Clerk Domains capability. 7 operations. Lead operation: Create Organization Domain.'
+  tags:
+  - Clerk
+  - Domains
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-domains
+    baseUri: ''
+    description: Clerk clerk-frontend-api Domains business capability.
+    resources:
+    - name: v1-organizations-organization-id-domains
+      path: /v1/organizations/{organization_id}/domains
+      operations:
+      - name: CreateOrganizationDomain
+        method: POST
+        description: Create Organization Domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: ListOrganizationDomains
+        method: GET
+        description: Get All Organization Domains
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: verified
+          in: query
+          type: boolean
+          description: Filter by whether a domain is verified
+          required: false
+        - name: enrollment_mode
+          in: query
+          type: string
+          description: Filter by enrollment mode
+          required: false
+    - name: v1-organizations-organization-id-domains-domain-id
+      path: /v1/organizations/{organization_id}/domains/{domain_id}
+      operations:
+      - name: GetOrganizationDomain
+        method: GET
+        description: Get Organization Domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: domain_id
+          in: path
+          type: string
+          description: The domain ID.
+          required: true
+      - name: deleteOrganizationDomain
+        method: DELETE
+        description: Delete Organization Domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: domain_id
+          in: path
+          type: string
+          description: The domain ID.
+          required: true
+    - name: v1-organizations-organization-id-domains-domain-id-update-enrollment-mode
+      path: /v1/organizations/{organization_id}/domains/{domain_id}/update_enrollment_mode
+      operations:
+      - name: UpdateOrganizationDomainEnrollmentMode
+        method: POST
+        description: Update Organization Enrollment Mode
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: domain_id
+          in: path
+          type: string
+          description: The domain ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organization-id-domains-domain-id-prepare-affiliation-verification
+      path: /v1/organizations/{organization_id}/domains/{domain_id}/prepare_affiliation_verification
+      operations:
+      - name: prepareOrganizationDomainVerification
+        method: POST
+        description: Prepare Organization Domain Affiliation Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: domain_id
+          in: path
+          type: string
+          description: The domain ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-organizations-organization-id-domains-domain-id-attempt-affiliation-verification
+      path: /v1/organizations/{organization_id}/domains/{domain_id}/attempt_affiliation_verification
+      operations:
+      - name: attemptOrganizationDomainVerification
+        method: POST
+        description: Attempt Organization Domain Affiliation Verification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization_id
+          in: path
+          type: string
+          description: The organization ID.
+          required: true
+        - name: domain_id
+          in: path
+          type: string
+          description: The domain ID.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true

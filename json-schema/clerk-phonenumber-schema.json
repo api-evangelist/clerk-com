@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-phonenumber-schema.json",
+  "title": "Clerk PhoneNumber",
+  "description": "Clerk PhoneNumber object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "phone_number"
+      ]
+    },
+    "phone_number": {
+      "type": "string"
+    },
+    "reserved_for_second_factor": {
+      "type": "boolean"
+    },
+    "default_second_factor": {
+      "type": "boolean"
+    },
+    "reserved": {
+      "type": "boolean"
+    },
+    "verification": {
+      "type": "object",
+      "nullable": true,
+      "oneOf": [
+        {
+          "x-speakeasy-name-override": "OTP",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_otp"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "unverified",
+                "verified",
+                "failed",
+                "expired"
+              ]
+            },
+            "strategy": {
+              "x-speakeasy-unknown-values": "allow",
+              "type": "string",
+              "enum": [
+                "phone_code",
+                "email_code",
+                "reset_password_email_code"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        },
+        {
+          "x-speakeasy-name-override": "Admin",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "object": {
+              "type": "string",
+              "enum": [
+                "verification_admin"
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "verified"
+              ]
+            },
+            "strategy": {
+              "x-speakeasy-unknown-values": "allow",
+              "type": "string",
+              "enum": [
+                "admin"
+              ]
+            },
+            "attempts": {
+              "type": "integer",
+              "nullable": true
+            },
+            "expire_at": {
+              "type": "integer",
+              "nullable": true
+            },
+            "verified_at_client": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "required": [
+            "status",
+            "strategy",
+            "attempts",
+            "expire_at"
+          ]
+        }
+      ],
+      "discriminator": {
+        "propertyName": "object",
+        "mapping": {
+          "verification_otp": "#/components/schemas/verification_otp",
+          "verification_admin": "#/components/schemas/verification_admin"
+        }
+      }
+    },
+    "linked_to": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "pattern": "^oauth_[a-z]+$"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ]
+      }
+    },
+    "backup_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation\n"
+    }
+  },
+  "required": [
+    "object",
+    "phone_number",
+    "verification",
+    "linked_to",
+    "reserved",
+    "created_at",
+    "updated_at"
+  ]
+}

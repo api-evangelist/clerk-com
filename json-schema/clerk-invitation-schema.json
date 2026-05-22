@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-invitation-schema.json",
+  "title": "Clerk Invitation",
+  "description": "Clerk Invitation object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": [
+        "invitation"
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "email_address": {
+      "type": "string",
+      "format": "email"
+    },
+    "public_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "revoked": {
+      "type": "boolean",
+      "example": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "revoked",
+        "expired"
+      ],
+      "example": "pending"
+    },
+    "url": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "Unix timestamp of expiration.\n"
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation.\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update.\n"
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "email_address",
+    "public_metadata",
+    "status",
+    "created_at",
+    "updated_at"
+  ]
+}

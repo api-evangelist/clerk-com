@@ -1,0 +1,2033 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/clerk-com/main/json-schema/clerk-user-schema.json",
+  "title": "Clerk User",
+  "description": "Clerk User object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string",
+      "description": "String representing the object's type. Objects of the same type share the same value.\n",
+      "enum": [
+        "user"
+      ]
+    },
+    "external_id": {
+      "nullable": true,
+      "type": "string"
+    },
+    "primary_email_address_id": {
+      "nullable": true,
+      "type": "string"
+    },
+    "primary_phone_number_id": {
+      "nullable": true,
+      "type": "string"
+    },
+    "primary_web3_wallet_id": {
+      "nullable": true,
+      "type": "string"
+    },
+    "username": {
+      "nullable": true,
+      "type": "string"
+    },
+    "first_name": {
+      "nullable": true,
+      "type": "string"
+    },
+    "last_name": {
+      "nullable": true,
+      "type": "string"
+    },
+    "locale": {
+      "nullable": true,
+      "type": "string"
+    },
+    "profile_image_url": {
+      "type": "string",
+      "deprecated": true
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "has_image": {
+      "type": "boolean"
+    },
+    "public_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "private_metadata": {
+      "nullable": true,
+      "type": "object",
+      "additionalProperties": true
+    },
+    "unsafe_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "email_addresses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "x-speakeasy-unknown-values": "allow",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "email_address"
+            ]
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "reserved": {
+            "type": "boolean"
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "OTP",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_otp"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "phone_code",
+                      "email_code",
+                      "reset_password_email_code"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Admin",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_admin"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "admin"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "FromOAuth",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_from_oauth"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "pattern": "^from_oauth_(?:(?:token_)|(?:custom_))?[a-z]+$"
+                  },
+                  "error": {
+                    "type": "object",
+                    "nullable": true,
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Ticket",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_ticket"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "ticket"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "SAML",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_saml"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired",
+                      "transferable"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "saml"
+                    ]
+                  },
+                  "external_verification_redirect_url": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "error": {
+                    "nullable": true,
+                    "type": "object",
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "EmailLink",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_email_link"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "email_link"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object",
+              "mapping": {
+                "verification_otp": "#/components/schemas/verification_otp",
+                "verification_admin": "#/components/schemas/verification_admin",
+                "verification_from_oauth": "#/components/schemas/verification_from_oauth",
+                "verification_ticket": "#/components/schemas/verification_ticket",
+                "verification_saml": "#/components/schemas/verification_saml",
+                "verification_email_link": "#/components/schemas/verification_email_link"
+              }
+            }
+          },
+          "linked_to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "pattern": "^oauth_[a-z]+$"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ]
+            }
+          },
+          "matches_sso_connection": {
+            "description": "Indicates whether this email address domain matches an active enterprise connection.\n",
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          }
+        },
+        "required": [
+          "object",
+          "email_address",
+          "verification",
+          "linked_to",
+          "reserved",
+          "created_at",
+          "updated_at"
+        ]
+      }
+    },
+    "phone_numbers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "phone_number"
+            ]
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "reserved_for_second_factor": {
+            "type": "boolean"
+          },
+          "default_second_factor": {
+            "type": "boolean"
+          },
+          "reserved": {
+            "type": "boolean"
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "OTP",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_otp"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "phone_code",
+                      "email_code",
+                      "reset_password_email_code"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Admin",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_admin"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "admin"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object",
+              "mapping": {
+                "verification_otp": "#/components/schemas/verification_otp",
+                "verification_admin": "#/components/schemas/verification_admin"
+              }
+            }
+          },
+          "linked_to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "pattern": "^oauth_[a-z]+$"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "id"
+              ]
+            }
+          },
+          "backup_codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          }
+        },
+        "required": [
+          "object",
+          "phone_number",
+          "verification",
+          "linked_to",
+          "reserved",
+          "created_at",
+          "updated_at"
+        ]
+      }
+    },
+    "web3_wallets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "web3_wallet"
+            ]
+          },
+          "web3_wallet": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "Web3Signature",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_web3"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "web3_metamask_signature",
+                      "web3_base_signature",
+                      "web3_coinbase_wallet_signature",
+                      "web3_okx_wallet_signature",
+                      "web3_solana_signature"
+                    ]
+                  },
+                  "nonce": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "message": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Admin",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_admin"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "admin"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object"
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          }
+        },
+        "required": [
+          "object",
+          "web3_wallet",
+          "verification",
+          "created_at",
+          "updated_at"
+        ]
+      }
+    },
+    "passkeys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "passkey"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "last_used_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of when the passkey was last used.\n"
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "Passkey",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_passkey"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "passkey"
+                    ]
+                  },
+                  "nonce": {
+                    "type": "string",
+                    "enum": [
+                      "nonce"
+                    ]
+                  },
+                  "message": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object"
+            }
+          }
+        },
+        "required": [
+          "object",
+          "name",
+          "last_used_at",
+          "verification"
+        ]
+      }
+    },
+    "password_enabled": {
+      "type": "boolean"
+    },
+    "two_factor_enabled": {
+      "type": "boolean"
+    },
+    "totp_enabled": {
+      "type": "boolean"
+    },
+    "backup_code_enabled": {
+      "type": "boolean"
+    },
+    "mfa_enabled_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of when MFA was last enabled for this user. It should be noted that this field is not nullified if MFA is disabled.\n",
+      "nullable": true
+    },
+    "mfa_disabled_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of when MFA was last disabled for this user. It should be noted that this field is not nullified if MFA is enabled again.\n",
+      "nullable": true
+    },
+    "password_last_updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of when the user's password was last updated.\n",
+      "nullable": true
+    },
+    "external_accounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.",
+            "enum": [
+              "external_account",
+              "facebook_account",
+              "google_account"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "identification_id": {
+            "type": "string"
+          },
+          "provider_user_id": {
+            "description": "The unique ID of the user in the external provider's system",
+            "type": "string"
+          },
+          "approved_scopes": {
+            "type": "string"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "email_address_verified": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether the email was verified by the OAuth provider at creation time. null = unknown (pre-migration data or custom OAuth providers), true = provider confirmed email was verified, false = provider confirmed email was NOT verified\n"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "avatar_url": {
+            "type": "string",
+            "deprecated": true,
+            "description": "Please use `image_url` instead"
+          },
+          "image_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "public_metadata": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation\n"
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "Oauth",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_oauth"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "x-speakeasy-unknown-values": "allow",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired",
+                      "transferable"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "x-speakeasy-unknown-values": "allow",
+                    "pattern": "^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$"
+                  },
+                  "external_verification_redirect_url": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "type": "object",
+                    "nullable": true,
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer"
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "GoogleOneTap",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_google_one_tap"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "google_one_tap"
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "error": {
+                    "type": "object",
+                    "nullable": true,
+                    "oneOf": [
+                      {}
+                    ]
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object"
+            }
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "provider",
+          "identification_id",
+          "provider_user_id",
+          "approved_scopes",
+          "email_address",
+          "first_name",
+          "last_name",
+          "public_metadata",
+          "created_at",
+          "updated_at",
+          "verification"
+        ]
+      }
+    },
+    "saml_accounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "saml_account"
+            ]
+          },
+          "provider": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "provider_user_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_authenticated_at": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "Unix timestamp of last authentication.\n"
+          },
+          "public_metadata": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "SAML",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_saml"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired",
+                      "transferable"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "saml"
+                    ]
+                  },
+                  "external_verification_redirect_url": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "error": {
+                    "nullable": true,
+                    "type": "object",
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Ticket",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_ticket"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "ticket"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object"
+            }
+          },
+          "saml_connection": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "domain": {
+                    "type": "string",
+                    "deprecated": true
+                  },
+                  "domains": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "sync_user_attributes": {
+                    "type": "boolean"
+                  },
+                  "allow_subdomains": {
+                    "type": "boolean"
+                  },
+                  "allow_idp_initiated": {
+                    "type": "boolean"
+                  },
+                  "disable_additional_identifications": {
+                    "type": "boolean"
+                  },
+                  "created_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of creation.\n"
+                  },
+                  "updated_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of last update.\n"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "active",
+                  "provider",
+                  "sync_user_attributes",
+                  "created_at",
+                  "updated_at"
+                ],
+                "anyOf": [
+                  {
+                    "required": [
+                      "domain"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "domains"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "provider",
+          "active",
+          "email_address",
+          "verification"
+        ]
+      }
+    },
+    "enterprise_accounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "enterprise_account"
+            ]
+          },
+          "protocol": {
+            "type": "string",
+            "description": "The authentication protocol used to sign in.\n",
+            "enum": [
+              "oauth",
+              "saml"
+            ]
+          },
+          "provider": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "provider_user_id": {
+            "description": "The unique ID of the user in the external provider's system",
+            "type": "string",
+            "nullable": true
+          },
+          "enterprise_connection_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "public_metadata": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "x-speakeasy-name-override": "Ticket",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_ticket"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "expired"
+                    ]
+                  },
+                  "strategy": {
+                    "x-speakeasy-unknown-values": "allow",
+                    "type": "string",
+                    "enum": [
+                      "ticket"
+                    ]
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "SAML",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_saml"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired",
+                      "transferable"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": [
+                      "saml"
+                    ]
+                  },
+                  "external_verification_redirect_url": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "error": {
+                    "nullable": true,
+                    "type": "object",
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts"
+                ]
+              },
+              {
+                "x-speakeasy-name-override": "Oauth",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "verification_oauth"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "x-speakeasy-unknown-values": "allow",
+                    "enum": [
+                      "unverified",
+                      "verified",
+                      "failed",
+                      "expired",
+                      "transferable"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "x-speakeasy-unknown-values": "allow",
+                    "pattern": "^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$"
+                  },
+                  "external_verification_redirect_url": {
+                    "type": "string"
+                  },
+                  "error": {
+                    "type": "object",
+                    "nullable": true,
+                    "oneOf": [
+                      {}
+                    ]
+                  },
+                  "expire_at": {
+                    "type": "integer"
+                  },
+                  "attempts": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "verified_at_client": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "status",
+                  "strategy",
+                  "attempts",
+                  "expire_at"
+                ]
+              }
+            ],
+            "discriminator": {
+              "propertyName": "object"
+            }
+          },
+          "enterprise_connection": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "protocol": {
+                    "type": "string"
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "logo_public_url": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "domain": {
+                    "type": "string",
+                    "deprecated": true
+                  },
+                  "domains": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "sync_user_attributes": {
+                    "type": "boolean"
+                  },
+                  "allow_subdomains": {
+                    "type": "boolean"
+                  },
+                  "allow_idp_initiated": {
+                    "type": "boolean"
+                  },
+                  "disable_additional_identifications": {
+                    "type": "boolean"
+                  },
+                  "created_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of creation.\n"
+                  },
+                  "updated_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of last update.\n"
+                  }
+                },
+                "required": [
+                  "id",
+                  "protocol",
+                  "name",
+                  "logo_public_url",
+                  "active",
+                  "provider",
+                  "sync_user_attributes",
+                  "disable_additional_identifications",
+                  "allow_subdomains",
+                  "allow_idp_initiated",
+                  "created_at",
+                  "updated_at"
+                ],
+                "anyOf": [
+                  {
+                    "required": [
+                      "domain"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "domains"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "last_authenticated_at": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "Unix timestamp of last authentication.\n"
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "provider",
+          "active",
+          "email_address",
+          "verification"
+        ]
+      }
+    },
+    "organization_memberships": {
+      "type": "array",
+      "items": {
+        "description": "A user's membership in an organization",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "organization_membership"
+            ]
+          },
+          "role": {
+            "type": "string"
+          },
+          "role_name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "public_metadata": {
+            "type": "object",
+            "description": "Metadata saved on the organization membership, accessible from both Frontend and Backend APIs",
+            "additionalProperties": true
+          },
+          "private_metadata": {
+            "type": "object",
+            "description": "Metadata saved on the organization membership, accessible only from the Backend API",
+            "additionalProperties": true
+          },
+          "organization": {
+            "type": "object",
+            "nullable": false,
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "object": {
+                    "type": "string",
+                    "enum": [
+                      "organization"
+                    ]
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "image_url": {
+                    "type": "string"
+                  },
+                  "has_image": {
+                    "type": "boolean"
+                  },
+                  "members_count": {
+                    "type": "integer"
+                  },
+                  "missing_member_with_elevated_permissions": {
+                    "type": "boolean"
+                  },
+                  "pending_invitations_count": {
+                    "type": "integer"
+                  },
+                  "max_allowed_memberships": {
+                    "type": "integer"
+                  },
+                  "admin_delete_enabled": {
+                    "type": "boolean"
+                  },
+                  "public_metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "private_metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "created_by": {
+                    "type": "string"
+                  },
+                  "created_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of creation.\n"
+                  },
+                  "updated_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of last update.\n"
+                  },
+                  "last_active_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Unix timestamp of last activity.\n"
+                  },
+                  "role_set_key": {
+                    "type": "string",
+                    "description": "The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.\n",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "object",
+                  "id",
+                  "name",
+                  "slug",
+                  "has_image",
+                  "max_allowed_memberships",
+                  "admin_delete_enabled",
+                  "public_metadata",
+                  "created_at",
+                  "updated_at"
+                ]
+              }
+            ]
+          },
+          "public_user_data": {
+            "description": "An organization membership with public user data populated",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "user_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "first_name": {
+                "type": "string",
+                "nullable": true
+              },
+              "last_name": {
+                "type": "string",
+                "nullable": true
+              },
+              "profile_image_url": {
+                "type": "string",
+                "nullable": true,
+                "deprecated": true
+              },
+              "image_url": {
+                "type": "string"
+              },
+              "has_image": {
+                "type": "boolean"
+              },
+              "identifier": {
+                "type": "string",
+                "nullable": true
+              },
+              "username": {
+                "type": "string",
+                "nullable": true
+              },
+              "banned": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "user_id",
+              "first_name",
+              "last_name",
+              "profile_image_url",
+              "image_url",
+              "has_image"
+            ]
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation."
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of last update."
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "role",
+          "permissions",
+          "public_metadata",
+          "created_at",
+          "updated_at",
+          "organization"
+        ]
+      }
+    },
+    "last_sign_in_at": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "Unix timestamp of last sign-in.\n"
+    },
+    "banned": {
+      "type": "boolean",
+      "description": "Flag to denote whether user is banned or not.\n"
+    },
+    "locked": {
+      "type": "boolean",
+      "description": "Flag to denote whether user is currently locked, i.e. restricted from signing in or not.\n"
+    },
+    "deprovisioned": {
+      "type": "boolean",
+      "description": "Flag to denote whether user has been deprovisioned and is restricted from signing in.\n"
+    },
+    "lockout_expires_in_seconds": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "The number of seconds remaining until the lockout period expires for a locked user. A null value for a locked user indicates that lockout never expires.\n"
+    },
+    "verification_attempts_remaining": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "The number of verification attempts remaining until the user is locked. Null if account lockout is not enabled. Note: if a user is locked explicitly via the Backend API, they may still have verification attempts remaining.\n"
+    },
+    "updated_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of last update.\n"
+    },
+    "created_at": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp of creation.\n"
+    },
+    "delete_self_enabled": {
+      "type": "boolean",
+      "description": "If enabled, user can delete themselves via FAPI.\n"
+    },
+    "create_organization_enabled": {
+      "type": "boolean",
+      "description": "If enabled, user can create organizations via FAPI.\n"
+    },
+    "create_organizations_limit": {
+      "type": "integer",
+      "description": "The maximum number of organizations the user can create. 0 means unlimited.\n",
+      "nullable": true
+    },
+    "last_active_at": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "Unix timestamp of the latest session activity, with day precision.\n",
+      "example": 1700690400000
+    },
+    "legal_accepted_at": {
+      "type": "integer",
+      "format": "int64",
+      "nullable": true,
+      "description": "Unix timestamp of when the user accepted the legal requirements.\n",
+      "example": 1700690400000
+    },
+    "bypass_client_trust": {
+      "type": "boolean",
+      "description": "When set to `true`, the user will bypass client trust checks during sign-in.",
+      "default": false
+    },
+    "scim": {
+      "nullable": true,
+      "allOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Metadata describing a user's linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed.\n",
+          "properties": {
+            "directory_id": {
+              "type": "string",
+              "description": "The ID of the SCIM directory the user is provisioned from.\n"
+            },
+            "directory_enabled": {
+              "type": "boolean",
+              "description": "Whether the SCIM directory is currently enabled. Omitted when false.\n"
+            },
+            "external_id": {
+              "type": "string",
+              "nullable": true,
+              "description": "The user's external ID as reported by the SCIM directory, if any.\n"
+            }
+          },
+          "required": [
+            "directory_id",
+            "external_id"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "object",
+    "username",
+    "first_name",
+    "last_name",
+    "has_image",
+    "primary_email_address_id",
+    "primary_phone_number_id",
+    "primary_web3_wallet_id",
+    "password_enabled",
+    "two_factor_enabled",
+    "totp_enabled",
+    "backup_code_enabled",
+    "email_addresses",
+    "phone_numbers",
+    "web3_wallets",
+    "passkeys",
+    "external_accounts",
+    "saml_accounts",
+    "enterprise_accounts",
+    "public_metadata",
+    "external_id",
+    "last_sign_in_at",
+    "banned",
+    "locked",
+    "lockout_expires_in_seconds",
+    "verification_attempts_remaining",
+    "created_at",
+    "updated_at",
+    "delete_self_enabled",
+    "create_organization_enabled",
+    "last_active_at",
+    "mfa_enabled_at",
+    "mfa_disabled_at",
+    "legal_accepted_at"
+  ]
+}

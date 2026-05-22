@@ -1,0 +1,54 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Backend Api — Agent Tasks
+  description: 'Clerk Agent Tasks capability. 2 operations. Lead operation: Create Agent Task.'
+  tags:
+  - Clerk
+  - Agent Tasks
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-backend-api-agent-tasks
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-backend-api Agent Tasks business capability.
+    resources:
+    - name: agents-tasks
+      path: /agents/tasks
+      operations:
+      - name: CreateAgentTask
+        method: POST
+        description: Create Agent Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: agents-tasks-agent-task-id-revoke
+      path: /agents/tasks/{agent_task_id}/revoke
+      operations:
+      - name: RevokeAgentTask
+        method: POST
+        description: Revoke Agent Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: agent_task_id
+          in: path
+          type: string
+          description: The ID of the agent task to be revoked.
+          required: true

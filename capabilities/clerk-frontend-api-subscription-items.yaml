@@ -1,0 +1,87 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Frontend Api — Subscription Items
+  description: 'Clerk Subscription Items capability. 4 operations. Lead operation: List User''s Subscription Items.'
+  tags:
+  - Clerk
+  - Subscription Items
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PUBLISHABLE_KEY: CLERK_PUBLISHABLE_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-frontend-api-subscription-items
+    baseUri: ''
+    description: Clerk clerk-frontend-api Subscription Items business capability.
+    resources:
+    - name: v1-me-billing-subscription-items
+      path: /v1/me/billing/subscription_items
+      operations:
+      - name: GetUserBillingSubscriptionItems
+        method: GET
+        description: List User's Subscription Items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-me-billing-subscription-items-subscriptionitemid
+      path: /v1/me/billing/subscription_items/{subscriptionItemID}
+      operations:
+      - name: DeleteUserBillingSubscriptionItem
+        method: DELETE
+        description: Cancel User's Subscription Item
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: subscriptionItemID
+          in: path
+          type: string
+          description: The ID of the subscription item to cancel
+          required: true
+    - name: v1-organizations-organizationid-billing-subscription-items
+      path: /v1/organizations/{organizationID}/billing/subscription_items
+      operations:
+      - name: GetOrganizationBillingSubscriptionItems
+        method: GET
+        description: List Organization's Subscription Items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+    - name: v1-organizations-organizationid-billing-subscription-items-subscriptionitemid
+      path: /v1/organizations/{organizationID}/billing/subscription_items/{subscriptionItemID}
+      operations:
+      - name: DeleteOrganizationBillingSubscriptionItem
+        method: DELETE
+        description: Cancel Organization's Subscription Item
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organizationID
+          in: path
+          type: string
+          description: The ID of the organization
+          required: true
+        - name: subscriptionItemID
+          in: path
+          type: string
+          description: The ID of the subscription item to cancel
+          required: true

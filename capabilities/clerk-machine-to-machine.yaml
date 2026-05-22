@@ -1,0 +1,33 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Machine-to-Machine Workflow
+  description: 'M2M and agent authentication workflow composition: API keys, M2M tokens, OAuth applications, OAuth access tokens, JWT templates, and agent tasks.'
+  tags:
+  - Clerk
+  - Workflow
+  - M2M
+  - API Keys
+  - Agents
+  - OAuth
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_SECRET_KEY: CLERK_SECRET_KEY
+imports:
+- ./clerk-backend-api-api-keys.yaml
+- ./clerk-backend-api-m2m-tokens.yaml
+- ./clerk-backend-api-machines.yaml
+- ./clerk-backend-api-oauth-applications.yaml
+- ./clerk-backend-api-oauth-access-tokens.yaml
+- ./clerk-backend-api-jwt-templates.yaml
+- ./clerk-backend-api-agent-tasks.yaml
+capability:
+  description: |
+    Composes Clerk's machine-and-agent identity surface:
+      1. createMachine + createAPIKey for service-account style integration.
+      2. createM2MToken to mint short-lived JWTs for service-to-service calls.
+      3. createOAuthApplication for third-party integrations using Clerk as an IdP.
+      4. createJWTTemplate to shape claims (Supabase, Hasura, custom audiences).
+      5. createAgentTask + sign-in tokens to spin up authenticated agent sessions for testing or autonomous agents.

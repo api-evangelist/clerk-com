@@ -1,0 +1,135 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Clerk Platform Api — Redirect URLs
+  description: 'Clerk Redirect URLs capability. 4 operations. Lead operation: List Redirect URLs.'
+  tags:
+  - Clerk
+  - Redirect URLs
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+- namespace: env
+  keys:
+    CLERK_PARTNER_KEY: CLERK_PARTNER_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: clerk-platform-api-redirect-urls
+    baseUri: https://api.clerk.com/v1
+    description: Clerk clerk-platform-api Redirect URLs business capability.
+    resources:
+    - name: platform-applications-applicationid-instances-envorinsid-redirect-urls
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls
+      operations:
+      - name: PlatformListRedirectURLs
+        method: GET
+        description: List Redirect URLs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results to return per page (1-500, default 10).
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Number of results to skip for pagination.
+          required: false
+      - name: PlatformCreateRedirectURL
+        method: POST
+        description: Create a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: platform-applications-applicationid-instances-envorinsid-redirect-urls-redirecturlid
+      path: /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls/{redirectURLID}
+      operations:
+      - name: PlatformGetRedirectURL
+        method: GET
+        description: Get a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: redirectURLID
+          in: path
+          type: string
+          description: Redirect URL ID.
+          required: true
+      - name: PlatformDeleteRedirectURL
+        method: DELETE
+        description: Delete a Redirect URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: applicationID
+          in: path
+          type: string
+          description: Application ID.
+          required: true
+        - name: envOrInsID
+          in: path
+          type: string
+          description: 'Environment type (e.g., "development", "production") or instance ID.
+
+            '
+          required: true
+        - name: redirectURLID
+          in: path
+          type: string
+          description: Redirect URL ID.
+          required: true
