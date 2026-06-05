@@ -1,96 +1,201 @@
-# Clerk — API Evangelist Profile
+# Clerk (clerk-com)
 
-[Clerk](https://clerk.com) is a complete user management and authentication infrastructure platform built around embeddable UI components, flexible REST APIs, and admin dashboards. Clerk offers full-stack authentication and identity management — multi-factor authentication, social SSO, passkeys, organizations for B2B SaaS, billing, session management, and machine-to-machine authentication — wrapped by SDKs spanning Next.js, React, Expo, iOS, Android, Go, Python, Ruby, Java, PHP, and C#.
+Clerk is a complete user management and authentication infrastructure platform offering embeddable UI components, flexible APIs, and admin dashboards. It provides full-stack authentication including multi-factor authentication, social sign-on, passkeys, organizations for B2B SaaS, billing, session management, and machine-to-machine authentication, with SDKs spanning Next.js, React, Expo, iOS, Android, Go, Python, Ruby, Java, PHP, and C#.
 
-This repository profiles Clerk's developer surface using the [APIs.json](https://apisjson.org) format. It catalogs every public API surface, downloads canonical OpenAPI specs, generates Naftiko capabilities, JSON Schemas, JSON-LD, vocabulary, Spectral rules, and aligns Clerk's commercial offering to the API Commons Plans, Rate Limits, and FOCUS FinOps specifications.
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/clerk-com/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/clerk-com/refs/heads/main/apis.yml)
 
-## APIs Documented
+## Scope
 
-| API | Description | Spec |
-|---|---|---|
-| **Clerk Backend API** | REST API for backend servers (155 ops): users, sessions, organizations, invitations, JWT templates, OAuth applications, SAML connections, M2M tokens, API keys, billing. | [`openapi/clerk-backend-api-openapi.yml`](./openapi/clerk-backend-api-openapi.yml) |
-| **Clerk Frontend API** | Browser/mobile/chrome-extension surface (150 ops) powering Clerk's prebuilt sign-in, sign-up, session, organization, passkey, MFA, billing, and waitlist flows. | [`openapi/clerk-frontend-api-openapi.yml`](./openapi/clerk-frontend-api-openapi.yml) |
-| **Clerk Platform API (Beta)** | Partner/reseller surface (26 ops) for creating and managing Clerk applications, domains, transfers, users, JWT templates, and platform config. | [`openapi/clerk-platform-api-openapi.yml`](./openapi/clerk-platform-api-openapi.yml) |
-| **Clerk Webhooks** | Svix-delivered event stream for user, session, organization, invitation, email, SMS, and SAML lifecycle events. | [`openapi/clerk-webhooks-openapi.yml`](./openapi/clerk-webhooks-openapi.yml) |
+- **Type:** Index
 
-All four specs are pulled from Clerk's canonical [`clerk/openapi-specs`](https://github.com/clerk/openapi-specs) GitHub repository at version `2025-11-10` (BAPI + FAPI), `beta` (Platform), and `2025-04-15` (Webhooks).
+## Tags
 
-## Repository Layout
+- Authentication
+- Authorization
+- B2B SaaS
+- CIAM
+- Identity Management
+- MFA
+- OAuth
+- OpenID Connect
+- Organizations
+- Passkeys
+- SAML
+- Security
+- Sessions
+- SSO
+- User Management
 
-```
-clerk-com/
-├── apis.yml                  Top-level APIs.json index
-├── README.md                 This file
-├── openapi/                  4 OpenAPI 3 specs (BAPI, FAPI, Platform, Webhooks)
-├── rules/                    Spectral ruleset enforcing Clerk's conventions
-├── capabilities/             87 Naftiko capability YAMLs (84 per-tag + 3 workflow compositions)
-├── json-schema/              14 entity JSON Schemas (Draft 2020-12)
-├── json-structure/           14 structural overlays per entity
-├── json-ld/                  JSON-LD context mapping Clerk vocab to schema.org
-├── examples/                 26 example payloads (canonical entities + response samples)
-├── vocabulary/               Operational vocabulary, dimensions, and ID-prefix taxonomy
-├── plans/                    Pricing/plans aligned to API Commons Plans 0.1
-├── rate-limits/              Rate-limit policies aligned to API Commons Rate Limits 0.1
-└── finops/                   FOCUS-aligned FinOps view of Clerk billing
-```
+## Timestamps
 
-## Pricing at a Glance
+- **Created:** 2026-05-22
+- **Modified:** 2026-05-22
 
-Source: [clerk.com/pricing](https://clerk.com/pricing) snapshot 2026-05-22.
+## APIs
 
-| Plan | Price (annual / monthly) | Included MRUs | Highlights |
-|---|---|---|---|
-| Hobby | Free | 50,000 | Unlimited apps, 3 dashboard seats, Clerk branding |
-| Pro | $20 / $25 per month | 50,000 | No branding, MFA, passkeys, custom email templates |
-| Business | $250 / $300 per month | inherits Pro | 10 seats, SOC2 report, priority support, 30-day log retention |
-| Enterprise | Custom | Custom | 99.99% uptime SLA, HIPAA, dedicated support |
+### Clerk Backend API
 
-Add-ons:
-- **B2B Authentication Enhanced** — $85 / $100 per month, unlocks unlimited org members and custom role sets.
-- **Administration Enhanced** — $85 / $100 per month, unlimited user impersonations.
-- **Billing** — 0.7% of billing volume + Stripe fees.
-- **API Keys / M2M** — Free up to 1,000 monthly creations, then $0.001 per creation.
+The Clerk Backend API is a REST API meant to be accessed by backend servers. It exposes resources for managing users, sessions, organizations, invitations, JWT templates, OAuth applications, SAML connections, M2M tokens, API keys, and billing — wrapped by every official Clerk backend SDK.
 
-Full breakdown in [`plans/clerk-com-plans-pricing.yml`](./plans/clerk-com-plans-pricing.yml).
+- **Human URL:** [https://clerk.com/docs/reference/backend-api](https://clerk.com/docs/reference/backend-api)
+- **Base URL:** `https://api.clerk.com/v1`
 
-## Capabilities
+#### Tags
 
-87 [Naftiko](https://github.com/naftiko) capability files are generated under `capabilities/`:
+- Authentication
+- Backend
+- Identity Management
+- REST
+- User Management
 
-- **38 Backend-API capabilities** — one per OpenAPI tag (Users, Sessions, Organizations, Organization Memberships, Organization Invitations, Organization Roles, Organization Permissions, Organization Domains, Role Sets, Invitations, Email Addresses, Phone Numbers, Clients, JWT Templates, JWKS, OAuth Applications, OAuth Access Tokens, SAML Connections, Enterprise Connections, M2M Tokens, API Keys, Machines, Sign-in Tokens, Actor Tokens, Sign Ups, Testing Tokens, Agent Tasks, Allow-list / Block-list, Redirect URLs, Domains, Email & SMS Templates, Instance Settings, Webhooks, Beta Features, Waitlist Entries, Proxy Checks, Accountless Applications, Billing, Miscellaneous).
-- **39 Frontend-API capabilities** — one per Frontend API tag (Client, Sessions, Sign Ins, Sign Ups, User, Email Addresses, Phone Numbers, Passkeys, External Accounts, TOTP, Backup Codes, Active Sessions, Web3 Wallets, OAuth2 Identity Provider, OAuth2 Callbacks, SAML, Plans, Subscriptions, Subscription Items, Checkouts, Payment Methods, Payment Attempts, Statements, Organization, Organization Creation Defaults, Organizations Memberships, Invitations, Members, Membership Requests, Domains, Environment, Waitlist, API Keys, Enterprise Connections, Health, Well Known, DevBrowser, DevTools, Miscellaneous).
-- **7 Platform-API capabilities** — Applications, Domains, Application Transfers, Users, JWT Templates, Redirect URLs, Config.
-- **3 workflow compositions** — [`clerk-user-lifecycle.yaml`](./capabilities/clerk-user-lifecycle.yaml), [`clerk-b2b-saas.yaml`](./capabilities/clerk-b2b-saas.yaml), [`clerk-machine-to-machine.yaml`](./capabilities/clerk-machine-to-machine.yaml).
+#### Properties
 
-## SDK & Tooling Surface
+- [Documentation](https://clerk.com/docs/reference/backend-api)
+- [API Reference](https://clerk.com/docs/reference/backend-api)
+- [OpenAPI](openapi/clerk-backend-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/clerk-backend-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/clerk-backend-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Getting Started](https://clerk.com/docs/quickstarts/overview)
+- [Authentication](https://clerk.com/docs/backend-requests/making/jwt-templates)
+- [Spectral Ruleset](rules/clerk-rules.yml)
 
-Clerk's [GitHub org](https://github.com/clerk) (`149 public repos`) exposes a deep first-party SDK matrix:
+### Clerk Frontend API
 
-**Backend SDKs** — Go, Python, Ruby, Java, PHP, C# / .NET.
-**Mobile / Edge SDKs** — iOS (Swift), Android (Kotlin), Flutter (Dart), Chrome Extension.
-**Frontend SDKs (monorepo)** — Next.js, React, Astro, Remix, Vue, Nuxt, Expo, React Router, TanStack React Start.
-**CLIs** — [`clerk/cli`](https://github.com/clerk/cli) (agentic CLI), [`clerk/protect-cli`](https://github.com/clerk/protect-cli) (early access).
-**Agent / MCP tooling** — [`clerk/agentpass`](https://github.com/clerk/agentpass), [`clerk/mcp-tools`](https://github.com/clerk/mcp-tools), [`clerk/mcp-nextjs-example`](https://github.com/clerk/mcp-nextjs-example), [`clerk/skills`](https://github.com/clerk/skills).
-**Migration / Eval** — [`clerk/migration-tool`](https://github.com/clerk/migration-tool), [`clerk/clerk-evals`](https://github.com/clerk/clerk-evals).
+The Clerk Frontend API powers Clerk's prebuilt UI components and JavaScript SDKs. It handles sign-in, sign-up, session, organization, passkey, multi-factor, billing, and waitlist flows directly from browser, mobile, and chrome-extension contexts.
 
-## Operational Signals
+- **Human URL:** [https://clerk.com/docs](https://clerk.com/docs)
+- **Base URL:** `https://{domain}.clerk.accounts.dev`
 
-- **Versioning** — Clerk uses date-based API versions (`2024-10-01`, `2025-11-10`). Five published versions of the Backend and Frontend APIs are tracked in `clerk/openapi-specs`.
-- **Status** — [status.clerk.com](https://status.clerk.com) tracks 11 production, 1 development, and 4 administration components, reporting 99.95% uptime for Feb–May 2026.
-- **Changelog** — Atom feed at [`clerk.com/changelog/atom.xml`](https://clerk.com/changelog/atom.xml). Recent themes: SCIM directory sync GA (May 2026), Application Logs launch, Clerk CLI, M2M / API Keys GA, native iOS/Android theming.
-- **Compliance** — SOC2 Type II (Business+), HIPAA available (Enterprise), GDPR/CCPA.
+#### Tags
 
-## API Versions Tracked
+- Authentication
+- Frontend
+- JavaScript
+- Sessions
+- Sign-In
+- Sign-Up
 
-| Surface | Versions in `clerk/openapi-specs` |
-|---|---|
-| BAPI (Backend) | `2021-02-05`, `2024-10-01`, `2025-03-12`, `2025-04-10`, `2025-11-10` |
-| FAPI (Frontend) | `2021-02-05`, `2024-10-01`, `2025-03-12`, `2025-04-10`, `2025-11-10` |
-| Platform | `beta` |
-| Webhooks | `2025-04-15` |
+#### Properties
 
-This repo tracks the latest in each lane.
+- [Documentation](https://clerk.com/docs)
+- [OpenAPI](openapi/clerk-frontend-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/clerk-frontend-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/clerk-frontend-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## License & Maintainer
+### Clerk Platform API
 
-This profile is maintained by [Kin Lane](https://x.com/apievangelist) (API Evangelist / Naftiko) under the [API Evangelist Network](https://github.com/api-evangelist). Profile data is licensed CC-BY 4.0; Clerk's canonical OpenAPI specs remain under the MIT license stated in [`clerk/openapi-specs`](https://github.com/clerk/openapi-specs/blob/main/LICENSE).
+The Clerk Platform API (beta) is a partner / reseller surface for programmatically creating and managing Clerk applications, domains, application transfers, users, JWT templates, redirect URLs, and platform configuration on behalf of end customers.
+
+- **Human URL:** [https://clerk.com/docs](https://clerk.com/docs)
+- **Base URL:** `https://api.clerk.com/v1`
+
+#### Tags
+
+- Applications
+- Beta
+- Multi-Tenant
+- Partner
+- Platform
+
+#### Properties
+
+- [Documentation](https://clerk.com/docs)
+- [OpenAPI](openapi/clerk-platform-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/clerk-platform-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/clerk-platform-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Clerk Webhooks
+
+Clerk Webhooks deliver real-time events for users, sessions, organizations, invitations, email, SMS, and SAML changes via Svix, allowing applications to react asynchronously to identity lifecycle events.
+
+- **Human URL:** [https://clerk.com/docs/webhooks/overview](https://clerk.com/docs/webhooks/overview)
+- **Base URL:** `https://api.clerk.dev/v1`
+
+#### Tags
+
+- Events
+- Svix
+- Webhooks
+
+#### Properties
+
+- [Documentation](https://clerk.com/docs/webhooks/overview)
+- [OpenAPI](openapi/clerk-webhooks-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Open Collection](collections/clerk-webhooks.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [Homepage](https://clerk.com)
+- [Documentation](https://clerk.com/docs)
+- [Sign Up](https://dashboard.clerk.com/sign-up)
+- [Sign In](https://dashboard.clerk.com/sign-in)
+- [Pricing](https://clerk.com/pricing)
+- [Terms of Service](https://clerk.com/terms)
+- [Privacy Policy](https://clerk.com/privacy)
+- [Security](https://clerk.com/security)
+- [Blog](https://clerk.com/blog)
+- [Changelog](https://clerk.com/changelog)
+- [Changelog R S S](https://clerk.com/changelog/atom.xml)
+- [Status Page](https://status.clerk.com)
+- [Support](https://clerk.com/support)
+- [Git Hub](https://github.com/clerk)
+- [Open A P I Repository](https://github.com/clerk/openapi-specs)
+- [X (Twitter)](https://x.com/ClerkDev)
+- [SDK](https://github.com/clerk/javascript)
+- [SDK](https://github.com/clerk/clerk-sdk-go)
+- [SDK](https://github.com/clerk/clerk-sdk-python)
+- [SDK](https://github.com/clerk/clerk-sdk-ruby)
+- [SDK](https://github.com/clerk/clerk-sdk-java)
+- [SDK](https://github.com/clerk/clerk-sdk-php)
+- [SDK](https://github.com/clerk/clerk-sdk-csharp)
+- [SDK](https://github.com/clerk/clerk-ios)
+- [SDK](https://github.com/clerk/clerk-android)
+- [SDK](https://github.com/clerk/clerk-sdk-flutter)
+- [C L I](https://github.com/clerk/cli)
+- [C L I](https://github.com/clerk/protect-cli)
+- [Integration](https://clerk.com/docs/integrations/databases/supabase)
+- [Integration](https://clerk.com/docs/integrations/databases/convex)
+- [Integration](https://vercel.com/integrations/clerk)
+- [Tool](https://github.com/clerk/agent-toolkit-example)
+- [Tool](https://github.com/clerk/agentpass)
+- [Tool](https://github.com/clerk/mcp-tools)
+- [Tool](https://github.com/clerk/migration-tool)
+- [Plans](plans/clerk-com-plans-pricing.yml)
+- [Rate Limits](rate-limits/clerk-com-rate-limits.yml)
+- [Fin Ops](finops/clerk-com-finops.yml)
+- [Vocabulary](vocabulary/clerk-com-vocabulary.yml)
+- [JSON-LD](json-ld/clerk-com-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [JSON Schema](json-schema/clerk-user-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-user-structure.json)
+- [JSON Schema](json-schema/clerk-session-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-session-structure.json)
+- [JSON Schema](json-schema/clerk-organization-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-organization-structure.json)
+- [JSON Schema](json-schema/clerk-organizationmembership-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-organizationmembership-structure.json)
+- [JSON Schema](json-schema/clerk-organizationinvitation-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-organizationinvitation-structure.json)
+- [JSON Schema](json-schema/clerk-invitation-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-invitation-structure.json)
+- [JSON Schema](json-schema/clerk-emailaddress-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-emailaddress-structure.json)
+- [JSON Schema](json-schema/clerk-phonenumber-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-phonenumber-structure.json)
+- [JSON Schema](json-schema/clerk-client-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-client-structure.json)
+- [JSON Schema](json-schema/clerk-oauthapplication-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-oauthapplication-structure.json)
+- [JSON Schema](json-schema/clerk-samlconnection-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-samlconnection-structure.json)
+- [JSON Schema](json-schema/clerk-jwttemplate-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-jwttemplate-structure.json)
+- [JSON Schema](json-schema/clerk-signintoken-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-signintoken-structure.json)
+- [JSON Schema](json-schema/clerk-actortoken-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/clerk-actortoken-structure.json)
+- [L L Ms Txt](https://clerk.com/llms.txt)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
