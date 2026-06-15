@@ -1,0 +1,5021 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Frontend API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Well Known",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Android Asset Links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/.well-known/assetlinks.json"
+          },
+          "docs": "Get Android asset links for universal/deep linking"
+        },
+        {
+          "info": {
+            "name": "JWKS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/.well-known/jwks.json"
+          },
+          "docs": "Retrieve the JSON Web Key Set of the instance"
+        },
+        {
+          "info": {
+            "name": "Apple App Site Association",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/.well-known/apple-app-site-association"
+          },
+          "docs": "Retrieve the Apple App Site Association file of the instance"
+        },
+        {
+          "info": {
+            "name": "Basic OpenID Configuration Payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/.well-known/openid-configuration"
+          },
+          "docs": "Get a basic OpenID configuration payload"
+        },
+        {
+          "info": {
+            "name": "OAuth 2.0 Authorization Server Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/.well-known/oauth-authorization-server"
+          },
+          "docs": "Get the OAuth 2.0 Authorization Server Metadata according to RFC 8414"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth2 Identity Provider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request OAuth2 Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/authorize",
+            "params": [
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "The authorization flow type. Must be `code` for authorization code flow."
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The OAuth2 client ID of the OAuth application."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI to redirect to after authorization. Must be registered for the OAuth application."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided."
+              },
+              {
+                "name": "prompt",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen)."
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query",
+                "description": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients."
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query",
+                "description": "The method used to generate the code challenge. Must be `S256`."
+              },
+              {
+                "name": "response_mode",
+                "value": "",
+                "type": "query",
+                "description": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body)."
+              },
+              {
+                "name": "nonce",
+                "value": "",
+                "type": "query",
+                "description": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows."
+              }
+            ]
+          },
+          "docs": "Request OAuth2 authorization. If successful, receive authorization grant via redirect."
+        },
+        {
+          "info": {
+            "name": "Request OAuth2 Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/authorize",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "response_type",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "state",
+                  "value": ""
+                },
+                {
+                  "name": "prompt",
+                  "value": ""
+                },
+                {
+                  "name": "code_challenge",
+                  "value": ""
+                },
+                {
+                  "name": "code_challenge_method",
+                  "value": ""
+                },
+                {
+                  "name": "response_mode",
+                  "value": ""
+                },
+                {
+                  "name": "nonce",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Request OAuth2 authorization. If successful, receive authorization grant via redirect."
+        },
+        {
+          "info": {
+            "name": "Register OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new OAuth 2.0 client with the authorization server according to RFC 7591\n(OAuth 2.0 Dynamic Client Registration Protocol).\n\nThis endpoint allows clients to dynamically register by submitting client metadata.\nUpon successful registration, the authorization server assigns a unique client identifier\nand optionally a client secret (for confidential clients).\n\n**Authentication:** This endpoint does not require authentication as it is used for\ninitial client registration. However, the endp"
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "code_verifier",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Exchange an authorization grant for OAuth2 tokens (access token, refresh token, and optionally ID token).\n\nThis endpoint implements the OAuth 2.0 Token Endpoint (RFC 6749) and OpenID Connect token endpoint.\nIt supports two grant types: `authorization_code` and `refresh_token`.\n\n#### Grant Types\n\n- **`authorization_code`**: Exchange an authorization code for tokens\n- **`refresh_token`**: Refresh an access token using a refresh token\n\n#### Authentication\n\n- **Confidential clients**: Must authentic"
+        },
+        {
+          "info": {
+            "name": "Get User Info After OAuth2 Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/userinfo"
+          },
+          "docs": "Get user info in exchange for a valid OAuth2 access token."
+        },
+        {
+          "info": {
+            "name": "Get User Info After OAuth2 Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/userinfo"
+          },
+          "docs": "Get user info in exchange for a valid OAuth2 access token."
+        },
+        {
+          "info": {
+            "name": "Get Information for an Access or Refresh Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/token_info",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "token_type_hint",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Get information for an access or refresh token"
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth2 Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/oauth/token/revoke",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "token_type_hint",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Revoke OAuth2 token by token.\n\n#### Authentication\n\n- **Confidential clients**: Must authenticate using HTTP Basic Authentication with Client ID as username and Client Secret as password in the Authorization header."
+        },
+        {
+          "info": {
+            "name": "Get Consent Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/oauth/consent/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The OAuth Application Client ID to get consent information for."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Optional space-separated list of scopes to restrict the response to only those requested."
+              }
+            ]
+          },
+          "docs": "Returns the scopes for a given OAuth Application Client ID.\nAn optional `scope` query parameter can restrict the returned scopes to only those requested.\nThe OAuth application must have consent screen enabled.\n"
+        },
+        {
+          "info": {
+            "name": "Submit OAuth2 Consent Decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/oauth/consent/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The OAuth Application Client ID the consent decision applies to."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "consented",
+                  "value": ""
+                },
+                {
+                  "name": "organization_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submits the user's consent decision for an OAuth2 authorization request.\nThis endpoint allows building custom consent portals as a replacement for\nthe default account-portal-rendered consent screen.\n\nThe OAuth application must have the consent screen enabled. On grant, the\nflow continues just like the standard `/oauth/authorize` endpoint and\nreturns the appropriate redirect.\n\nIn addition to the fields documented below, the request body must\nre-submit the standard OAuth2 authorize parameters from"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organization Creation Defaults",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Creation Defaults",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_creation_defaults"
+          },
+          "docs": "Get suggested organization name and other defaults for creating a new organization.\nReturns suggestions based on the user's email domain or configured naming templates.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Account Portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/account_portal"
+          },
+          "docs": "Get users account portal"
+        },
+        {
+          "info": {
+            "name": "Get Proxy Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/proxy-health",
+            "headers": [
+              {
+                "name": "Clerk-Proxy-Url",
+                "value": ""
+              },
+              {
+                "name": "Clerk-Secret-Key",
+                "value": ""
+              },
+              {
+                "name": "X-Forwarded-For",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the domain"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to check the validity of a proxy configuration for a domain.\nPass the instance ID and domain ID as query parameters."
+        },
+        {
+          "info": {
+            "name": "Sync Clients Across Multiple Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sync",
+            "params": [
+              {
+                "name": "link_domain",
+                "value": "",
+                "type": "query",
+                "description": "The satellite domain which should be synced with its primary."
+              },
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect to after the syncing process has been completed."
+              }
+            ]
+          },
+          "docs": "Start the syncing process between a satellite and primary domain."
+        },
+        {
+          "info": {
+            "name": "Link Clients Across Multiple Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/link",
+            "params": [
+              {
+                "name": "__clerk_token",
+                "value": "",
+                "type": "query",
+                "description": "The token generated from a sync request."
+              }
+            ]
+          },
+          "docs": "Complete a syncing process between a satellite and primary domains by linking their clients."
+        },
+        {
+          "info": {
+            "name": "Post Dev Browser Init Set Cookie",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/dev_browser/set_first_party_cookie"
+          },
+          "docs": "post dev_browser/set_first_party_cookie"
+        },
+        {
+          "info": {
+            "name": "Initialize Dev Browser for Development and Staging Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/dev_browser/init",
+            "params": [
+              {
+                "name": "origin",
+                "value": "",
+                "type": "query",
+                "description": "The origin of the request"
+              }
+            ]
+          },
+          "docs": "get dev_browser/init"
+        },
+        {
+          "info": {
+            "name": "Set the Clear-Site-Data Header",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/clear-site-data"
+          },
+          "docs": "Clear browsing data (cookies, storage, cache) associated with the requesting website"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Environment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/environment"
+          },
+          "docs": "Get the current environment. The environment contains information about the settings and features enabled for the current instance."
+        },
+        {
+          "info": {
+            "name": "Update Environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/environment",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update environment using request origin"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SAML",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "SAML Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/saml/metadata/:saml_connection_id.xml",
+            "params": [
+              {
+                "name": "saml_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SAML Connection"
+              }
+            ]
+          },
+          "docs": "The Service Provider's SAML metadata"
+        },
+        {
+          "info": {
+            "name": "SAML ACS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/saml/acs/:saml_connection_id",
+            "params": [
+              {
+                "name": "saml_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SAML Connection"
+              }
+            ]
+          },
+          "docs": "The SAML Assertion Consumer Service (ACS) endpoint, which processes SAML Responses by the IdP.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/health"
+          },
+          "docs": "Get Health"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Client",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client"
+          },
+          "docs": "Returns the current client that is present either in the browser cookies or authorization header."
+        },
+        {
+          "info": {
+            "name": "Create New Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client"
+          },
+          "docs": "Creates a new Client and sets it either in the response cookies or the response authorization header."
+        },
+        {
+          "info": {
+            "name": "Create New Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client"
+          },
+          "docs": "Creates a new Client and sets it either in the response cookies or the response authorization header."
+        },
+        {
+          "info": {
+            "name": "Delete Client's Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client"
+          },
+          "docs": "Ends all Sessions of the Current Client"
+        },
+        {
+          "info": {
+            "name": "Generate and Return a New Session Token for a Given Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/handshake",
+            "headers": [
+              {
+                "name": "Clerk-Proxy-Url",
+                "value": ""
+              },
+              {
+                "name": "Clerk-Secret-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect back to after the handshake"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The supported format of the handshake payload."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "The organization ID or slug to attempt to set as active for the session. If this param is present but has no value,\nthe personal account will be set as active. If the organization cannot be set as active (because it does not\nexist, or the user is not a member), the active organization for the session will not change.\n"
+              },
+              {
+                "name": "satellite_fapi",
+                "value": "",
+                "type": "query",
+                "description": "The Frontend API of the satellite domain"
+              }
+            ]
+          },
+          "docs": "When the authentication status cannot be determined from the current session token, we initiate a handshake to refresh the token and send it back to the application. Called in server environments."
+        },
+        {
+          "info": {
+            "name": "Create Session from Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/agents/tasks",
+            "params": [
+              {
+                "name": "ticket",
+                "value": "",
+                "type": "query",
+                "description": "The agent task ticket value obtained from the Backend API."
+              }
+            ]
+          },
+          "docs": "Creates a new session directly from an agent task without requiring navigation to the sign-in page.\nAgent tasks are single-use tokens created via the Backend API that bypass MFA requirements.\n\nThe endpoint returns a redirect with a handshake cookie containing all session cookies,\nenabling cookie sync to the app domain in a single step. This is useful for browser\nautomation tools (Puppeteer, Playwright) that need cookies on the application domain.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sign Ins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a New Sign in or Replace the Current One.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "identifier",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "transfer",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates or replaces the current Sign in object.\nIn order to authenticate a Sign in in as few requests as possible,\nyou can pass in parameters to this request that can identify and verify the Sign in.\n\nParameter rules:\n\nIf the strategy equals `phone_code`, `email_code`, `web3_[provider]_signature`, `reset_password_code` or `reset_password_phone_code` then an identifier is required.\n\nIf the strategy equals `email_link` then an identifier is required and optionally redirect_url can be supplied.\n\nIf"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sign-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ]
+          },
+          "docs": "Returns the sign-in with the given ID.\nThe sign in is returned only if it belongs to the requesting client and is not abandoned."
+        },
+        {
+          "info": {
+            "name": "Reset Password on Sign-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id/reset_password",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "sign_out_of_other_sessions",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Reset password on sign-in."
+        },
+        {
+          "info": {
+            "name": "Prepare First Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id/prepare_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "web3_wallet_id",
+                  "value": ""
+                },
+                {
+                  "name": "passkey_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares the verification object for the identified Sign in.\nThis step authenticates that the user is who they say they are.\nDepending on the strategy, this request will do something different.\n\nParameter actions:\nIf the strategy equals email_code then this request will send an email with an OTP code.\nIf the strategy equals phone_code then this request will send an SMS with an OTP code.\nIf the strategy equals oauth_[provider] then this request generate a URL that the User needs to visit in order"
+        },
+        {
+          "info": {
+            "name": "Attempt First Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id/attempt_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "signature",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the first verification.\nRequires the sign in attempt to be identified, and the first factor verification to be prepared, unless you're using a password.\n\nParameter rules:\nIf the strategy equals `email_code` or `phone_code` then a code is required.\nIf the strategy equals `password` then a password is required."
+        },
+        {
+          "info": {
+            "name": "Prepare Second Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id/prepare_second_factor",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the second verification.\nRequires the sign in attempt `status` to be equal to `needs_second_factor` or `needs_client_trust`."
+        },
+        {
+          "info": {
+            "name": "Attempt Second Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ins/:sign_in_id/attempt_second_factor",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the second verification.\nRequires the sign in attempt `status` to be equal to `needs_second_factor` or `needs_client_trust`, and for the preparation step to have been called."
+        },
+        {
+          "info": {
+            "name": "Accept Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/tickets/accept",
+            "params": [
+              {
+                "name": "ticket",
+                "value": "",
+                "type": "query",
+                "description": "The JWT with verification information"
+              }
+            ]
+          },
+          "docs": "Parses a ticket JWT and performs the necessary actions depending on the ticket's source type.\nDepending on the ticket source type, a successful response can either redirect to a new location\nwith the ticket in the query string, or respond directly with a text/html content type for the response body."
+        },
+        {
+          "info": {
+            "name": "Attempt Email Link Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/verify",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "The JWT with verification information"
+              }
+            ]
+          },
+          "docs": "Attempt to verify a verification with email_link strategy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sign Ups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Sign-up",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ups",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "transfer",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "first_name",
+                  "value": ""
+                },
+                {
+                  "name": "last_name",
+                  "value": ""
+                },
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_or_phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                },
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "web3_wallet",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "captcha_token",
+                  "value": ""
+                },
+                {
+                  "name": "captcha_error",
+                  "value": ""
+                },
+                {
+                  "name": "captcha_widget_type",
+                  "value": ""
+                },
+                {
+                  "name": "legal_accepted",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates or replaces the sign-up on the current Client object."
+        },
+        {
+          "info": {
+            "name": "Get Sign-up",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ups/:sign_up_id",
+            "params": [
+              {
+                "name": "sign_up_id",
+                "value": "",
+                "type": "path",
+                "description": "The sign up unique identifier."
+              }
+            ]
+          },
+          "docs": "Returns the sign-up by ID. Must be associated with the current Client object."
+        },
+        {
+          "info": {
+            "name": "Update Sign-up",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ups/:sign_up_id",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_up_id",
+                "value": "",
+                "type": "path",
+                "description": "The sign up unique identifier."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "first_name",
+                  "value": ""
+                },
+                {
+                  "name": "last_name",
+                  "value": ""
+                },
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_or_phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                },
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "web3_wallet",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "legal_accepted",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Updates the sign-up object specified by ID, with the supplied parameters."
+        },
+        {
+          "info": {
+            "name": "Prepare Sign-up Identification Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ups/:sign_up_id/prepare_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_up_id",
+                "value": "",
+                "type": "path",
+                "description": "The sign up unique identifier."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares verification for the sign-up specified by `{id}`.\n\nDepending on the given strategy, the API will prepare the verification for the current sign-up.\nIn particular,\n* for `email_code`, the API will send a verification email to the email address currently load up in the sign-up\n* for `phone_code`, the API will send a verification SMS to the phone number currently load up in the sign-up\n"
+        },
+        {
+          "info": {
+            "name": "Attempt Sign-up Identification Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sign_ups/:sign_up_id/attempt_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_up_id",
+                "value": "",
+                "type": "path",
+                "description": "The sign up unique identifier."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "signature",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the identification that corresponds to the given strategy using the given verification code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DevBrowser",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Dev Browser Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/dev_browser"
+          },
+          "docs": "Generate a Dev Browser API token.\n\nThis is used to authenticate Development Instances with the `DevBrowser` scheme.\nIt must be set before making any request to a dev instance, even for endpoints that are public."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth2 Callbacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/oauth_callback",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "returned scopes from OAuth provider."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "returned exchange code from OAuth provider."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "returned state from OAuth provider."
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query",
+                "description": "returned error state from OAuth provider, if applicable"
+              }
+            ]
+          },
+          "docs": "The endpoint where the OAuth providers redirect to after a successful authentication attempt."
+        },
+        {
+          "info": {
+            "name": "OAuth Post Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/oauth_callback",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "state",
+                  "value": ""
+                },
+                {
+                  "name": "error",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Converts a POST to a GET, because if it's a POST coming from an external account. This is necessary because some providers (e.g. Apple) issue a POST instead of a GET request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Remove Client's Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions"
+          },
+          "docs": "Removes all the sessions of the current client without removing the __client cookie"
+        },
+        {
+          "info": {
+            "name": "Get Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Returns the session with the given id"
+        },
+        {
+          "info": {
+            "name": "Touch Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/touch",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "active_organization_id",
+                  "value": ""
+                },
+                {
+                  "name": "intent",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Specify the active session for the client.\n\nWhen force organization selection is enabled and `active_organization_id` is sent as null or empty string,\nthe session will keep the previous active organization and will not attempt to switch to a personal account."
+        },
+        {
+          "info": {
+            "name": "End Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/end",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Marks the given session as ended."
+        },
+        {
+          "info": {
+            "name": "Remove Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/remove",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Delete the given session."
+        },
+        {
+          "info": {
+            "name": "Create Session Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/tokens",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "organization_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a session JWT for the authenticated requested user.\n\nWhen force organization selection is enabled and `organization_id` is sent as null or empty string,\nthe token will be created with the previous active organization and will not attempt to switch to a personal account."
+        },
+        {
+          "info": {
+            "name": "Create Session Token with JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/tokens/:template_name",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              },
+              {
+                "name": "template_name",
+                "value": "",
+                "type": "path",
+                "description": "the template name"
+              }
+            ]
+          },
+          "docs": "Create a session JWT for the authenticated requested user."
+        },
+        {
+          "info": {
+            "name": "Start a New Session Reverification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/verify",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "level",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Start a new session reverification flow by providing a verification level.\n\nIf the requested level equals 'secondFactor' or 'multiFactor' and the associated user\ndoesn't have any available second factor, then we fall back to 'firstFactor'"
+        },
+        {
+          "info": {
+            "name": "Prepare Session Reverification First Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/verify/prepare_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the first factor verification.\nDepending on the strategy, this request will do something different.\n\nParameter actions:\nIf the strategy equals email_code then this request will send an email with an OTP code.\nIf the strategy equals phone_code then this request will send an SMS with an OTP code."
+        },
+        {
+          "info": {
+            "name": "Attempt Session Reverification First Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/verify/attempt_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the first factor verification.\nRequires the first factor verification to be prepared, unless you're using a password.\n\nParameter rules:\nIf the strategy equals `email_code` then a code is required.\nIf the strategy equals `password` then a password is required."
+        },
+        {
+          "info": {
+            "name": "Prepare Session Reverification Second Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/verify/prepare_second_factor",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the second factor verification.\nRequires the `status` to be equal to `needs_second_factor`."
+        },
+        {
+          "info": {
+            "name": "Attempt Session Reverification Second Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/client/sessions/:session_id/verify/attempt_second_factor",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the second factor verification.\nRequires the `status` to be equal to `needs_second_factor` and for the preparation step to have been called."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Active Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Active Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/sessions/active",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Returns all active session for user, including activity information."
+        },
+        {
+          "info": {
+            "name": "Revoke Given Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/sessions/:session_id/revoke",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The session ID to be revoked."
+              }
+            ]
+          },
+          "docs": "Revokes given session."
+        },
+        {
+          "info": {
+            "name": "Get Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/sessions",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Get all the sessions of the current user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Email Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all the email addresses associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add an email address to the current user. The address then needs to be verified using the `prepare_verification` and `attempt_verification` endpoints."
+        },
+        {
+          "info": {
+            "name": "Attempt Email Address Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses/:email_id/attempt_verification",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt to verify an email address that was previously created."
+        },
+        {
+          "info": {
+            "name": "Prepare Email Address Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses/:email_id/prepare_verification",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Depending on the given strategy, the API will prepare the verification for the email address.\nIn particular, * for `email_code`, the API will send a verification email to the address containing a code. * for `email_link`, the API will send a verification email to the address containing a link to the verification attempt endpoint. * for `enterprise_sso`, the API will send an external redirect URL to the browser containing a link to the SSO verification endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve an email address by ID."
+        },
+        {
+          "info": {
+            "name": "Delete Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/email_addresses/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Delete an email address by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Phone Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all phone numbers associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "reserved_for_second_factor",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add a phone number to the current user. The phone number then needs to be verified using the sms `prepare_verification` and `attempt_verification` endpoints."
+        },
+        {
+          "info": {
+            "name": "Attempt Phone Number Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers/:phone_number_id/attempt_verification",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt to verify the given phone number using the code sent during the `prepare_verification` step."
+        },
+        {
+          "info": {
+            "name": "Prepare Phone Number Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers/:phone_number_id/prepare_verification",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Sends an SMS to the phone number with the code needed to verify it."
+        },
+        {
+          "info": {
+            "name": "Retrieve Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties for the given phone number."
+        },
+        {
+          "info": {
+            "name": "Update Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "reserved_for_second_factor",
+                  "value": ""
+                },
+                {
+                  "name": "default_second_factor",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the properties of the given phone number."
+        },
+        {
+          "info": {
+            "name": "Delete Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Deletes the phone number with the given ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Web3 Wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Web3 Wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all web3 wallets associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "web3_wallet",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Get Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets/:web3_wallet_id",
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties associated with a specific web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Delete Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets/:web3_wallet_id",
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ]
+          },
+          "docs": "Delete a web3 wallet by ID."
+        },
+        {
+          "info": {
+            "name": "Prepare Web3 Wallet Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets/:web3_wallet_id/prepare_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares verification for the provided web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Attempt Web3 Wallet Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/web3_wallets/:web3_wallet_id/attempt_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "signature",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the provided web3 wallet."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Passkeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/passkeys",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              },
+              {
+                "name": "X-Original-Host",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Create a new passkey."
+        },
+        {
+          "info": {
+            "name": "Get Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties associated with a specific passkey."
+        },
+        {
+          "info": {
+            "name": "Update Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update properties of a specific passkey."
+        },
+        {
+          "info": {
+            "name": "Delete Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ]
+          },
+          "docs": "Delete a passkey by ID."
+        },
+        {
+          "info": {
+            "name": "Attempt Passkey Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/passkeys/:passkey_id/attempt_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the provided passkey."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "External Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect OAuth Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/external_accounts",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "enterprise_connection_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "additional_scope",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Connect a new External Account from the OAuth providers enabled."
+        },
+        {
+          "info": {
+            "name": "Reauthorize External Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/external_accounts/:external_account_id/reauthorize",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "additional_scope",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Reauthorize an external account by ID."
+        },
+        {
+          "info": {
+            "name": "Delete External Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/external_accounts/:external_account_id",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ]
+          },
+          "docs": "Delete an external account by ID."
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/external_accounts/:external_account_id/tokens",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ]
+          },
+          "docs": "Revoke the OAuth access and refresh token of an external account by ID, if supported by the provider."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TOTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create TOTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/totp"
+          },
+          "docs": "Initializes TOTP by generating a new secret. This then needs to be added to an authenticator app and verified. A user can have only one TOTP secret and this endpoint will return an error if it is already present."
+        },
+        {
+          "info": {
+            "name": "Delete TOTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/totp"
+          },
+          "docs": "Deletes the current TOTP secret. This will invalidate all authenticators that where previously added."
+        },
+        {
+          "info": {
+            "name": "Attempt TOTP Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/totp/attempt_verification",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the TOTP secret previously created using a code from an authenticator."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Backup Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Backup Codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/backup_codes"
+          },
+          "docs": "Create two factor authentication backup codes for the current user.\nA two factor authentication method must be enabled for the environment. Otherwise the endpoint will return an error."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me"
+          },
+          "docs": "Returns all attributes of the current user."
+        },
+        {
+          "info": {
+            "name": "Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "first_name",
+                  "value": ""
+                },
+                {
+                  "name": "last_name",
+                  "value": ""
+                },
+                {
+                  "name": "primary_email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "primary_phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "primary_web3_wallet_id",
+                  "value": ""
+                },
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user with the given attributes."
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me"
+          },
+          "docs": "Delete the current user."
+        },
+        {
+          "info": {
+            "name": "Merge and Update the Current User's Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/metadata",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's metadata attributes by merging existing values with the provided parameters.\n\nThis endpoint behaves differently than the *Update User* endpoint.\nMetadata values will not be replaced entirely.\nInstead, a deep merge will be performed.\nDeep means that any nested JSON objects will be merged as well.\n\nYou can remove metadata keys at any level by setting their value to `null`.\n\nOnly `unsafe_metadata` can be updated through the Frontend API. `public_metadata` and `private_meta"
+        },
+        {
+          "info": {
+            "name": "createServiceToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/tokens",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "service",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a JWT for the requested user."
+        },
+        {
+          "info": {
+            "name": "Update Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/profile_image",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's profile image."
+        },
+        {
+          "info": {
+            "name": "Delete Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/profile_image"
+          },
+          "docs": "Remove the current user's profile image."
+        },
+        {
+          "info": {
+            "name": "Update Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/change_password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "current_password",
+                  "value": ""
+                },
+                {
+                  "name": "new_password",
+                  "value": ""
+                },
+                {
+                  "name": "sign_out_of_other_sessions",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's password."
+        },
+        {
+          "info": {
+            "name": "Delete Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/remove_password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "current_password",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Removes the current user's password."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User's Main Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/subscription"
+          },
+          "docs": "Returns the main billing subscription for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Organization's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/subscription",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Returns the billing subscription for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscription Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User's Subscription Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/subscription_items",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of subscription items for the current user."
+        },
+        {
+          "info": {
+            "name": "Cancel User's Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/subscription_items/:subscriptionItemID",
+            "params": [
+              {
+                "name": "subscriptionItemID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to cancel"
+              }
+            ]
+          },
+          "docs": "Cancels a subscription item for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization's Subscription Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/subscription_items",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Returns a list of subscription items for the organization."
+        },
+        {
+          "info": {
+            "name": "Cancel Organization's Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "subscriptionItemID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to cancel"
+              }
+            ]
+          },
+          "docs": "Cancels a subscription item for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payment Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User Payment Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_methods",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of all payment methods for the current user."
+        },
+        {
+          "info": {
+            "name": "Create User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_methods",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "org_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "Initialize User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_methods/initialize"
+          },
+          "docs": "Initializes a payment method setup process for the current user."
+        },
+        {
+          "info": {
+            "name": "Delete User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_methods/:paymentMethodID",
+            "params": [
+              {
+                "name": "paymentMethodID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment method to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a specific payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "Set User Default Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payers/default_payment_method"
+          },
+          "docs": "Sets the default payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization Payment Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/payment_methods",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Lists all payment methods for the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/payment_methods",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Initialize Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/payment_methods/initialize",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Initializes a payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/payment_methods/:paymentMethodID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "paymentMethodID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment method to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Set Organization Default Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/payers/default_payment_method",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the default payment method for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Checkouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/checkouts",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "plan_id",
+                  "value": ""
+                },
+                {
+                  "name": "plan_period",
+                  "value": ""
+                },
+                {
+                  "name": "org_id",
+                  "value": ""
+                },
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/checkouts/:checkoutID",
+            "params": [
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout"
+              }
+            ]
+          },
+          "docs": "Returns a billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Confirm Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/checkouts/:checkoutID/confirm",
+            "params": [
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout to confirm"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                },
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "use_test_card",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Confirms a billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Create Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/checkouts",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "plan_id",
+                  "value": ""
+                },
+                {
+                  "name": "plan_period",
+                  "value": ""
+                },
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new billing checkout for the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/checkouts/:checkoutID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout"
+              }
+            ]
+          },
+          "docs": "Returns a billing checkout for the organization."
+        },
+        {
+          "info": {
+            "name": "Confirm Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/checkouts/:checkoutID/confirm",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout to confirm"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                },
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "use_test_card",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Confirms a billing checkout for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payment Attempts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User Payment Attempts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_attempts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of payment attempts for the current user."
+        },
+        {
+          "info": {
+            "name": "Get User Payment Attempt",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/payment_attempts/:paymentAttemptID",
+            "params": [
+              {
+                "name": "paymentAttemptID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment attempt to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific payment attempt for the current user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User Statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/statements",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of billing statements for the current user."
+        },
+        {
+          "info": {
+            "name": "Get User Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/billing/statements/:statementID",
+            "params": [
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific billing statement for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization Statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/statements",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Lists all statements for the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organizationID/billing/statements/:statementID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve"
+              }
+            ]
+          },
+          "docs": "Gets a specific statement for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Billing Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/billing/plans",
+            "params": [
+              {
+                "name": "payer_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter plans by payer type"
+              }
+            ]
+          },
+          "docs": "Returns a list of all publicly visible billing plans."
+        },
+        {
+          "info": {
+            "name": "Get a Billing Plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/billing/plans/:planIdOrSlug",
+            "params": [
+              {
+                "name": "planIdOrSlug",
+                "value": "",
+                "type": "path",
+                "description": "The ID or slug of the plan"
+              }
+            ]
+          },
+          "docs": "Returns a billing plan by ID or slug."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organizations Memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_memberships",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Get a list of the organization memberships of the current user."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_memberships/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the membership will be deleted"
+              }
+            ]
+          },
+          "docs": "Delete the membership of the given organization."
+        },
+        {
+          "info": {
+            "name": "Get Current User's Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_invitations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the organization invitations to filter by"
+              }
+            ]
+          },
+          "docs": "Get a list of the organization invitations of the current user."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_invitations/:invitation_id/accept",
+            "params": [
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization invitation to accept"
+              }
+            ]
+          },
+          "docs": "Accept an organization invitation for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Organization Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_suggestions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of the organization suggestions of the current user."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Suggestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/me/organization_suggestions/:suggestion_id/accept",
+            "params": [
+              {
+                "name": "suggestion_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization suggestion to accept"
+              }
+            ]
+          },
+          "docs": "Accept an organization suggestion for the current user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                },
+                {
+                  "name": "slug",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create an organization and add the current user as admin."
+        },
+        {
+          "info": {
+            "name": "Get Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties of an organization that the current user is member of."
+        },
+        {
+          "info": {
+            "name": "Update Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to update"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                },
+                {
+                  "name": "slug",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the given properties of an organization.\n\nThe current user must be an admin in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to delete"
+              }
+            ]
+          },
+          "docs": "Delete the given organization.\n\nThe current user must be an admin in the organization."
+        },
+        {
+          "info": {
+            "name": "Update Organization Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/logo",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the organization logo.\n\nThe current user must be an admin in the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/logo",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization."
+              }
+            ]
+          },
+          "docs": "Delete the organization logo.\n\nThe current user must be an admin in the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invitations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitation will be retrieved."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve all invitations for an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitation will be created."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create an invitation for a user to join an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Bulk Create Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/invitations/bulk",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be created."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create an invitation for a user to join an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Get All Pending Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/invitations/pending",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be retrieved."
+              }
+            ]
+          },
+          "docs": "Get a list of pending invitations for an organization.\n\nThis endpoint is deprecated. Instead use the `/v1/organizations/{organization_id}/invitations`\nwith a query parameter of `status=pending`."
+        },
+        {
+          "info": {
+            "name": "Revoke Pending Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/invitations/:invitation_id/revoke",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be retrieved."
+              },
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the invitation to revoke."
+              }
+            ]
+          },
+          "docs": "Revoke a pending organization invitation.\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Organization Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns members that match the given query.\nFor possible matches, we check for any of the user's identifier, usernames, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Filter by roles. This can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined."
+              }
+            ]
+          },
+          "docs": "Retrieve all members of an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "user_id",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new organization membership.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Update Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The member ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the attributes of an organization membership for a specific user.\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Remove Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The member ID."
+              }
+            ]
+          },
+          "docs": "Remove a member from an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Organization Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether a domain is verified"
+              },
+              {
+                "name": "enrollment_mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by enrollment mode"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all the domains in an organization\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new organization domain.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties for a domain of an organization.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ]
+          },
+          "docs": "Remove a domain from an organization.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Update Organization Enrollment Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains/:domain_id/update_enrollment_mode",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "enrollment_mode",
+                  "value": ""
+                },
+                {
+                  "name": "delete_pending",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the enrollment mode for an organization domain.\n\nThis can be either `automatic_invitation` or `automatic_suggestion`.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Prepare Organization Domain Affiliation Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains/:domain_id/prepare_affiliation_verification",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "affiliation_email_address",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares affiliation verification for an organization domain.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Attempt Organization Domain Affiliation Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/domains/:domain_id/attempt_affiliation_verification",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts affiliation verification for organization domain\n\nThe current user must have permissions to manage the domains of the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Membership Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Membership Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/membership_requests",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all membership requests of an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Membership Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/membership_requests/:request_id/accept",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The request ID."
+              }
+            ]
+          },
+          "docs": "Accepts an organization membership request.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Reject Organization Membership Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/membership_requests/:request_id/reject",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The request ID."
+              }
+            ]
+          },
+          "docs": "Rejects an organization membership request\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/organizations/:organization_id/roles",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all roles of an organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Redirect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Redirect to a Validated URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/v1/redirect",
+            "params": [
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect to (optional). If empty or not provided, redirects to the default URL."
+              }
+            ]
+          },
+          "docs": "Validates and redirects to a safe URL. If no URL is provided, redirects to a default URL."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Waitlist",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Join Waitlist",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/v1/waitlist",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Adds an email address to the waitlist. If the email is already on the waitlist, the request will still succeed,\nreturning the ID of the existing waitlist entry."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.clerk.accounts.dev/api_keys",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_invalid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get API Keys"
+        },
+        {
+          "info": {
+            "name": "Create an API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/api_keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an API Key"
+        },
+        {
+          "info": {
+            "name": "Update an API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{domain}.clerk.accounts.dev/api_keys/:apiKeyID",
+            "params": [
+              {
+                "name": "apiKeyID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an API Key"
+        },
+        {
+          "info": {
+            "name": "Revoke an API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.clerk.accounts.dev/api_keys/:apiKeyID/revoke",
+            "params": [
+              {
+                "name": "apiKeyID",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke an API Key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
