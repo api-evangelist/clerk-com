@@ -1,0 +1,59 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/clerk-backend-api-openapi.yml, openapi/clerk-frontend-api-openapi.yml, openapi/clerk-platform-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - cookie
+  - query
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: sk_<environment>_<secret value>
+  description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+  sources:
+  - openapi/clerk-backend-api-openapi.yml
+  - openapi/clerk-frontend-api-openapi.yml
+  - openapi/clerk-platform-api-openapi.yml
+- name: ProductionBrowser
+  type: apiKey
+  in: cookie
+  parameter: __client
+  description: |-
+    The Client API token sent in the form of a browser cookie.
+
+    Used to authenticate production browser applications.
+  sources:
+  - openapi/clerk-frontend-api-openapi.yml
+- name: DevBrowser
+  type: apiKey
+  in: query
+  parameter: __dev_session
+  description: |-
+    A Dev Browser API token sent as a query parameter.
+
+    Used to authenticate only dev instances.
+
+    To generate a dev instance API token you must first make a request to `/v1/dev_browser`
+    and copy it from the response.
+  sources:
+  - openapi/clerk-frontend-api-openapi.yml
+- name: ProductionNativeFlag
+  type: apiKey
+  in: query
+  parameter: _is_native
+  description: |-
+    If sent and the value is true, it instructs the server to parse the API token from the `Authorization` header.
+
+    It should always be set to true when using the `Authorization` header authentication strategy.
+  sources:
+  - openapi/clerk-frontend-api-openapi.yml
+- name: ClientCredentials
+  type: http
+  scheme: basic
+  description: HTTP Basic Authentication using Client ID as username and Client Secret as password.
+  sources:
+  - openapi/clerk-frontend-api-openapi.yml
