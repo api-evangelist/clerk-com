@@ -1,0 +1,2513 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Billing API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Billing
+  description: Billing-related endpoints for managing statements and payment attempts.
+  externalDocs:
+    url: https://clerk.com/docs/billing/overview
+paths:
+  /users/{user_id}/billing/subscription:
+    get:
+      operationId: GetUserBillingSubscription
+      x-speakeasy-group: users
+      x-speakeasy-name-override: getBillingSubscription
+      summary: Retrieve a User's Billing Subscription
+      description: 'Retrieves the billing subscription for the specified user.
+
+        This includes subscription details, active plans, billing information, and payment status.
+
+        The subscription contains subscription items which represent the individual plans the user is subscribed to.'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the user whose subscription to retrieve
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceSubscription'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /users/{user_id}/billing/credits:
+    get:
+      operationId: GetUserBillingCreditBalance
+      x-speakeasy-group: users
+      x-speakeasy-name-override: getBillingCreditBalance
+      summary: Retrieve a User's Credit Balance
+      description: 'Retrieves the current credit balance for the specified user.
+
+        Credits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the user whose credit balance to retrieve
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceCreditBalance'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+    post:
+      operationId: AdjustUserBillingCreditBalance
+      x-speakeasy-group: users
+      x-speakeasy-name-override: adjustBillingCreditBalance
+      summary: Adjust a User's Credit Balance
+      description: 'Increases or decreases the credit balance for the specified user.
+
+        Each adjustment is recorded as a ledger entry. The idempotency_key parameter
+
+        ensures that duplicate requests are safely handled.'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the user whose credit balance to adjust
+      requestBody:
+        description: Parameters for the credit balance adjustment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdjustCreditBalanceRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceCreditLedger'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '409':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /organizations/{organization_id}/billing/subscription:
+    get:
+      operationId: GetOrganizationBillingSubscription
+      x-speakeasy-group: organizations
+      x-speakeasy-name-override: getBillingSubscription
+      summary: Retrieve an Organization's Billing Subscription
+      description: 'Retrieves the billing subscription for the specified organization.
+
+        This includes subscription details, active plans, billing information, and payment status.
+
+        The subscription contains subscription items which represent the individual plans the organization is subscribed to.'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: organization_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the organization whose subscription to retrieve
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceSubscription'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /organizations/{organization_id}/billing/credits:
+    get:
+      operationId: GetOrganizationBillingCreditBalance
+      x-speakeasy-group: organizations
+      x-speakeasy-name-override: getBillingCreditBalance
+      summary: Retrieve an Organization's Credit Balance
+      description: 'Retrieves the current credit balance for the specified organization.
+
+        Credits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges.'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: organization_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the organization whose credit balance to retrieve
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceCreditBalance'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+    post:
+      operationId: AdjustOrganizationBillingCreditBalance
+      x-speakeasy-group: organizations
+      x-speakeasy-name-override: adjustBillingCreditBalance
+      summary: Adjust an Organization's Credit Balance
+      description: 'Increases or decreases the credit balance for the specified organization.
+
+        Each adjustment is recorded as a ledger entry. The idempotency_key parameter
+
+        ensures that duplicate requests are safely handled.'
+      tags:
+      - Billing
+      parameters:
+      - in: path
+        name: organization_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the organization whose credit balance to adjust
+      requestBody:
+        description: Parameters for the credit balance adjustment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdjustCreditBalanceRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceCreditLedger'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '409':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/plans:
+    get:
+      operationId: GetCommercePlanList
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: listPlans
+      tags:
+      - Billing
+      summary: List All Billing Plans
+      description: 'Returns a list of all billing plans for the instance. The plans are returned sorted by creation date,
+
+        with the newest plans appearing first. This includes both free and paid plans. Pagination is supported.'
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - in: query
+        name: payer_type
+        description: Filter plans by payer type
+        required: false
+        schema:
+          type: string
+          enum:
+          - user
+          - org
+      responses:
+        '200':
+          $ref: '#/components/responses/CommercePlan.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/prices:
+    get:
+      operationId: GetBillingPriceList
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: listPrices
+      tags:
+      - Billing
+      summary: List All Billing Prices
+      description: 'Returns a list of all prices for the instance. The prices are returned sorted by amount ascending,
+
+        then by creation date descending. This includes both default and custom prices. Pagination is supported.'
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - in: query
+        name: plan_id
+        description: Filter prices by plan ID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingPrice.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+    post:
+      operationId: CreateBillingPrice
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: createPrice
+      tags:
+      - Billing
+      summary: Create a Custom Billing Price
+      description: 'Creates a custom price for a billing plan. Custom prices allow you to offer different pricing
+
+        to specific customers while maintaining the same plan structure.'
+      requestBody:
+        description: Parameters for creating a custom price
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBillingPriceRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingPrice'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/subscription_items:
+    get:
+      operationId: GetCommerceSubscriptionItemList
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: listSubscriptionItems
+      tags:
+      - Billing
+      summary: List All Subscription Items
+      description: 'Returns a list of all subscription items for the instance. The subscription items are returned sorted by creation date,
+
+        with the newest appearing first. This includes subscriptions for both users and organizations. Pagination is supported.'
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - in: query
+        name: status
+        description: Filter subscription items by status
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - ended
+          - past_due
+          - upcoming
+          - free_trial
+      - in: query
+        name: payer_type
+        description: Filter subscription items by payer type
+        required: false
+        schema:
+          type: string
+          enum:
+          - user
+          - org
+      - in: query
+        name: plan_id
+        description: Filter subscription items by plan ID
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: include_free
+        description: Whether to include free plan subscription items
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: query
+        description: Search query to filter subscription items
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceSubscriptionItem.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/subscription_items/{subscription_item_id}:
+    delete:
+      operationId: CancelCommerceSubscriptionItem
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: cancelSubscriptionItem
+      tags:
+      - Billing
+      summary: Cancel a Subscription Item
+      description: Cancel a specific subscription item. The subscription item can be canceled immediately or at the end of the current billing period.
+      parameters:
+      - name: subscription_item_id
+        in: path
+        description: The ID of the subscription item to cancel
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: end_now
+        description: Whether to cancel the subscription immediately (true) or at the end of the current billing period (false, default)
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          $ref: '#/components/responses/CommerceSubscriptionItem'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/subscription_items/{subscription_item_id}/extend_free_trial:
+    post:
+      operationId: ExtendBillingSubscriptionItemFreeTrial
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: extendSubscriptionItemFreeTrial
+      tags:
+      - Billing
+      summary: Extend Free Trial for a Subscription Item
+      description: 'Extends the free trial period for a specific subscription item to the specified timestamp.
+
+        The subscription item must be currently in a free trial period, and the plan must support free trials.
+
+        The timestamp must be in the future and not more than 365 days from the end of the current trial period
+
+        This operation is idempotent - repeated requests with the same timestamp will not change the trial period.'
+      parameters:
+      - name: subscription_item_id
+        in: path
+        description: The ID of the subscription item to extend the free trial for
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Parameters for extending the free trial
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtendFreeTrialRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/responses-CommerceSubscriptionItem'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/subscription_items/{subscription_item_id}/price_transition:
+    post:
+      operationId: CreateBillingPriceTransition
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: createPriceTransition
+      tags:
+      - Billing
+      summary: Create a Price Transition for a Subscription Item
+      description: 'Creates a price transition for the specified subscription item.
+
+        This may create an upcoming subscription item or activate immediately depending on plan and payer rules.'
+      parameters:
+      - name: subscription_item_id
+        in: path
+        description: The ID of the subscription item to transition
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Parameters for the price transition
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceTransitionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CommercePriceTransition'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/statements:
+    get:
+      operationId: GetBillingStatementList
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: listStatements
+      tags:
+      - Billing
+      summary: List All Billing Statements
+      description: 'Returns a list of all billing statements for the instance. The statements are returned sorted by creation date,
+
+        with the newest statements appearing first. Pagination is supported.'
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingStatement.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/statements/{statementID}:
+    get:
+      operationId: GetBillingStatement
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: getStatement
+      tags:
+      - Billing
+      summary: Retrieve a Billing Statement
+      description: Retrieves the details of a billing statement.
+      parameters:
+      - name: statementID
+        in: path
+        description: The ID of the statement to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingStatement'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+  /billing/statements/{statementID}/payment_attempts:
+    get:
+      operationId: GetBillingStatementPaymentAttempts
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: getStatementPaymentAttempts
+      tags:
+      - Billing
+      summary: List Payment Attempts for a Billing Statement
+      description: 'Returns a list of all payment attempts for a specific billing statement. The payment attempts are returned sorted by creation date,
+
+        with the newest payment attempts appearing first. Pagination is supported.'
+      parameters:
+      - name: statementID
+        in: path
+        description: The ID of the statement to retrieve payment attempts for.
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingPaymentAttempt.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    BillingStatement:
+      description: A billing statement.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BillingStatement'
+    BillingPrice.List:
+      description: A list of billing prices.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedBillingPriceResponse'
+    CommercePriceTransition:
+      description: A commerce price transition.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommercePriceTransitionResponse'
+    CommerceCreditBalance:
+      description: A payer's credit balance.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceCreditBalanceResponse'
+    BillingPrice:
+      description: A billing price.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BillingPriceResponse'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    CommerceCreditLedger:
+      description: A credit ledger entry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceCreditLedgerResponse'
+    responses-CommerceSubscriptionItem:
+      description: A commerce subscription item.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/schemas-CommerceSubscriptionItem'
+    BillingPaymentAttempt.List:
+      description: A list of billing payment attempts.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedBillingPaymentAttemptResponse'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    CommerceSubscriptionItem:
+      description: A commerce subscription item.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceSubscriptionItem'
+    BillingStatement.List:
+      description: A list of billing statements.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedBillingStatementResponse'
+    CommerceSubscription:
+      description: A commerce subscription.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceSubscription'
+    CommercePlan.List:
+      description: A list of commerce plans.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedCommercePlanResponse'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    CommerceSubscriptionItem.List:
+      description: A list of commerce subscription items.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaginatedCommerceSubscriptionItemResponse'
+  schemas:
+    CommerceProrationCreditDetailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        cycle_days_remaining:
+          type: integer
+          format: int64
+        cycle_days_total:
+          type: integer
+          format: int64
+        cycle_remaining_percent:
+          type: number
+          format: double
+      required:
+      - amount
+      - cycle_days_remaining
+      - cycle_days_total
+      - cycle_remaining_percent
+    BillingPriceResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - plan_id
+      - instance_id
+      - currency
+      - currency_symbol
+      - amount
+      - annual_monthly_amount
+      - fee
+      - annual_monthly_fee
+      - is_default
+      - created_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_price
+        id:
+          type: string
+          description: Unique identifier for the price.
+        plan_id:
+          type: string
+          description: Unique identifier for the associated plan.
+        instance_id:
+          type: string
+          description: Unique identifier for the instance.
+        currency:
+          type: string
+          description: The currency code (e.g., "USD").
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$").
+        amount:
+          type: integer
+          format: int64
+          description: The amount in cents for the price.
+        annual_monthly_amount:
+          type: integer
+          format: int64
+          description: The monthly amount in cents when billed annually.
+        fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        annual_monthly_fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        description:
+          type: string
+          nullable: true
+          description: The description of the price.
+        is_default:
+          type: boolean
+          description: Whether this price is the default price for its plan.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of creation.
+    PriceTransitionRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - from_price_id
+      - to_price_id
+      properties:
+        from_price_id:
+          type: string
+          description: The current price ID of the subscription item.
+        to_price_id:
+          type: string
+          description: The target price ID to transition to.
+    CommerceSubscription:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - status
+      - payer_id
+      - created_at
+      - updated_at
+      - active_at
+      - past_due_at
+      - subscription_items
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_subscription
+        id:
+          type: string
+          description: Unique identifier for the commerce subscription.
+        instance_id:
+          type: string
+          description: The ID of the instance this subscription belongs to.
+        status:
+          type: string
+          description: The current status of the subscription.
+          enum:
+          - active
+          - past_due
+          - canceled
+          - ended
+          - abandoned
+          - incomplete
+        payer_id:
+          type: string
+          description: The ID of the payer for this subscription.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of last update.
+        active_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (milliseconds) when the subscription became active.
+        past_due_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (milliseconds) when the subscription became past due.
+        subscription_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommerceSubscriptionItem'
+          description: Array of subscription items in this subscription.
+        next_payment:
+          $ref: '#/components/schemas/CommerceSubscriptionNextPayment'
+          description: Information about the next scheduled payment.
+        eligible_for_free_trial:
+          type: boolean
+          description: Whether the payer is eligible for a free trial.
+    CommerceCreditBalanceResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - balance
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Always "commerce_credit_balance".
+        balance:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: The current credit balance. Null when the payer has never had credits.
+    PaginatedCommerceSubscriptionItemResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommerceSubscriptionItem'
+          description: Array of subscription items.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of subscription items.
+    schemas-CommercePayerResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - first_name
+      - last_name
+      - email
+      - image_url
+      - created_at
+      - updated_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_payer
+        id:
+          type: string
+          description: Unique identifier for the payer.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        user_id:
+          type: string
+          description: User ID for user-type payers.
+        first_name:
+          type: string
+          description: First name of the payer.
+        last_name:
+          type: string
+          description: Last name of the payer.
+        email:
+          type: string
+          description: Email address of the payer.
+        organization_id:
+          type: string
+          description: Organization ID for org-type payers.
+        organization_name:
+          type: string
+          description: Organization name for org-type payers.
+        image_url:
+          type: string
+          description: URL of the payer's image/avatar.
+        credits_balance:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Current credits balance for the payer.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was last updated.
+    schemas-CommercePlan:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - fee
+      - annual_monthly_fee
+      - annual_fee
+      - amount
+      - amount_formatted
+      - annual_monthly_amount
+      - annual_monthly_amount_formatted
+      - annual_amount
+      - annual_amount_formatted
+      - currency_symbol
+      - currency
+      - description
+      - product_id
+      - is_default
+      - is_recurring
+      - publicly_visible
+      - has_base_fee
+      - payer_type
+      - for_payer_type
+      - slug
+      - avatar_url
+      - features
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_plan
+        id:
+          type: string
+          description: Unique identifier for the commerce plan.
+        name:
+          type: string
+          description: The name of the commerce plan.
+        fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        annual_monthly_fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        annual_fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        amount:
+          type: integer
+          format: int64
+          description: The amount in cents for the plan.
+        amount_formatted:
+          type: string
+          description: The formatted amount as a string (e.g., "$49.99").
+        annual_monthly_amount:
+          type: integer
+          format: int64
+          description: The monthly amount in cents when billed annually.
+        annual_monthly_amount_formatted:
+          type: string
+          description: The formatted annual monthly amount as a string.
+        annual_amount:
+          type: integer
+          format: int64
+          description: The total annual amount in cents.
+        annual_amount_formatted:
+          type: string
+          description: The formatted annual amount as a string.
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$").
+        currency:
+          type: string
+          description: The currency code (e.g., "USD").
+        description:
+          type: string
+          description: The description of the commerce plan.
+        product_id:
+          type: string
+          description: The ID of the product this plan belongs to.
+        is_default:
+          type: boolean
+          description: Whether this is the default plan.
+        is_recurring:
+          type: boolean
+          description: Whether this is a recurring plan.
+        publicly_visible:
+          type: boolean
+          description: Whether this plan is publicly visible.
+        has_base_fee:
+          type: boolean
+          description: Whether this plan has a base fee.
+        payer_type:
+          type: array
+          items:
+            type: string
+          description: The types of payers that can use this plan.
+        for_payer_type:
+          type: string
+          description: The payer type this plan is designed for.
+        slug:
+          type: string
+          description: The URL-friendly slug for the plan.
+        avatar_url:
+          type: string
+          description: The URL of the plan's avatar image.
+        period:
+          type: string
+          description: The billing period for the plan.
+        interval:
+          type: integer
+          format: int64
+          description: The billing interval.
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/schemas-FeatureResponse'
+          description: The features included in this plan.
+        free_trial_enabled:
+          type: boolean
+          description: Whether free trial is enabled for this plan.
+        free_trial_days:
+          type: integer
+          format: int64
+          nullable: true
+          description: Number of free trial days for this plan.
+    CommercePriceTransitionDetails:
+      type: object
+      additionalProperties: false
+      required:
+      - previous_plan
+      - previous_price
+      - effective_at
+      - effective_mode
+      - charged_immediately
+      - previous_subscription_item_status
+      - previous_subscription_item_id
+      properties:
+        previous_plan:
+          $ref: '#/components/schemas/schemas-CommercePlan'
+        previous_price:
+          $ref: '#/components/schemas/BillingPriceResponse'
+        effective_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) when the new price takes effect.
+        effective_mode:
+          type: string
+          description: When the new price takes effect.
+          enum:
+          - immediate
+          - end_of_period
+        next_billing_date:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (milliseconds) for the next billing date.
+        charged_immediately:
+          type: boolean
+          description: Whether an immediate charge was made.
+        immediate_charge:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: Amount charged immediately, if any.
+        previous_subscription_item_status:
+          type: string
+          description: The status of the previous subscription item after transition.
+          enum:
+          - canceled
+          - ended
+          - abandoned
+        previous_subscription_item_id:
+          type: string
+          description: The ID of the previous subscription item.
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    CommercePaymentMethodResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - payer_id
+      - payment_type
+      - gateway
+      - gateway_external_id
+      - gateway_external_account_id
+      - last4
+      - status
+      - card_type
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_payment_method
+        id:
+          type: string
+          description: Unique identifier for the payment method.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payment_type:
+          type: string
+          description: The payment method type.
+          enum:
+          - card
+          - link
+        is_default:
+          type: boolean
+          description: Whether this is the default payment method for the payer.
+        gateway:
+          type: string
+          description: The payment gateway.
+        gateway_external_id:
+          type: string
+          description: External ID in the payment gateway.
+        gateway_external_account_id:
+          type: string
+          nullable: true
+          description: External account ID in the payment gateway.
+        last4:
+          type: string
+          description: Last 4 digits of the card (for card payment methods).
+          nullable: true
+        status:
+          type: string
+          description: Status of the payment method.
+          enum:
+          - active
+          - disconnected
+        wallet_type:
+          type: string
+          description: Type of wallet (if applicable).
+          nullable: true
+        card_type:
+          type: string
+          description: Type of card (if applicable).
+          nullable: true
+        expiry_year:
+          type: integer
+          description: Card expiration year (for card payment methods).
+          nullable: true
+        expiry_month:
+          type: integer
+          description: Card expiration month (for card payment methods).
+          nullable: true
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was last updated.
+        is_removable:
+          type: boolean
+          description: Whether this payment method can be removed.
+    CommercePaymentSourceResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - payer_id
+      - payment_method
+      - gateway
+      - gateway_external_id
+      - last4
+      - status
+      - wallet_type
+      - card_type
+      - created_at
+      - updated_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_source
+        id:
+          type: string
+          description: Unique identifier for the payment source.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payment_method:
+          type: string
+          description: The payment method type.
+          enum:
+          - card
+          - apple_pay
+          - google_pay
+        is_default:
+          type: boolean
+          nullable: true
+          description: Whether this is the default payment source for the payer.
+        gateway:
+          type: string
+          description: The payment gateway.
+        gateway_external_id:
+          type: string
+          description: External ID in the payment gateway.
+        gateway_external_account_id:
+          type: string
+          nullable: true
+          description: External account ID in the payment gateway.
+        last4:
+          type: string
+          description: Last 4 digits of the card (for card payment sources).
+        status:
+          type: string
+          description: Status of the payment source.
+          enum:
+          - active
+          - disconnected
+        wallet_type:
+          type: string
+          description: Type of wallet (if applicable).
+        card_type:
+          type: string
+          description: Type of card (if applicable).
+        expiry_year:
+          type: integer
+          description: Card expiration year (for card payment sources).
+        expiry_month:
+          type: integer
+          description: Card expiration month (for card payment sources).
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment source was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment source was last updated.
+        is_removable:
+          type: boolean
+          nullable: true
+          description: Whether this payment source can be removed.
+    PaginatedBillingPriceResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPriceResponse'
+          description: Array of prices.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of prices.
+    BillingPaymentAttempt:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - payment_id
+      - instance_id
+      - charge_type
+      - payee_id
+      - payee
+      - payer_id
+      - payer
+      - amount
+      - payment_method_id
+      - payment_method
+      - statement_id
+      - gateway_external_id
+      - gateway_external_url
+      - status
+      - paid_at
+      - failed_at
+      - created_at
+      - updated_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_payment
+        id:
+          type: string
+          description: Unique identifier for the payment attempt.
+        payment_id:
+          type: string
+          description: Unique identifier for the associated payment.
+        instance_id:
+          type: string
+          description: The ID of the instance this payment attempt belongs to.
+        charge_type:
+          type: string
+          description: Type of charge for this payment attempt.
+        payee_id:
+          type: string
+          description: Unique identifier for the payee.
+        payee:
+          type: object
+          description: The payee associated with this payment attempt.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payer:
+          $ref: '#/components/schemas/CommercePayerResponse'
+          description: The payer associated with this payment attempt.
+        subscription_item_id:
+          type: string
+          description: Unique identifier for the associated subscription item.
+        subscription_item:
+          type: object
+          description: The subscription item associated with this payment attempt.
+        amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: The amount for this payment attempt.
+        totals:
+          allOf:
+          - $ref: '#/components/schemas/CommerceTotalsResponse'
+          nullable: true
+          description: Totals breakdown for this payment attempt.
+        payment_method_id:
+          type: string
+          description: Unique identifier for the payment method.
+        payment_method:
+          $ref: '#/components/schemas/CommercePaymentMethodResponse'
+          description: The payment method used for this payment attempt.
+        statement_id:
+          type: string
+          description: Unique identifier for the associated statement.
+        gateway_external_id:
+          type: string
+          description: External identifier from the payment gateway.
+          nullable: true
+        gateway_external_url:
+          type: string
+          nullable: true
+          description: External URL from the payment gateway.
+        status:
+          type: string
+          description: The current status of the payment attempt.
+          enum:
+          - pending
+          - paid
+          - failed
+        paid_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the payment was completed.
+        failed_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the payment failed to be processed.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment attempt was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment attempt was last updated.
+    CommercePlanUnitPrice:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
+          type: integer
+          format: int64
+          description: Number of units included in each pricing block
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePlanUnitPriceTier'
+          description: Tiered pricing configuration for this unit
+      required:
+      - name
+      - block_size
+      - tiers
+    CommercePlanUnitPriceTier:
+      type: object
+      additionalProperties: false
+      properties:
+        starts_at_block:
+          type: integer
+          format: int64
+          description: Start block (inclusive) for this tier
+        ends_after_block:
+          type: integer
+          format: int64
+          nullable: true
+          description: End block (inclusive) for this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Price charged per block in this tier
+      required:
+      - starts_at_block
+      - fee_per_block
+    CommercePlan:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - fee
+      - annual_monthly_fee
+      - annual_fee
+      - description
+      - product_id
+      - is_default
+      - is_recurring
+      - publicly_visible
+      - has_base_fee
+      - for_payer_type
+      - slug
+      - avatar_url
+      - free_trial_enabled
+      - free_trial_days
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_plan
+        id:
+          type: string
+          description: Unique identifier for the plan.
+        name:
+          type: string
+          description: The name of the plan.
+        fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        annual_monthly_fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        annual_fee:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+        description:
+          type: string
+          description: The description of the plan.
+          nullable: true
+        product_id:
+          type: string
+          description: The ID of the product this plan belongs to.
+          deprecated: true
+        is_default:
+          type: boolean
+          description: Whether this is the default plan.
+        is_recurring:
+          type: boolean
+          description: Whether this is a recurring plan.
+        publicly_visible:
+          type: boolean
+          description: Whether this plan is publicly visible.
+        has_base_fee:
+          type: boolean
+          description: Whether this plan has a base fee.
+        for_payer_type:
+          type: string
+          description: The payer type this plan is designed for.
+        slug:
+          type: string
+          description: The URL-friendly slug for the plan.
+        avatar_url:
+          type: string
+          description: The URL of the plan's avatar image.
+          nullable: true
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeatureResponse'
+          description: The features included in this plan.
+        free_trial_enabled:
+          type: boolean
+          description: Whether free trial is enabled for this plan.
+        free_trial_days:
+          type: integer
+          format: int64
+          nullable: true
+          description: Number of free trial days for this plan.
+        unit_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePlanUnitPrice'
+          description: Per-unit pricing tiers for this plan (for example, seats)
+    CommercePerUnitTotal:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
+          type: integer
+          format: int64
+          description: Number of units included in each pricing block
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePerUnitTotalTier'
+          description: Computed totals for each pricing tier
+      required:
+      - name
+      - block_size
+      - tiers
+    CommercePayerCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        remaining_balance:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        applied_amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+      required:
+      - remaining_balance
+      - applied_amount
+    CreateBillingPriceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - plan_id
+      - amount
+      properties:
+        plan_id:
+          type: string
+          description: The ID of the plan this price belongs to.
+        currency:
+          type: string
+          description: The currency code (e.g., "USD"). Defaults to USD.
+          default: USD
+        amount:
+          type: integer
+          format: int64
+          nullable: true
+          description: The monthly amount in cents. Must be at least $1 (100 cents) if not null.
+        annual_monthly_amount:
+          type: integer
+          format: int64
+          nullable: true
+          description: The monthly amount in cents when billed annually. Must be at least $1 (100 cents) if not null.
+        description:
+          type: string
+          description: An optional description for this custom price.
+    CommerceSubscriptionItemSeatsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          nullable: true
+          description: Seat quantity being billed; null means unlimited
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePerUnitTotalTier'
+          description: Per-unit cost breakdown by pricing tier
+      required:
+      - quantity
+    CommerceSubscriptionCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: Credit amount.
+        cycle_remaining_percent:
+          type: number
+          format: float
+          description: Percentage of the billing cycle remaining.
+    BillingStatement:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - timestamp
+      - payer
+      - status
+      - totals
+      - groups
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_statement
+        id:
+          type: string
+          description: Unique identifier for the billing statement.
+        instance_id:
+          type: string
+          description: The ID of the instance this statement belongs to.
+        timestamp:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the statement was created.
+        payer:
+          $ref: '#/components/schemas/CommercePayerResponse'
+          description: The payer associated with this statement.
+        status:
+          type: string
+          description: The current status of the statement.
+          enum:
+          - open
+          - closed
+        totals:
+          type: object
+          description: Totals for the statement.
+          required:
+          - grand_total
+          - subtotal
+          - base_fee
+          - tax_total
+          properties:
+            grand_total:
+              $ref: '#/components/schemas/CommerceMoneyResponse'
+              description: The grand total amount for the statement.
+            subtotal:
+              $ref: '#/components/schemas/CommerceMoneyResponse'
+              description: The subtotal amount for the statement (base fee + unit price totals).
+            base_fee:
+              $ref: '#/components/schemas/CommerceMoneyResponse'
+              description: The base plan fee before unit pricing.
+            tax_total:
+              $ref: '#/components/schemas/CommerceMoneyResponse'
+              description: The tax total amount for the statement.
+        groups:
+          type: array
+          description: Array of statement groups.
+          items:
+            type: object
+            description: A statement group.
+            required:
+            - object
+            - timestamp
+            - items
+            properties:
+              object:
+                type: string
+                description: String representing the object's type. Objects of the same type share the same value.
+                enum:
+                - commerce_statement_group
+              timestamp:
+                type: integer
+                format: int64
+                description: Unix timestamp (in milliseconds) of the date the group's payment attempts were created
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BillingPaymentAttempt'
+                description: The payment attempts included in the group
+    PaginatedBillingPaymentAttemptResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPaymentAttempt'
+          description: Array of billing payment attempts.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of billing payment attempts.
+    CommerceCreditsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        proration:
+          allOf:
+          - $ref: '#/components/schemas/CommerceProrationCreditDetailResponse'
+          nullable: true
+        payer:
+          allOf:
+          - $ref: '#/components/schemas/CommercePayerCreditResponse'
+          nullable: true
+        total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+      required:
+      - proration
+      - payer
+      - total
+    AdjustCreditBalanceRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - amount
+      - action
+      - idempotency_key
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The credit amount in cents. Must be greater than zero.
+        action:
+          type: string
+          enum:
+          - increase
+          - decrease
+          description: Whether to increase or decrease the credit balance.
+        currency:
+          type: string
+          description: The currency code (e.g. "USD"). Defaults to USD if not provided.
+        idempotency_key:
+          type: string
+          description: A unique key to ensure the adjustment is applied only once. Repeated requests with the same key return the original ledger entry.
+        note:
+          type: string
+          description: An optional note to attach to the ledger entry.
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    schemas-FeatureResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - description
+      - slug
+      - avatar_url
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - feature
+        id:
+          type: string
+          description: Unique identifier for the feature.
+        name:
+          type: string
+          description: The name of the feature.
+        description:
+          type: string
+          description: The description of the feature.
+        slug:
+          type: string
+          description: The URL-friendly slug for the feature.
+        avatar_url:
+          type: string
+          description: The URL of the feature's avatar image.
+    CommercePerUnitTotalTier:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+          type: integer
+          format: int64
+          nullable: true
+          description: Units billed in this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Price charged per block in this tier
+        total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Total charge for this tier
+      required:
+      - fee_per_block
+      - total
+    CommerceMoneyResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The amount in cents.
+        amount_formatted:
+          type: string
+          description: The formatted amount as a string (e.g., "$49.99").
+        currency:
+          type: string
+          description: The currency code (e.g., "USD").
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$").
+      required:
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
+    PaginatedCommercePlanResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePlan'
+          description: Array of plans.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of plans.
+    CommerceCreditLedgerResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - payer_id
+      - amount
+      - currency
+      - source_type
+      - source_id
+      - created_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Always "commerce_credit_ledger".
+        id:
+          type: string
+          description: Unique identifier for the ledger entry.
+        payer_id:
+          type: string
+          description: The ID of the payer whose balance was adjusted.
+        amount:
+          type: integer
+          format: int64
+          description: The signed credit amount. Positive for increases, negative for decreases.
+        currency:
+          type: string
+          description: The currency code of the credit adjustment.
+        source_type:
+          type: string
+          description: The type of source that originated the adjustment (e.g. "grant").
+        source_id:
+          type: string
+          description: The ID of the source that originated the adjustment.
+        note:
+          type: string
+          nullable: true
+          description: An optional note attached to the ledger entry.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ledger entry was created.
+    CommerceSubscriptionNextPayment:
+      type: object
+      additionalProperties: false
+      required:
+      - date
+      - amount
+      properties:
+        date:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of the next payment date.
+        amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: The amount of the next payment.
+    CommercePayerResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_payer
+        id:
+          type: string
+          description: Unique identifier for the payer.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        user_id:
+          type: string
+          description: User ID for user-type payers.
+          nullable: true
+        first_name:
+          type: string
+          description: First name of the payer.
+          nullable: true
+        last_name:
+          type: string
+          description: Last name of the payer.
+          nullable: true
+        email:
+          type: string
+          description: Email address of the payer.
+          nullable: true
+        organization_id:
+          type: string
+          description: Organization ID for org-type payers.
+          nullable: true
+        organization_name:
+          type: string
+          description: Organization name for org-type payers.
+          nullable: true
+        image_url:
+          type: string
+          description: URL of the payer's image/avatar.
+        credits_balance:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Current credits balance for the payer.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was last updated.
+    schemas-CommerceSubscriptionItem:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - status
+      - plan_id
+      - plan
+      - plan_period
+      - payment_source_id
+      - payer_id
+      - is_free_trial
+      - proration_date
+      - created_at
+      - updated_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_subscription_item
+        id:
+          type: string
+          description: Unique identifier for the subscription item.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        status:
+          type: string
+          description: Current status of the subscription item.
+          enum:
+          - active
+          - ended
+          - past_due
+          - upcoming
+          - incomplete
+          - abandoned
+        credit:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionCreditResponse'
+          nullable: true
+          description: Credit information (only available in PaymentAttempt events).
+        plan_id:
+          type: string
+          description: Unique identifier for the associated plan.
+        price_id:
+          type: string
+          description: Unique identifier for the associated price
+        plan:
+          allOf:
+          - $ref: '#/components/schemas/schemas-CommercePlan'
+          nullable: true
+          description: The associated commerce plan.
+        plan_period:
+          type: string
+          description: The billing period for this subscription.
+          enum:
+          - month
+          - annual
+        payment_source_id:
+          type: string
+          description: Unique identifier for the payment source.
+        payment_source:
+          allOf:
+          - $ref: '#/components/schemas/CommercePaymentSourceResponse'
+          nullable: true
+          description: The payment source associated with this subscription.
+        lifetime_paid:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: Total amount paid over the lifetime of this subscription.
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: Current amount for this subscription.
+        next_invoice:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemNextPaymentResponse'
+          nullable: true
+          description: Information about the next invoice.
+        next_payment:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemNextPaymentResponse'
+          nullable: true
+          description: Information about the next payment.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payer:
+          allOf:
+          - $ref: '#/components/schemas/schemas-CommercePayerResponse'
+          nullable: true
+          description: The payer associated with this subscription.
+        is_free_trial:
+          type: boolean
+          description: Whether this subscription is currently on a free trial.
+        period_start:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the current period started.
+        period_end:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the current period ends.
+        proration_date:
+          type: string
+          description: Date used for proration calculations.
+        canceled_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription was canceled.
+        past_due_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription became past due.
+        ended_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription ended.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription was last updated.
+    CommerceSubscriptionItemNextPaymentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          nullable: true
+          description: Amount for the next payment.
+        date:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) for the next payment date.
+    ExtendFreeTrialRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - extend_to
+      properties:
+        extend_to:
+          type: string
+          format: date-time
+          description: 'RFC3339 timestamp to extend the free trial to.
+
+            Must be in the future and not more than 365 days from now.'
+          example: '2026-01-08T00:00:00Z'
+    CommerceTotalsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        subtotal:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        base_fee:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        tax_total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        grand_total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        per_unit_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommercePerUnitTotal'
+        credits:
+          allOf:
+          - $ref: '#/components/schemas/CommerceCreditsResponse'
+          nullable: true
+      required:
+      - subtotal
+      - base_fee
+      - tax_total
+      - grand_total
+    CommercePriceTransitionResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - subscription_item
+      - transition
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_price_transition
+        subscription_item:
+          $ref: '#/components/schemas/schemas-CommerceSubscriptionItem'
+        transition:
+          $ref: '#/components/schemas/CommercePriceTransitionDetails'
+    FeatureResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - description
+      - slug
+      - avatar_url
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - feature
+        id:
+          type: string
+          description: Unique identifier for the feature.
+        name:
+          type: string
+          description: The name of the feature.
+        description:
+          type: string
+          nullable: true
+          description: The description of the feature.
+        slug:
+          type: string
+          description: The URL-friendly slug for the feature.
+        avatar_url:
+          type: string
+          nullable: true
+          description: The URL of the feature's avatar image.
+    PaginatedBillingStatementResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingStatement'
+          description: Array of billing statements.
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of billing statements.
+    CommerceSubscriptionItem:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - status
+      - plan_id
+      - plan_period
+      - payer_id
+      - is_free_trial
+      - period_start
+      - period_end
+      - canceled_at
+      - past_due_at
+      - ended_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_subscription_item
+        id:
+          type: string
+          description: Unique identifier for the subscription item.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        status:
+          type: string
+          description: Current status of the subscription item.
+          enum:
+          - active
+          - canceled
+          - expired
+          - ended
+          - past_due
+          - upcoming
+          - incomplete
+          - abandoned
+        credit:
+          $ref: '#/components/schemas/CommerceSubscriptionCreditResponse'
+          description: Credit information (only available in PaymentAttempt events).
+        credits:
+          allOf:
+          - $ref: '#/components/schemas/CommerceCreditsResponse'
+          nullable: true
+          description: Unified credits breakdown for this subscription item.
+        plan_id:
+          type: string
+          description: Unique identifier for the associated plan.
+          nullable: true
+        price_id:
+          type: string
+          description: Unique identifier for the associated price
+        plan:
+          allOf:
+          - $ref: '#/components/schemas/CommercePlan'
+          nullable: true
+          description: The associated plan.
+        plan_period:
+          type: string
+          description: The billing period for this subscription item.
+          enum:
+          - month
+          - annual
+        payment_method:
+          $ref: '#/components/schemas/CommercePaymentMethodResponse'
+          description: The payment method used for this subscription item.
+        lifetime_paid:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Total amount paid over the lifetime of this subscription item.
+        next_payment:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemNextPaymentResponse'
+          nullable: true
+          description: Information about the next payment.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payer:
+          $ref: '#/components/schemas/CommercePayerResponse'
+          description: The payer associated with this subscription item.
+        is_free_trial:
+          type: boolean
+          description: Whether this subscription item includes a free trial.
+        period_start:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the current period started.
+        period_end:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the current period ends.
+        proration_date:
+          type: string
+          format: date
+          description: The day the subscription item was prorated from. Only available in some responses.
+        canceled_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription item was canceled.
+        past_due_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription item became past due.
+        ended_at:
+          type: integer
+          format: int64
+          nullable: true
+          description: Unix timestamp (in milliseconds) when the subscription item ended.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item was last updated.
+        seats:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemSeatsResponse'
+          nullable: true
+          description: Seat quantity for seat-based billing.
+        totals:
+          allOf:
+          - $ref: '#/components/schemas/CommerceTotalsResponse'
+          nullable: true
+          description: Totals for this subscription item.
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

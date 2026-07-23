@@ -1,0 +1,574 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Organization Domains API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Organization Domains
+  description: Manage organization domains.
+paths:
+  /organizations/{organization_id}/domains:
+    post:
+      operationId: CreateOrganizationDomain
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: create
+      summary: Create a New Organization Domain.
+      description: Creates a new organization domain. By default the domain is verified, but can be optionally set to unverified.
+      tags:
+      - Organization Domains
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization where the new domain will be created.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  description: The name of the new domain
+                  nullable: false
+                enrollment_mode:
+                  type: string
+                  description: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+                  nullable: false
+                verified:
+                  type: boolean
+                  description: The status of domain's verification. Defaults to true
+                  nullable: true
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationDomain'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: ListOrganizationDomains
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: list
+      summary: Get a List of All Domains of an Organization.
+      description: Get a list of all domains of an organization.
+      tags:
+      - Organization Domains
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: query
+        required: false
+        name: verified
+        description: Filter domains by their verification status. `true` or `false`
+        schema:
+          type: string
+      - in: query
+        required: false
+        name: enrollment_mode
+        description: Filter domains by their enrollment mode
+        schema:
+          type: string
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationDomains'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /organizations/{organization_id}/domains/{domain_id}:
+    patch:
+      operationId: UpdateOrganizationDomain
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: update
+      summary: Update an Organization Domain.
+      description: Updates the properties of an existing organization domain.
+      tags:
+      - Organization Domains
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization to which the domain belongs
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The ID of the domain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enrollment_mode:
+                  type: string
+                  description: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
+                  nullable: true
+                verified:
+                  type: boolean
+                  description: The status of the domain's verification
+                  nullable: true
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationDomain'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: DeleteOrganizationDomain
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: delete
+      summary: Remove a Domain from an Organization.
+      description: Removes the given domain from the organization.
+      tags:
+      - Organization Domains
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization to which the domain belongs
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The ID of the domain
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /organization_domains:
+    get:
+      operationId: ListAllOrganizationDomains
+      x-speakeasy-group: organizationDomains
+      x-speakeasy-name-override: listAll
+      summary: List All Organization Domains
+      description: 'Retrieves a list of all organization domains within the current instance.
+
+        This endpoint can be used to list all domains across all organizations
+
+        or filter domains by organization, verification status, enrollment mode, or search query.
+
+
+        The response includes pagination information and details about each domain
+
+        including its verification status, enrollment mode, and associated counts.
+
+        '
+      tags:
+      - Organization Domains
+      parameters:
+      - in: query
+        name: organization_id
+        description: The ID of the organization to filter domains by
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: verified
+        description: Filter by verification status
+        required: false
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      - in: query
+        name: enrollment_mode
+        description: Filter by enrollment mode
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - manual_invitation
+            - automatic_invitation
+            - automatic_suggestion
+      - in: query
+        name: query
+        description: 'Search domains by name or organization ID.
+
+          If the query starts with "org_", it will search by exact organization ID match.
+
+          Otherwise, it performs a case-insensitive partial match on the domain name.
+
+
+          Note: An empty string or whitespace-only value is not allowed and will result in a validation error.
+
+          '
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: domains
+        description: Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: order_by
+        description: 'Allows to return organization domains in a particular order.
+
+          At the moment, you can order the returned domains by their `name` or `created_at`.
+
+          In order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.
+
+          For example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+
+          If you don''t use `+` or `-`, then `+` is implied.
+
+          Defaults to `-created_at`.
+
+          '
+        required: false
+        schema:
+          type: string
+          default: -created_at
+      - $ref: '#/components/parameters/OffsetParameter'
+      - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationDomains'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  schemas:
+    OrganizationDomains:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationDomain'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization domains
+
+            '
+      required:
+      - data
+      - total_count
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    OrganizationDomainVerification:
+      description: The verification object from an organization domain
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the verification. It can be `unverified` or `verified`
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          description: Name of the strategy used to verify the domain
+        attempts:
+          type: integer
+          description: How many attempts have been made to verify the domain
+          nullable: true
+        expire_at:
+          type: integer
+          nullable: true
+          format: int64
+          description: Unix timestamp of when the verification will expire
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OrganizationDomain:
+      description: An organization domain
+      type: object
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value. Always `organization_domain`
+
+            '
+          enum:
+          - organization_domain
+        id:
+          type: string
+          description: Unique identifier for the organization domain
+        organization_id:
+          type: string
+          description: Unique identifier for the organization
+        name:
+          type: string
+          description: Name of the organization domain
+        enrollment_mode:
+          type: string
+          description: Mode of enrollment for the domain
+          enum:
+          - manual_invitation
+          - automatic_invitation
+          - automatic_suggestion
+        affiliation_email_address:
+          type: string
+          nullable: true
+          description: Affiliation email address for the domain, if available.
+        verification:
+          type: object
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OrganizationDomainVerification'
+          description: Verification details for the domain
+        total_pending_invitations:
+          type: integer
+          format: int32
+          description: Total number of pending invitations associated with this domain
+        total_pending_suggestions:
+          type: integer
+          format: int32
+          description: Total number of pending suggestions associated with this domain
+        public_organization_data:
+          type: object
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/OrganizationInvitationPublicOrganizationData'
+          description: Public organization data associated with this domain
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp when the domain was created
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of the last update to the domain
+      required:
+      - object
+      - id
+      - organization_id
+      - name
+      - enrollment_mode
+      - affiliation_email_address
+      - verification
+      - total_pending_invitations
+      - total_pending_suggestions
+      - created_at
+      - updated_at
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationDomain:
+      description: An organization domain
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomain'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationDomains:
+      description: A list of organization domains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomains'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

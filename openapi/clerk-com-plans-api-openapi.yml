@@ -1,0 +1,389 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Plans API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Plans
+  description: Used to interact with plans that users and organizations can purchase.
+paths:
+  /v1/billing/plans:
+    get:
+      operationId: GetBillingPlanList
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: listPlans
+      tags:
+      - Plans
+      summary: List Billing Plans
+      description: Returns a list of all publicly visible billing plans.
+      parameters:
+      - in: query
+        name: payer_type
+        description: Filter plans by payer type
+        required: false
+        schema:
+          type: string
+          enum:
+          - user
+          - org
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingPlanList'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /v1/billing/plans/{planIdOrSlug}:
+    get:
+      operationId: GetBillingPlan
+      x-speakeasy-group: billing
+      x-speakeasy-name-override: getPlan
+      tags:
+      - Plans
+      summary: Get a Billing Plan
+      description: Returns a billing plan by ID or slug.
+      parameters:
+      - name: planIdOrSlug
+        in: path
+        description: The ID or slug of the plan
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/BillingPlan'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  responses:
+    BillingPlan:
+      description: Returns a commerce plan.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BillingPlan'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    BillingPlanList:
+      description: Returns a list of commerce plans.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required:
+            - data
+            - total_count
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BillingPlan'
+              total_count:
+                type: integer
+                format: int64
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    BillingFee:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Amount in the smallest currency unit (e.g., cents)
+          minimum: 0
+        amount_formatted:
+          type: string
+          description: The formatted amount as a string (e.g., "$49.99")
+        currency:
+          type: string
+          description: The currency code (e.g., "USD")
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$")
+      required:
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
+    BillingPlan:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: String representing the object's type
+          enum:
+          - commerce_plan
+        id:
+          type: string
+          description: Unique identifier for the plan
+        name:
+          type: string
+          description: The name of the plan
+        fee:
+          allOf:
+          - $ref: '#/components/schemas/BillingFee'
+          nullable: true
+          description: The monthly fee for this plan
+        annual_monthly_fee:
+          allOf:
+          - $ref: '#/components/schemas/BillingFee'
+          nullable: true
+          description: The monthly equivalent when billed annually
+        annual_fee:
+          allOf:
+          - $ref: '#/components/schemas/BillingFee'
+          nullable: true
+          description: The annual fee for this plan
+        description:
+          type: string
+          description: The description of the plan
+          nullable: true
+        product_id:
+          type: string
+          description: The ID of the product this plan belongs to
+          deprecated: true
+        is_default:
+          type: boolean
+          description: Whether this is the default plan
+        is_recurring:
+          type: boolean
+          description: Whether this is a recurring plan
+        publicly_visible:
+          type: boolean
+          description: Whether this plan is publicly visible
+        has_base_fee:
+          type: boolean
+          description: Whether this plan has a base fee
+        for_payer_type:
+          type: string
+          description: The payer type this plan is designed for
+        slug:
+          type: string
+          description: The URL-friendly slug for the plan
+        avatar_url:
+          type: string
+          description: The URL of the plan's avatar image
+          nullable: true
+        free_trial_enabled:
+          type: boolean
+          description: Whether free trial is enabled for this plan
+        free_trial_days:
+          type: integer
+          nullable: true
+          description: Number of free trial days for this plan
+        unit_prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPlanUnitPrice'
+          description: Per-unit pricing tiers for this plan (for example, seats)
+        features:
+          type: array
+          description: The features included in this plan
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                enum:
+                - feature
+                description: String representing the object's type
+              id:
+                type: string
+                description: Unique identifier for the feature
+              name:
+                type: string
+                description: Name of the feature
+              description:
+                type: string
+                nullable: true
+                description: Description of the feature
+              slug:
+                type: string
+                description: URL-friendly representation of the feature's name
+              avatar_url:
+                type: string
+                nullable: true
+                description: URL for an image to represent the feature
+            required:
+            - object
+            - id
+            - name
+            - description
+            - slug
+            - avatar_url
+      required:
+      - object
+      - id
+      - name
+      - fee
+      - annual_monthly_fee
+      - annual_fee
+      - description
+      - product_id
+      - is_default
+      - is_recurring
+      - publicly_visible
+      - has_base_fee
+      - for_payer_type
+      - slug
+      - avatar_url
+      - free_trial_enabled
+      - free_trial_days
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    BillingPlanUnitPrice:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
+          type: integer
+          format: int64
+          description: Number of units included in each pricing block
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPlanUnitPriceTier'
+          description: Tiered pricing configuration for this unit
+      required:
+      - name
+      - block_size
+      - tiers
+    BillingMoneyResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Amount in cents
+        amount_formatted:
+          type: string
+          description: Formatted amount as a string (e.g., "$10.00")
+        currency:
+          type: string
+          description: Currency code (e.g., "USD")
+        currency_symbol:
+          type: string
+          description: Currency symbol (e.g., "$")
+      required:
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
+    BillingPlanUnitPriceTier:
+      type: object
+      additionalProperties: false
+      properties:
+        starts_at_block:
+          type: integer
+          format: int64
+          description: Start block (inclusive) for this tier
+        ends_after_block:
+          type: integer
+          format: int64
+          nullable: true
+          description: End block (inclusive) for this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Price charged per block in this tier
+      required:
+      - starts_at_block
+      - fee_per_block
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

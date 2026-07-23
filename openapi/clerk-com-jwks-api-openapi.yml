@@ -1,0 +1,357 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal JWKS API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: JWKS
+  description: Retrieve the JSON Web Key Set which can be used to verify the token signatures of the instance.
+paths:
+  /jwks:
+    get:
+      operationId: GetJWKS
+      x-speakeasy-group: jwks
+      x-speakeasy-name-override: getJWKS
+      summary: Retrieve the JSON Web Key Set of the Instance
+      description: Retrieve the JSON Web Key Set of the instance
+      tags:
+      - JWKS
+      responses:
+        '200':
+          $ref: '#/components/responses/WellKnown.JWKS'
+components:
+  schemas:
+    JWKS.ed25519.PrivateKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - OKP
+        crv:
+          type: string
+          enum:
+          - Ed25519
+        x:
+          type: string
+        d:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - d
+    JWKS.ecdsa.PrivateKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - EC
+        crv:
+          type: string
+        x:
+          type: string
+        y:
+          type: string
+        d:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - y
+      - d
+    JWKS.rsa.PrivateKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - RSA
+        n:
+          type: string
+        e:
+          type: string
+        d:
+          type: string
+        p:
+          type: string
+        q:
+          type: string
+        dp:
+          type: string
+        dq:
+          type: string
+        qi:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - n
+      - e
+      - d
+      - p
+      - q
+    JWKS.rsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - RSA
+        n:
+          type: string
+        e:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - n
+      - e
+    JWKS.symmetric.Key:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - oct
+        k:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - k
+    JWKS.ecdsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - EC
+        crv:
+          type: string
+        x:
+          type: string
+        y:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - y
+    JWKS:
+      type: object
+      additionalProperties: false
+      properties:
+        keys:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/JWKS.ed25519.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ed25519.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.symmetric.Key'
+    JWKS.ed25519.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - OKP
+        crv:
+          type: string
+          enum:
+          - Ed25519
+        x:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+  responses:
+    WellKnown.JWKS:
+      description: Get the JSON Web Key Set
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWKS'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

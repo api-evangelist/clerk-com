@@ -1,0 +1,413 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Organization Permissions API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Organization Permissions
+  description: Manage organization permissions that define what members can do within an organization.
+  externalDocs:
+    url: https://clerk.com/docs/organizations/manage-member-roles
+paths:
+  /organization_permissions:
+    get:
+      operationId: ListOrganizationPermissions
+      x-speakeasy-group: organizationPermissions
+      x-speakeasy-name-override: list
+      summary: Get a List of All Organization Permissions
+      description: Retrieves all organization permissions for the given instance.
+      tags:
+      - Organization Permissions
+      parameters:
+      - name: query
+        in: query
+        description: 'Returns organization permissions with ID, name, or key that match the given query.
+
+          Uses exact match for permission ID and partial match for name and key.'
+        schema:
+          type: string
+        required: false
+      - name: order_by
+        in: query
+        description: 'Allows to return organization permissions in a particular order.
+
+          At the moment, you can order the returned permissions by their `created_at`, `name`, or `key`.
+
+          In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+
+          For example, if you want permissions to be returned in descending order according to their `created_at` property, you can use `-created_at`.'
+        schema:
+          type: string
+        required: false
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Permissions'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    post:
+      operationId: CreateOrganizationPermission
+      x-speakeasy-group: organizationPermissions
+      x-speakeasy-name-override: create
+      summary: Create a New Organization Permission
+      description: Creates a new organization permission for the given instance.
+      tags:
+      - Organization Permissions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the permission.
+                key:
+                  type: string
+                  description: The key of the permission. Must have the format "org:feature:action" where feature and action are segments consisting of lowercase letters, digits, or underscores, for example "org:billing:manage" or "org:team:read". Cannot begin with "org:sys_" as that prefix is reserved for system permissions.
+                description:
+                  type: string
+                  description: A description of the permission.
+              required:
+              - name
+              - key
+      responses:
+        '200':
+          $ref: '#/components/responses/Permission'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /organization_permissions/{permission_id}:
+    get:
+      operationId: GetOrganizationPermission
+      x-speakeasy-group: organizationPermissions
+      x-speakeasy-name-override: get
+      summary: Get an Organization Permission
+      description: Retrieves the details of an organization permission.
+      tags:
+      - Organization Permissions
+      parameters:
+      - in: path
+        required: true
+        name: permission_id
+        schema:
+          type: string
+        description: The ID of the permission to retrieve
+      responses:
+        '200':
+          $ref: '#/components/responses/Permission'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    patch:
+      operationId: UpdateOrganizationPermission
+      x-speakeasy-group: organizationPermissions
+      x-speakeasy-name-override: update
+      summary: Update an Organization Permission
+      description: 'Updates the properties of an existing organization permission.
+
+        System permissions cannot be updated.'
+      tags:
+      - Organization Permissions
+      parameters:
+      - in: path
+        required: true
+        name: permission_id
+        schema:
+          type: string
+        description: The ID of the permission to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the permission.
+                key:
+                  type: string
+                  description: The key of the permission. Must have the format "org:feature:action" where feature and action are segments consisting of lowercase letters, digits, or underscores. Cannot begin with "org:sys_" as that prefix is reserved for system permissions.
+                description:
+                  type: string
+                  description: A description of the permission.
+      responses:
+        '200':
+          $ref: '#/components/responses/Permission'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: DeleteOrganizationPermission
+      x-speakeasy-group: organizationPermissions
+      x-speakeasy-name-override: delete
+      summary: Delete an Organization Permission
+      description: 'Deletes an organization permission.
+
+        System permissions cannot be deleted.'
+      tags:
+      - Organization Permissions
+      parameters:
+      - in: path
+        required: true
+        name: permission_id
+        schema:
+          type: string
+        description: The ID of the permission to delete
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Permissions:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permissions'
+    Permission:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permission'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    Permissions:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of permissions
+
+            '
+      required:
+      - data
+      - total_count
+    Permission:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - permission
+        id:
+          type: string
+        name:
+          type: string
+        key:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+      required:
+      - object
+      - id
+      - name
+      - key
+      - description
+      - type
+      - created_at
+      - updated_at
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

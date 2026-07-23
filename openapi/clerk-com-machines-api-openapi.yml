@@ -1,0 +1,689 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Machines API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Machines
+  description: A Machine represents a machine/server/service which can be used in machine-to-machine authentication.
+paths:
+  /machines:
+    get:
+      operationId: ListMachines
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: list
+      summary: Get a List of Machines for an Instance
+      description: 'This request returns the list of machines for an instance. The machines are
+
+        ordered by descending creation date (i.e. most recent machines will be
+
+        returned first)'
+      tags:
+      - Machines
+      parameters:
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - in: query
+        name: query
+        description: Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name.
+        schema:
+          type: string
+        allowEmptyValue: true
+        required: false
+      - in: query
+        name: order_by
+        description: 'Allows to return machines in a particular order.
+
+          You can order the returned machines by their `name` or `created_at`.
+
+          To specify the direction, use the `+` or `-` symbols prepended to the property to order by.
+
+          For example, to return machines in descending order by `created_at`, use `-created_at`.
+
+          If you don''t use `+` or `-`, then `+` is implied.
+
+          Defaults to `-created_at`.'
+        schema:
+          type: string
+          default: -created_at
+        required: false
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    post:
+      operationId: CreateMachine
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: create
+      summary: Create a Machine
+      description: Creates a new machine.
+      tags:
+      - Machines
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: The name of the machine
+                  minLength: 1
+                  maxLength: 255
+                scoped_machines:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of machine IDs that this machine will have access to. Maximum of 150 scopes per machine.
+                  maxItems: 150
+                default_token_ttl:
+                  type: integer
+                  description: The default time-to-live (TTL) in seconds for tokens created by this machine. Must be at least 1 second.
+                  minimum: 1
+                  maximum: 315360000
+                  default: 3600
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine.Created'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /machines/{machine_id}:
+    get:
+      operationId: GetMachine
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: get
+      summary: Retrieve a Machine
+      description: Returns the details of a machine.
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    patch:
+      operationId: UpdateMachine
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: update
+      summary: Update a Machine
+      description: 'Updates an existing machine.
+
+        Only the provided fields will be updated.'
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine to update
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the machine
+                  minLength: 1
+                  maxLength: 255
+                default_token_ttl:
+                  type: integer
+                  description: The default time-to-live (TTL) in seconds for tokens created by this machine. Must be at least 1 second.
+                  minimum: 1
+                  maximum: 315360000
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: DeleteMachine
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: delete
+      summary: Delete a Machine
+      description: Deletes a machine.
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine.Deleted'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /machines/{machine_id}/secret_key:
+    get:
+      operationId: GetMachineSecretKey
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: getSecretKey
+      summary: Retrieve a Machine Secret Key
+      description: Returns the secret key for a machine.
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine to retrieve the secret key for
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine.SecretKey'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /machines/{machine_id}/secret_key/rotate:
+    post:
+      operationId: RotateMachineSecretKey
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: rotateSecretKey
+      summary: Rotate a Machine's Secret Key
+      description: 'Rotates the machine''s secret key.
+
+        When the secret key is rotated, make sure to update it in your machine/application.
+
+        The previous secret key will remain valid for the duration specified by the previous_token_ttl parameter.'
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine to rotate the secret key for
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - previous_token_ttl
+              properties:
+                previous_token_ttl:
+                  type: integer
+                  minimum: 0
+                  maximum: 28800
+                  description: 'The time in seconds that the previous secret key will remain valid after rotation.
+
+                    This ensures a graceful transition period for updating applications with the new secret key.
+
+                    Set to 0 to immediately expire the previous key. Maximum value is 8 hours (28800 seconds).'
+      responses:
+        '200':
+          $ref: '#/components/responses/Machine.SecretKey'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /machines/{machine_id}/scopes:
+    post:
+      operationId: CreateMachineScope
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: createScope
+      summary: Create a Machine Scope
+      description: 'Creates a new machine scope, allowing the specified machine to access another machine.
+
+        Maximum of 150 scopes per machine.'
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine that will have access to another machine
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - to_machine_id
+              properties:
+                to_machine_id:
+                  type: string
+                  description: The ID of the machine that will be scoped to the current machine
+      responses:
+        '200':
+          $ref: '#/components/responses/MachineScope'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /machines/{machine_id}/scopes/{other_machine_id}:
+    delete:
+      operationId: DeleteMachineScope
+      x-speakeasy-group: machines
+      x-speakeasy-name-override: deleteScope
+      summary: Delete a Machine Scope
+      description: Deletes a machine scope, removing access from one machine to another.
+      tags:
+      - Machines
+      parameters:
+      - name: machine_id
+        in: path
+        description: The ID of the machine that has access to another machine
+        required: true
+        schema:
+          type: string
+      - name: other_machine_id
+        in: path
+        description: The ID of the machine that is being accessed
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/MachineScope.Deleted'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.Created:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/Machine'
+            - type: object
+              required:
+              - secret_key
+              properties:
+                secret_key:
+                  type: string
+                  readOnly: true
+                  description: The secret key for the machine, only returned upon creation.
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - data
+            - total_count
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Machine'
+              total_count:
+                type: integer
+                description: Total number of machines
+    MachineScope.Deleted:
+      description: Machine scope deleted successfully for a machine
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - from_machine_id
+            - to_machine_id
+            - deleted
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_scope
+                description: String representing the object's type.
+              from_machine_id:
+                type: string
+                description: The ID of the machine that had access to the target machine
+              to_machine_id:
+                type: string
+                description: The ID of the machine that was being accessed
+              deleted:
+                type: boolean
+                enum:
+                - true
+                description: Whether the machine scope was successfully deleted
+    MachineScope:
+      description: Machine scope created successfully for a machine
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MachineScope'
+    Machine.Deleted:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - id
+            - deleted
+            properties:
+              object:
+                type: string
+                enum:
+                - machine
+                description: String representing the object's type.
+              id:
+                type: string
+                description: The ID of the deleted machine
+              deleted:
+                type: boolean
+                enum:
+                - true
+                description: Whether the machine was successfully deleted
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Machine'
+    Machine.SecretKey:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - secret
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_secret_key
+                description: String representing the object's type.
+              secret:
+                type: string
+                readOnly: true
+                description: The secret key for the machine.
+  schemas:
+    MachineWithoutScopedMachines:
+      type: object
+      required:
+      - object
+      - id
+      - name
+      - instance_id
+      - created_at
+      - updated_at
+      properties:
+        object:
+          type: string
+          enum:
+          - machine
+        id:
+          type: string
+          description: Unique identifier for the machine.
+        name:
+          type: string
+          description: The name of the machine.
+          maxLength: 255
+          minLength: 1
+        instance_id:
+          type: string
+          description: The ID of the instance this machine belongs to.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+        default_token_ttl:
+          type: integer
+          description: The default time-to-live (TTL) in seconds for tokens created by this machine.
+          minimum: 1
+          default: 3600
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Machine:
+      allOf:
+      - $ref: '#/components/schemas/MachineWithoutScopedMachines'
+      - type: object
+        required:
+        - scoped_machines
+        properties:
+          scoped_machines:
+            type: array
+            items:
+              $ref: '#/components/schemas/MachineWithoutScopedMachines'
+            description: Array of machines this machine has access to.
+    MachineScope:
+      type: object
+      required:
+      - object
+      - from_machine_id
+      - to_machine_id
+      - created_at
+      properties:
+        object:
+          type: string
+          enum:
+          - machine_scope
+        from_machine_id:
+          type: string
+          description: The ID of the machine that has access to the target machine.
+        to_machine_id:
+          type: string
+          description: The ID of the machine that is being accessed.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

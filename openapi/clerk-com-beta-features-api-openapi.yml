@@ -1,0 +1,246 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Beta Features API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Beta Features
+  description: Modify instance settings that are currently in beta.
+paths:
+  /beta_features/instance_settings:
+    patch:
+      operationId: UpdateInstanceAuthConfig
+      x-speakeasy-group: betaFeatures
+      x-speakeasy-name-override: updateInstanceSettings
+      summary: Update Instance Settings
+      description: Updates the settings of an instance
+      tags:
+      - Beta Features
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                restricted_to_allowlist:
+                  type: boolean
+                  description: Whether sign up is restricted to email addresses, phone numbers and usernames that are on the allowlist.
+                  nullable: true
+                  default: false
+                from_email_address:
+                  type: string
+                  description: 'The local part of the email address from which authentication-related emails (e.g. OTP code, magic links) will be sent.
+
+                    Only alphanumeric values are allowed.
+
+                    Note that this value should contain only the local part of the address (e.g. `foo` for `foo@example.com`).'
+                  nullable: true
+                progressive_sign_up:
+                  type: boolean
+                  description: Enable the Progressive Sign Up algorithm. This feature is deprecated, please contact support if you need assistance.
+                  nullable: true
+                test_mode:
+                  type: boolean
+                  description: 'Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
+
+                    Defaults to true for development instances.'
+                  nullable: true
+      responses:
+        '200':
+          $ref: '#/components/responses/InstanceSettings'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /beta_features/domain:
+    put:
+      deprecated: true
+      operationId: UpdateProductionInstanceDomain
+      x-speakeasy-group: betaFeatures
+      x-speakeasy-name-override: updateProductionInstanceDomain
+      summary: Update Production Instance Domain
+      description: 'Change the domain of a production instance.
+
+
+        Changing the domain requires updating the [DNS records](https://clerk.com/docs/deployments/overview#dns-records) accordingly, deploying new [SSL certificates](https://clerk.com/docs/deployments/overview#deploy-certificates), updating your Social Connection''s redirect URLs and setting the new keys in your code.
+
+
+        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.'
+      tags:
+      - Beta Features
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                home_url:
+                  type: string
+                  description: The new home URL of the production instance e.g. https://www.example.com
+                is_secondary:
+                  type: boolean
+                  description: Whether the domain is a secondary app.
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+  /instance/change_domain:
+    post:
+      operationId: ChangeProductionInstanceDomain
+      x-speakeasy-group: instanceSettings
+      x-speakeasy-name-override: changeDomain
+      summary: Update Production Instance Domain
+      description: 'Change the domain of a production instance.
+
+
+        Changing the domain requires updating the [DNS records](https://clerk.com/docs/deployments/overview#dns-records) accordingly, deploying new [SSL certificates](https://clerk.com/docs/deployments/overview#deploy-certificates), updating your Social Connection''s redirect URLs and setting the new keys in your code.
+
+
+        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.'
+      tags:
+      - Beta Features
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                home_url:
+                  type: string
+                  description: The new home URL of the production instance e.g. https://www.example.com
+                is_secondary:
+                  type: boolean
+                  description: 'Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and
+
+                    will be stored as part of the domain. This is useful for supporting multiple apps (one primary and
+
+                    multiple secondaries) on the same root domain (eTLD+1).'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+components:
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    InstanceSettings:
+      description: InstanceSettings Server API
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              object:
+                type: string
+                description: String representing the object's type. Objects of the same type share the same value.
+                enum:
+                - instance_settings
+              id:
+                type: string
+              restricted_to_allowlist:
+                type: boolean
+              from_email_address:
+                type: string
+              progressive_sign_up:
+                type: boolean
+              enhanced_email_deliverability:
+                type: boolean
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

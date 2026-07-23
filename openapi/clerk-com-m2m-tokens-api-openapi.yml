@@ -1,0 +1,772 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal M2M Tokens API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: M2M Tokens
+  description: Machine to Machine Tokens are used to manage authentication between Machines.
+paths:
+  /m2m_tokens:
+    post:
+      x-speakeasy-group: m2m
+      x-speakeasy-name-override: createToken
+      operationId: createM2MToken
+      summary: Create a M2M Token
+      description: Creates a new M2M Token. Must be authenticated via a Machine Secret Key.
+      tags:
+      - M2M Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token_format:
+                  type: string
+                  enum:
+                  - opaque
+                  - jwt
+                  default: opaque
+                seconds_until_expiration:
+                  type: number
+                  nullable: true
+                  minimum: 0
+                  exclusiveMinimum: true
+                claims:
+                  nullable: true
+                min_remaining_ttl_seconds:
+                  type: integer
+                  minimum: 0
+                  description: 'Enables server-side token reuse for opaque-format tokens. When set, if a non-revoked, non-expired M2M token already exists for this machine with identical `claims` and `scopes` and at least this many seconds of remaining lifetime, that existing token is returned and no new token is minted.
+
+
+                    Use this when caching tokens in application memory across requests is impractical — for example, in serverless functions, short-lived job workers, or autoscaling containers that churn faster than the token TTL. Pooling at the server collapses many redundant create calls into reuse of a single live token, which is the recommended pattern for high-volume M2M traffic.
+
+
+                    Must be strictly less than the effective token lifetime — that is, `seconds_until_expiration` when provided, or the machine''s default TTL otherwise. A value greater than or equal to the lifetime is rejected with a 400, since no freshly-minted token would ever satisfy the requirement.
+
+
+                    Only applies to opaque-format tokens (`token_format` defaults to `opaque`). JWT-format tokens are stateless and are never deduplicated.'
+                  example: 240
+              additionalProperties: false
+      responses:
+        '201':
+          description: 201 Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - machine_to_machine_token
+                  id:
+                    type: string
+                    pattern: ^mt_[0-9A-Fa-f]{32}$
+                    example: mt_f7f0ba8c3b4843ce7d85fcdd5e71853e
+                  subject:
+                    type: string
+                    pattern: ^mch_\w{27}$
+                    example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                  claims:
+                    nullable: true
+                    example:
+                      important_metadata: Some useful data
+                  scopes:
+                    type: array
+                    items:
+                      type: string
+                      pattern: ^mch_\w{27}$
+                    default: []
+                    example:
+                    - mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                    - mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em
+                  token:
+                    type: string
+                    example: mt_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                  revoked:
+                    type: boolean
+                    example: false
+                  revocation_reason:
+                    type: string
+                    nullable: true
+                    example: Revoked by user
+                  expired:
+                    type: boolean
+                    example: false
+                  expiration:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token will expire, in milliseconds
+                    example: 1716883200
+                  last_used_at:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token was last used, in milliseconds
+                    example: 1716883200
+                  created_at:
+                    type: number
+                    description: The timestamp for when the token was created, in milliseconds
+                    example: 1716883200
+                  updated_at:
+                    type: number
+                    description: The timestamp for when the token was last updated, in milliseconds
+                    example: 1716883200
+                required:
+                - object
+                - id
+                - subject
+                - token
+                - revoked
+                - revocation_reason
+                - expired
+                - expiration
+                - last_used_at
+                - created_at
+                - updated_at
+                additionalProperties: false
+        '400':
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Bad Request
+                        long_message:
+                          type: string
+                          example: 'Invalid ''url_parameter.example'': Failed regex check'
+                        code:
+                          type: string
+                          example: bad_request
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '409':
+          description: 409 Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+    get:
+      x-speakeasy-group: m2m
+      x-speakeasy-name-override: listTokens
+      operationId: getM2MTokens
+      summary: Get M2M Tokens
+      description: 'Fetches M2M tokens for a specific machine.
+
+
+        Only tokens created with the opaque token format are returned by this endpoint. JWT-format M2M tokens are stateless and are not stored.
+
+
+        This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
+
+
+        - When fetching M2M tokens with a Machine Secret Key, only tokens associated with the authenticated machine can be retrieved.
+
+        - When fetching M2M tokens with a Clerk Secret Key, tokens for any machine in the instance can be retrieved.'
+      tags:
+      - M2M Tokens
+      parameters:
+      - schema:
+          type: string
+          pattern: ^mch_\w{27}$
+        required: true
+        name: subject
+        in: query
+      - schema:
+          type: boolean
+          nullable: true
+          default: false
+        required: false
+        name: revoked
+        in: query
+      - schema:
+          type: boolean
+          nullable: true
+          default: false
+        required: false
+        name: expired
+        in: query
+      - schema:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 10
+        required: false
+        name: limit
+        in: query
+      - schema:
+          type: number
+          nullable: true
+          minimum: 0
+          default: 0
+        required: false
+        name: offset
+        in: query
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  m2m_tokens:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        object:
+                          type: string
+                          enum:
+                          - machine_to_machine_token
+                        id:
+                          type: string
+                          pattern: ^mt_[0-9A-Fa-f]{32}$
+                          example: mt_f7f0ba8c3b4843ce7d85fcdd5e71853e
+                        subject:
+                          type: string
+                          pattern: ^mch_\w{27}$
+                          example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                        claims:
+                          nullable: true
+                          example:
+                            important_metadata: Some useful data
+                        scopes:
+                          type: array
+                          items:
+                            type: string
+                            pattern: ^mch_\w{27}$
+                          default: []
+                          example:
+                          - mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                          - mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em
+                        revoked:
+                          type: boolean
+                          example: false
+                        revocation_reason:
+                          type: string
+                          nullable: true
+                          example: Revoked by user
+                        expired:
+                          type: boolean
+                          example: false
+                        expiration:
+                          type: number
+                          nullable: true
+                          description: The timestamp for when the token will expire, in milliseconds
+                          example: 1716883200
+                        last_used_at:
+                          type: number
+                          nullable: true
+                          description: The timestamp for when the token was last used, in milliseconds
+                          example: 1716883200
+                        created_at:
+                          type: number
+                          description: The timestamp for when the token was created, in milliseconds
+                          example: 1716883200
+                        updated_at:
+                          type: number
+                          description: The timestamp for when the token was last updated, in milliseconds
+                          example: 1716883200
+                      required:
+                      - object
+                      - id
+                      - subject
+                      - revoked
+                      - revocation_reason
+                      - expired
+                      - expiration
+                      - last_used_at
+                      - created_at
+                      - updated_at
+                      additionalProperties: false
+                  total_count:
+                    type: number
+                required:
+                - m2m_tokens
+                - total_count
+                additionalProperties: false
+        '400':
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Bad Request
+                        long_message:
+                          type: string
+                          example: 'Invalid ''url_parameter.example'': Failed regex check'
+                        code:
+                          type: string
+                          example: bad_request
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '403':
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '404':
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+  /m2m_tokens/{m2m_token_id}/revoke:
+    post:
+      x-speakeasy-group: m2m
+      x-speakeasy-name-override: revokeToken
+      operationId: revokeM2MToken
+      summary: Revoke a M2M Token
+      description: 'Revokes a M2M Token.
+
+
+        This endpoint only revokes stored opaque-format M2M tokens. JWT-format M2M tokens are stateless and cannot be revoked.
+
+
+        This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
+
+
+        - When revoking a M2M Token with a Machine Secret Key, the token must managed by the Machine associated with the Machine Secret Key.
+
+        - When revoking a M2M Token with a Clerk Secret Key, any token on the Instance can be revoked.'
+      tags:
+      - M2M Tokens
+      parameters:
+      - schema:
+          type: string
+          pattern: ^mt_[0-9A-Fa-f]{32}$
+        required: true
+        name: m2m_token_id
+        in: path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                revocation_reason:
+                  type: string
+                  nullable: true
+              additionalProperties: false
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - machine_to_machine_token
+                  id:
+                    type: string
+                    pattern: ^mt_[0-9A-Fa-f]{32}$
+                    example: mt_f7f0ba8c3b4843ce7d85fcdd5e71853e
+                  subject:
+                    type: string
+                    pattern: ^mch_\w{27}$
+                    example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                  claims:
+                    nullable: true
+                    example:
+                      important_metadata: Some useful data
+                  scopes:
+                    type: array
+                    items:
+                      type: string
+                      pattern: ^mch_\w{27}$
+                    default: []
+                    example:
+                    - mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                    - mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em
+                  revoked:
+                    type: boolean
+                    example: false
+                  revocation_reason:
+                    type: string
+                    nullable: true
+                    example: Revoked by user
+                  expired:
+                    type: boolean
+                    example: false
+                  expiration:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token will expire, in milliseconds
+                    example: 1716883200
+                  last_used_at:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token was last used, in milliseconds
+                    example: 1716883200
+                  created_at:
+                    type: number
+                    description: The timestamp for when the token was created, in milliseconds
+                    example: 1716883200
+                  updated_at:
+                    type: number
+                    description: The timestamp for when the token was last updated, in milliseconds
+                    example: 1716883200
+                required:
+                - object
+                - id
+                - subject
+                - revoked
+                - revocation_reason
+                - expired
+                - expiration
+                - last_used_at
+                - created_at
+                - updated_at
+                additionalProperties: false
+        '400':
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Bad Request
+                        long_message:
+                          type: string
+                          example: 'Invalid ''url_parameter.example'': Failed regex check'
+                        code:
+                          type: string
+                          example: bad_request
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '404':
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+  /m2m_tokens/verify:
+    post:
+      x-speakeasy-group: m2m
+      x-speakeasy-name-override: verifyToken
+      operationId: verifyM2MToken
+      summary: Verify a M2M Token
+      description: 'Verifies a M2M Token.
+
+
+        This endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.
+
+
+        - When verifying a M2M Token with a Machine Secret Key, the token must be granted access to the Machine associated with the Machine Secret Key.
+
+        - When verifying a M2M Token with a Clerk Secret Key, any token on the Instance can be verified.'
+      tags:
+      - M2M Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+              - token
+              additionalProperties: false
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - machine_to_machine_token
+                  id:
+                    type: string
+                    pattern: ^mt_[0-9A-Fa-f]{32}$
+                    example: mt_f7f0ba8c3b4843ce7d85fcdd5e71853e
+                  subject:
+                    type: string
+                    pattern: ^mch_\w{27}$
+                    example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                  claims:
+                    nullable: true
+                    example:
+                      important_metadata: Some useful data
+                  scopes:
+                    type: array
+                    items:
+                      type: string
+                      pattern: ^mch_\w{27}$
+                    default: []
+                    example:
+                    - mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                    - mch_2yGkLpQ7Y3rXSwtU24CzTk9I7Em
+                  revoked:
+                    type: boolean
+                    example: false
+                  revocation_reason:
+                    type: string
+                    nullable: true
+                    example: Revoked by user
+                  expired:
+                    type: boolean
+                    example: false
+                  expiration:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token will expire, in milliseconds
+                    example: 1716883200
+                  last_used_at:
+                    type: number
+                    nullable: true
+                    description: The timestamp for when the token was last used, in milliseconds
+                    example: 1716883200
+                  created_at:
+                    type: number
+                    description: The timestamp for when the token was created, in milliseconds
+                    example: 1716883200
+                  updated_at:
+                    type: number
+                    description: The timestamp for when the token was last updated, in milliseconds
+                    example: 1716883200
+                required:
+                - object
+                - id
+                - subject
+                - revoked
+                - revocation_reason
+                - expired
+                - expiration
+                - last_used_at
+                - created_at
+                - updated_at
+                additionalProperties: false
+        '400':
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Bad Request
+                        long_message:
+                          type: string
+                          example: 'Invalid ''url_parameter.example'': Failed regex check'
+                        code:
+                          type: string
+                          example: bad_request
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '404':
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

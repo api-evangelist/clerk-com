@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Testing Tokens API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Testing Tokens
+  description: Tokens meant for use by end-to-end test suites in requests to the Frontend API, so as to bypass bot detection measures.
+  externalDocs:
+    url: https://clerk.com/docs/testing/overview#testing-tokens
+paths:
+  /testing_tokens:
+    post:
+      operationId: CreateTestingToken
+      x-speakeasy-group: testingTokens
+      x-speakeasy-name-override: create
+      summary: Retrieve a New Testing Token
+      description: Retrieve a new testing token.
+      tags:
+      - Testing Tokens
+      responses:
+        '200':
+          $ref: '#/components/responses/TestingToken'
+components:
+  schemas:
+    TestingToken:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - testing_token
+        token:
+          type: string
+          description: The actual token. This value is meant to be passed in the `__clerk_testing_token` query parameter with requests to the Frontend API.
+          example: 1713877200-c_2J2MvPu9PnXcuhbPZNao0LOXqK9A7YrnBn0HmIWxy
+        expires_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of the token''s expiration time.
+
+            '
+          example: 1713880800
+      required:
+      - object
+      - token
+      - expires_at
+  responses:
+    TestingToken:
+      description: A Testing Token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TestingToken'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

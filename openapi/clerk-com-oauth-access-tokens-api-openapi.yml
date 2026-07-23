@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal OAuth Access Tokens API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: OAuth Access Tokens
+  description: Endpoints for managing OAuth Access Tokens, which are credentials to access protected resources on behalf of a user.
+paths:
+  /oauth_applications/access_tokens/verify:
+    post:
+      x-speakeasy-group: oauthAccessTokens
+      x-speakeasy-name-override: verify
+      operationId: verifyOAuthAccessToken
+      summary: Verify an OAuth Access Token
+      tags:
+      - OAuth Access Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: The access token to verify.
+                  example: XXXXXXXXXXXXXX
+                secret:
+                  type: string
+                  description: The access token to verify. This is deprecated, use `access_token` instead.
+                  deprecated: true
+                  example: XXXXXXXXXXXXXX
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    object:
+                      type: string
+                      enum:
+                      - clerk_idp_oauth_access_token
+                      example: clerk_idp_oauth_access_token
+                    id:
+                      type: string
+                      pattern: ^oat_[0-9A-Fa-f]{32}$
+                      example: oat_0ef5a7a33d87ed87ee7954c845d80450
+                    client_id:
+                      type: string
+                      example: client_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                    subject:
+                      type: string
+                      pattern: ^user_\w{27}$
+                      example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
+                    scopes:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                      - read
+                      - write
+                    revoked:
+                      type: boolean
+                      example: false
+                    revocation_reason:
+                      type: string
+                      nullable: true
+                      example: Revoked by user
+                    expired:
+                      type: boolean
+                      example: false
+                    expiration:
+                      type: number
+                      nullable: true
+                      example: 1716883200
+                    created_at:
+                      type: number
+                      example: 1716883200
+                    updated_at:
+                      type: number
+                      example: 1716883200
+                  required:
+                  - object
+                  - id
+                  - client_id
+                  - subject
+                  - scopes
+                  - revoked
+                  - revocation_reason
+                  - expired
+                  - expiration
+                  - created_at
+                  - updated_at
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    active:
+                      type: boolean
+                      enum:
+                      - false
+                      description: Indicates that a JWT access token is not active (expired)
+                      example: false
+                  required:
+                  - active
+                  additionalProperties: false
+        '400':
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Bad Request
+                        long_message:
+                          type: string
+                          example: 'Invalid ''url_parameter.example'': Failed regex check'
+                        code:
+                          type: string
+                          example: bad_request
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+        '404':
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: some details about the error
+                        long_message:
+                          type: string
+                          example: some details about the error
+                        code:
+                          type: string
+                          example: some_error_code
+                      required:
+                      - message
+                      - long_message
+                      - code
+                required:
+                - errors
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

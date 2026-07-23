@@ -1,0 +1,716 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Organization Memberships API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Organization Memberships
+  description: Manage member roles in an organization.
+  externalDocs:
+    url: https://clerk.com/docs/organizations/manage-member-roles
+paths:
+  /organizations/{organization_id}/memberships:
+    post:
+      operationId: CreateOrganizationMembership
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: create
+      summary: Create a New Organization Membership
+      description: 'Adds a user as a member to the given organization.
+
+        Only users in the same instance as the organization can be added as members.
+
+
+        This organization will be the user''s [active organization] (https://clerk.com/docs/organizations/overview#active-organization)
+
+        the next time they create a session, presuming they don''t explicitly set a
+
+        different organization as active before then.'
+      tags:
+      - Organization Memberships
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization where the new membership will be created
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: 'The ID of the user that will be added as a member in the organization.
+
+                    The user needs to exist in the same instance as the organization and must not be a member of the given organization already.'
+                role:
+                  type: string
+                  description: The role that the new member will have in the organization.
+                public_metadata:
+                  type: object
+                  description: Metadata saved on the organization membership, that is visible to both your frontend and backend.
+                  additionalProperties: true
+                  nullable: true
+                private_metadata:
+                  type: object
+                  description: Metadata saved on the organization membership that is only visible to your backend.
+                  additionalProperties: true
+                  nullable: true
+              required:
+              - user_id
+              - role
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMembership'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: ListOrganizationMemberships
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: list
+      summary: Get a List of All Members of an Organization
+      description: Retrieves all user memberships for the given organization
+      tags:
+      - Organization Memberships
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: query
+        required: false
+        name: order_by
+        description: 'Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+
+          By prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order."'
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Returns users with the user IDs specified. For each user ID, the `+` and `-` can be
+
+          prepended to the ID, which denote whether the respective user ID should be included or
+
+          excluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored.'
+        required: false
+      - name: email_address
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored.
+        required: false
+      - name: phone_number
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored.
+        required: false
+      - name: username
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Returns users with the specified usernames.
+
+          Accepts up to 100 usernames.
+
+          Any usernames not found are ignored.'
+        required: false
+      - name: web3_wallet
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Returns users with the specified web3 wallet addresses.
+
+          Accepts up to 100 web3 wallet addresses.
+
+          Any web3 wallet addresses not found are ignored.'
+        required: false
+      - name: role
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored.
+        required: false
+      - name: query
+        in: query
+        description: 'Returns users that match the given query.
+
+          For possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.
+
+          The query value doesn''t need to match the exact value you are looking for, it is capable of partial matches as well.'
+        schema:
+          type: string
+        required: false
+      - name: email_address_query
+        in: query
+        description: 'Returns users with emails that match the given query, via case-insensitive partial match.
+
+          For example, `email_address_query=ello` will match a user with the email `HELLO@example.com`.'
+        schema:
+          type: string
+        required: false
+      - name: phone_number_query
+        in: query
+        description: 'Returns users with phone numbers that match the given query, via case-insensitive partial match.
+
+          For example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`.'
+        schema:
+          type: string
+        required: false
+      - name: username_query
+        in: query
+        description: 'Returns users with usernames that match the given query, via case-insensitive partial match.
+
+          For example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`.'
+        schema:
+          type: string
+      - name: name_query
+        in: query
+        description: Returns users with names that match the given query, via case-insensitive partial match.
+        schema:
+          type: string
+      - name: last_active_at_before
+        in: query
+        description: 'Returns users whose last session activity was before the given date (with millisecond precision).
+
+          Example: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23.'
+        example: 1700690400000
+        schema:
+          type: integer
+      - name: last_active_at_after
+        in: query
+        description: 'Returns users whose last session activity was after the given date (with millisecond precision).
+
+          Example: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23.'
+        example: 1700690400000
+        schema:
+          type: integer
+      - name: created_at_before
+        in: query
+        description: 'Returns users who have been created before the given date (with millisecond precision).
+
+          Example: use 1730160000000 to retrieve users who have been created before 2024-10-29.'
+        example: 1730160000000
+        schema:
+          type: integer
+      - name: created_at_after
+        in: query
+        description: 'Returns users who have been created after the given date (with millisecond precision).
+
+          Example: use 1730160000000 to retrieve users who have been created after 2024-10-29.'
+        example: 1730160000000
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMemberships'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /organizations/{organization_id}/memberships/{user_id}:
+    patch:
+      operationId: UpdateOrganizationMembership
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: update
+      summary: Update an Organization Membership
+      description: Updates the properties of an existing organization membership
+      tags:
+      - Organization Memberships
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization to which this membership belongs
+      - in: path
+        required: true
+        name: user_id
+        schema:
+          type: string
+        description: The ID of the user to which this membership belongs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  description: The new role of the given membership.
+              required:
+              - role
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMembership'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: DeleteOrganizationMembership
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: delete
+      summary: Remove a Member from an Organization
+      description: Removes the given membership from the organization
+      tags:
+      - Organization Memberships
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization to which this membership belongs
+      - in: path
+        required: true
+        name: user_id
+        schema:
+          type: string
+        description: The ID of the user to which this membership belongs
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMembership'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /organizations/{organization_id}/memberships/{user_id}/metadata:
+    patch:
+      operationId: UpdateOrganizationMembershipMetadata
+      x-speakeasy-group: organizationMemberships
+      x-speakeasy-name-override: updateMetadata
+      summary: Merge and Update Organization Membership Metadata
+      description: 'Update an organization membership''s metadata attributes by merging existing values with the provided parameters.
+
+        Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
+
+        You can remove metadata keys at any level by setting their value to `null`.'
+      tags:
+      - Organization Memberships
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The ID of the organization to which this membership belongs
+      - in: path
+        required: true
+        name: user_id
+        schema:
+          type: string
+        description: The ID of the user to which this membership belongs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                public_metadata:
+                  type: object
+                  description: 'Metadata saved on the organization membership, that is visible to both your frontend and backend.
+
+                    The new object will be merged with the existing value.'
+                  additionalProperties: true
+                private_metadata:
+                  type: object
+                  description: 'Metadata saved on the organization membership that is only visible to your backend.
+
+                    The new object will be merged with the existing value.'
+                  additionalProperties: true
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMembership'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /organization_memberships:
+    get:
+      operationId: InstanceGetOrganizationMemberships
+      x-speakeasy-group: users
+      x-speakeasy-name-override: getInstanceOrganizationMemberships
+      summary: Get a List of All Organization Memberships Within an Instance.
+      description: Retrieves all organization user memberships for the given instance.
+      tags:
+      - Organization Memberships
+      parameters:
+      - name: order_by
+        in: query
+        required: false
+        description: 'Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.
+
+          By prepending one of those values with + or -,
+
+          we can choose to sort in ascending (ASC) or descending (DESC) order.'
+        schema:
+          type: string
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/OrganizationMemberships'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ClerkErrors'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
+    OrganizationMemberships:
+      description: A list of organization memberships
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMemberships'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Organization:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - organization
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        members_count:
+          type: integer
+        missing_member_with_elevated_permissions:
+          type: boolean
+        pending_invitations_count:
+          type: integer
+        max_allowed_memberships:
+          type: integer
+        admin_delete_enabled:
+          type: boolean
+        public_metadata:
+          type: object
+          additionalProperties: true
+        private_metadata:
+          type: object
+          additionalProperties: true
+        created_by:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        last_active_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last activity.
+
+            '
+        role_set_key:
+          type: string
+          description: 'The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.
+
+            '
+          nullable: true
+      required:
+      - object
+      - id
+      - name
+      - slug
+      - has_image
+      - max_allowed_memberships
+      - admin_delete_enabled
+      - public_metadata
+      - created_at
+      - updated_at
+    OrganizationMembership:
+      description: A user's membership in an organization
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_membership
+        role:
+          type: string
+        role_name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        public_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible from both Frontend and Backend APIs
+          additionalProperties: true
+        private_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible only from the Backend API
+          additionalProperties: true
+        organization:
+          type: object
+          nullable: false
+          allOf:
+          - $ref: '#/components/schemas/Organization'
+        public_user_data:
+          $ref: '#/components/schemas/OrganizationMembershipPublicUserData'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+      required:
+      - object
+      - id
+      - role
+      - permissions
+      - public_metadata
+      - created_at
+      - updated_at
+      - organization
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+          nullable: false
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        profile_image_url:
+          type: string
+          nullable: true
+          deprecated: true
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        banned:
+          type: boolean
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - profile_image_url
+      - image_url
+      - has_image
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OrganizationMemberships:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization memberships
+
+            '
+      required:
+      - data
+      - total_count
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Account Portal
+paths:
+  /v1/account_portal:
+    get:
+      summary: Get Account Portal
+      description: Get users account portal
+      operationId: getAccountPortal
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.AccountPortal'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+      tags:
+      - Account Portal
+components:
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Client.AccountPortal:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - account_portal
+        allowed:
+          type: boolean
+        enabled:
+          type: boolean
+        internal_linking:
+          type: boolean
+        after_sign_in_url:
+          type: string
+        after_sign_up_url:
+          type: string
+        after_join_waitlist_url:
+          type: string
+        after_create_organization_url:
+          type: string
+        after_leave_organization_url:
+          type: string
+        logo_link_url:
+          type: string
+        customization:
+          type: object
+          properties:
+            appearance:
+              type: string
+              enum:
+              - auto
+              - dark
+              - light
+              nullable: true
+            background_color_dark:
+              type: string
+              nullable: true
+            background_color_light:
+              type: string
+              nullable: true
+            primary_color_dark:
+              type: string
+              nullable: true
+            primary_color_light:
+              type: string
+              nullable: true
+          required:
+          - appearance
+          - background_color_dark
+          - background_color_light
+          - primary_color_dark
+          - primary_color_light
+      required:
+      - object
+      - allowed
+      - enabled
+      - internal_linking
+      - after_sign_in_url
+      - after_sign_up_url
+      - after_join_waitlist_url
+      - after_create_organization_url
+      - after_leave_organization_url
+      - logo_link_url
+      - customization
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.AccountPortal:
+      description: Returns the account portal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.AccountPortal'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

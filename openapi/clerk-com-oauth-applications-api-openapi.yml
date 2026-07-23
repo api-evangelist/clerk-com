@@ -1,0 +1,595 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal OAuth Applications API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: OAuth Applications
+  description: OAuth applications contain data for clients using Clerk as an OAuth2 identity provider.
+paths:
+  /oauth_applications:
+    get:
+      operationId: ListOAuthApplications
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: list
+      summary: Get a List of OAuth Applications for an Instance
+      description: 'This request returns the list of OAuth applications for an instance.
+
+        Results can be paginated using the optional `limit` and `offset` query parameters.
+
+        The OAuth applications are ordered by descending creation date.
+
+        Most recent OAuth applications will be returned first.'
+      tags:
+      - OAuth Applications
+      parameters:
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - name: order_by
+        in: query
+        description: 'Allows to return OAuth applications in a particular order.
+
+          At the moment, you can order the returned OAuth applications by their `created_at` and `name`.
+
+          In order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.
+
+          For example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.
+
+          If you don''t use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,
+
+          if you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.'
+        required: false
+        schema:
+          type: string
+          default: +created_at
+      - name: name_query
+        in: query
+        description: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplications'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    post:
+      operationId: CreateOAuthApplication
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: create
+      summary: Create an OAuth Application
+      description: 'Creates a new OAuth application with the given name and callback URL for an instance.
+
+        The callback URL must be a valid URL.
+
+        All URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...'
+      tags:
+      - OAuth Applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the new OAuth application.
+
+                    Max length: 256'
+                redirect_uris:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of redirect URIs of the new OAuth application
+                  nullable: true
+                callback_url:
+                  type: string
+                  maxLength: 1024
+                  description: The callback URL of the new OAuth application
+                  nullable: true
+                  deprecated: true
+                scopes:
+                  type: string
+                  maxLength: 1024
+                  description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+                  default: profile email
+                  example: profile email public_metadata
+                  nullable: true
+                consent_screen_enabled:
+                  type: boolean
+                  default: true
+                  description: True to enable a consent screen to display in the authentication flow.
+                  nullable: true
+                pkce_required:
+                  type: boolean
+                  default: false
+                  description: True to require the Proof Key of Code Exchange (PKCE) flow.
+                  nullable: true
+                public:
+                  type: boolean
+                  description: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
+                  nullable: true
+              required:
+              - name
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplicationWithSecret'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /oauth_applications/{oauth_application_id}:
+    get:
+      operationId: GetOAuthApplication
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: get
+      summary: Retrieve an OAuth Application by ID
+      description: Fetches the OAuth application whose ID matches the provided `id` in the path.
+      tags:
+      - OAuth Applications
+      parameters:
+      - in: path
+        name: oauth_application_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the OAuth application
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplication'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    patch:
+      operationId: UpdateOAuthApplication
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: update
+      summary: Update an OAuth Application
+      description: Updates an existing OAuth application
+      tags:
+      - OAuth Applications
+      parameters:
+      - in: path
+        name: oauth_application_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the OAuth application to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  description: 'The new name of the OAuth application.
+
+                    Max length: 256'
+                  nullable: true
+                redirect_uris:
+                  type: array
+                  items:
+                    type: string
+                  description: An array of redirect URIs of the new OAuth application
+                  nullable: true
+                callback_url:
+                  type: string
+                  maxLength: 1024
+                  description: The new callback URL of the OAuth application
+                  nullable: true
+                  deprecated: true
+                scopes:
+                  type: string
+                  maxLength: 1024
+                  description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+                  default: profile email
+                  example: profile email public_metadata private_metadata
+                  nullable: true
+                consent_screen_enabled:
+                  type: boolean
+                  description: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
+                  nullable: true
+                pkce_required:
+                  type: boolean
+                  description: True to require the Proof Key of Code Exchange (PKCE) flow.
+                  nullable: true
+                public:
+                  type: boolean
+                  description: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
+                  nullable: true
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplication'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: DeleteOAuthApplication
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: delete
+      summary: Delete an OAuth Application
+      description: 'Deletes the given OAuth application.
+
+        This is not reversible.'
+      tags:
+      - OAuth Applications
+      parameters:
+      - in: path
+        name: oauth_application_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the OAuth application to delete
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /oauth_applications/{oauth_application_id}/logo:
+    put:
+      operationId: UploadOAuthApplicationLogo
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: uploadLogo
+      summary: Upload a Logo for the OAuth Application
+      description: 'Set or replace an OAuth application''s logo by uploading an image file.
+
+        This endpoint uses the `multipart/form-data` request content type and accepts a file of image type.
+
+        The file size cannot exceed 10MB.
+
+        Only the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`.'
+      tags:
+      - OAuth Applications
+      parameters:
+      - name: oauth_application_id
+        in: path
+        description: The ID of the OAuth application for which to upload a logo
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                uploader_user_id:
+                  type: string
+                  description: The ID of the user that will be credited with the image upload.
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplication'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '413':
+          $ref: '#/components/responses/ClerkErrors'
+  /oauth_applications/{oauth_application_id}/rotate_secret:
+    post:
+      operationId: RotateOAuthApplicationSecret
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: rotateSecret
+      summary: Rotate the Client Secret of the Given OAuth Application
+      description: 'Rotates the OAuth application''s client secret.
+
+        When the client secret is rotated, make sure to update it in authorized OAuth clients.'
+      tags:
+      - OAuth Applications
+      parameters:
+      - name: oauth_application_id
+        in: path
+        description: The ID of the OAuth application for which to rotate the client secret
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OAuthApplicationWithSecret'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  schemas:
+    OAuthApplications:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of OAuth applications
+
+            '
+      required:
+      - data
+      - total_count
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    OAuthApplicationWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/OAuthApplication'
+      - type: object
+        properties:
+          client_secret:
+            type: string
+            description: 'Empty if public client.
+
+              '
+    OAuthApplication:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - oauth_application
+        id:
+          type: string
+        instance_id:
+          type: string
+        name:
+          type: string
+        client_id:
+          type: string
+        client_uri:
+          type: string
+          nullable: true
+        client_image_url:
+          type: string
+          nullable: true
+        dynamically_registered:
+          type: boolean
+        consent_screen_enabled:
+          type: boolean
+        pkce_required:
+          type: boolean
+        public:
+          type: boolean
+        scopes:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            type: string
+        callback_url:
+          type: string
+          deprecated: true
+          description: 'Deprecated: Use redirect_uris instead.
+
+            '
+        authorize_url:
+          type: string
+        token_fetch_url:
+          type: string
+        user_info_url:
+          type: string
+        discovery_url:
+          type: string
+        token_introspection_url:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+      required:
+      - object
+      - id
+      - instance_id
+      - name
+      - dynamically_registered
+      - consent_screen_enabled
+      - pkce_required
+      - public
+      - client_id
+      - client_uri
+      - client_image_url
+      - scopes
+      - redirect_uris
+      - callback_url
+      - authorize_url
+      - token_fetch_url
+      - user_info_url
+      - discovery_url
+      - token_introspection_url
+      - created_at
+      - updated_at
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplicationWithSecret:
+      description: An OAuth application with client secret
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationWithSecret'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplications:
+      description: A list of OAuth applications
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplications'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    OAuthApplication:
+      description: An OAuth application
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplication'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

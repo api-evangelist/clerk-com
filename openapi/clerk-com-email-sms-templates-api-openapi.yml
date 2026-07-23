@@ -1,0 +1,559 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Email & SMS Templates API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Email & SMS Templates
+  description: Email & SMS templates allow you to customize the theming and wording of emails & SMS messages that are sent by your instance.
+  externalDocs:
+    url: https://clerk.com/docs/authentication/email-sms-templates
+paths:
+  /templates/{template_type}:
+    get:
+      deprecated: true
+      operationId: GetTemplateList
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: list
+      summary: List All Templates
+      description: 'Returns a list of all templates.
+
+        The templates are returned sorted by position.'
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of templates to list (email or SMS)
+        required: true
+        schema:
+          type: string
+          enum:
+          - email
+          - sms
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Template.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /templates/{template_type}/{slug}:
+    get:
+      deprecated: true
+      operationId: GetTemplate
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: get
+      summary: Retrieve a Template
+      description: Returns the details of a template
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of templates to retrieve (email or SMS)
+        required: true
+        schema:
+          type: string
+          enum:
+          - email
+          - sms
+      - name: slug
+        in: path
+        description: The slug (i.e. machine-friendly name) of the template to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    put:
+      deprecated: true
+      operationId: UpsertTemplate
+      x-speakeasy-group: emailAndSmsTemplates
+      x-speakeasy-name-override: upsert
+      summary: Update a Template for a Given Type and Slug
+      description: Updates the existing template of the given type and slug
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of template to update
+        required: true
+        schema:
+          type: string
+          enum:
+          - email
+          - sms
+      - name: slug
+        in: path
+        description: The slug of the template to update
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  description: The user-friendly name of the template
+                subject:
+                  type: string
+                  description: 'The email subject.
+
+                    Applicable only to email templates.'
+                  nullable: true
+                markup:
+                  type: string
+                  description: The editor markup used to generate the body of the template
+                  nullable: true
+                body:
+                  type: string
+                  description: The template body before variable interpolation
+                delivered_by_clerk:
+                  type: boolean
+                  description: Whether Clerk should deliver emails or SMS messages based on the current template
+                  nullable: true
+                from_email_name:
+                  type: string
+                  description: 'The local part of the From email address that will be used for emails.
+
+                    For example, in the address ''hello@example.com'', the local part is ''hello''.
+
+                    Applicable only to email templates.'
+                reply_to_email_name:
+                  type: string
+                  description: 'The local part of the Reply To email address that will be used for emails.
+
+                    For example, in the address ''hello@example.com'', the local part is ''hello''.
+
+                    Applicable only to email templates.'
+      responses:
+        '200':
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /templates/{template_type}/{slug}/revert:
+    post:
+      deprecated: true
+      operationId: RevertTemplate
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: revert
+      summary: Revert a Template
+      description: Reverts an updated template to its default state
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of template to revert
+        required: true
+        schema:
+          type: string
+          enum:
+          - email
+          - sms
+      - name: slug
+        in: path
+        description: The slug of the template to revert
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /templates/{template_type}/{slug}/preview:
+    post:
+      deprecated: true
+      operationId: PreviewTemplate
+      x-speakeasy-group: templates
+      x-speakeasy-name-override: preview
+      summary: Preview Changes to a Template
+      description: Returns a preview of a template for a given template_type, slug and body
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of template to preview
+        required: true
+        schema:
+          type: string
+      - name: slug
+        in: path
+        description: The slug of the template to preview
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Required parameters
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                subject:
+                  type: string
+                  description: 'The email subject.
+
+                    Applicable only to email templates.'
+                  nullable: true
+                body:
+                  type: string
+                  description: The template body before variable interpolation
+                from_email_name:
+                  type: string
+                  description: 'The local part of the From email address that will be used for emails.
+
+                    For example, in the address ''hello@example.com'', the local part is ''hello''.
+
+                    Applicable only to email templates.'
+                reply_to_email_name:
+                  type: string
+                  description: 'The local part of the Reply To email address that will be used for emails.
+
+                    For example, in the address ''hello@example.com'', the local part is ''hello''.
+
+                    Applicable only to email templates.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /templates/{template_type}/{slug}/toggle_delivery:
+    post:
+      deprecated: true
+      operationId: ToggleTemplateDelivery
+      x-speakeasy-group: emailSMSTemplates
+      x-speakeasy-name-override: toggleTemplateDelivery
+      summary: Toggle the Delivery by Clerk for a Template of a Given Type and Slug
+      description: 'Toggles the delivery by Clerk for a template of a given type and slug.
+
+        If disabled, Clerk will not deliver the resulting email or SMS.
+
+        The app developer will need to listen to the `email.created` or `sms.created` webhooks in order to handle delivery themselves.'
+      tags:
+      - Email & SMS Templates
+      parameters:
+      - name: template_type
+        in: path
+        description: The type of template to toggle delivery for
+        required: true
+        schema:
+          type: string
+          enum:
+          - email
+          - sms
+      - name: slug
+        in: path
+        description: The slug of the template for which to toggle delivery
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                delivered_by_clerk:
+                  type: boolean
+                  description: Whether Clerk should deliver emails or SMS messages based on the current template
+      responses:
+        '200':
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Template:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - template
+        instance_id:
+          nullable: true
+          type: string
+          description: The ID of the instance to which the template belongs
+        resource_type:
+          type: string
+          description: whether this is a system (default) or user overridden) template
+        template_type:
+          type: string
+          description: whether this is an email or SMS template
+        name:
+          type: string
+          description: user-friendly name of the template
+        slug:
+          type: string
+          description: machine-friendly name of the template
+        position:
+          type: integer
+          description: position with the listing of templates
+        can_revert:
+          type: boolean
+          description: whether this template can be reverted to the corresponding system default
+        can_delete:
+          type: boolean
+          description: whether this template can be deleted
+        can_edit_body:
+          type: boolean
+          description: whether the body of this template can be edited
+        can_toggle:
+          type: boolean
+          description: whether this template can be enabled or disabled, true only for notification SMS templates
+        subject:
+          type: string
+          description: email subject
+          nullable: true
+        markup:
+          type: string
+          description: the editor markup used to generate the body of the template
+        body:
+          type: string
+          description: the template body before variable interpolation
+        available_variables:
+          type: array
+          description: list of variables that are available for use in the template body
+          items:
+            type: string
+        required_variables:
+          type: array
+          description: list of variables that must be contained in the template body
+          items:
+            type: string
+        from_email_name:
+          type: string
+        reply_to_email_name:
+          type: string
+        delivered_by_clerk:
+          type: boolean
+        enabled:
+          type: boolean
+        flagged_as_suspicious:
+          type: boolean
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Template:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Template'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Template.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Template'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

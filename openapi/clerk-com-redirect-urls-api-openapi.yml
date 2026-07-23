@@ -1,0 +1,568 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Redirect URLs API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Redirect URLs
+  description: 'Redirect URLs are whitelisted URLs that facilitate secure authentication flows in native applications (e.g. React Native, Expo).
+
+    In these contexts, Clerk ensures that security-critical nonces are passed only to the whitelisted URLs.'
+paths:
+  /redirect_urls:
+    get:
+      summary: List All Redirect URLs
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: list
+      description: Lists all whitelisted redirect_urls for the instance
+      operationId: ListRedirectURLs
+      tags:
+      - Redirect URLs
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/RedirectURL.List'
+    post:
+      summary: Create a Redirect URL
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: create
+      description: Create a redirect URL
+      operationId: CreateRedirectURL
+      tags:
+      - Redirect URLs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The full URL value prefixed with `https://` or a custom scheme e.g. `"https://my-app.com/oauth-callback"` or `"my-app://oauth-callback"`
+              required:
+              - url
+      responses:
+        '200':
+          $ref: '#/components/responses/RedirectURL'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /redirect_urls/{id}:
+    get:
+      summary: Retrieve a Redirect URL
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: get
+      description: Retrieve the details of the redirect URL with the given ID
+      operationId: GetRedirectURL
+      tags:
+      - Redirect URLs
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the redirect URL
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/RedirectURL'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    delete:
+      summary: Delete a Redirect URL
+      x-speakeasy-group: redirectUrls
+      x-speakeasy-name-override: delete
+      description: Remove the selected redirect URL from the whitelist of the instance
+      operationId: DeleteRedirectURL
+      tags:
+      - Redirect URLs
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the redirect URL
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls:
+    get:
+      operationId: PlatformListRedirectURLs
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: listRedirectURLs
+      tags:
+      - Redirect URLs
+      summary: List Redirect URLs
+      description: 'List all redirect URLs for an application instance.
+
+
+        The `envOrInsID` parameter can be either an environment type (e.g., "development", "production")
+
+        or an instance ID.
+
+
+        Requires the `applications:read` scope.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: envOrInsID
+        in: path
+        description: 'Environment type (e.g., "development", "production") or instance ID.
+
+          '
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of results to return per page (1-500, default 10).
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 10
+      - name: offset
+        in: query
+        description: Number of results to skip for pagination.
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        '200':
+          description: Redirect URLs retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformListRedirectURLsResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    post:
+      operationId: PlatformCreateRedirectURL
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: createRedirectURL
+      tags:
+      - Redirect URLs
+      summary: Create a Redirect URL
+      description: 'Create a redirect URL for an application instance.
+
+
+        The `envOrInsID` parameter can be either an environment type (e.g., "development", "production")
+
+        or an instance ID.
+
+
+        Requires the `applications:manage` scope.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: envOrInsID
+        in: path
+        description: 'Environment type (e.g., "development", "production") or instance ID.
+
+          '
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Redirect URL data to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                url:
+                  type: string
+                  description: The full URL value prefixed with `https://` or a custom scheme e.g. `"https://my-app.com/oauth-callback"` or `"my-app://oauth-callback"`.
+              required:
+              - url
+      responses:
+        '200':
+          description: Redirect URL created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectURL'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls/{redirectURLID}:
+    get:
+      operationId: PlatformGetRedirectURL
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: getRedirectURL
+      tags:
+      - Redirect URLs
+      summary: Get a Redirect URL
+      description: 'Retrieve a redirect URL for an application instance.
+
+
+        The `envOrInsID` parameter can be either an environment type (e.g., "development", "production")
+
+        or an instance ID.
+
+
+        Requires the `applications:read` scope.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: envOrInsID
+        in: path
+        description: 'Environment type (e.g., "development", "production") or instance ID.
+
+          '
+        required: true
+        schema:
+          type: string
+      - name: redirectURLID
+        in: path
+        description: Redirect URL ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Redirect URL retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RedirectURL'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    delete:
+      operationId: PlatformDeleteRedirectURL
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: deleteRedirectURL
+      tags:
+      - Redirect URLs
+      summary: Delete a Redirect URL
+      description: 'Delete a redirect URL from an application instance.
+
+
+        The `envOrInsID` parameter can be either an environment type (e.g., "development", "production")
+
+        or an instance ID.
+
+
+        Requires the `applications:manage` scope.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: envOrInsID
+        in: path
+        description: 'Environment type (e.g., "development", "production") or instance ID.
+
+          '
+        required: true
+        schema:
+          type: string
+      - name: redirectURLID
+        in: path
+        description: Redirect URL ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RedirectURL:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectURL'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    RedirectURL.List:
+      description: List of Redirect URLs
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RedirectURL'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    PlatformListRedirectURLsResponse:
+      title: List Redirect URLs Response
+      description: A paginated list of redirect URLs for an application instance.
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          description: The list of redirect URLs.
+          items:
+            $ref: '#/components/schemas/RedirectURL'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of redirect URLs in the instance.
+          example: 3
+      required:
+      - data
+      - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    RedirectURL:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - redirect_url
+        id:
+          type: string
+        url:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+      required:
+      - object
+      - id
+      - url
+      - created_at
+      - updated_at
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

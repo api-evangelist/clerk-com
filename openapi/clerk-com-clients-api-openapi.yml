@@ -1,0 +1,429 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Clients API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Clients
+  description: The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+  externalDocs:
+    url: https://clerk.com/docs/references/javascript/client
+paths:
+  /clients:
+    get:
+      deprecated: true
+      operationId: GetClientList
+      x-speakeasy-group: clients
+      x-speakeasy-name-override: list
+      tags:
+      - Clients
+      summary: List All Clients
+      description: 'Returns a list of all clients. The clients are returned sorted by creation date,
+
+        with the newest clients appearing first.
+
+        Warning: the endpoint is being deprecated and will be removed in future versions.'
+      parameters:
+      - $ref: '#/components/parameters/Paginated'
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.List'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '410':
+          $ref: '#/components/responses/DeprecatedEndpoint'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /clients/verify:
+    post:
+      operationId: VerifyClient
+      x-speakeasy-group: clients
+      x-speakeasy-name-override: verify
+      tags:
+      - Clients
+      summary: Verify a Client
+      description: Verifies the client in the provided token
+      requestBody:
+        description: Parameters.
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                token:
+                  type: string
+                  description: A JWT that represents the active client.
+              required:
+              - token
+      responses:
+        '200':
+          $ref: '#/components/responses/Client'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /clients/{client_id}:
+    get:
+      operationId: GetClient
+      x-speakeasy-group: clients
+      x-speakeasy-name-override: get
+      tags:
+      - Clients
+      summary: Get a Client
+      description: Returns the details of a client.
+      parameters:
+      - name: client_id
+        in: path
+        description: Client ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Client'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  schemas:
+    Session:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - session
+        id:
+          type: string
+        user_id:
+          type: string
+        client_id:
+          type: string
+        actor:
+          type: object
+          nullable: true
+        status:
+          type: string
+          enum:
+          - active
+          - revoked
+          - ended
+          - expired
+          - removed
+          - abandoned
+          - replaced
+          - pending
+        last_active_organization_id:
+          type: string
+          nullable: true
+        last_active_at:
+          type: integer
+        latest_activity:
+          $ref: '#/components/schemas/SessionActivityResponse'
+        expire_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of expiration.
+
+            '
+        abandon_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of abandonment.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        tasks:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/SessionTask'
+      required:
+      - object
+      - id
+      - user_id
+      - client_id
+      - status
+      - last_active_at
+      - expire_at
+      - abandon_at
+      - updated_at
+      - created_at
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    SessionTask:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key
+    Client:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - client
+        id:
+          type: string
+          description: 'String representing the identifier of the session.
+
+            '
+        session_ids:
+          type: array
+          items:
+            type: string
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        sign_in_id:
+          type: string
+          nullable: true
+        sign_up_id:
+          type: string
+          nullable: true
+        last_active_session_id:
+          nullable: true
+          type: string
+          description: 'Last active session_id.
+
+            '
+        last_authentication_strategy:
+          nullable: true
+          type: string
+          description: 'The authentication strategy that was last used to authenticate the user on this client.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+      required:
+      - object
+      - id
+      - session_ids
+      - sessions
+      - sign_in_id
+      - sign_up_id
+      - last_active_session_id
+      - last_authentication_strategy
+      - updated_at
+      - created_at
+    SessionActivityResponse:
+      type: object
+      nullable: true
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        device_type:
+          type: string
+        is_mobile:
+          type: boolean
+        browser_name:
+          type: string
+        browser_version:
+          type: string
+        ip_address:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - object
+      - is_mobile
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeprecatedEndpoint:
+      description: The endpoint is considered deprecated and is pending removal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Client'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

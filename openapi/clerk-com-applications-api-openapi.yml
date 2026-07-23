@@ -1,0 +1,827 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Applications API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Applications
+  description: An object representing a Clerk application. Each `application` can have multiple `instances`, typically one for development and one for production, each with distinct user pools.
+paths:
+  /platform/applications:
+    get:
+      operationId: PlatformListApplications
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: listApplications
+      tags:
+      - Applications
+      summary: List Applications
+      description: 'List applications.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: include_secret_keys
+        in: query
+        description: Whether to include secret keys in the response.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Applications retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformListApplicationsResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+    post:
+      operationId: PlatformCreateApplication
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: createApplication
+      tags:
+      - Applications
+      summary: Create an Application
+      description: 'Create a new application.
+
+        '
+      security:
+      - platform_api_access_token: []
+      requestBody:
+        description: Application data to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformCreateApplicationRequest'
+      responses:
+        '200':
+          description: Application created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /platform/applications/{applicationID}:
+    get:
+      operationId: PlatformGetApplication
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: getApplication
+      tags:
+      - Applications
+      summary: Get an Application
+      description: 'Get application details.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: include_secret_keys
+        in: query
+        description: Whether to include secret keys in the response. If 'true', the response will include the secret keys for each instance.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Application retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    patch:
+      operationId: PlatformUpdateApplication
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: updateApplication
+      tags:
+      - Applications
+      summary: Update an Application
+      description: 'Update an application.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Application data to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformUpdateApplicationRequest'
+      responses:
+        '200':
+          description: Application updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: PlatformDeleteApplication
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: deleteApplication
+      tags:
+      - Applications
+      summary: Delete an Application
+      description: 'Delete an application.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformDeletedObjectResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /platform/applications/{applicationID}/logo:
+    post:
+      operationId: PlatformUploadApplicationLogo
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: uploadApplicationLogo
+      tags:
+      - Applications
+      summary: Upload Application Logo
+      description: 'Set or replace an application''s logo by uploading an image file.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+          application/octet-stream:
+            schema:
+              type: string
+            example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=
+      responses:
+        '200':
+          description: Application logo uploaded successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '413':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: PlatformDeleteApplicationLogo
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: deleteApplicationLogo
+      tags:
+      - Applications
+      summary: Delete Application Logo
+      description: 'Delete an application''s logo.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application logo deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /platform/applications/{applicationID}/favicon:
+    post:
+      operationId: PlatformUploadApplicationFavicon
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: uploadApplicationFavicon
+      tags:
+      - Applications
+      summary: Upload Application Favicon
+      description: 'Set or replace an application''s favicon by uploading an image file.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+          application/octet-stream:
+            schema:
+              type: string
+            example: data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA
+      responses:
+        '200':
+          description: Application favicon uploaded successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '413':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: PlatformDeleteApplicationFavicon
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: deleteApplicationFavicon
+      tags:
+      - Applications
+      summary: Delete Application Favicon
+      description: 'Delete an application''s favicon.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Application favicon deleted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+  /platform/applications/{applicationID}/instances/{envOrInsID}/usage:
+    get:
+      operationId: PlatformGetInstanceUsage
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: getInstanceUsage
+      tags:
+      - Applications
+      summary: Get Instance Usage
+      description: 'Get usage totals for an application instance across meters such as MAU, MAO,
+
+        SMS, custom domains, and enterprise connections.
+
+
+        The `envOrInsID` parameter can be either an environment type (e.g., "development", "production")
+
+        or an instance ID.
+
+
+        Requires the `application_usage:read` scope.
+
+        '
+      security:
+      - platform_api_access_token: []
+      parameters:
+      - name: applicationID
+        in: path
+        description: Application ID.
+        required: true
+        schema:
+          type: string
+      - name: envOrInsID
+        in: path
+        description: 'Environment type (e.g., "development", "production") or instance ID.
+
+          '
+        required: true
+        schema:
+          type: string
+      - name: start
+        in: query
+        description: 'Start of the date range for usage data in YYYY-MM-DD format.
+
+          Both `start` and `end` must be provided together.
+
+          When omitted, the current billing cycle is used.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end
+        in: query
+        description: 'Inclusive end of the date range for usage data in YYYY-MM-DD format.
+
+          Both `start` and `end` must be provided together.
+
+          When omitted, the current billing cycle is used.
+
+          '
+        required: false
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Instance usage retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformInstanceUsageResponse'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+  /platform/accountless_applications/claim:
+    post:
+      operationId: PlatformClaimAccountlessApplication
+      x-speakeasy-group: platform
+      x-speakeasy-name-override: claimAccountlessApplication
+      tags:
+      - Applications
+      summary: Claim an Accountless Application
+      description: 'Claim an accountless application by assigning it to the authenticated principal''s workspace.
+
+        The application is identified by a single-use claim token that was generated when the
+
+        accountless application was created. Once claimed, the token is invalidated and cannot be reused.
+
+        '
+      security:
+      - platform_api_access_token: []
+      requestBody:
+        description: Claim token and application name.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                token:
+                  type: string
+                  description: The single-use claim token for the accountless application.
+                name:
+                  type: string
+                  description: The name to assign to the claimed application.
+                  maxLength: 50
+              required:
+              - token
+              - name
+      responses:
+        '200':
+          description: Application claimed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformApplicationResponse'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/AuthenticationInvalid'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    InstanceSMSUsage:
+      title: Instance SMS Usage
+      description: Total SMS usage with per-geographic-tier breakdowns.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total SMS messages across all tiers.
+        tier_a:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        tier_b:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        tier_c:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        tier_d:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        tier_e:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        tier_f:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+      required:
+      - total_usage
+      - tier_a
+      - tier_b
+      - tier_c
+      - tier_d
+      - tier_e
+      - tier_f
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    PlatformInstanceUsageResponse:
+      title: Instance Usage Report
+      description: Usage report for an application instance containing per-meter totals.
+      type: object
+      additionalProperties: false
+      properties:
+        application_id:
+          type: string
+          description: The ID of the application.
+        instance_id:
+          type: string
+          description: The ID of the instance.
+        period_start:
+          type: string
+          format: date-time
+          description: 'Inclusive start of the usage period boundary (RFC3339). When an
+
+            explicit date range is provided, this is midnight UTC on the start
+
+            date. When no date range is provided, this is the start of the
+
+            current billing cycle.
+
+            '
+        period_end:
+          type: string
+          format: date-time
+          description: 'Exclusive end of the usage period boundary (RFC3339). When an
+
+            explicit date range is provided, this is midnight UTC immediately
+
+            after the requested end date. When no date range is provided, this
+
+            is the end of the current billing cycle.
+
+            '
+        mau:
+          $ref: '#/components/schemas/InstanceUsageMeterWithBillable'
+        mao:
+          $ref: '#/components/schemas/InstanceUsageMeterWithBillable'
+        custom_domains:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+        sms_messages:
+          $ref: '#/components/schemas/InstanceSMSUsage'
+        enterprise_connections:
+          $ref: '#/components/schemas/InstanceUsageMeter'
+      required:
+      - application_id
+      - instance_id
+      - period_start
+      - period_end
+      - mau
+      - mao
+      - custom_domains
+      - sms_messages
+      - enterprise_connections
+    PlatformUpdateApplicationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The name of the application.
+    PlatformCreateApplicationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The name of the application.
+        domain:
+          type: string
+          description: The domain for the application (optional).
+        proxy_path:
+          type: string
+          description: Custom proxy path for provider domains (e.g., "/__clerk"). Must start with a leading slash and be a single path segment. Defaults to "/__clerk" if not provided.
+        environment_types:
+          type: array
+          items:
+            type: string
+          description: List of environment types to create instances for. Accepted values are "development" and "production". Defaults to "development" if not provided.
+        template:
+          type: string
+          description: Application template to use for configuring the application (e.g., "b2b-saas", "b2c-saas", "waitlist").
+      required:
+      - name
+    PlatformListApplicationsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlatformApplicationResponse'
+      minItems: 0
+    PlatformApplicationInstance:
+      title: Application Instance
+      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
+      type: object
+      additionalProperties: false
+      properties:
+        instance_id:
+          type: string
+          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
+          example: ins_2abc123def456
+        environment_type:
+          type: string
+          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
+          enum:
+          - development
+          - production
+          example: production
+        secret_key:
+          type: string
+          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
+          example: sk_live_abc123...
+          x-sensitive: true
+        publishable_key:
+          type: string
+          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
+          example: pk_live_abc123...
+      required:
+      - instance_id
+      - environment_type
+    InstanceUsageMeterWithBillable:
+      title: Instance Usage Meter With Billable
+      description: Usage totals for a meter that includes both total and billable quantities.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+        total_billable_usage:
+          type: integer
+          format: int64
+          description: Billable subset of total usage for this meter in the selected period.
+      required:
+      - total_usage
+      - total_billable_usage
+    PlatformDeletedObjectResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        deleted:
+          type: boolean
+          description: Whether the object was deleted.
+        object:
+          type: string
+          example: deleted
+        id:
+          type: string
+          description: The ID of the deleted resource.
+      required:
+      - deleted
+      - object
+      - id
+    InstanceUsageMeter:
+      title: Instance Usage Meter
+      description: Usage totals for a single meter.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+      required:
+      - total_usage
+    PlatformApplicationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        application_id:
+          type: string
+          description: The ID of the application.
+        name:
+          type: string
+          description: The name of the application.
+        instances:
+          type: array
+          description: List of instances associated with this application.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationInstance'
+      required:
+      - application_id
+      - name
+      - instances
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

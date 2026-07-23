@@ -1,0 +1,246 @@
+openapi: 3.0.3
+info:
+  title: Clerk Backend Account Portal Agent Tasks API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2025-11-10'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: Agent Tasks
+  description: Tasks that allow creating user sessions for agent-based interactions.
+paths:
+  /agents/tasks:
+    post:
+      operationId: CreateAgentTask
+      x-speakeasy-group: agentTasks
+      x-speakeasy-name-override: create
+      summary: Create Agent Task
+      description: 'Create an agent task on behalf of a user.
+
+        The response contains a URL that, when visited, creates a session for the user.
+
+        The agent_id is stable per agent_name within an instance. The agent_task_id is unique per call.'
+      tags:
+      - Agent Tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                on_behalf_of:
+                  type: object
+                  description: 'Identifies the user on whose behalf the agent task is created.
+
+                    Exactly one of user_id or identifier must be provided.'
+                  properties:
+                    user_id:
+                      type: string
+                      description: The ID of the user.
+                    identifier:
+                      type: string
+                      description: A verified identifier (e.g. email address) belonging to the user.
+                permissions:
+                  type: string
+                  description: The permissions granted to the agent task. Must be "*" (all permissions).
+                  enum:
+                  - '*'
+                agent_name:
+                  type: string
+                  description: 'A name identifying the agent. Used to derive a stable agent_id per instance.
+
+                    Logged for audit purposes.'
+                task_description:
+                  type: string
+                  description: A description of the task being performed. Logged for audit purposes.
+                redirect_url:
+                  type: string
+                  format: uri
+                  description: 'The URL the user is redirected to after the agent task is accepted.
+
+                    Must be a valid absolute URL with an `https` scheme in production instances.
+
+                    In development instances, `http` is also permitted.
+
+                    The URL''s domain must belong to one of the instance''s associated domains
+
+                    (primary or satellite); otherwise the redirect will be rejected when the
+
+                    task ticket is consumed.'
+                session_max_duration_in_seconds:
+                  type: integer
+                  description: 'The maximum duration that the session which will be created by the generated agent task should last.
+
+                    By default, the duration of a session created via an agent task lasts 30 minutes.'
+                  default: 1800
+              required:
+              - on_behalf_of
+              - permissions
+              - agent_name
+              - task_description
+              - redirect_url
+      responses:
+        '200':
+          $ref: '#/components/responses/AgentTask'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /agents/tasks/{agent_task_id}/revoke:
+    post:
+      operationId: RevokeAgentTask
+      x-speakeasy-group: agentTasks
+      x-speakeasy-name-override: revoke
+      summary: Revoke Agent Task
+      description: Revokes a pending agent task.
+      tags:
+      - Agent Tasks
+      parameters:
+      - name: agent_task_id
+        in: path
+        description: The ID of the agent task to be revoked.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/AgentTask'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    AgentTask:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - agent_task
+        agent_id:
+          type: string
+          description: 'A stable identifier for the agent, unique per agent_name within an instance.
+
+            '
+        agent_task_id:
+          type: string
+          description: 'A unique identifier for this agent task.
+
+            '
+        task_id:
+          type: string
+          deprecated: true
+          description: 'A unique identifier for this agent task. Deprecated: use agent_task_id instead.
+
+            '
+        url:
+          type: string
+          description: 'The URL that, when visited, creates a session for the user. Only present in the response to a create request.
+
+            '
+      required:
+      - object
+      - agent_id
+      - agent_task_id
+      - task_id
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AgentTask:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentTask'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true
