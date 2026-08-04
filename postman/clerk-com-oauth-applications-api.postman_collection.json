@@ -1,0 +1,1971 @@
+{
+  "info": {
+    "_postman_id": "eb8f8cde-2a0e-4477-9d45-f9c295efca67",
+    "name": "Clerk Backend Account Portal OAuth Applications API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:24:00.000Z",
+    "updatedAt": "2026-07-28T01:24:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-eb8f8cde-2a0e-4477-9d45-f9c295efca67"
+  },
+  "item": [
+    {
+      "name": "oauth_applications",
+      "item": [
+        {
+          "name": "{oauth_application_id}",
+          "item": [
+            {
+              "name": "logo",
+              "item": [
+                {
+                  "name": "Upload a Logo for the OAuth Application",
+                  "id": "34b1c73c-6cdf-49f8-95b4-8d93c3256ae7",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) ",
+                          "key": "file",
+                          "type": "file",
+                          "value": null
+                        },
+                        {
+                          "description": "The ID of the user that will be credited with the image upload.",
+                          "key": "uploader_user_id",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id",
+                        "logo"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8f95b1eb-5cef-4b7a-ae17-929f3271ec01",
+                          "key": "oauth_application_id",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the OAuth application for which to upload a logo"
+                        }
+                      ]
+                    },
+                    "description": "Set or replace an OAuth application's logo by uploading an image file.\nThis endpoint uses the `multipart/form-data` request content type and accepts a file of image type.\nThe file size cannot exceed 10MB.\nOnly the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`."
+                  },
+                  "response": [
+                    {
+                      "id": "1c408f9a-70ac-4229-8c0d-ec8cf6ea22a6",
+                      "name": "An OAuth application",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "The ID of the user that will be credited with the image upload.",
+                              "key": "uploader_user_id",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "logo"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"oauth_application\",\n  \"id\": \"<string>\",\n  \"instance_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dynamically_registered\": \"<boolean>\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\",\n  \"client_id\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"client_image_url\": \"<string>\",\n  \"scopes\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"authorize_url\": \"<string>\",\n  \"token_fetch_url\": \"<string>\",\n  \"user_info_url\": \"<string>\",\n  \"discovery_url\": \"<string>\",\n  \"token_introspection_url\": \"<string>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-1c408f9a-70ac-4229-8c0d-ec8cf6ea22a6"
+                    },
+                    {
+                      "id": "bb249ea4-036a-423a-9ccb-832eafc6c0c2",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "The ID of the user that will be credited with the image upload.",
+                              "key": "uploader_user_id",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "logo"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-bb249ea4-036a-423a-9ccb-832eafc6c0c2"
+                    },
+                    {
+                      "id": "d4047780-854a-4749-8a83-9da103c5a9c8",
+                      "name": "Authorization invalid",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "The ID of the user that will be credited with the image upload.",
+                              "key": "uploader_user_id",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "logo"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-d4047780-854a-4749-8a83-9da103c5a9c8"
+                    },
+                    {
+                      "id": "0c6c0c93-240c-4272-ac39-bc05befeda99",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "The ID of the user that will be credited with the image upload.",
+                              "key": "uploader_user_id",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "logo"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-0c6c0c93-240c-4272-ac39-bc05befeda99"
+                    },
+                    {
+                      "id": "c4aabde7-6f87-4252-8306-112d4a3f76ff",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) ",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "The ID of the user that will be credited with the image upload.",
+                              "key": "uploader_user_id",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/logo",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "logo"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Request Entity Too Large",
+                      "code": 413,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-c4aabde7-6f87-4252-8306-112d4a3f76ff"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-34b1c73c-6cdf-49f8-95b4-8d93c3256ae7"
+                }
+              ],
+              "id": "cff34423-749c-49b6-9501-84db77fa87d5",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-cff34423-749c-49b6-9501-84db77fa87d5"
+            },
+            {
+              "name": "rotate_secret",
+              "item": [
+                {
+                  "name": "Rotate the Client Secret of the Given OAuth Application",
+                  "id": "588ba329-dcab-436b-a931-0a18bc729c4e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/rotate_secret",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id",
+                        "rotate_secret"
+                      ],
+                      "variable": [
+                        {
+                          "id": "10c9f49d-31e0-4e84-9c08-d51305ef305f",
+                          "key": "oauth_application_id",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the OAuth application for which to rotate the client secret"
+                        }
+                      ]
+                    },
+                    "description": "Rotates the OAuth application's client secret.\nWhen the client secret is rotated, make sure to update it in authorized OAuth clients."
+                  },
+                  "response": [
+                    {
+                      "id": "d5f51a33-aa18-445a-a86a-b9510a92054d",
+                      "name": "An OAuth application with client secret",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/rotate_secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "rotate_secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"oauth_application\",\n  \"id\": \"<string>\",\n  \"instance_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dynamically_registered\": \"<boolean>\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\",\n  \"client_id\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"client_image_url\": \"<string>\",\n  \"scopes\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"authorize_url\": \"<string>\",\n  \"token_fetch_url\": \"<string>\",\n  \"user_info_url\": \"<string>\",\n  \"discovery_url\": \"<string>\",\n  \"token_introspection_url\": \"<string>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"client_secret\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-d5f51a33-aa18-445a-a86a-b9510a92054d"
+                    },
+                    {
+                      "id": "1155392a-197c-4d62-856c-ca072b812ab4",
+                      "name": "Authorization invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/rotate_secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "rotate_secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-1155392a-197c-4d62-856c-ca072b812ab4"
+                    },
+                    {
+                      "id": "082c16a2-6275-499f-aec6-04dd5a5c61f7",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id/rotate_secret",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "oauth_applications",
+                            ":oauth_application_id",
+                            "rotate_secret"
+                          ],
+                          "variable": [
+                            {
+                              "key": "oauth_application_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:00.000Z",
+                      "updatedAt": "2026-07-28T01:24:00.000Z",
+                      "uid": "35240-082c16a2-6275-499f-aec6-04dd5a5c61f7"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-588ba329-dcab-436b-a931-0a18bc729c4e"
+                }
+              ],
+              "id": "3ffd3d5b-c2db-4b84-ae3d-0f89816417d8",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-3ffd3d5b-c2db-4b84-ae3d-0f89816417d8"
+            },
+            {
+              "name": "Retrieve an OAuth Application by ID",
+              "id": "7a4b2ed9-a038-43a9-bd85-e3a76a71491e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications",
+                    ":oauth_application_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "e11ea8b9-8eb4-441b-a35c-d4021db39838",
+                      "key": "oauth_application_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the OAuth application"
+                    }
+                  ]
+                },
+                "description": "Fetches the OAuth application whose ID matches the provided `id` in the path."
+              },
+              "response": [
+                {
+                  "id": "8a1635f0-5585-4299-be6b-a81242d6d851",
+                  "name": "An OAuth application",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"oauth_application\",\n  \"id\": \"<string>\",\n  \"instance_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dynamically_registered\": \"<boolean>\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\",\n  \"client_id\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"client_image_url\": \"<string>\",\n  \"scopes\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"authorize_url\": \"<string>\",\n  \"token_fetch_url\": \"<string>\",\n  \"user_info_url\": \"<string>\",\n  \"discovery_url\": \"<string>\",\n  \"token_introspection_url\": \"<string>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-8a1635f0-5585-4299-be6b-a81242d6d851"
+                },
+                {
+                  "id": "a3fffa8b-6411-4fac-ba0d-598fc260a771",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-a3fffa8b-6411-4fac-ba0d-598fc260a771"
+                },
+                {
+                  "id": "6aa4363a-ca7a-4479-9344-9057691e85e0",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-6aa4363a-ca7a-4479-9344-9057691e85e0"
+                }
+              ],
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-7a4b2ed9-a038-43a9-bd85-e3a76a71491e"
+            },
+            {
+              "name": "Update an OAuth Application",
+              "id": "bf9fba32-e0ac-42c7-b083-61dbe9941e66",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications",
+                    ":oauth_application_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "8ae243c7-527a-456a-afe5-f38cb0a77375",
+                      "key": "oauth_application_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the OAuth application to update"
+                    }
+                  ]
+                },
+                "description": "Updates an existing OAuth application"
+              },
+              "response": [
+                {
+                  "id": "3ae13f15-4fa2-4d96-a1c0-81662b0b08aa",
+                  "name": "An OAuth application",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"oauth_application\",\n  \"id\": \"<string>\",\n  \"instance_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dynamically_registered\": \"<boolean>\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\",\n  \"client_id\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"client_image_url\": \"<string>\",\n  \"scopes\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"authorize_url\": \"<string>\",\n  \"token_fetch_url\": \"<string>\",\n  \"user_info_url\": \"<string>\",\n  \"discovery_url\": \"<string>\",\n  \"token_introspection_url\": \"<string>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-3ae13f15-4fa2-4d96-a1c0-81662b0b08aa"
+                },
+                {
+                  "id": "184ef97b-362b-4ac3-936f-f9c9f0b45aed",
+                  "name": "Request was not successful",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-184ef97b-362b-4ac3-936f-f9c9f0b45aed"
+                },
+                {
+                  "id": "4dc12d5c-d04e-4aec-9746-309b9964bc58",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-4dc12d5c-d04e-4aec-9746-309b9964bc58"
+                },
+                {
+                  "id": "6b423507-88ac-4ad2-844d-14c5884fc990",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-6b423507-88ac-4ad2-844d-14c5884fc990"
+                },
+                {
+                  "id": "db28e311-8e2b-41ee-95e1-a58b715aa032",
+                  "name": "Invalid request parameters",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-db28e311-8e2b-41ee-95e1-a58b715aa032"
+                }
+              ],
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-bf9fba32-e0ac-42c7-b083-61dbe9941e66"
+            },
+            {
+              "name": "Delete an OAuth Application",
+              "id": "f737ab40-eb73-4043-b309-bf2809543b74",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications",
+                    ":oauth_application_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "39234fc9-b950-42e2-b60e-c0bdea31abbd",
+                      "key": "oauth_application_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the OAuth application to delete"
+                    }
+                  ]
+                },
+                "description": "Deletes the given OAuth application.\nThis is not reversible."
+              },
+              "response": [
+                {
+                  "id": "161a9366-3e65-405d-ae9b-a9f38d952fc1",
+                  "name": "Deleted Object",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"deleted\": \"<boolean>\",\n  \"id\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"external_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-161a9366-3e65-405d-ae9b-a9f38d952fc1"
+                },
+                {
+                  "id": "ce96b25d-a291-43b0-8f2b-ae154f063f41",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-ce96b25d-a291-43b0-8f2b-ae154f063f41"
+                },
+                {
+                  "id": "150d9b7e-7e7e-4772-bb7a-e955a2ae7198",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/oauth_applications/:oauth_application_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "oauth_applications",
+                        ":oauth_application_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "oauth_application_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:24:00.000Z",
+                  "updatedAt": "2026-07-28T01:24:00.000Z",
+                  "uid": "35240-150d9b7e-7e7e-4772-bb7a-e955a2ae7198"
+                }
+              ],
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-f737ab40-eb73-4043-b309-bf2809543b74"
+            }
+          ],
+          "id": "8940ccb8-28ae-4cdf-86e8-2947260b5149",
+          "createdAt": "2026-07-28T01:24:00.000Z",
+          "updatedAt": "2026-07-28T01:24:00.000Z",
+          "uid": "35240-8940ccb8-28ae-4cdf-86e8-2947260b5149"
+        },
+        {
+          "name": "Get a List of OAuth Applications for an Instance",
+          "id": "a68f39f0-0ed2-4f60-8f2e-be901d3aa29b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/oauth_applications?limit=10&offset=0&order_by=+created_at&name_query=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "oauth_applications"
+              ],
+              "query": [
+                {
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.",
+                  "key": "order_by",
+                  "value": "+created_at"
+                },
+                {
+                  "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match.",
+                  "key": "name_query",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "This request returns the list of OAuth applications for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe OAuth applications are ordered by descending creation date.\nMost recent OAuth applications will be returned first."
+          },
+          "response": [
+            {
+              "id": "35088f89-9506-4cbc-b310-a704df17667b",
+              "name": "A list of OAuth applications",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications?limit=10&offset=0&order_by=+created_at&name_query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.",
+                      "key": "order_by",
+                      "value": "+created_at"
+                    },
+                    {
+                      "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match.",
+                      "key": "name_query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"object\": \"oauth_application\",\n      \"id\": \"<string>\",\n      \"instance_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"dynamically_registered\": \"<boolean>\",\n      \"consent_screen_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\",\n      \"public\": \"<boolean>\",\n      \"client_id\": \"<string>\",\n      \"client_uri\": \"<string>\",\n      \"client_image_url\": \"<string>\",\n      \"scopes\": \"<string>\",\n      \"redirect_uris\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"callback_url\": \"<string>\",\n      \"authorize_url\": \"<string>\",\n      \"token_fetch_url\": \"<string>\",\n      \"user_info_url\": \"<string>\",\n      \"discovery_url\": \"<string>\",\n      \"token_introspection_url\": \"<string>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\"\n    },\n    {\n      \"object\": \"oauth_application\",\n      \"id\": \"<string>\",\n      \"instance_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"dynamically_registered\": \"<boolean>\",\n      \"consent_screen_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\",\n      \"public\": \"<boolean>\",\n      \"client_id\": \"<string>\",\n      \"client_uri\": \"<string>\",\n      \"client_image_url\": \"<string>\",\n      \"scopes\": \"<string>\",\n      \"redirect_uris\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"callback_url\": \"<string>\",\n      \"authorize_url\": \"<string>\",\n      \"token_fetch_url\": \"<string>\",\n      \"user_info_url\": \"<string>\",\n      \"discovery_url\": \"<string>\",\n      \"token_introspection_url\": \"<string>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\"\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-35088f89-9506-4cbc-b310-a704df17667b"
+            },
+            {
+              "id": "292710dd-ecbe-4312-99b9-d8c2531b8d7b",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications?limit=10&offset=0&order_by=+created_at&name_query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.",
+                      "key": "order_by",
+                      "value": "+created_at"
+                    },
+                    {
+                      "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match.",
+                      "key": "name_query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-292710dd-ecbe-4312-99b9-d8c2531b8d7b"
+            },
+            {
+              "id": "f15c2b07-341f-4906-8f95-30909c6c91bf",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications?limit=10&offset=0&order_by=+created_at&name_query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.",
+                      "key": "order_by",
+                      "value": "+created_at"
+                    },
+                    {
+                      "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match.",
+                      "key": "name_query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-f15c2b07-341f-4906-8f95-30909c6c91bf"
+            },
+            {
+              "id": "6b4c98e2-d8ab-43bd-88e1-c0cb0c7d44a3",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications?limit=10&offset=0&order_by=+created_at&name_query=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case.",
+                      "key": "order_by",
+                      "value": "+created_at"
+                    },
+                    {
+                      "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match.",
+                      "key": "name_query",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-6b4c98e2-d8ab-43bd-88e1-c0cb0c7d44a3"
+            }
+          ],
+          "createdAt": "2026-07-28T01:24:00.000Z",
+          "updatedAt": "2026-07-28T01:24:00.000Z",
+          "uid": "35240-a68f39f0-0ed2-4f60-8f2e-be901d3aa29b"
+        },
+        {
+          "name": "Create an OAuth Application",
+          "id": "5fa91b38-7b9b-41f6-ae30-27efc18e39b4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": true,\n  \"pkce_required\": false,\n  \"public\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/oauth_applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "oauth_applications"
+              ]
+            },
+            "description": "Creates a new OAuth application with the given name and callback URL for an instance.\nThe callback URL must be a valid URL.\nAll URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc..."
+          },
+          "response": [
+            {
+              "id": "89373dd8-a4f7-480c-84a1-c96b379fe9e6",
+              "name": "An OAuth application with client secret",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": true,\n  \"pkce_required\": false,\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"oauth_application\",\n  \"id\": \"<string>\",\n  \"instance_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"dynamically_registered\": \"<boolean>\",\n  \"consent_screen_enabled\": \"<boolean>\",\n  \"pkce_required\": \"<boolean>\",\n  \"public\": \"<boolean>\",\n  \"client_id\": \"<string>\",\n  \"client_uri\": \"<string>\",\n  \"client_image_url\": \"<string>\",\n  \"scopes\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"authorize_url\": \"<string>\",\n  \"token_fetch_url\": \"<string>\",\n  \"user_info_url\": \"<string>\",\n  \"discovery_url\": \"<string>\",\n  \"token_introspection_url\": \"<string>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"client_secret\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-89373dd8-a4f7-480c-84a1-c96b379fe9e6"
+            },
+            {
+              "id": "2d407ff2-8bc3-4108-921c-623143ae61e7",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": true,\n  \"pkce_required\": false,\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-2d407ff2-8bc3-4108-921c-623143ae61e7"
+            },
+            {
+              "id": "dc238b4a-5d27-4662-b57e-5b2316293632",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": true,\n  \"pkce_required\": false,\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-dc238b4a-5d27-4662-b57e-5b2316293632"
+            },
+            {
+              "id": "a27b7b04-0078-4d8c-adb0-60a321905764",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"redirect_uris\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"callback_url\": \"<string>\",\n  \"scopes\": \"profile email\",\n  \"consent_screen_enabled\": true,\n  \"pkce_required\": false,\n  \"public\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/oauth_applications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "oauth_applications"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:00.000Z",
+              "updatedAt": "2026-07-28T01:24:00.000Z",
+              "uid": "35240-a27b7b04-0078-4d8c-adb0-60a321905764"
+            }
+          ],
+          "createdAt": "2026-07-28T01:24:00.000Z",
+          "updatedAt": "2026-07-28T01:24:00.000Z",
+          "uid": "35240-5fa91b38-7b9b-41f6-ae30-27efc18e39b4"
+        }
+      ],
+      "id": "72c6b4a6-9db9-43bd-bd69-b6046c3336c9",
+      "createdAt": "2026-07-28T01:24:00.000Z",
+      "updatedAt": "2026-07-28T01:24:00.000Z",
+      "uid": "35240-72c6b4a6-9db9-43bd-bd69-b6046c3336c9"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}

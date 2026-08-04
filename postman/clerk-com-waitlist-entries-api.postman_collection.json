@@ -1,0 +1,1568 @@
+{
+  "info": {
+    "_postman_id": "2d1373f5-5817-4594-b509-d3238cbc4fe5",
+    "name": "Clerk Backend Account Portal Waitlist Entries API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:25:24.000Z",
+    "updatedAt": "2026-07-28T01:25:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2d1373f5-5817-4594-b509-d3238cbc4fe5"
+  },
+  "item": [
+    {
+      "name": "waitlist_entries",
+      "item": [
+        {
+          "name": "bulk",
+          "item": [
+            {
+              "name": "Create Multiple Waitlist Entries",
+              "id": "b24ed34f-23b8-4086-95cf-b7446d80b8f8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"email_address\": \"<email>\",\n    \"notify\": true\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries/bulk",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries",
+                    "bulk"
+                  ]
+                },
+                "description": "Creates multiple waitlist entries for the provided email addresses.\nYou can choose whether to send confirmation emails by setting the `notify` parameter to `true` or `false` for each entry.\nIf the `notify` parameter is omitted, it defaults to `true`.\n\nIf an email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned.\nDuplicate email addresses within the same request are not allowed.\n\nThis endpoint is limited to a maximum of 50 entries per API call. If you need to add more entries, please make multiple requests."
+              },
+              "response": [
+                {
+                  "id": "f0e890e5-c3f0-4db4-8171-4b69dae63118",
+                  "name": "Array of waitlist entries",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"email_address\": \"<email>\",\n    \"notify\": true\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/bulk",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        "bulk"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "[\n  {\n    \"object\": \"waitlist_entry\",\n    \"id\": \"<string>\",\n    \"email_address\": \"<email>\",\n    \"status\": \"invited\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"is_locked\": \"<boolean>\",\n    \"invitation\": {\n      \"object\": \"invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<email>\",\n      \"public_metadata\": {\n        \"esse0\": 61538172.53156063\n      },\n      \"status\": \"expired\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"revoked\": \"<boolean>\",\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\"\n    }\n  },\n  {\n    \"object\": \"waitlist_entry\",\n    \"id\": \"<string>\",\n    \"email_address\": \"<email>\",\n    \"status\": \"completed\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"is_locked\": \"<boolean>\",\n    \"invitation\": {\n      \"object\": \"invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<email>\",\n      \"public_metadata\": {\n        \"laboreb\": false,\n        \"adipisicing1\": 38235009.13939381,\n        \"pariatur_e2e\": 83576505\n      },\n      \"status\": \"expired\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"revoked\": \"<boolean>\",\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\"\n    }\n  }\n]",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-f0e890e5-c3f0-4db4-8171-4b69dae63118"
+                },
+                {
+                  "id": "af6dbe53-e99e-4821-af4d-9434351d2a49",
+                  "name": "Request was not successful",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"email_address\": \"<email>\",\n    \"notify\": true\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/bulk",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        "bulk"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-af6dbe53-e99e-4821-af4d-9434351d2a49"
+                },
+                {
+                  "id": "643f0404-e059-4787-aa4c-57cd629d1447",
+                  "name": "Invalid request parameters",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"email_address\": \"<email>\",\n    \"notify\": true\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/bulk",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        "bulk"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-643f0404-e059-4787-aa4c-57cd629d1447"
+                }
+              ],
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-b24ed34f-23b8-4086-95cf-b7446d80b8f8"
+            }
+          ],
+          "id": "6ddb595f-0f67-4691-91ef-78f82770128d",
+          "createdAt": "2026-07-28T01:25:25.000Z",
+          "updatedAt": "2026-07-28T01:25:25.000Z",
+          "uid": "35240-6ddb595f-0f67-4691-91ef-78f82770128d"
+        },
+        {
+          "name": "{waitlist_entry_id}",
+          "item": [
+            {
+              "name": "invite",
+              "item": [
+                {
+                  "name": "Invite a Waitlist Entry",
+                  "id": "d69f241a-52ec-4860-9165-0d87738c453e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"ignore_existing\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id",
+                        "invite"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9c434e58-711c-42af-8b0f-c2d36af95e9f",
+                          "key": "waitlist_entry_id",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the waitlist entry to invite"
+                        }
+                      ]
+                    },
+                    "description": "Send an invite to the email address in a waitlist entry."
+                  },
+                  "response": [
+                    {
+                      "id": "bf7cdaaa-7e1d-44ac-a7dd-26d2d66173fb",
+                      "name": "A Waitlist Entry",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ignore_existing\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "invite"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"waitlist_entry\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"status\": \"completed\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"is_locked\": \"<boolean>\",\n  \"invitation\": {\n    \"object\": \"invitation\",\n    \"id\": \"<string>\",\n    \"email_address\": \"<email>\",\n    \"public_metadata\": {\n      \"consequat_471\": 27155589,\n      \"enim_3\": -75205764.23523702\n    },\n    \"status\": \"accepted\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"revoked\": \"<boolean>\",\n    \"url\": \"<string>\",\n    \"expires_at\": \"<long>\"\n  }\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-bf7cdaaa-7e1d-44ac-a7dd-26d2d66173fb"
+                    },
+                    {
+                      "id": "410a8dcd-4aee-49ec-82fe-ea0c0b1af450",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ignore_existing\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "invite"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-410a8dcd-4aee-49ec-82fe-ea0c0b1af450"
+                    },
+                    {
+                      "id": "4575f28c-de09-4cc4-a561-d866de6826d6",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ignore_existing\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "invite"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-4575f28c-de09-4cc4-a561-d866de6826d6"
+                    },
+                    {
+                      "id": "c8a60ca3-4978-4139-9e9f-2f4960bc08fd",
+                      "name": "Conflict",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ignore_existing\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "invite"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-c8a60ca3-4978-4139-9e9f-2f4960bc08fd"
+                    },
+                    {
+                      "id": "226098f9-0820-4460-9372-e14a0be26f73",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"ignore_existing\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "invite"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-226098f9-0820-4460-9372-e14a0be26f73"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-d69f241a-52ec-4860-9165-0d87738c453e"
+                }
+              ],
+              "id": "2575b15a-e907-416e-b272-bf459e19740f",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-2575b15a-e907-416e-b272-bf459e19740f"
+            },
+            {
+              "name": "reject",
+              "item": [
+                {
+                  "name": "Reject a Waitlist Entry",
+                  "id": "4d48734d-9817-4581-aa7e-4bc4b199eeee",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id",
+                        "reject"
+                      ],
+                      "variable": [
+                        {
+                          "id": "19fed93b-1714-4204-b8b4-493b44e3e350",
+                          "key": "waitlist_entry_id",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the waitlist entry to reject"
+                        }
+                      ]
+                    },
+                    "description": "Reject a waitlist entry."
+                  },
+                  "response": [
+                    {
+                      "id": "70116099-bb41-40f2-a861-55fd709037b8",
+                      "name": "A Waitlist Entry",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "reject"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"waitlist_entry\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"status\": \"completed\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"is_locked\": \"<boolean>\",\n  \"invitation\": {\n    \"object\": \"invitation\",\n    \"id\": \"<string>\",\n    \"email_address\": \"<email>\",\n    \"public_metadata\": {\n      \"consequat_471\": 27155589,\n      \"enim_3\": -75205764.23523702\n    },\n    \"status\": \"accepted\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"revoked\": \"<boolean>\",\n    \"url\": \"<string>\",\n    \"expires_at\": \"<long>\"\n  }\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-70116099-bb41-40f2-a861-55fd709037b8"
+                    },
+                    {
+                      "id": "e4c2046c-4c54-4c79-b731-82bddf79d94f",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "reject"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-e4c2046c-4c54-4c79-b731-82bddf79d94f"
+                    },
+                    {
+                      "id": "3fa30cfd-41d9-477e-bddc-004c4a8c7952",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "reject"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-3fa30cfd-41d9-477e-bddc-004c4a8c7952"
+                    },
+                    {
+                      "id": "a3796e14-ed39-45ae-9991-28073b048847",
+                      "name": "Conflict",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "reject"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-a3796e14-ed39-45ae-9991-28073b048847"
+                    },
+                    {
+                      "id": "ca0a6bfe-2bb5-45a7-bf62-574ca1f9c4f6",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id/reject",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "waitlist_entries",
+                            ":waitlist_entry_id",
+                            "reject"
+                          ],
+                          "variable": [
+                            {
+                              "key": "waitlist_entry_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:25:25.000Z",
+                      "updatedAt": "2026-07-28T01:25:25.000Z",
+                      "uid": "35240-ca0a6bfe-2bb5-45a7-bf62-574ca1f9c4f6"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-4d48734d-9817-4581-aa7e-4bc4b199eeee"
+                }
+              ],
+              "id": "7e76ad63-54d5-4065-9f17-2b7ce98cd2bf",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-7e76ad63-54d5-4065-9f17-2b7ce98cd2bf"
+            },
+            {
+              "name": "Delete a Pending Waitlist Entry",
+              "id": "ebf6a1b5-a7c7-4130-bf40-3362f1dc8c6f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries",
+                    ":waitlist_entry_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "23b75870-df77-48ea-b786-0a744b6049b6",
+                      "key": "waitlist_entry_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the waitlist entry to delete"
+                    }
+                  ]
+                },
+                "description": "Delete a pending waitlist entry."
+              },
+              "response": [
+                {
+                  "id": "9d264f38-8d3e-42e3-b89f-7943e0910dba",
+                  "name": "Deleted Object",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "waitlist_entry_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"deleted\": \"<boolean>\",\n  \"id\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"external_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-9d264f38-8d3e-42e3-b89f-7943e0910dba"
+                },
+                {
+                  "id": "e0acccd5-36b0-456a-b49f-d8e5a5664363",
+                  "name": "Request was not successful",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "waitlist_entry_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-e0acccd5-36b0-456a-b49f-d8e5a5664363"
+                },
+                {
+                  "id": "927e7096-42f5-4fac-865c-2f7305baf9b0",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "waitlist_entry_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-927e7096-42f5-4fac-865c-2f7305baf9b0"
+                },
+                {
+                  "id": "98ab6bcf-3dda-4236-ade3-8b17021817f1",
+                  "name": "Conflict",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "waitlist_entry_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-98ab6bcf-3dda-4236-ade3-8b17021817f1"
+                },
+                {
+                  "id": "890033de-37f0-43fe-b02d-21a3a68304e4",
+                  "name": "Invalid request parameters",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/waitlist_entries/:waitlist_entry_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "waitlist_entries",
+                        ":waitlist_entry_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "waitlist_entry_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:25:25.000Z",
+                  "updatedAt": "2026-07-28T01:25:25.000Z",
+                  "uid": "35240-890033de-37f0-43fe-b02d-21a3a68304e4"
+                }
+              ],
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-ebf6a1b5-a7c7-4130-bf40-3362f1dc8c6f"
+            }
+          ],
+          "id": "aae579db-5eda-42d7-ad59-12f1e9e0a23f",
+          "createdAt": "2026-07-28T01:25:25.000Z",
+          "updatedAt": "2026-07-28T01:25:25.000Z",
+          "uid": "35240-aae579db-5eda-42d7-ad59-12f1e9e0a23f"
+        },
+        {
+          "name": "List All Waitlist Entries",
+          "id": "ea700dd1-855e-46a5-8d31-59f5fabfda4a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/waitlist_entries?limit=10&offset=0&query=<string>&status=pending&order_by=-created_at",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "waitlist_entries"
+              ],
+              "query": [
+                {
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "description": "Filter waitlist entries by `email_address` or `id`",
+                  "key": "query",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter waitlist entries by their status",
+                  "key": "status",
+                  "value": "pending"
+                },
+                {
+                  "description": "Specify the order of results. Supported values are:\n- `created_at`\n- `email_address`\n- `invited_at`\n\nUse `+` for ascending or `-` for descending order. Defaults to `-created_at`.",
+                  "key": "order_by",
+                  "value": "-created_at"
+                }
+              ]
+            },
+            "description": "Retrieve a list of waitlist entries for the instance.\nEntries are ordered by creation date in descending order by default.\nSupports filtering by email address or status and pagination with limit and offset parameters."
+          },
+          "response": [
+            {
+              "id": "bfa5bd9a-af1c-4682-9a28-8d4aa5bd3f12",
+              "name": "List of waitlist entries",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries?limit=10&offset=0&query=<string>&status=pending&order_by=-created_at",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Filter waitlist entries by `email_address` or `id`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter waitlist entries by their status",
+                      "key": "status",
+                      "value": "pending"
+                    },
+                    {
+                      "description": "Specify the order of results. Supported values are:\n- `created_at`\n- `email_address`\n- `invited_at`\n\nUse `+` for ascending or `-` for descending order. Defaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"object\": \"waitlist_entry\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<email>\",\n      \"status\": \"pending\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"is_locked\": \"<boolean>\",\n      \"invitation\": {\n        \"object\": \"invitation\",\n        \"id\": \"<string>\",\n        \"email_address\": \"<email>\",\n        \"public_metadata\": {\n          \"irureb12\": \"Ut eiusmod\",\n          \"consequat_b\": false\n        },\n        \"status\": \"revoked\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\",\n        \"revoked\": \"<boolean>\",\n        \"url\": \"<string>\",\n        \"expires_at\": \"<long>\"\n      }\n    },\n    {\n      \"object\": \"waitlist_entry\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<email>\",\n      \"status\": \"completed\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"is_locked\": \"<boolean>\",\n      \"invitation\": {\n        \"object\": \"invitation\",\n        \"id\": \"<string>\",\n        \"email_address\": \"<email>\",\n        \"public_metadata\": {\n          \"Ut66\": 60759453,\n          \"sed58\": 27462745,\n          \"aute_97\": -61086238,\n          \"Ut_042\": false\n        },\n        \"status\": \"accepted\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\",\n        \"revoked\": \"<boolean>\",\n        \"url\": \"<string>\",\n        \"expires_at\": \"<long>\"\n      }\n    }\n  ],\n  \"total_count\": \"<integer>\"\n}",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-bfa5bd9a-af1c-4682-9a28-8d4aa5bd3f12"
+            }
+          ],
+          "createdAt": "2026-07-28T01:25:25.000Z",
+          "updatedAt": "2026-07-28T01:25:25.000Z",
+          "uid": "35240-ea700dd1-855e-46a5-8d31-59f5fabfda4a"
+        },
+        {
+          "name": "Create a Waitlist Entry",
+          "id": "6111a695-2b80-46b7-84fc-7e218b622c76",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"<string>\",\n  \"notify\": true\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/waitlist_entries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "waitlist_entries"
+              ]
+            },
+            "description": "Creates a new waitlist entry for the given email address.\nIf the email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned."
+          },
+          "response": [
+            {
+              "id": "7f8763da-4b18-4e67-8112-821b8e5b008d",
+              "name": "A Waitlist Entry",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\",\n  \"notify\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"waitlist_entry\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<email>\",\n  \"status\": \"completed\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"is_locked\": \"<boolean>\",\n  \"invitation\": {\n    \"object\": \"invitation\",\n    \"id\": \"<string>\",\n    \"email_address\": \"<email>\",\n    \"public_metadata\": {\n      \"consequat_471\": 27155589,\n      \"enim_3\": -75205764.23523702\n    },\n    \"status\": \"accepted\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"revoked\": \"<boolean>\",\n    \"url\": \"<string>\",\n    \"expires_at\": \"<long>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-7f8763da-4b18-4e67-8112-821b8e5b008d"
+            },
+            {
+              "id": "b93c02c7-2b62-44b3-af1f-998d8693acdd",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\",\n  \"notify\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-b93c02c7-2b62-44b3-af1f-998d8693acdd"
+            },
+            {
+              "id": "84e2ca3d-a8b5-422a-bef9-bd131b8724c5",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\",\n  \"notify\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/waitlist_entries",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "waitlist_entries"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:25:25.000Z",
+              "updatedAt": "2026-07-28T01:25:25.000Z",
+              "uid": "35240-84e2ca3d-a8b5-422a-bef9-bd131b8724c5"
+            }
+          ],
+          "createdAt": "2026-07-28T01:25:25.000Z",
+          "updatedAt": "2026-07-28T01:25:25.000Z",
+          "uid": "35240-6111a695-2b80-46b7-84fc-7e218b622c76"
+        }
+      ],
+      "id": "9e32d556-0a13-4067-b166-e82762f1a09c",
+      "createdAt": "2026-07-28T01:25:25.000Z",
+      "updatedAt": "2026-07-28T01:25:25.000Z",
+      "uid": "35240-9e32d556-0a13-4067-b166-e82762f1a09c"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}

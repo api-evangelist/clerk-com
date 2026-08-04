@@ -1,0 +1,1054 @@
+{
+  "info": {
+    "_postman_id": "afc24c40-0b7c-4ee6-96fc-e0be6dd533f8",
+    "name": "Clerk Backend Account Portal M2M Tokens API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:23:30.000Z",
+    "updatedAt": "2026-07-28T01:23:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-afc24c40-0b7c-4ee6-96fc-e0be6dd533f8"
+  },
+  "item": [
+    {
+      "name": "m2m_tokens",
+      "item": [
+        {
+          "name": "{m2m_token_id}",
+          "item": [
+            {
+              "name": "revoke",
+              "item": [
+                {
+                  "name": "Revoke a M2M Token",
+                  "id": "d0292850-3e1d-4995-a5f0-02b7b7822cb3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"revocation_reason\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/m2m_tokens/:m2m_token_id/revoke",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "m2m_tokens",
+                        ":m2m_token_id",
+                        "revoke"
+                      ],
+                      "variable": [
+                        {
+                          "id": "7a584667-f5c9-472d-8307-8f091646b868",
+                          "key": "m2m_token_id",
+                          "value": "mt_16E74f8dB0f598dbdEDCaFBABd8DcBFF",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Revokes a M2M Token.\n\nThis endpoint only revokes stored opaque-format M2M tokens. JWT-format M2M tokens are stateless and cannot be revoked.\n\nThis endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.\n\n- When revoking a M2M Token with a Machine Secret Key, the token must managed by the Machine associated with the Machine Secret Key.\n- When revoking a M2M Token with a Clerk Secret Key, any token on the Instance can be revoked."
+                  },
+                  "response": [
+                    {
+                      "id": "a5f52c89-9d79-4da0-a4ca-3c26f9231973",
+                      "name": "200 OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"revocation_reason\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/m2m_tokens/:m2m_token_id/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "m2m_tokens",
+                            ":m2m_token_id",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "m2m_token_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"machine_to_machine_token\",\n  \"id\": \"mt_3BcbfD498AF4BA215EA1E298Dbf58FCf\",\n  \"subject\": \"mch_vKWHbXeGPVIQY8ybb18ALc5jylN\",\n  \"revoked\": \"<boolean>\",\n  \"revocation_reason\": \"<string>\",\n  \"expired\": \"<boolean>\",\n  \"expiration\": \"<number>\",\n  \"last_used_at\": \"<number>\",\n  \"created_at\": \"<number>\",\n  \"updated_at\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true,\n    \"example\": {\n      \"important_metadata\": \"Some useful data\"\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T01:23:30.000Z",
+                      "updatedAt": "2026-07-28T01:23:30.000Z",
+                      "uid": "35240-a5f52c89-9d79-4da0-a4ca-3c26f9231973"
+                    },
+                    {
+                      "id": "9e1b3d20-99e2-4903-bbfa-9e2ddbeedf29",
+                      "name": "400 Bad Request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"revocation_reason\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/m2m_tokens/:m2m_token_id/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "m2m_tokens",
+                            ":m2m_token_id",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "m2m_token_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:23:30.000Z",
+                      "updatedAt": "2026-07-28T01:23:30.000Z",
+                      "uid": "35240-9e1b3d20-99e2-4903-bbfa-9e2ddbeedf29"
+                    },
+                    {
+                      "id": "f95428fe-6588-4fc5-9098-135b578a77d2",
+                      "name": "404 Not Found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"revocation_reason\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/m2m_tokens/:m2m_token_id/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "m2m_tokens",
+                            ":m2m_token_id",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "m2m_token_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:23:30.000Z",
+                      "updatedAt": "2026-07-28T01:23:30.000Z",
+                      "uid": "35240-f95428fe-6588-4fc5-9098-135b578a77d2"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:23:30.000Z",
+                  "updatedAt": "2026-07-28T01:23:30.000Z",
+                  "uid": "35240-d0292850-3e1d-4995-a5f0-02b7b7822cb3"
+                }
+              ],
+              "id": "74ac34cb-c9ec-4cc1-aa80-691d44d108cc",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-74ac34cb-c9ec-4cc1-aa80-691d44d108cc"
+            }
+          ],
+          "id": "fbc0ab53-0b75-495f-b976-f49473b17145",
+          "createdAt": "2026-07-28T01:23:30.000Z",
+          "updatedAt": "2026-07-28T01:23:30.000Z",
+          "uid": "35240-fbc0ab53-0b75-495f-b976-f49473b17145"
+        },
+        {
+          "name": "verify",
+          "item": [
+            {
+              "name": "Verify a M2M Token",
+              "id": "e85501b3-e91b-4589-b78c-1720175e98bd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens/verify",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens",
+                    "verify"
+                  ]
+                },
+                "description": "Verifies a M2M Token.\n\nThis endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.\n\n- When verifying a M2M Token with a Machine Secret Key, the token must be granted access to the Machine associated with the Machine Secret Key.\n- When verifying a M2M Token with a Clerk Secret Key, any token on the Instance can be verified."
+              },
+              "response": [
+                {
+                  "id": "8aac8f6b-cc42-455b-ab5e-a70d5f4247b7",
+                  "name": "200 OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/m2m_tokens/verify",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "m2m_tokens",
+                        "verify"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"machine_to_machine_token\",\n  \"id\": \"mt_3BcbfD498AF4BA215EA1E298Dbf58FCf\",\n  \"subject\": \"mch_vKWHbXeGPVIQY8ybb18ALc5jylN\",\n  \"revoked\": \"<boolean>\",\n  \"revocation_reason\": \"<string>\",\n  \"expired\": \"<boolean>\",\n  \"expiration\": \"<number>\",\n  \"last_used_at\": \"<number>\",\n  \"created_at\": \"<number>\",\n  \"updated_at\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true,\n    \"example\": {\n      \"important_metadata\": \"Some useful data\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:23:30.000Z",
+                  "updatedAt": "2026-07-28T01:23:30.000Z",
+                  "uid": "35240-8aac8f6b-cc42-455b-ab5e-a70d5f4247b7"
+                },
+                {
+                  "id": "05ca6943-6f8a-4d22-a906-5cde8e41b01e",
+                  "name": "400 Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/m2m_tokens/verify",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "m2m_tokens",
+                        "verify"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:23:30.000Z",
+                  "updatedAt": "2026-07-28T01:23:30.000Z",
+                  "uid": "35240-05ca6943-6f8a-4d22-a906-5cde8e41b01e"
+                },
+                {
+                  "id": "f90a38b0-1f91-439a-ac51-a2efceffa97c",
+                  "name": "404 Not Found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/m2m_tokens/verify",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "m2m_tokens",
+                        "verify"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:23:30.000Z",
+                  "updatedAt": "2026-07-28T01:23:30.000Z",
+                  "uid": "35240-f90a38b0-1f91-439a-ac51-a2efceffa97c"
+                }
+              ],
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-e85501b3-e91b-4589-b78c-1720175e98bd"
+            }
+          ],
+          "id": "ca5414fb-ee5d-4fee-9863-00219a2d73bd",
+          "createdAt": "2026-07-28T01:23:30.000Z",
+          "updatedAt": "2026-07-28T01:23:30.000Z",
+          "uid": "35240-ca5414fb-ee5d-4fee-9863-00219a2d73bd"
+        },
+        {
+          "name": "Create a M2M Token",
+          "id": "aec08b7f-b7c7-4922-b0a7-52abf8e97b87",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token_format\": \"opaque\",\n  \"seconds_until_expiration\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true\n  },\n  \"min_remaining_ttl_seconds\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/m2m_tokens",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "m2m_tokens"
+              ]
+            },
+            "description": "Creates a new M2M Token. Must be authenticated via a Machine Secret Key."
+          },
+          "response": [
+            {
+              "id": "b9e8d439-0467-4366-ae00-ad3347a0cbf1",
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token_format\": \"opaque\",\n  \"seconds_until_expiration\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true\n  },\n  \"min_remaining_ttl_seconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"machine_to_machine_token\",\n  \"id\": \"mt_DaBFFB6CDCDe0d7fEA8Ac69eECF7d672\",\n  \"subject\": \"mch_ehXssHUaP8L12xw5aH0jE7jxWvw\",\n  \"token\": \"<string>\",\n  \"revoked\": \"<boolean>\",\n  \"revocation_reason\": \"<string>\",\n  \"expired\": \"<boolean>\",\n  \"expiration\": \"<number>\",\n  \"last_used_at\": \"<number>\",\n  \"created_at\": \"<number>\",\n  \"updated_at\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true,\n    \"example\": {\n      \"important_metadata\": \"Some useful data\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-b9e8d439-0467-4366-ae00-ad3347a0cbf1"
+            },
+            {
+              "id": "1982d739-bbd8-46fd-90e0-95204b2b8403",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token_format\": \"opaque\",\n  \"seconds_until_expiration\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true\n  },\n  \"min_remaining_ttl_seconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-1982d739-bbd8-46fd-90e0-95204b2b8403"
+            },
+            {
+              "id": "d990b6b4-c7ae-4015-9caf-179624208af3",
+              "name": "409 Conflict",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token_format\": \"opaque\",\n  \"seconds_until_expiration\": \"<number>\",\n  \"claims\": {\n    \"nullable\": true\n  },\n  \"min_remaining_ttl_seconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-d990b6b4-c7ae-4015-9caf-179624208af3"
+            }
+          ],
+          "createdAt": "2026-07-28T01:23:30.000Z",
+          "updatedAt": "2026-07-28T01:23:30.000Z",
+          "uid": "35240-aec08b7f-b7c7-4922-b0a7-52abf8e97b87"
+        },
+        {
+          "name": "Get M2M Tokens",
+          "id": "97a699a3-ceed-4e34-8d1b-0272368b988c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/m2m_tokens?subject=mch_312SUqr4zHo78iZmsbEc07pRPKM&revoked=false&expired=false&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "m2m_tokens"
+              ],
+              "query": [
+                {
+                  "description": "(Required) ",
+                  "key": "subject",
+                  "value": "mch_312SUqr4zHo78iZmsbEc07pRPKM"
+                },
+                {
+                  "key": "revoked",
+                  "value": "false"
+                },
+                {
+                  "key": "expired",
+                  "value": "false"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Fetches M2M tokens for a specific machine.\n\nOnly tokens created with the opaque token format are returned by this endpoint. JWT-format M2M tokens are stateless and are not stored.\n\nThis endpoint can be authenticated by either a Machine Secret Key or by a Clerk Secret Key.\n\n- When fetching M2M tokens with a Machine Secret Key, only tokens associated with the authenticated machine can be retrieved.\n- When fetching M2M tokens with a Clerk Secret Key, tokens for any machine in the instance can be retrieved."
+          },
+          "response": [
+            {
+              "id": "bb7a695d-00cd-4c61-9772-67e470650024",
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens?subject=mch_312SUqr4zHo78iZmsbEc07pRPKM&revoked=false&expired=false&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "subject",
+                      "value": "mch_312SUqr4zHo78iZmsbEc07pRPKM"
+                    },
+                    {
+                      "key": "revoked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expired",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"m2m_tokens\": [\n    {\n      \"object\": \"machine_to_machine_token\",\n      \"id\": \"mt_CF6E73D6CF33E2aEDf2c6eB5C8A3D766\",\n      \"subject\": \"mch_ab6dCA2GFcmOC_Nu5D9OPhTPqU8\",\n      \"revoked\": \"<boolean>\",\n      \"revocation_reason\": \"<string>\",\n      \"expired\": \"<boolean>\",\n      \"expiration\": \"<number>\",\n      \"last_used_at\": \"<number>\",\n      \"created_at\": \"<number>\",\n      \"updated_at\": \"<number>\",\n      \"claims\": {\n        \"nullable\": true,\n        \"example\": {\n          \"important_metadata\": \"Some useful data\"\n        }\n      }\n    },\n    {\n      \"object\": \"machine_to_machine_token\",\n      \"id\": \"mt_6dD9EFdDE68dbd7FeFaAfEfD104FD83E\",\n      \"subject\": \"mch_6Ne1bqJ9WuZjDFQRyC1vkUboZkG\",\n      \"revoked\": \"<boolean>\",\n      \"revocation_reason\": \"<string>\",\n      \"expired\": \"<boolean>\",\n      \"expiration\": \"<number>\",\n      \"last_used_at\": \"<number>\",\n      \"created_at\": \"<number>\",\n      \"updated_at\": \"<number>\",\n      \"claims\": {\n        \"nullable\": true,\n        \"example\": {\n          \"important_metadata\": \"Some useful data\"\n        }\n      }\n    }\n  ],\n  \"total_count\": \"<number>\"\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-bb7a695d-00cd-4c61-9772-67e470650024"
+            },
+            {
+              "id": "c1391ed3-1752-447d-92f1-c9ec018ed4b4",
+              "name": "400 Bad Request",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens?subject=mch_312SUqr4zHo78iZmsbEc07pRPKM&revoked=false&expired=false&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "subject",
+                      "value": "mch_312SUqr4zHo78iZmsbEc07pRPKM"
+                    },
+                    {
+                      "key": "revoked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expired",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-c1391ed3-1752-447d-92f1-c9ec018ed4b4"
+            },
+            {
+              "id": "809b15f2-f227-45fa-9707-c7492fca04cf",
+              "name": "403 Forbidden",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens?subject=mch_312SUqr4zHo78iZmsbEc07pRPKM&revoked=false&expired=false&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "subject",
+                      "value": "mch_312SUqr4zHo78iZmsbEc07pRPKM"
+                    },
+                    {
+                      "key": "revoked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expired",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-809b15f2-f227-45fa-9707-c7492fca04cf"
+            },
+            {
+              "id": "8630619d-e22f-44a0-a087-67cebf97515e",
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/m2m_tokens?subject=mch_312SUqr4zHo78iZmsbEc07pRPKM&revoked=false&expired=false&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "m2m_tokens"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "subject",
+                      "value": "mch_312SUqr4zHo78iZmsbEc07pRPKM"
+                    },
+                    {
+                      "key": "revoked",
+                      "value": "false"
+                    },
+                    {
+                      "key": "expired",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:23:30.000Z",
+              "updatedAt": "2026-07-28T01:23:30.000Z",
+              "uid": "35240-8630619d-e22f-44a0-a087-67cebf97515e"
+            }
+          ],
+          "createdAt": "2026-07-28T01:23:30.000Z",
+          "updatedAt": "2026-07-28T01:23:30.000Z",
+          "uid": "35240-97a699a3-ceed-4e34-8d1b-0272368b988c"
+        }
+      ],
+      "id": "f806209b-5a76-40ec-844b-a2d513fc218d",
+      "createdAt": "2026-07-28T01:23:30.000Z",
+      "updatedAt": "2026-07-28T01:23:30.000Z",
+      "uid": "35240-f806209b-5a76-40ec-844b-a2d513fc218d"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}

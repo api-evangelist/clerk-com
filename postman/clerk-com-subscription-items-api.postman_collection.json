@@ -1,0 +1,1473 @@
+{
+  "info": {
+    "_postman_id": "4754ade0-019f-48c4-941c-8640f1eb4a6f",
+    "name": "Clerk Backend Account Portal Subscription Items API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:25:15.000Z",
+    "updatedAt": "2026-07-28T01:25:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4754ade0-019f-48c4-941c-8640f1eb4a6f"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "me",
+          "item": [
+            {
+              "name": "billing",
+              "item": [
+                {
+                  "name": "subscription_items",
+                  "item": [
+                    {
+                      "name": "{subscriptionItemID}",
+                      "item": [
+                        {
+                          "name": "Cancel User's Subscription Item",
+                          "id": "e7620185-e6d2-4ab1-9216-94c12122dd51",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "me",
+                                "billing",
+                                "subscription_items",
+                                ":subscriptionItemID"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "7231922a-f6d8-4913-bf5e-1e05e91e0c64",
+                                  "key": "subscriptionItemID",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the subscription item to cancel"
+                                }
+                              ]
+                            },
+                            "description": "Cancels a subscription item for the current user."
+                          },
+                          "response": [
+                            {
+                              "id": "6f002cde-dfcc-4916-a0ca-011c94e07e9b",
+                              "name": "Returns a commerce subscription item.",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"response\": {\n    \"object\": \"commerce_subscription_item\",\n    \"id\": \"<string>\",\n    \"instance_id\": \"<string>\",\n    \"status\": \"incomplete\",\n    \"plan_id\": \"<string>\",\n    \"plan_period\": \"month\",\n    \"payer_id\": \"<string>\",\n    \"is_free_trial\": \"<boolean>\",\n    \"period_start\": \"<long>\",\n    \"period_end\": \"<long>\",\n    \"canceled_at\": \"<long>\",\n    \"past_due_at\": \"<long>\",\n    \"ended_at\": \"<long>\",\n    \"credit\": {\n      \"amount\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"cycle_days_remaining\": \"<long>\",\n      \"cycle_days_total\": \"<long>\",\n      \"cycle_remaining_percent\": \"<double>\"\n    },\n    \"credits\": {\n      \"proration\": {\n        \"amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"cycle_days_remaining\": \"<long>\",\n        \"cycle_days_total\": \"<long>\",\n        \"cycle_remaining_percent\": \"<double>\"\n      },\n      \"payer\": {\n        \"remaining_balance\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"applied_amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      },\n      \"total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      }\n    },\n    \"price_id\": \"<string>\",\n    \"plan\": {\n      \"object\": \"commerce_plan\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"annual_monthly_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"annual_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"product_id\": \"<string>\",\n      \"is_default\": \"<boolean>\",\n      \"is_recurring\": \"<boolean>\",\n      \"publicly_visible\": \"<boolean>\",\n      \"has_base_fee\": \"<boolean>\",\n      \"for_payer_type\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"avatar_url\": \"<string>\",\n      \"free_trial_enabled\": \"<boolean>\",\n      \"free_trial_days\": \"<integer>\",\n      \"unit_prices\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"starts_at_block\": \"<long>\",\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"ends_after_block\": \"<long>\"\n            }\n          ]\n        }\n      ],\n      \"features\": [\n        {\n          \"object\": \"feature\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"avatar_url\": \"<string>\"\n        }\n      ]\n    },\n    \"payment_method_id\": \"<string>\",\n    \"payment_method\": {\n      \"object\": \"commerce_payment_method\",\n      \"id\": \"<string>\",\n      \"payer_id\": \"<string>\",\n      \"payment_type\": \"link\",\n      \"gateway\": \"<string>\",\n      \"gateway_external_id\": \"<string>\",\n      \"gateway_external_account_id\": \"<string>\",\n      \"last4\": \"<string>\",\n      \"status\": \"disconnected\",\n      \"card_type\": \"<string>\",\n      \"is_default\": \"<boolean>\",\n      \"wallet_type\": \"<string>\",\n      \"expiry_year\": \"<integer>\",\n      \"expiry_month\": \"<integer>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"is_removable\": \"<boolean>\"\n    },\n    \"lifetime_paid\": {\n      \"amount\": \"<long>\",\n      \"amount_formatted\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"currency_symbol\": \"<string>\"\n    },\n    \"amount\": {\n      \"amount\": \"<long>\",\n      \"amount_formatted\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"currency_symbol\": \"<string>\"\n    },\n    \"next_payment\": {\n      \"amount\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"date\": \"<long>\",\n      \"per_unit_totals\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"payer\": {\n      \"object\": \"commerce_payer\",\n      \"id\": \"<string>\",\n      \"instance_id\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"organization_name\": \"<string>\",\n      \"image_url\": \"<uri>\",\n      \"credits_balance\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\"\n    },\n    \"proration_date\": \"<string>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"seats\": {\n      \"quantity\": \"<long>\",\n      \"tiers\": [\n        {\n          \"fee_per_block\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"quantity\": \"<long>\"\n        }\n      ]\n    },\n    \"totals\": {\n      \"subtotal\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"base_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"tax_total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"grand_total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"total_due_after_free_trial\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"credit\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"past_due\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"total_due_now\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"per_unit_totals\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        }\n      ],\n      \"credits\": {\n        \"proration\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"cycle_days_remaining\": \"<long>\",\n          \"cycle_days_total\": \"<long>\",\n          \"cycle_remaining_percent\": \"<double>\"\n        },\n        \"payer\": {\n          \"remaining_balance\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"applied_amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          }\n        },\n        \"total\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      },\n      \"proration\": {\n        \"credit\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      }\n    }\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"<string>\",\n    \"sessions\": [\n      {\n        \"abandon_at\": \"<long>\",\n        \"created_at\": \"<long>\",\n        \"expire_at\": \"<long>\",\n        \"factor_verification_age\": [\n          \"<integer>\"\n        ],\n        \"id\": \"<string>\",\n        \"last_active_at\": \"<long>\",\n        \"last_active_organization_id\": \"<string>\",\n        \"object\": \"session\",\n        \"public_user_data\": {\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"identifier\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"image_url\": \"<string>\",\n          \"profile_image_url\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"username\": \"<string>\",\n          \"banned\": \"<boolean>\"\n        },\n        \"status\": \"active\",\n        \"updated_at\": \"<long>\",\n        \"last_active_token\": {\n          \"object\": \"token\",\n          \"jwt\": \"<string>\"\n        },\n        \"actor\": {\n          \"veniam_f9\": 31399783.7078757,\n          \"ex_a8\": false\n        },\n        \"tasks\": [\n          {\n            \"key\": \"<string>\"\n          }\n        ],\n        \"user\": {\n          \"id\": \"<string>\",\n          \"object\": \"user\",\n          \"username\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"primary_email_address_id\": \"<string>\",\n          \"primary_phone_number_id\": \"<string>\",\n          \"primary_web3_wallet_id\": \"<string>\",\n          \"password_enabled\": \"<boolean>\",\n          \"two_factor_enabled\": \"<boolean>\",\n          \"totp_enabled\": \"<boolean>\",\n          \"backup_code_enabled\": \"<boolean>\",\n          \"email_addresses\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"email_address\",\n              \"email_address\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_custom_mock\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"matches_sso_connection\": \"<boolean>\"\n            }\n          ],\n          \"phone_numbers\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"phone_number\",\n              \"phone_number\": \"<string>\",\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"email_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"saml\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"reserved_for_second_factor\": \"<boolean>\",\n              \"default_second_factor\": \"<boolean>\",\n              \"backup_codes\": [\n                \"<string>\"\n              ]\n            }\n          ],\n          \"web3_wallets\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"web3_wallet\",\n              \"web3_wallet\": \"<string>\",\n              \"verification\": {\n                \"status\": \"expired\",\n                \"strategy\": \"web3_base_signature\",\n                \"object\": \"verification_web3\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"nonce\": \"<string>\",\n                \"message\": \"<string>\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"passkeys\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"passkey\",\n              \"name\": \"<string>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"passkey\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_passkey\",\n                \"attempts\": \"<integer>\",\n                \"nonce\": \"<string>\"\n              },\n              \"last_used_at\": \"<long>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"external_accounts\": [\n            {\n              \"object\": \"external_account\",\n              \"id\": \"<string>\",\n              \"provider\": \"<string>\",\n              \"identification_id\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"approved_scopes\": \"<string>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"public_metadata\": {\n                \"occaecat_3b\": false,\n                \"laboris1e0\": \"aute quis adipisicing id\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"verification\": {\n                \"status\": \"transferable\",\n                \"strategy\": \"oauth_wayfh\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_oauth\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"verified_at_client\": \"<string>\"\n              },\n              \"email_address_verified\": \"<boolean>\",\n              \"avatar_url\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"username\": \"<string>\",\n              \"phone_number\": \"<string>\",\n              \"label\": \"<string>\"\n            }\n          ],\n          \"saml_accounts\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"saml_account\",\n              \"provider\": \"<string>\",\n              \"active\": \"<boolean>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"public_metadata\": {\n                \"in_cb\": true\n              },\n              \"saml_connection\": {\n                \"domain\": -63621756\n              },\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"saml\",\n                \"object\": \"verification_saml\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"expire_at\": \"<integer>\",\n                \"attempts\": \"<integer>\"\n              },\n              \"enterprise_connection_id\": \"<string>\",\n              \"last_authenticated_at\": \"<long>\"\n            }\n          ],\n          \"public_metadata\": {\n            \"sint_44\": false,\n            \"laborum_c\": -72579681\n          },\n          \"external_id\": \"<string>\",\n          \"last_sign_in_at\": \"<long>\",\n          \"banned\": \"<boolean>\",\n          \"locked\": \"<boolean>\",\n          \"lockout_expires_in_seconds\": \"<long>\",\n          \"verification_attempts_remaining\": \"<long>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"delete_self_enabled\": \"<boolean>\",\n          \"create_organization_enabled\": \"<boolean>\",\n          \"last_active_at\": \"<long>\",\n          \"mfa_enabled_at\": \"<long>\",\n          \"mfa_disabled_at\": \"<long>\",\n          \"legal_accepted_at\": \"<long>\",\n          \"image_url\": \"<string>\",\n          \"organization_memberships\": [\n            {\n              \"object\": \"organization_membership\",\n              \"id\": \"<string>\",\n              \"public_metadata\": {\n                \"culpa2\": \"pariatur ea nulla\",\n                \"in55e\": false\n              },\n              \"role\": \"<string>\",\n              \"role_name\": \"<string>\",\n              \"permissions\": [\n                \"<string>\"\n              ],\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"organization\": {\n                \"object\": \"organization\",\n                \"id\": \"<string>\",\n                \"name\": \"<string>\",\n                \"slug\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"max_allowed_memberships\": \"<integer>\",\n                \"admin_delete_enabled\": \"<boolean>\",\n                \"public_metadata\": {\n                  \"pariatur_f_d\": 16970404\n                },\n                \"created_at\": \"<long>\",\n                \"updated_at\": \"<long>\",\n                \"image_url\": \"<string>\",\n                \"members_count\": \"<integer>\",\n                \"pending_invitations_count\": \"<integer>\",\n                \"logo_url\": \"<string>\"\n              },\n              \"public_user_data\": {\n                \"first_name\": \"<string>\",\n                \"last_name\": \"<string>\",\n                \"identifier\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"image_url\": \"<string>\",\n                \"profile_image_url\": \"<string>\",\n                \"user_id\": \"<string>\",\n                \"username\": \"<string>\",\n                \"banned\": \"<boolean>\"\n              }\n            }\n          ],\n          \"password_last_updated_at\": \"<long>\",\n          \"private_metadata\": {\n            \"sed4\": 98158073.01995906,\n            \"culpaa8\": 49333544\n          },\n          \"unsafe_metadata\": {\n            \"magna_7b\": \"occaecat mollit Duis\",\n            \"pariature4\": -63153715.143411174\n          },\n          \"deprovisioned\": \"<boolean>\",\n          \"create_organizations_limit\": \"<integer>\",\n          \"profile_image_url\": \"<string>\"\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"needs_protect_check\",\n      \"supported_identifiers\": [\n        \"email_address\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"strategy\": \"oauth_token_mock\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"strategy\": \"enterprise_sso\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": \"verified\",\n        \"strategy\": \"password\",\n        \"object\": \"verification_password\",\n        \"attempts\": \"<integer>\",\n        \"expire_at\": \"<integer>\"\n      },\n      \"second_factor_verification\": {\n        \"status\": \"unverified\",\n        \"strategy\": \"email_code\",\n        \"expire_at\": \"<integer>\",\n        \"object\": \"verification_otp\",\n        \"attempts\": \"<integer>\"\n      },\n      \"identifier\": \"<string>\",\n      \"user_data\": {\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\",\n        \"profile_image_url\": \"<string>\"\n      },\n      \"created_session_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"<string>\"\n      ],\n      \"optional_fields\": [\n        \"<string>\"\n      ],\n      \"missing_fields\": [\n        \"<string>\"\n      ],\n      \"unverified_fields\": [\n        \"<string>\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"\",\n          \"status\": \"failed\",\n          \"strategy\": \"email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"phone_number\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"failed\",\n          \"strategy\": \"email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"web3_wallet\": {\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"expired\",\n          \"strategy\": \"web3_okx_wallet_signature\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_web3\",\n          \"attempts\": \"<integer>\",\n          \"expire_at\": \"<integer>\",\n          \"nonce\": \"<string>\",\n          \"message\": \"<string>\"\n        },\n        \"external_account\": {\n          \"status\": \"failed\",\n          \"strategy\": \"oauth_token_y6ib\",\n          \"expire_at\": \"<integer>\",\n          \"object\": \"verification_oauth\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"error\": {\n            \"message\": \"<string>\",\n            \"long_message\": \"<string>\",\n            \"code\": \"<string>\",\n            \"meta\": {}\n          },\n          \"attempts\": \"<integer>\"\n        }\n      },\n      \"username\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"web3_wallet\": \"<string>\",\n      \"password_enabled\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"custom_action\": \"<boolean>\",\n      \"external_id\": \"<string>\",\n      \"created_session_id\": \"<string>\",\n      \"created_user_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"legal_accepted_at\": \"<long>\",\n      \"unsafe_metadata\": {\n        \"ametc\": 15398949,\n        \"ea_991\": \"exercitation\",\n        \"aute_8_\": true\n      },\n      \"public_metadata\": {\n        \"ad_8\": true\n      }\n    },\n    \"last_active_session_id\": \"<string>\",\n    \"last_authentication_strategy\": \"<string>\",\n    \"cookie_expires_at\": \"<long>\",\n    \"captcha_bypass\": \"<boolean>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-6f002cde-dfcc-4916-a0ca-011c94e07e9b"
+                            },
+                            {
+                              "id": "059243de-26aa-4e01-bccd-ce6d063cc1a7",
+                              "name": "Subscription item canceled successfully",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "No Content",
+                              "code": 204,
+                              "_postman_previewlanguage": "text",
+                              "header": [],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": null,
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-059243de-26aa-4e01-bccd-ce6d063cc1a7"
+                            },
+                            {
+                              "id": "d3c6c784-ac91-473b-ae16-78d7a2c9c3ef",
+                              "name": "Request was not successful",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-d3c6c784-ac91-473b-ae16-78d7a2c9c3ef"
+                            },
+                            {
+                              "id": "d1fe24f4-2316-4ac6-bee9-29f274137456",
+                              "name": "Authentication invalid",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-d1fe24f4-2316-4ac6-bee9-29f274137456"
+                            },
+                            {
+                              "id": "98e609c7-6a11-41cd-923f-1ae208b167f2",
+                              "name": "Authorization invalid",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-98e609c7-6a11-41cd-923f-1ae208b167f2"
+                            },
+                            {
+                              "id": "3353551d-6119-4b97-9abc-42322769e18d",
+                              "name": "Resource not found",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-3353551d-6119-4b97-9abc-42322769e18d"
+                            },
+                            {
+                              "id": "9701dc12-874a-4033-b45f-ffa5d570f596",
+                              "name": "Request was not successful",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Conflict",
+                              "code": 409,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-9701dc12-874a-4033-b45f-ffa5d570f596"
+                            },
+                            {
+                              "id": "37dc8afc-b515-408e-845d-94e8b99e7403",
+                              "name": "Invalid request parameters",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                              "code": 422,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-37dc8afc-b515-408e-845d-94e8b99e7403"
+                            },
+                            {
+                              "id": "3e13a919-6a7d-4c19-8cf6-fe2fa2e8b960",
+                              "name": "Request was not successful",
+                              "originalRequest": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/me/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "me",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "subscriptionItemID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Internal Server Error",
+                              "code": 500,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-3e13a919-6a7d-4c19-8cf6-fe2fa2e8b960"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-e7620185-e6d2-4ab1-9216-94c12122dd51"
+                        }
+                      ],
+                      "id": "4b22cc56-2800-4e82-a4f3-c5afe1eb0063",
+                      "createdAt": "2026-07-28T01:25:16.000Z",
+                      "updatedAt": "2026-07-28T01:25:16.000Z",
+                      "uid": "35240-4b22cc56-2800-4e82-a4f3-c5afe1eb0063"
+                    },
+                    {
+                      "name": "List User's Subscription Items",
+                      "id": "1437ef89-a633-4057-8267-e2f97483a2ee",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/v1/me/billing/subscription_items?limit=10&offset=0&paginated=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "v1",
+                            "me",
+                            "billing",
+                            "subscription_items"
+                          ],
+                          "query": [
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated.",
+                              "key": "paginated",
+                              "value": "<boolean>"
+                            }
+                          ]
+                        },
+                        "description": "Returns a list of subscription items for the current user."
+                      },
+                      "response": [
+                        {
+                          "id": "b725ef1e-aff9-45af-a931-605f1c43fd97",
+                          "name": "Returns a list of commerce subscription items.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/me/billing/subscription_items?limit=10&offset=0&paginated=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "me",
+                                "billing",
+                                "subscription_items"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated.",
+                                  "key": "paginated",
+                                  "value": "<boolean>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"response\": {\n    \"data\": [\n      {\n        \"object\": \"commerce_subscription_item\",\n        \"id\": \"<string>\",\n        \"instance_id\": \"<string>\",\n        \"status\": \"canceled\",\n        \"plan_id\": \"<string>\",\n        \"plan_period\": \"month\",\n        \"payer_id\": \"<string>\",\n        \"is_free_trial\": \"<boolean>\",\n        \"period_start\": \"<long>\",\n        \"period_end\": \"<long>\",\n        \"canceled_at\": \"<long>\",\n        \"past_due_at\": \"<long>\",\n        \"ended_at\": \"<long>\",\n        \"credit\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"cycle_days_remaining\": \"<long>\",\n          \"cycle_days_total\": \"<long>\",\n          \"cycle_remaining_percent\": \"<double>\"\n        },\n        \"credits\": {\n          \"proration\": {\n            \"amount\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            },\n            \"cycle_days_remaining\": \"<long>\",\n            \"cycle_days_total\": \"<long>\",\n            \"cycle_remaining_percent\": \"<double>\"\n          },\n          \"payer\": {\n            \"remaining_balance\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            },\n            \"applied_amount\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          },\n          \"total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          }\n        },\n        \"price_id\": \"<string>\",\n        \"plan\": {\n          \"object\": \"commerce_plan\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"annual_monthly_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"annual_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"description\": \"<string>\",\n          \"product_id\": \"<string>\",\n          \"is_default\": \"<boolean>\",\n          \"is_recurring\": \"<boolean>\",\n          \"publicly_visible\": \"<boolean>\",\n          \"has_base_fee\": \"<boolean>\",\n          \"for_payer_type\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"avatar_url\": \"<string>\",\n          \"free_trial_enabled\": \"<boolean>\",\n          \"free_trial_days\": \"<integer>\",\n          \"unit_prices\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"starts_at_block\": \"<long>\",\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"ends_after_block\": \"<long>\"\n                }\n              ]\n            }\n          ],\n          \"features\": [\n            {\n              \"object\": \"feature\",\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"avatar_url\": \"<string>\"\n            }\n          ]\n        },\n        \"payment_method_id\": \"<string>\",\n        \"payment_method\": {\n          \"object\": \"commerce_payment_method\",\n          \"id\": \"<string>\",\n          \"payer_id\": \"<string>\",\n          \"payment_type\": \"card\",\n          \"gateway\": \"<string>\",\n          \"gateway_external_id\": \"<string>\",\n          \"gateway_external_account_id\": \"<string>\",\n          \"last4\": \"<string>\",\n          \"status\": \"active\",\n          \"card_type\": \"<string>\",\n          \"is_default\": \"<boolean>\",\n          \"wallet_type\": \"<string>\",\n          \"expiry_year\": \"<integer>\",\n          \"expiry_month\": \"<integer>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"is_removable\": \"<boolean>\"\n        },\n        \"lifetime_paid\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"next_payment\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"date\": \"<long>\",\n          \"per_unit_totals\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"total\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"quantity\": \"<long>\"\n                }\n              ]\n            }\n          ]\n        },\n        \"payer\": {\n          \"object\": \"commerce_payer\",\n          \"id\": \"<string>\",\n          \"instance_id\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"organization_id\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organization_name\": \"<string>\",\n          \"image_url\": \"<uri>\",\n          \"credits_balance\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\"\n        },\n        \"proration_date\": \"<string>\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\",\n        \"seats\": {\n          \"quantity\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        },\n        \"totals\": {\n          \"subtotal\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"base_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"tax_total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"grand_total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total_due_after_free_trial\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"credit\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"past_due\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total_due_now\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"per_unit_totals\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"total\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"quantity\": \"<long>\"\n                }\n              ]\n            }\n          ],\n          \"credits\": {\n            \"proration\": {\n              \"amount\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"cycle_days_remaining\": \"<long>\",\n              \"cycle_days_total\": \"<long>\",\n              \"cycle_remaining_percent\": \"<double>\"\n            },\n            \"payer\": {\n              \"remaining_balance\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"applied_amount\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              }\n            },\n            \"total\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          },\n          \"proration\": {\n            \"credit\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          }\n        }\n      }\n    ],\n    \"total_count\": \"<long>\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"<string>\",\n    \"sessions\": [\n      {\n        \"abandon_at\": \"<long>\",\n        \"created_at\": \"<long>\",\n        \"expire_at\": \"<long>\",\n        \"factor_verification_age\": [\n          \"<integer>\"\n        ],\n        \"id\": \"<string>\",\n        \"last_active_at\": \"<long>\",\n        \"last_active_organization_id\": \"<string>\",\n        \"object\": \"session\",\n        \"public_user_data\": {\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"identifier\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"image_url\": \"<string>\",\n          \"profile_image_url\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"username\": \"<string>\",\n          \"banned\": \"<boolean>\"\n        },\n        \"status\": \"abandoned\",\n        \"updated_at\": \"<long>\",\n        \"last_active_token\": {\n          \"object\": \"token\",\n          \"jwt\": \"<string>\"\n        },\n        \"actor\": {\n          \"sit09_\": -97183832.6420413,\n          \"eu_8\": -10074869\n        },\n        \"tasks\": [\n          {\n            \"key\": \"<string>\"\n          }\n        ],\n        \"user\": {\n          \"id\": \"<string>\",\n          \"object\": \"user\",\n          \"username\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"primary_email_address_id\": \"<string>\",\n          \"primary_phone_number_id\": \"<string>\",\n          \"primary_web3_wallet_id\": \"<string>\",\n          \"password_enabled\": \"<boolean>\",\n          \"two_factor_enabled\": \"<boolean>\",\n          \"totp_enabled\": \"<boolean>\",\n          \"backup_code_enabled\": \"<boolean>\",\n          \"email_addresses\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"email_address\",\n              \"email_address\": \"<string>\",\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"reset_password_phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_apple\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"matches_sso_connection\": \"<boolean>\"\n            }\n          ],\n          \"phone_numbers\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"phone_number\",\n              \"phone_number\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"reset_password_phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_google\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"reserved_for_second_factor\": \"<boolean>\",\n              \"default_second_factor\": \"<boolean>\",\n              \"backup_codes\": [\n                \"<string>\"\n              ]\n            }\n          ],\n          \"web3_wallets\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"web3_wallet\",\n              \"web3_wallet\": \"<string>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"web3_metamask_signature\",\n                \"object\": \"verification_web3\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"nonce\": \"<string>\",\n                \"message\": \"<string>\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"passkeys\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"passkey\",\n              \"name\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"passkey\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_passkey\",\n                \"attempts\": \"<integer>\",\n                \"nonce\": \"<string>\"\n              },\n              \"last_used_at\": \"<long>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"external_accounts\": [\n            {\n              \"object\": \"external_account\",\n              \"id\": \"<string>\",\n              \"provider\": \"<string>\",\n              \"identification_id\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"approved_scopes\": \"<string>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"public_metadata\": {\n                \"ut_8b\": 42234138,\n                \"minim_c9a\": \"id in aliqua consectetur\",\n                \"cillum64\": \"dolor deserunt labore\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"oauth_ntzzmtsdkan\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_oauth\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"verified_at_client\": \"<string>\"\n              },\n              \"email_address_verified\": \"<boolean>\",\n              \"avatar_url\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"username\": \"<string>\",\n              \"phone_number\": \"<string>\",\n              \"label\": \"<string>\"\n            }\n          ],\n          \"saml_accounts\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"saml_account\",\n              \"provider\": \"<string>\",\n              \"active\": \"<boolean>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"public_metadata\": {\n                \"Ut_8b6\": -85202620.88606425,\n                \"commodo_8\": \"in dolor ea sunt\",\n                \"cupidatatf\": 20082401,\n                \"commodo_c\": \"tempor dolor do\",\n                \"ut_a3\": false\n              },\n              \"saml_connection\": {\n                \"domain\": 21922483.09377569\n              },\n              \"verification\": {\n                \"status\": \"transferable\",\n                \"strategy\": \"saml\",\n                \"object\": \"verification_saml\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"expire_at\": \"<integer>\",\n                \"attempts\": \"<integer>\"\n              },\n              \"enterprise_connection_id\": \"<string>\",\n              \"last_authenticated_at\": \"<long>\"\n            }\n          ],\n          \"public_metadata\": {\n            \"eu_b\": \"cillum in Duis\",\n            \"Lorem_24a\": \"nostrud eu velit ipsum\",\n            \"nulla8\": false\n          },\n          \"external_id\": \"<string>\",\n          \"last_sign_in_at\": \"<long>\",\n          \"banned\": \"<boolean>\",\n          \"locked\": \"<boolean>\",\n          \"lockout_expires_in_seconds\": \"<long>\",\n          \"verification_attempts_remaining\": \"<long>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"delete_self_enabled\": \"<boolean>\",\n          \"create_organization_enabled\": \"<boolean>\",\n          \"last_active_at\": \"<long>\",\n          \"mfa_enabled_at\": \"<long>\",\n          \"mfa_disabled_at\": \"<long>\",\n          \"legal_accepted_at\": \"<long>\",\n          \"image_url\": \"<string>\",\n          \"organization_memberships\": [\n            {\n              \"object\": \"organization_membership\",\n              \"id\": \"<string>\",\n              \"public_metadata\": {\n                \"dolor6\": 19922907.39774707\n              },\n              \"role\": \"<string>\",\n              \"role_name\": \"<string>\",\n              \"permissions\": [\n                \"<string>\"\n              ],\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"organization\": {\n                \"object\": \"organization\",\n                \"id\": \"<string>\",\n                \"name\": \"<string>\",\n                \"slug\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"max_allowed_memberships\": \"<integer>\",\n                \"admin_delete_enabled\": \"<boolean>\",\n                \"public_metadata\": {\n                  \"ut__\": 83347690,\n                  \"eiusmod0\": \"ex nisi sed aute\"\n                },\n                \"created_at\": \"<long>\",\n                \"updated_at\": \"<long>\",\n                \"image_url\": \"<string>\",\n                \"members_count\": \"<integer>\",\n                \"pending_invitations_count\": \"<integer>\",\n                \"logo_url\": \"<string>\"\n              },\n              \"public_user_data\": {\n                \"first_name\": \"<string>\",\n                \"last_name\": \"<string>\",\n                \"identifier\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"image_url\": \"<string>\",\n                \"profile_image_url\": \"<string>\",\n                \"user_id\": \"<string>\",\n                \"username\": \"<string>\",\n                \"banned\": \"<boolean>\"\n              }\n            }\n          ],\n          \"password_last_updated_at\": \"<long>\",\n          \"private_metadata\": {\n            \"reprehenderit_79\": -11853482\n          },\n          \"unsafe_metadata\": {\n            \"non_3e\": \"ex nisi irure\"\n          },\n          \"deprovisioned\": \"<boolean>\",\n          \"create_organizations_limit\": \"<integer>\",\n          \"profile_image_url\": \"<string>\"\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"abandoned\",\n      \"supported_identifiers\": [\n        \"phone_number\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"strategy\": \"email_link\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"strategy\": \"oauth_token_mock\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": \"verified\",\n        \"strategy\": \"password\",\n        \"object\": \"verification_password\",\n        \"attempts\": \"<integer>\",\n        \"expire_at\": \"<integer>\"\n      },\n      \"second_factor_verification\": {\n        \"status\": \"failed\",\n        \"strategy\": \"reset_password_phone_code\",\n        \"expire_at\": \"<integer>\",\n        \"object\": \"verification_otp\",\n        \"attempts\": \"<integer>\"\n      },\n      \"identifier\": \"<string>\",\n      \"user_data\": {\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\",\n        \"profile_image_url\": \"<string>\"\n      },\n      \"created_session_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"client_trust_state\": \"pending\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"<string>\"\n      ],\n      \"optional_fields\": [\n        \"<string>\"\n      ],\n      \"missing_fields\": [\n        \"<string>\"\n      ],\n      \"unverified_fields\": [\n        \"<string>\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"\",\n          \"status\": \"unverified\",\n          \"strategy\": \"phone_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"phone_number\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"needs_attempt\",\n          \"status\": \"expired\",\n          \"strategy\": \"reset_password_email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"web3_wallet\": {\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"expired\",\n          \"strategy\": \"web3_okx_wallet_signature\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_web3\",\n          \"attempts\": \"<integer>\",\n          \"expire_at\": \"<integer>\",\n          \"nonce\": \"<string>\",\n          \"message\": \"<string>\"\n        },\n        \"external_account\": {\n          \"status\": \"verified\",\n          \"strategy\": \"oauth_ph\",\n          \"expire_at\": \"<integer>\",\n          \"object\": \"verification_oauth\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"error\": {\n            \"message\": \"<string>\",\n            \"long_message\": \"<string>\",\n            \"code\": \"<string>\",\n            \"meta\": {}\n          },\n          \"attempts\": \"<integer>\"\n        }\n      },\n      \"username\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"web3_wallet\": \"<string>\",\n      \"password_enabled\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"custom_action\": \"<boolean>\",\n      \"external_id\": \"<string>\",\n      \"created_session_id\": \"<string>\",\n      \"created_user_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"legal_accepted_at\": \"<long>\",\n      \"unsafe_metadata\": {\n        \"dolord20\": \"laborum laboris sit occaecat\",\n        \"ut_f\": -59478528.10416161\n      },\n      \"public_metadata\": {\n        \"occaecat__f\": \"laborum cillum in\"\n      }\n    },\n    \"last_active_session_id\": \"<string>\",\n    \"last_authentication_strategy\": \"<string>\",\n    \"cookie_expires_at\": \"<long>\",\n    \"captcha_bypass\": \"<boolean>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-b725ef1e-aff9-45af-a931-605f1c43fd97"
+                        },
+                        {
+                          "id": "8f2c6f70-8a2d-4c1f-8e18-8dc687620700",
+                          "name": "Request was not successful",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/me/billing/subscription_items?limit=10&offset=0&paginated=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "me",
+                                "billing",
+                                "subscription_items"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated.",
+                                  "key": "paginated",
+                                  "value": "<boolean>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-8f2c6f70-8a2d-4c1f-8e18-8dc687620700"
+                        },
+                        {
+                          "id": "48a35187-27b9-4ece-a5ba-cd9d41b7816c",
+                          "name": "Authentication invalid",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/me/billing/subscription_items?limit=10&offset=0&paginated=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "me",
+                                "billing",
+                                "subscription_items"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated.",
+                                  "key": "paginated",
+                                  "value": "<boolean>"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unauthorized",
+                          "code": 401,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-48a35187-27b9-4ece-a5ba-cd9d41b7816c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:25:16.000Z",
+                      "updatedAt": "2026-07-28T01:25:16.000Z",
+                      "uid": "35240-1437ef89-a633-4057-8267-e2f97483a2ee"
+                    }
+                  ],
+                  "id": "593ee16a-493f-403a-a9dc-20a61399563f",
+                  "createdAt": "2026-07-28T01:25:16.000Z",
+                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                  "uid": "35240-593ee16a-493f-403a-a9dc-20a61399563f"
+                }
+              ],
+              "id": "6bfd8501-a7ae-46cf-9db0-79ce7014353e",
+              "createdAt": "2026-07-28T01:25:16.000Z",
+              "updatedAt": "2026-07-28T01:25:16.000Z",
+              "uid": "35240-6bfd8501-a7ae-46cf-9db0-79ce7014353e"
+            }
+          ],
+          "id": "60aa4b6a-04c5-488b-8c9d-57e2b51e50b2",
+          "createdAt": "2026-07-28T01:25:16.000Z",
+          "updatedAt": "2026-07-28T01:25:16.000Z",
+          "uid": "35240-60aa4b6a-04c5-488b-8c9d-57e2b51e50b2"
+        },
+        {
+          "name": "organizations",
+          "item": [
+            {
+              "name": "{organizationID}",
+              "item": [
+                {
+                  "name": "billing",
+                  "item": [
+                    {
+                      "name": "subscription_items",
+                      "item": [
+                        {
+                          "name": "{subscriptionItemID}",
+                          "item": [
+                            {
+                              "name": "Cancel Organization's Subscription Item",
+                              "id": "d73319c2-237d-40f8-a28e-0f51fc3eb86e",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "DELETE",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items",
+                                    ":subscriptionItemID"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "cc6464dd-93ab-4938-b066-cc2c365a4db9",
+                                      "key": "organizationID",
+                                      "value": "<string>",
+                                      "description": "(Required) The ID of the organization"
+                                    },
+                                    {
+                                      "id": "8268a46d-6024-4662-adf1-4a47bd074544",
+                                      "key": "subscriptionItemID",
+                                      "value": "<string>",
+                                      "description": "(Required) The ID of the subscription item to cancel"
+                                    }
+                                  ]
+                                },
+                                "description": "Cancels a subscription item for the organization."
+                              },
+                              "response": [
+                                {
+                                  "id": "d119074b-d4d2-4d70-aa91-0b256d76f64c",
+                                  "name": "Returns a commerce subscription item.",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "organizations",
+                                        ":organizationID",
+                                        "billing",
+                                        "subscription_items",
+                                        ":subscriptionItemID"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "organizationID"
+                                        },
+                                        {
+                                          "key": "subscriptionItemID"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"response\": {\n    \"object\": \"commerce_subscription_item\",\n    \"id\": \"<string>\",\n    \"instance_id\": \"<string>\",\n    \"status\": \"incomplete\",\n    \"plan_id\": \"<string>\",\n    \"plan_period\": \"month\",\n    \"payer_id\": \"<string>\",\n    \"is_free_trial\": \"<boolean>\",\n    \"period_start\": \"<long>\",\n    \"period_end\": \"<long>\",\n    \"canceled_at\": \"<long>\",\n    \"past_due_at\": \"<long>\",\n    \"ended_at\": \"<long>\",\n    \"credit\": {\n      \"amount\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"cycle_days_remaining\": \"<long>\",\n      \"cycle_days_total\": \"<long>\",\n      \"cycle_remaining_percent\": \"<double>\"\n    },\n    \"credits\": {\n      \"proration\": {\n        \"amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"cycle_days_remaining\": \"<long>\",\n        \"cycle_days_total\": \"<long>\",\n        \"cycle_remaining_percent\": \"<double>\"\n      },\n      \"payer\": {\n        \"remaining_balance\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"applied_amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      },\n      \"total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      }\n    },\n    \"price_id\": \"<string>\",\n    \"plan\": {\n      \"object\": \"commerce_plan\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"annual_monthly_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"annual_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"description\": \"<string>\",\n      \"product_id\": \"<string>\",\n      \"is_default\": \"<boolean>\",\n      \"is_recurring\": \"<boolean>\",\n      \"publicly_visible\": \"<boolean>\",\n      \"has_base_fee\": \"<boolean>\",\n      \"for_payer_type\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"avatar_url\": \"<string>\",\n      \"free_trial_enabled\": \"<boolean>\",\n      \"free_trial_days\": \"<integer>\",\n      \"unit_prices\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"starts_at_block\": \"<long>\",\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"ends_after_block\": \"<long>\"\n            }\n          ]\n        }\n      ],\n      \"features\": [\n        {\n          \"object\": \"feature\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"avatar_url\": \"<string>\"\n        }\n      ]\n    },\n    \"payment_method_id\": \"<string>\",\n    \"payment_method\": {\n      \"object\": \"commerce_payment_method\",\n      \"id\": \"<string>\",\n      \"payer_id\": \"<string>\",\n      \"payment_type\": \"link\",\n      \"gateway\": \"<string>\",\n      \"gateway_external_id\": \"<string>\",\n      \"gateway_external_account_id\": \"<string>\",\n      \"last4\": \"<string>\",\n      \"status\": \"disconnected\",\n      \"card_type\": \"<string>\",\n      \"is_default\": \"<boolean>\",\n      \"wallet_type\": \"<string>\",\n      \"expiry_year\": \"<integer>\",\n      \"expiry_month\": \"<integer>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"is_removable\": \"<boolean>\"\n    },\n    \"lifetime_paid\": {\n      \"amount\": \"<long>\",\n      \"amount_formatted\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"currency_symbol\": \"<string>\"\n    },\n    \"amount\": {\n      \"amount\": \"<long>\",\n      \"amount_formatted\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"currency_symbol\": \"<string>\"\n    },\n    \"next_payment\": {\n      \"amount\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"date\": \"<long>\",\n      \"per_unit_totals\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        }\n      ]\n    },\n    \"payer\": {\n      \"object\": \"commerce_payer\",\n      \"id\": \"<string>\",\n      \"instance_id\": \"<string>\",\n      \"user_id\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"email\": \"<email>\",\n      \"organization_name\": \"<string>\",\n      \"image_url\": \"<uri>\",\n      \"credits_balance\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\"\n    },\n    \"proration_date\": \"<string>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\",\n    \"seats\": {\n      \"quantity\": \"<long>\",\n      \"tiers\": [\n        {\n          \"fee_per_block\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"quantity\": \"<long>\"\n        }\n      ]\n    },\n    \"totals\": {\n      \"subtotal\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"base_fee\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"tax_total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"grand_total\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"total_due_after_free_trial\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"credit\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"past_due\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"total_due_now\": {\n        \"amount\": \"<long>\",\n        \"amount_formatted\": \"<string>\",\n        \"currency\": \"<string>\",\n        \"currency_symbol\": \"<string>\"\n      },\n      \"per_unit_totals\": [\n        {\n          \"name\": \"<string>\",\n          \"block_size\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        }\n      ],\n      \"credits\": {\n        \"proration\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"cycle_days_remaining\": \"<long>\",\n          \"cycle_days_total\": \"<long>\",\n          \"cycle_remaining_percent\": \"<double>\"\n        },\n        \"payer\": {\n          \"remaining_balance\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"applied_amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          }\n        },\n        \"total\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      },\n      \"proration\": {\n        \"credit\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        }\n      }\n    }\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"<string>\",\n    \"sessions\": [\n      {\n        \"abandon_at\": \"<long>\",\n        \"created_at\": \"<long>\",\n        \"expire_at\": \"<long>\",\n        \"factor_verification_age\": [\n          \"<integer>\"\n        ],\n        \"id\": \"<string>\",\n        \"last_active_at\": \"<long>\",\n        \"last_active_organization_id\": \"<string>\",\n        \"object\": \"session\",\n        \"public_user_data\": {\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"identifier\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"image_url\": \"<string>\",\n          \"profile_image_url\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"username\": \"<string>\",\n          \"banned\": \"<boolean>\"\n        },\n        \"status\": \"active\",\n        \"updated_at\": \"<long>\",\n        \"last_active_token\": {\n          \"object\": \"token\",\n          \"jwt\": \"<string>\"\n        },\n        \"actor\": {\n          \"veniam_f9\": 31399783.7078757,\n          \"ex_a8\": false\n        },\n        \"tasks\": [\n          {\n            \"key\": \"<string>\"\n          }\n        ],\n        \"user\": {\n          \"id\": \"<string>\",\n          \"object\": \"user\",\n          \"username\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"primary_email_address_id\": \"<string>\",\n          \"primary_phone_number_id\": \"<string>\",\n          \"primary_web3_wallet_id\": \"<string>\",\n          \"password_enabled\": \"<boolean>\",\n          \"two_factor_enabled\": \"<boolean>\",\n          \"totp_enabled\": \"<boolean>\",\n          \"backup_code_enabled\": \"<boolean>\",\n          \"email_addresses\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"email_address\",\n              \"email_address\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_custom_mock\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"matches_sso_connection\": \"<boolean>\"\n            }\n          ],\n          \"phone_numbers\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"phone_number\",\n              \"phone_number\": \"<string>\",\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"email_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"saml\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"reserved_for_second_factor\": \"<boolean>\",\n              \"default_second_factor\": \"<boolean>\",\n              \"backup_codes\": [\n                \"<string>\"\n              ]\n            }\n          ],\n          \"web3_wallets\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"web3_wallet\",\n              \"web3_wallet\": \"<string>\",\n              \"verification\": {\n                \"status\": \"expired\",\n                \"strategy\": \"web3_base_signature\",\n                \"object\": \"verification_web3\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"nonce\": \"<string>\",\n                \"message\": \"<string>\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"passkeys\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"passkey\",\n              \"name\": \"<string>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"passkey\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_passkey\",\n                \"attempts\": \"<integer>\",\n                \"nonce\": \"<string>\"\n              },\n              \"last_used_at\": \"<long>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"external_accounts\": [\n            {\n              \"object\": \"external_account\",\n              \"id\": \"<string>\",\n              \"provider\": \"<string>\",\n              \"identification_id\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"approved_scopes\": \"<string>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"public_metadata\": {\n                \"occaecat_3b\": false,\n                \"laboris1e0\": \"aute quis adipisicing id\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"verification\": {\n                \"status\": \"transferable\",\n                \"strategy\": \"oauth_wayfh\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_oauth\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"verified_at_client\": \"<string>\"\n              },\n              \"email_address_verified\": \"<boolean>\",\n              \"avatar_url\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"username\": \"<string>\",\n              \"phone_number\": \"<string>\",\n              \"label\": \"<string>\"\n            }\n          ],\n          \"saml_accounts\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"saml_account\",\n              \"provider\": \"<string>\",\n              \"active\": \"<boolean>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"public_metadata\": {\n                \"in_cb\": true\n              },\n              \"saml_connection\": {\n                \"domain\": -63621756\n              },\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"saml\",\n                \"object\": \"verification_saml\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"expire_at\": \"<integer>\",\n                \"attempts\": \"<integer>\"\n              },\n              \"enterprise_connection_id\": \"<string>\",\n              \"last_authenticated_at\": \"<long>\"\n            }\n          ],\n          \"public_metadata\": {\n            \"sint_44\": false,\n            \"laborum_c\": -72579681\n          },\n          \"external_id\": \"<string>\",\n          \"last_sign_in_at\": \"<long>\",\n          \"banned\": \"<boolean>\",\n          \"locked\": \"<boolean>\",\n          \"lockout_expires_in_seconds\": \"<long>\",\n          \"verification_attempts_remaining\": \"<long>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"delete_self_enabled\": \"<boolean>\",\n          \"create_organization_enabled\": \"<boolean>\",\n          \"last_active_at\": \"<long>\",\n          \"mfa_enabled_at\": \"<long>\",\n          \"mfa_disabled_at\": \"<long>\",\n          \"legal_accepted_at\": \"<long>\",\n          \"image_url\": \"<string>\",\n          \"organization_memberships\": [\n            {\n              \"object\": \"organization_membership\",\n              \"id\": \"<string>\",\n              \"public_metadata\": {\n                \"culpa2\": \"pariatur ea nulla\",\n                \"in55e\": false\n              },\n              \"role\": \"<string>\",\n              \"role_name\": \"<string>\",\n              \"permissions\": [\n                \"<string>\"\n              ],\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"organization\": {\n                \"object\": \"organization\",\n                \"id\": \"<string>\",\n                \"name\": \"<string>\",\n                \"slug\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"max_allowed_memberships\": \"<integer>\",\n                \"admin_delete_enabled\": \"<boolean>\",\n                \"public_metadata\": {\n                  \"pariatur_f_d\": 16970404\n                },\n                \"created_at\": \"<long>\",\n                \"updated_at\": \"<long>\",\n                \"image_url\": \"<string>\",\n                \"members_count\": \"<integer>\",\n                \"pending_invitations_count\": \"<integer>\",\n                \"logo_url\": \"<string>\"\n              },\n              \"public_user_data\": {\n                \"first_name\": \"<string>\",\n                \"last_name\": \"<string>\",\n                \"identifier\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"image_url\": \"<string>\",\n                \"profile_image_url\": \"<string>\",\n                \"user_id\": \"<string>\",\n                \"username\": \"<string>\",\n                \"banned\": \"<boolean>\"\n              }\n            }\n          ],\n          \"password_last_updated_at\": \"<long>\",\n          \"private_metadata\": {\n            \"sed4\": 98158073.01995906,\n            \"culpaa8\": 49333544\n          },\n          \"unsafe_metadata\": {\n            \"magna_7b\": \"occaecat mollit Duis\",\n            \"pariature4\": -63153715.143411174\n          },\n          \"deprovisioned\": \"<boolean>\",\n          \"create_organizations_limit\": \"<integer>\",\n          \"profile_image_url\": \"<string>\"\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"needs_protect_check\",\n      \"supported_identifiers\": [\n        \"email_address\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"strategy\": \"oauth_token_mock\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"strategy\": \"enterprise_sso\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": \"verified\",\n        \"strategy\": \"password\",\n        \"object\": \"verification_password\",\n        \"attempts\": \"<integer>\",\n        \"expire_at\": \"<integer>\"\n      },\n      \"second_factor_verification\": {\n        \"status\": \"unverified\",\n        \"strategy\": \"email_code\",\n        \"expire_at\": \"<integer>\",\n        \"object\": \"verification_otp\",\n        \"attempts\": \"<integer>\"\n      },\n      \"identifier\": \"<string>\",\n      \"user_data\": {\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\",\n        \"profile_image_url\": \"<string>\"\n      },\n      \"created_session_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"<string>\"\n      ],\n      \"optional_fields\": [\n        \"<string>\"\n      ],\n      \"missing_fields\": [\n        \"<string>\"\n      ],\n      \"unverified_fields\": [\n        \"<string>\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"\",\n          \"status\": \"failed\",\n          \"strategy\": \"email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"phone_number\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"failed\",\n          \"strategy\": \"email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"web3_wallet\": {\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"expired\",\n          \"strategy\": \"web3_okx_wallet_signature\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_web3\",\n          \"attempts\": \"<integer>\",\n          \"expire_at\": \"<integer>\",\n          \"nonce\": \"<string>\",\n          \"message\": \"<string>\"\n        },\n        \"external_account\": {\n          \"status\": \"failed\",\n          \"strategy\": \"oauth_token_y6ib\",\n          \"expire_at\": \"<integer>\",\n          \"object\": \"verification_oauth\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"error\": {\n            \"message\": \"<string>\",\n            \"long_message\": \"<string>\",\n            \"code\": \"<string>\",\n            \"meta\": {}\n          },\n          \"attempts\": \"<integer>\"\n        }\n      },\n      \"username\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"web3_wallet\": \"<string>\",\n      \"password_enabled\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"custom_action\": \"<boolean>\",\n      \"external_id\": \"<string>\",\n      \"created_session_id\": \"<string>\",\n      \"created_user_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"legal_accepted_at\": \"<long>\",\n      \"unsafe_metadata\": {\n        \"ametc\": 15398949,\n        \"ea_991\": \"exercitation\",\n        \"aute_8_\": true\n      },\n      \"public_metadata\": {\n        \"ad_8\": true\n      }\n    },\n    \"last_active_session_id\": \"<string>\",\n    \"last_authentication_strategy\": \"<string>\",\n    \"cookie_expires_at\": \"<long>\",\n    \"captcha_bypass\": \"<boolean>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T01:25:16.000Z",
+                                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                                  "uid": "35240-d119074b-d4d2-4d70-aa91-0b256d76f64c"
+                                },
+                                {
+                                  "id": "77c5ae77-42bc-4256-9186-b2a339f6e952",
+                                  "name": "Request was not successful",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "organizations",
+                                        ":organizationID",
+                                        "billing",
+                                        "subscription_items",
+                                        ":subscriptionItemID"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "organizationID"
+                                        },
+                                        {
+                                          "key": "subscriptionItemID"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:25:16.000Z",
+                                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                                  "uid": "35240-77c5ae77-42bc-4256-9186-b2a339f6e952"
+                                },
+                                {
+                                  "id": "96a1d3a3-9d5d-46a0-92e6-16d235d71343",
+                                  "name": "Authentication invalid",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "organizations",
+                                        ":organizationID",
+                                        "billing",
+                                        "subscription_items",
+                                        ":subscriptionItemID"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "organizationID"
+                                        },
+                                        {
+                                          "key": "subscriptionItemID"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:25:16.000Z",
+                                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                                  "uid": "35240-96a1d3a3-9d5d-46a0-92e6-16d235d71343"
+                                },
+                                {
+                                  "id": "eafb1584-4ef8-47ae-909b-ed9b7c3c601f",
+                                  "name": "Authorization invalid",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "organizations",
+                                        ":organizationID",
+                                        "billing",
+                                        "subscription_items",
+                                        ":subscriptionItemID"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "organizationID"
+                                        },
+                                        {
+                                          "key": "subscriptionItemID"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Forbidden",
+                                  "code": 403,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:25:16.000Z",
+                                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                                  "uid": "35240-eafb1584-4ef8-47ae-909b-ed9b7c3c601f"
+                                },
+                                {
+                                  "id": "7b8c84d3-c55a-4d44-8aec-f27da04f3fc8",
+                                  "name": "Resource not found",
+                                  "originalRequest": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "v1",
+                                        "organizations",
+                                        ":organizationID",
+                                        "billing",
+                                        "subscription_items",
+                                        ":subscriptionItemID"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "organizationID"
+                                        },
+                                        {
+                                          "key": "subscriptionItemID"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T01:25:16.000Z",
+                                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                                  "uid": "35240-7b8c84d3-c55a-4d44-8aec-f27da04f3fc8"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-d73319c2-237d-40f8-a28e-0f51fc3eb86e"
+                            }
+                          ],
+                          "id": "6de85b9a-852a-4bae-a6b5-4413187da1b7",
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-6de85b9a-852a-4bae-a6b5-4413187da1b7"
+                        },
+                        {
+                          "name": "List Organization's Subscription Items",
+                          "id": "62aac78f-e38f-4132-a298-ec628858672f",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "v1",
+                                "organizations",
+                                ":organizationID",
+                                "billing",
+                                "subscription_items"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "486a6169-38f0-4b1e-9cd0-f4bc06fc01f5",
+                                  "key": "organizationID",
+                                  "value": "<string>",
+                                  "description": "(Required) The ID of the organization"
+                                }
+                              ]
+                            },
+                            "description": "Returns a list of subscription items for the organization."
+                          },
+                          "response": [
+                            {
+                              "id": "4fdb7a36-495e-48d2-b289-febbd4b6779c",
+                              "name": "Returns a list of commerce subscription items.",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organizationID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"response\": {\n    \"data\": [\n      {\n        \"object\": \"commerce_subscription_item\",\n        \"id\": \"<string>\",\n        \"instance_id\": \"<string>\",\n        \"status\": \"canceled\",\n        \"plan_id\": \"<string>\",\n        \"plan_period\": \"month\",\n        \"payer_id\": \"<string>\",\n        \"is_free_trial\": \"<boolean>\",\n        \"period_start\": \"<long>\",\n        \"period_end\": \"<long>\",\n        \"canceled_at\": \"<long>\",\n        \"past_due_at\": \"<long>\",\n        \"ended_at\": \"<long>\",\n        \"credit\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"cycle_days_remaining\": \"<long>\",\n          \"cycle_days_total\": \"<long>\",\n          \"cycle_remaining_percent\": \"<double>\"\n        },\n        \"credits\": {\n          \"proration\": {\n            \"amount\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            },\n            \"cycle_days_remaining\": \"<long>\",\n            \"cycle_days_total\": \"<long>\",\n            \"cycle_remaining_percent\": \"<double>\"\n          },\n          \"payer\": {\n            \"remaining_balance\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            },\n            \"applied_amount\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          },\n          \"total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          }\n        },\n        \"price_id\": \"<string>\",\n        \"plan\": {\n          \"object\": \"commerce_plan\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"annual_monthly_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"annual_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"description\": \"<string>\",\n          \"product_id\": \"<string>\",\n          \"is_default\": \"<boolean>\",\n          \"is_recurring\": \"<boolean>\",\n          \"publicly_visible\": \"<boolean>\",\n          \"has_base_fee\": \"<boolean>\",\n          \"for_payer_type\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"avatar_url\": \"<string>\",\n          \"free_trial_enabled\": \"<boolean>\",\n          \"free_trial_days\": \"<integer>\",\n          \"unit_prices\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"starts_at_block\": \"<long>\",\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"ends_after_block\": \"<long>\"\n                }\n              ]\n            }\n          ],\n          \"features\": [\n            {\n              \"object\": \"feature\",\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"description\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"avatar_url\": \"<string>\"\n            }\n          ]\n        },\n        \"payment_method_id\": \"<string>\",\n        \"payment_method\": {\n          \"object\": \"commerce_payment_method\",\n          \"id\": \"<string>\",\n          \"payer_id\": \"<string>\",\n          \"payment_type\": \"card\",\n          \"gateway\": \"<string>\",\n          \"gateway_external_id\": \"<string>\",\n          \"gateway_external_account_id\": \"<string>\",\n          \"last4\": \"<string>\",\n          \"status\": \"active\",\n          \"card_type\": \"<string>\",\n          \"is_default\": \"<boolean>\",\n          \"wallet_type\": \"<string>\",\n          \"expiry_year\": \"<integer>\",\n          \"expiry_month\": \"<integer>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"is_removable\": \"<boolean>\"\n        },\n        \"lifetime_paid\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"amount\": {\n          \"amount\": \"<long>\",\n          \"amount_formatted\": \"<string>\",\n          \"currency\": \"<string>\",\n          \"currency_symbol\": \"<string>\"\n        },\n        \"next_payment\": {\n          \"amount\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"date\": \"<long>\",\n          \"per_unit_totals\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"total\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"quantity\": \"<long>\"\n                }\n              ]\n            }\n          ]\n        },\n        \"payer\": {\n          \"object\": \"commerce_payer\",\n          \"id\": \"<string>\",\n          \"instance_id\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"organization_id\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organization_name\": \"<string>\",\n          \"image_url\": \"<uri>\",\n          \"credits_balance\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\"\n        },\n        \"proration_date\": \"<string>\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\",\n        \"seats\": {\n          \"quantity\": \"<long>\",\n          \"tiers\": [\n            {\n              \"fee_per_block\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"total\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"quantity\": \"<long>\"\n            }\n          ]\n        },\n        \"totals\": {\n          \"subtotal\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"base_fee\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"tax_total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"grand_total\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total_due_after_free_trial\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"credit\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"past_due\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"total_due_now\": {\n            \"amount\": \"<long>\",\n            \"amount_formatted\": \"<string>\",\n            \"currency\": \"<string>\",\n            \"currency_symbol\": \"<string>\"\n          },\n          \"per_unit_totals\": [\n            {\n              \"name\": \"<string>\",\n              \"block_size\": \"<long>\",\n              \"tiers\": [\n                {\n                  \"fee_per_block\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"total\": {\n                    \"amount\": \"<long>\",\n                    \"amount_formatted\": \"<string>\",\n                    \"currency\": \"<string>\",\n                    \"currency_symbol\": \"<string>\"\n                  },\n                  \"quantity\": \"<long>\"\n                }\n              ]\n            }\n          ],\n          \"credits\": {\n            \"proration\": {\n              \"amount\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"cycle_days_remaining\": \"<long>\",\n              \"cycle_days_total\": \"<long>\",\n              \"cycle_remaining_percent\": \"<double>\"\n            },\n            \"payer\": {\n              \"remaining_balance\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              },\n              \"applied_amount\": {\n                \"amount\": \"<long>\",\n                \"amount_formatted\": \"<string>\",\n                \"currency\": \"<string>\",\n                \"currency_symbol\": \"<string>\"\n              }\n            },\n            \"total\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          },\n          \"proration\": {\n            \"credit\": {\n              \"amount\": \"<long>\",\n              \"amount_formatted\": \"<string>\",\n              \"currency\": \"<string>\",\n              \"currency_symbol\": \"<string>\"\n            }\n          }\n        }\n      }\n    ],\n    \"total_count\": \"<long>\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"<string>\",\n    \"sessions\": [\n      {\n        \"abandon_at\": \"<long>\",\n        \"created_at\": \"<long>\",\n        \"expire_at\": \"<long>\",\n        \"factor_verification_age\": [\n          \"<integer>\"\n        ],\n        \"id\": \"<string>\",\n        \"last_active_at\": \"<long>\",\n        \"last_active_organization_id\": \"<string>\",\n        \"object\": \"session\",\n        \"public_user_data\": {\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"identifier\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"image_url\": \"<string>\",\n          \"profile_image_url\": \"<string>\",\n          \"user_id\": \"<string>\",\n          \"username\": \"<string>\",\n          \"banned\": \"<boolean>\"\n        },\n        \"status\": \"abandoned\",\n        \"updated_at\": \"<long>\",\n        \"last_active_token\": {\n          \"object\": \"token\",\n          \"jwt\": \"<string>\"\n        },\n        \"actor\": {\n          \"sit09_\": -97183832.6420413,\n          \"eu_8\": -10074869\n        },\n        \"tasks\": [\n          {\n            \"key\": \"<string>\"\n          }\n        ],\n        \"user\": {\n          \"id\": \"<string>\",\n          \"object\": \"user\",\n          \"username\": \"<string>\",\n          \"first_name\": \"<string>\",\n          \"last_name\": \"<string>\",\n          \"has_image\": \"<boolean>\",\n          \"primary_email_address_id\": \"<string>\",\n          \"primary_phone_number_id\": \"<string>\",\n          \"primary_web3_wallet_id\": \"<string>\",\n          \"password_enabled\": \"<boolean>\",\n          \"two_factor_enabled\": \"<boolean>\",\n          \"totp_enabled\": \"<boolean>\",\n          \"backup_code_enabled\": \"<boolean>\",\n          \"email_addresses\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"email_address\",\n              \"email_address\": \"<string>\",\n              \"verification\": {\n                \"status\": \"unverified\",\n                \"strategy\": \"reset_password_phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_apple\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"matches_sso_connection\": \"<boolean>\"\n            }\n          ],\n          \"phone_numbers\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"phone_number\",\n              \"phone_number\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"reset_password_phone_code\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_otp\",\n                \"attempts\": \"<integer>\"\n              },\n              \"linked_to\": [\n                {\n                  \"type\": \"oauth_google\",\n                  \"id\": \"<string>\"\n                }\n              ],\n              \"reserved\": \"<boolean>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"reserved_for_second_factor\": \"<boolean>\",\n              \"default_second_factor\": \"<boolean>\",\n              \"backup_codes\": [\n                \"<string>\"\n              ]\n            }\n          ],\n          \"web3_wallets\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"web3_wallet\",\n              \"web3_wallet\": \"<string>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"web3_metamask_signature\",\n                \"object\": \"verification_web3\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"nonce\": \"<string>\",\n                \"message\": \"<string>\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"passkeys\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"passkey\",\n              \"name\": \"<string>\",\n              \"verification\": {\n                \"status\": \"failed\",\n                \"strategy\": \"passkey\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_passkey\",\n                \"attempts\": \"<integer>\",\n                \"nonce\": \"<string>\"\n              },\n              \"last_used_at\": \"<long>\",\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\"\n            }\n          ],\n          \"external_accounts\": [\n            {\n              \"object\": \"external_account\",\n              \"id\": \"<string>\",\n              \"provider\": \"<string>\",\n              \"identification_id\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"approved_scopes\": \"<string>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"public_metadata\": {\n                \"ut_8b\": 42234138,\n                \"minim_c9a\": \"id in aliqua consectetur\",\n                \"cillum64\": \"dolor deserunt labore\"\n              },\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"verification\": {\n                \"status\": \"verified\",\n                \"strategy\": \"oauth_ntzzmtsdkan\",\n                \"attempts\": \"<integer>\",\n                \"expire_at\": \"<integer>\",\n                \"object\": \"verification_oauth\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"verified_at_client\": \"<string>\"\n              },\n              \"email_address_verified\": \"<boolean>\",\n              \"avatar_url\": \"<string>\",\n              \"image_url\": \"<string>\",\n              \"username\": \"<string>\",\n              \"phone_number\": \"<string>\",\n              \"label\": \"<string>\"\n            }\n          ],\n          \"saml_accounts\": [\n            {\n              \"id\": \"<string>\",\n              \"object\": \"saml_account\",\n              \"provider\": \"<string>\",\n              \"active\": \"<boolean>\",\n              \"email_address\": \"<string>\",\n              \"first_name\": \"<string>\",\n              \"last_name\": \"<string>\",\n              \"provider_user_id\": \"<string>\",\n              \"public_metadata\": {\n                \"Ut_8b6\": -85202620.88606425,\n                \"commodo_8\": \"in dolor ea sunt\",\n                \"cupidatatf\": 20082401,\n                \"commodo_c\": \"tempor dolor do\",\n                \"ut_a3\": false\n              },\n              \"saml_connection\": {\n                \"domain\": 21922483.09377569\n              },\n              \"verification\": {\n                \"status\": \"transferable\",\n                \"strategy\": \"saml\",\n                \"object\": \"verification_saml\",\n                \"external_verification_redirect_url\": \"<string>\",\n                \"error\": {\n                  \"message\": \"<string>\",\n                  \"long_message\": \"<string>\",\n                  \"code\": \"<string>\",\n                  \"meta\": {}\n                },\n                \"expire_at\": \"<integer>\",\n                \"attempts\": \"<integer>\"\n              },\n              \"enterprise_connection_id\": \"<string>\",\n              \"last_authenticated_at\": \"<long>\"\n            }\n          ],\n          \"public_metadata\": {\n            \"eu_b\": \"cillum in Duis\",\n            \"Lorem_24a\": \"nostrud eu velit ipsum\",\n            \"nulla8\": false\n          },\n          \"external_id\": \"<string>\",\n          \"last_sign_in_at\": \"<long>\",\n          \"banned\": \"<boolean>\",\n          \"locked\": \"<boolean>\",\n          \"lockout_expires_in_seconds\": \"<long>\",\n          \"verification_attempts_remaining\": \"<long>\",\n          \"created_at\": \"<long>\",\n          \"updated_at\": \"<long>\",\n          \"delete_self_enabled\": \"<boolean>\",\n          \"create_organization_enabled\": \"<boolean>\",\n          \"last_active_at\": \"<long>\",\n          \"mfa_enabled_at\": \"<long>\",\n          \"mfa_disabled_at\": \"<long>\",\n          \"legal_accepted_at\": \"<long>\",\n          \"image_url\": \"<string>\",\n          \"organization_memberships\": [\n            {\n              \"object\": \"organization_membership\",\n              \"id\": \"<string>\",\n              \"public_metadata\": {\n                \"dolor6\": 19922907.39774707\n              },\n              \"role\": \"<string>\",\n              \"role_name\": \"<string>\",\n              \"permissions\": [\n                \"<string>\"\n              ],\n              \"created_at\": \"<long>\",\n              \"updated_at\": \"<long>\",\n              \"organization\": {\n                \"object\": \"organization\",\n                \"id\": \"<string>\",\n                \"name\": \"<string>\",\n                \"slug\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"max_allowed_memberships\": \"<integer>\",\n                \"admin_delete_enabled\": \"<boolean>\",\n                \"public_metadata\": {\n                  \"ut__\": 83347690,\n                  \"eiusmod0\": \"ex nisi sed aute\"\n                },\n                \"created_at\": \"<long>\",\n                \"updated_at\": \"<long>\",\n                \"image_url\": \"<string>\",\n                \"members_count\": \"<integer>\",\n                \"pending_invitations_count\": \"<integer>\",\n                \"logo_url\": \"<string>\"\n              },\n              \"public_user_data\": {\n                \"first_name\": \"<string>\",\n                \"last_name\": \"<string>\",\n                \"identifier\": \"<string>\",\n                \"has_image\": \"<boolean>\",\n                \"image_url\": \"<string>\",\n                \"profile_image_url\": \"<string>\",\n                \"user_id\": \"<string>\",\n                \"username\": \"<string>\",\n                \"banned\": \"<boolean>\"\n              }\n            }\n          ],\n          \"password_last_updated_at\": \"<long>\",\n          \"private_metadata\": {\n            \"reprehenderit_79\": -11853482\n          },\n          \"unsafe_metadata\": {\n            \"non_3e\": \"ex nisi irure\"\n          },\n          \"deprovisioned\": \"<boolean>\",\n          \"create_organizations_limit\": \"<integer>\",\n          \"profile_image_url\": \"<string>\"\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"abandoned\",\n      \"supported_identifiers\": [\n        \"phone_number\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"strategy\": \"email_link\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"strategy\": \"oauth_token_mock\",\n          \"safe_identifier\": \"<string>\",\n          \"enterprise_connection_id\": \"<string>\",\n          \"enterprise_connection_name\": \"<string>\",\n          \"email_address_id\": \"<string>\",\n          \"phone_number_id\": \"<string>\",\n          \"web3_wallet_id\": \"<string>\",\n          \"passkey_id\": \"<string>\",\n          \"primary\": \"<boolean>\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"default\": \"<boolean>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": \"verified\",\n        \"strategy\": \"password\",\n        \"object\": \"verification_password\",\n        \"attempts\": \"<integer>\",\n        \"expire_at\": \"<integer>\"\n      },\n      \"second_factor_verification\": {\n        \"status\": \"failed\",\n        \"strategy\": \"reset_password_phone_code\",\n        \"expire_at\": \"<integer>\",\n        \"object\": \"verification_otp\",\n        \"attempts\": \"<integer>\"\n      },\n      \"identifier\": \"<string>\",\n      \"user_data\": {\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\",\n        \"profile_image_url\": \"<string>\"\n      },\n      \"created_session_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"client_trust_state\": \"pending\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"<string>\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"<string>\"\n      ],\n      \"optional_fields\": [\n        \"<string>\"\n      ],\n      \"missing_fields\": [\n        \"<string>\"\n      ],\n      \"unverified_fields\": [\n        \"<string>\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"\",\n          \"status\": \"unverified\",\n          \"strategy\": \"phone_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"phone_number\": {\n          \"expire_at\": \"<integer>\",\n          \"next_action\": \"needs_attempt\",\n          \"status\": \"expired\",\n          \"strategy\": \"reset_password_email_code\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_otp\",\n          \"attempts\": \"<integer>\"\n        },\n        \"web3_wallet\": {\n          \"next_action\": \"needs_prepare\",\n          \"status\": \"expired\",\n          \"strategy\": \"web3_okx_wallet_signature\",\n          \"supported_strategies\": [\n            \"<string>\"\n          ],\n          \"object\": \"verification_web3\",\n          \"attempts\": \"<integer>\",\n          \"expire_at\": \"<integer>\",\n          \"nonce\": \"<string>\",\n          \"message\": \"<string>\"\n        },\n        \"external_account\": {\n          \"status\": \"verified\",\n          \"strategy\": \"oauth_ph\",\n          \"expire_at\": \"<integer>\",\n          \"object\": \"verification_oauth\",\n          \"external_verification_redirect_url\": \"<string>\",\n          \"error\": {\n            \"message\": \"<string>\",\n            \"long_message\": \"<string>\",\n            \"code\": \"<string>\",\n            \"meta\": {}\n          },\n          \"attempts\": \"<integer>\"\n        }\n      },\n      \"username\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"web3_wallet\": \"<string>\",\n      \"password_enabled\": \"<boolean>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\",\n      \"custom_action\": \"<boolean>\",\n      \"external_id\": \"<string>\",\n      \"created_session_id\": \"<string>\",\n      \"created_user_id\": \"<string>\",\n      \"abandon_at\": \"<long>\",\n      \"legal_accepted_at\": \"<long>\",\n      \"unsafe_metadata\": {\n        \"dolord20\": \"laborum laboris sit occaecat\",\n        \"ut_f\": -59478528.10416161\n      },\n      \"public_metadata\": {\n        \"occaecat__f\": \"laborum cillum in\"\n      }\n    },\n    \"last_active_session_id\": \"<string>\",\n    \"last_authentication_strategy\": \"<string>\",\n    \"cookie_expires_at\": \"<long>\",\n    \"captcha_bypass\": \"<boolean>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-4fdb7a36-495e-48d2-b289-febbd4b6779c"
+                            },
+                            {
+                              "id": "e7b4b72a-d4ce-457f-9989-281a067ab593",
+                              "name": "Request was not successful",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organizationID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-e7b4b72a-d4ce-457f-9989-281a067ab593"
+                            },
+                            {
+                              "id": "51395221-bfda-4fa3-851a-b91fdcdbdcc5",
+                              "name": "Authentication invalid",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organizationID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Unauthorized",
+                              "code": 401,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-51395221-bfda-4fa3-851a-b91fdcdbdcc5"
+                            },
+                            {
+                              "id": "e58243e6-828d-4544-8e2c-f54a4bc1e5c4",
+                              "name": "Authorization invalid",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organizationID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-e58243e6-828d-4544-8e2c-f54a4bc1e5c4"
+                            },
+                            {
+                              "id": "b3f98403-9f73-4fac-9d30-f0219fa3df83",
+                              "name": "Resource not found",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/v1/organizations/:organizationID/billing/subscription_items",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "v1",
+                                    "organizations",
+                                    ":organizationID",
+                                    "billing",
+                                    "subscription_items"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organizationID"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:25:16.000Z",
+                              "updatedAt": "2026-07-28T01:25:16.000Z",
+                              "uid": "35240-b3f98403-9f73-4fac-9d30-f0219fa3df83"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:25:16.000Z",
+                          "updatedAt": "2026-07-28T01:25:16.000Z",
+                          "uid": "35240-62aac78f-e38f-4132-a298-ec628858672f"
+                        }
+                      ],
+                      "id": "3ebbac92-b61c-45c1-97be-de415545afb1",
+                      "createdAt": "2026-07-28T01:25:16.000Z",
+                      "updatedAt": "2026-07-28T01:25:16.000Z",
+                      "uid": "35240-3ebbac92-b61c-45c1-97be-de415545afb1"
+                    }
+                  ],
+                  "id": "d120111b-eede-49a4-8aba-e515a9e47295",
+                  "createdAt": "2026-07-28T01:25:16.000Z",
+                  "updatedAt": "2026-07-28T01:25:16.000Z",
+                  "uid": "35240-d120111b-eede-49a4-8aba-e515a9e47295"
+                }
+              ],
+              "id": "575654d1-3720-484e-8f66-88666af21ba9",
+              "createdAt": "2026-07-28T01:25:16.000Z",
+              "updatedAt": "2026-07-28T01:25:16.000Z",
+              "uid": "35240-575654d1-3720-484e-8f66-88666af21ba9"
+            }
+          ],
+          "id": "7ff96639-bd9e-4034-8bd1-40babbeffbe8",
+          "createdAt": "2026-07-28T01:25:16.000Z",
+          "updatedAt": "2026-07-28T01:25:16.000Z",
+          "uid": "35240-7ff96639-bd9e-4034-8bd1-40babbeffbe8"
+        }
+      ],
+      "id": "ed6e9899-fc30-4104-9300-7f0fc0e8133c",
+      "createdAt": "2026-07-28T01:25:16.000Z",
+      "updatedAt": "2026-07-28T01:25:16.000Z",
+      "uid": "35240-ed6e9899-fc30-4104-9300-7f0fc0e8133c"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}

@@ -1,0 +1,1628 @@
+{
+  "info": {
+    "_postman_id": "c58c0d36-347a-47a3-a2a6-f813af47b929",
+    "name": "Clerk Backend Account Portal Enterprise Connections API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:23:03.000Z",
+    "updatedAt": "2026-07-28T01:23:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c58c0d36-347a-47a3-a2a6-f813af47b929"
+  },
+  "item": [
+    {
+      "name": "enterprise_connections",
+      "item": [
+        {
+          "name": "{enterprise_connection_id}",
+          "item": [
+            {
+              "name": "Retrieve an Enterprise Connection",
+              "id": "ed0609d8-e081-412a-827c-047aada7d759",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections",
+                    ":enterprise_connection_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "75e29413-ee54-4cc2-a5de-fe6f3790a890",
+                      "key": "enterprise_connection_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the enterprise connection"
+                    }
+                  ]
+                },
+                "description": "Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path."
+              },
+              "response": [
+                {
+                  "id": "63d58d4c-be01-40d2-8d04-46272d3d9d2c",
+                  "name": "An enterprise connection",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"logo_public_url\": \"<string>\",\n  \"organization_id\": \"<string>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ],\n  \"saml_connection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"acs_url\": \"<string>\",\n    \"sp_entity_id\": \"<string>\",\n    \"sp_metadata_url\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"allow_subdomains\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oauth_config\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"provider_key\": \"<string>\",\n    \"client_id\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\",\n    \"logo_public_url\": \"<string>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-63d58d4c-be01-40d2-8d04-46272d3d9d2c"
+                },
+                {
+                  "id": "bb84bc16-29ff-4482-a672-b5df95fc9622",
+                  "name": "Payment required",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Payment Required",
+                  "code": 402,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-bb84bc16-29ff-4482-a672-b5df95fc9622"
+                },
+                {
+                  "id": "04321d38-ab53-4861-b188-001a10f130bb",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-04321d38-ab53-4861-b188-001a10f130bb"
+                },
+                {
+                  "id": "28af7863-985c-4783-969a-b54999998a25",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-28af7863-985c-4783-969a-b54999998a25"
+                }
+              ],
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-ed0609d8-e081-412a-827c-047aada7d759"
+            },
+            {
+              "name": "Update an Enterprise Connection",
+              "id": "6fc32156-836d-49ca-a654-912fe3d01fbd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections",
+                    ":enterprise_connection_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5944c281-e729-46a7-a0ed-8e3f5467b680",
+                      "key": "enterprise_connection_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the enterprise connection to update"
+                    }
+                  ]
+                },
+                "description": "Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.\nWhen enabling the connection (setting `active` to true), any existing verified organization domains that match the connection's domains (e.g. used for enrollment modes like automatic invitation) may be deleted so the connection can be enabled."
+              },
+              "response": [
+                {
+                  "id": "ef5d93f1-542e-478c-a425-71f47570f5ce",
+                  "name": "An enterprise connection",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"logo_public_url\": \"<string>\",\n  \"organization_id\": \"<string>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ],\n  \"saml_connection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"acs_url\": \"<string>\",\n    \"sp_entity_id\": \"<string>\",\n    \"sp_metadata_url\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"allow_subdomains\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oauth_config\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"provider_key\": \"<string>\",\n    \"client_id\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\",\n    \"logo_public_url\": \"<string>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-ef5d93f1-542e-478c-a425-71f47570f5ce"
+                },
+                {
+                  "id": "eb6ea7a3-3484-45d3-890f-8d0f9e02928f",
+                  "name": "Request was not successful",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-eb6ea7a3-3484-45d3-890f-8d0f9e02928f"
+                },
+                {
+                  "id": "ec0064b5-709d-4020-b243-52b58e3b8653",
+                  "name": "Payment required",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Payment Required",
+                  "code": 402,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-ec0064b5-709d-4020-b243-52b58e3b8653"
+                },
+                {
+                  "id": "ba91ea0e-27cc-4857-969a-2eb28122dcc2",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-ba91ea0e-27cc-4857-969a-2eb28122dcc2"
+                },
+                {
+                  "id": "409f8307-503c-416e-a062-28961de8f77c",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-409f8307-503c-416e-a062-28961de8f77c"
+                },
+                {
+                  "id": "8ac4924b-66b2-4e03-ab06-9f20bce3d6a4",
+                  "name": "Invalid request parameters",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"active\": \"<boolean>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"organization_id\": \"<string>\",\n  \"saml\": {\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"/E\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-8ac4924b-66b2-4e03-ab06-9f20bce3d6a4"
+                }
+              ],
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-6fc32156-836d-49ca-a654-912fe3d01fbd"
+            },
+            {
+              "name": "Delete an Enterprise Connection",
+              "id": "5fc1786b-7d6e-47b4-8c2d-7535b2f581e3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections",
+                    ":enterprise_connection_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "e8a54cb3-8f4f-4163-8dee-e10b4709deb1",
+                      "key": "enterprise_connection_id",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the enterprise connection to delete"
+                    }
+                  ]
+                },
+                "description": "Deletes the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path."
+              },
+              "response": [
+                {
+                  "id": "461e8ec4-3ada-41ab-8f07-27a3c637dda7",
+                  "name": "Deleted Object",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"deleted\": \"<boolean>\",\n  \"id\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"external_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-461e8ec4-3ada-41ab-8f07-27a3c637dda7"
+                },
+                {
+                  "id": "89e8c4fb-8bfe-4161-b8b0-b51ba08fb10f",
+                  "name": "Payment required",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Payment Required",
+                  "code": 402,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-89e8c4fb-8bfe-4161-b8b0-b51ba08fb10f"
+                },
+                {
+                  "id": "c94aae04-99a3-443c-bf6b-b8919b0722d0",
+                  "name": "Authorization invalid",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-c94aae04-99a3-443c-bf6b-b8919b0722d0"
+                },
+                {
+                  "id": "fc3e268b-a75c-4099-8f38-2487cff7f338",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/enterprise_connections/:enterprise_connection_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enterprise_connections",
+                        ":enterprise_connection_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "enterprise_connection_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:23:04.000Z",
+                  "updatedAt": "2026-07-28T01:23:04.000Z",
+                  "uid": "35240-fc3e268b-a75c-4099-8f38-2487cff7f338"
+                }
+              ],
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-5fc1786b-7d6e-47b4-8c2d-7535b2f581e3"
+            }
+          ],
+          "id": "7ce57dea-b5ea-4c4f-ab66-0e99e7e58fca",
+          "createdAt": "2026-07-28T01:23:04.000Z",
+          "updatedAt": "2026-07-28T01:23:04.000Z",
+          "uid": "35240-7ce57dea-b5ea-4c4f-ab66-0e99e7e58fca"
+        },
+        {
+          "name": "List Enterprise Connections",
+          "id": "a8d1b591-5a2b-49da-90da-d9add323c310",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enterprise_connections?limit=10&offset=0&organization_id=<string>&active=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enterprise_connections"
+              ],
+              "query": [
+                {
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "description": "Filter enterprise connections by organization ID",
+                  "key": "organization_id",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.",
+                  "key": "active",
+                  "value": "<boolean>"
+                }
+              ]
+            },
+            "description": "Returns the list of enterprise connections for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters."
+          },
+          "response": [
+            {
+              "id": "00269436-5fba-498f-9e22-014e3601be3e",
+              "name": "A list of enterprise connections",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections?limit=10&offset=0&organization_id=<string>&active=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Filter enterprise connections by organization ID",
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.",
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"logo_public_url\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"sync_user_attributes\": \"<boolean>\",\n      \"disable_additional_identifications\": \"<boolean>\",\n      \"allow_organization_account_linking\": \"<boolean>\",\n      \"custom_attributes\": [\n        {\n          \"name\": \"<string>\",\n          \"key\": \"<string>\",\n          \"sso_path\": \"<string>\",\n          \"scim_path\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"key\": \"<string>\",\n          \"sso_path\": \"<string>\",\n          \"scim_path\": \"<string>\"\n        }\n      ],\n      \"saml_connection\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"idp_entity_id\": \"<string>\",\n        \"idp_sso_url\": \"<string>\",\n        \"idp_metadata_url\": \"<string>\",\n        \"acs_url\": \"<string>\",\n        \"sp_entity_id\": \"<string>\",\n        \"sp_metadata_url\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"allow_idp_initiated\": \"<boolean>\",\n        \"allow_subdomains\": \"<boolean>\",\n        \"force_authn\": \"<boolean>\"\n      },\n      \"oauth_config\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"provider_key\": \"<string>\",\n        \"client_id\": \"<string>\",\n        \"discovery_url\": \"<string>\",\n        \"auth_url\": \"<string>\",\n        \"token_url\": \"<string>\",\n        \"user_info_url\": \"<string>\",\n        \"requires_pkce\": \"<boolean>\",\n        \"logo_public_url\": \"<string>\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider\": \"<string>\",\n      \"active\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"logo_public_url\": \"<string>\",\n      \"organization_id\": \"<string>\",\n      \"sync_user_attributes\": \"<boolean>\",\n      \"disable_additional_identifications\": \"<boolean>\",\n      \"allow_organization_account_linking\": \"<boolean>\",\n      \"custom_attributes\": [\n        {\n          \"name\": \"<string>\",\n          \"key\": \"<string>\",\n          \"sso_path\": \"<string>\",\n          \"scim_path\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"key\": \"<string>\",\n          \"sso_path\": \"<string>\",\n          \"scim_path\": \"<string>\"\n        }\n      ],\n      \"saml_connection\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"idp_entity_id\": \"<string>\",\n        \"idp_sso_url\": \"<string>\",\n        \"idp_metadata_url\": \"<string>\",\n        \"acs_url\": \"<string>\",\n        \"sp_entity_id\": \"<string>\",\n        \"sp_metadata_url\": \"<string>\",\n        \"active\": \"<boolean>\",\n        \"allow_idp_initiated\": \"<boolean>\",\n        \"allow_subdomains\": \"<boolean>\",\n        \"force_authn\": \"<boolean>\"\n      },\n      \"oauth_config\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"provider_key\": \"<string>\",\n        \"client_id\": \"<string>\",\n        \"discovery_url\": \"<string>\",\n        \"auth_url\": \"<string>\",\n        \"token_url\": \"<string>\",\n        \"user_info_url\": \"<string>\",\n        \"requires_pkce\": \"<boolean>\",\n        \"logo_public_url\": \"<string>\",\n        \"created_at\": \"<long>\",\n        \"updated_at\": \"<long>\"\n      }\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-00269436-5fba-498f-9e22-014e3601be3e"
+            },
+            {
+              "id": "a7553da1-555d-4550-82be-9245b939184f",
+              "name": "Payment required",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections?limit=10&offset=0&organization_id=<string>&active=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Filter enterprise connections by organization ID",
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.",
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-a7553da1-555d-4550-82be-9245b939184f"
+            },
+            {
+              "id": "4b7caa3b-8754-4909-aaac-1be058e25cfa",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections?limit=10&offset=0&organization_id=<string>&active=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Filter enterprise connections by organization ID",
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.",
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-4b7caa3b-8754-4909-aaac-1be058e25cfa"
+            },
+            {
+              "id": "03b5d8da-9b74-425e-850f-2d5e05e0b0bb",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections?limit=10&offset=0&organization_id=<string>&active=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ],
+                  "query": [
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Filter enterprise connections by organization ID",
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned.",
+                      "key": "active",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-03b5d8da-9b74-425e-850f-2d5e05e0b0bb"
+            }
+          ],
+          "createdAt": "2026-07-28T01:23:04.000Z",
+          "updatedAt": "2026-07-28T01:23:04.000Z",
+          "uid": "35240-a8d1b591-5a2b-49da-90da-d9add323c310"
+        },
+        {
+          "name": "Create an Enterprise Connection",
+          "id": "a0b8420c-6608-44be-b323-74b66fd1d62d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enterprise_connections",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enterprise_connections"
+              ]
+            },
+            "description": "Create a new enterprise connection."
+          },
+          "response": [
+            {
+              "id": "ab4483e3-efd9-416c-9e39-245b38dfccd8",
+              "name": "An enterprise connection",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"provider\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"logo_public_url\": \"<string>\",\n  \"organization_id\": \"<string>\",\n  \"sync_user_attributes\": \"<boolean>\",\n  \"disable_additional_identifications\": \"<boolean>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"<string>\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ],\n  \"saml_connection\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"acs_url\": \"<string>\",\n    \"sp_entity_id\": \"<string>\",\n    \"sp_metadata_url\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"allow_subdomains\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oauth_config\": {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"provider_key\": \"<string>\",\n    \"client_id\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\",\n    \"logo_public_url\": \"<string>\",\n    \"created_at\": \"<long>\",\n    \"updated_at\": \"<long>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-ab4483e3-efd9-416c-9e39-245b38dfccd8"
+            },
+            {
+              "id": "428e9f88-6493-476e-bc8a-df5b130823fe",
+              "name": "Payment required",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-428e9f88-6493-476e-bc8a-df5b130823fe"
+            },
+            {
+              "id": "222484a1-e95d-40d5-a637-ac8863eec6b2",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-222484a1-e95d-40d5-a637-ac8863eec6b2"
+            },
+            {
+              "id": "52a81557-4271-4828-81d5-ed740640f4e2",
+              "name": "Resource not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-52a81557-4271-4828-81d5-ed740640f4e2"
+            },
+            {
+              "id": "0b5cced2-f100-4b78-9d9b-4d483a2a1d4a",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-0b5cced2-f100-4b78-9d9b-4d483a2a1d4a"
+            },
+            {
+              "id": "eff2278a-9ce9-4de0-b928-32e9fdd9a3c1",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"provider\": \"saml_custom\",\n  \"domains\": [\n    \"<string>\"\n  ],\n  \"organization_id\": \"<string>\",\n  \"allow_organization_account_linking\": \"<boolean>\",\n  \"active\": \"<boolean>\",\n  \"saml\": {\n    \"idp_entity_id\": \"<string>\",\n    \"idp_sso_url\": \"<string>\",\n    \"idp_certificate\": \"<string>\",\n    \"idp_metadata_url\": \"<string>\",\n    \"idp_metadata\": \"<string>\",\n    \"attribute_mapping\": {\n      \"user_id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"first_name\": \"<string>\",\n      \"last_name\": \"<string>\"\n    },\n    \"allow_subdomains\": \"<boolean>\",\n    \"allow_idp_initiated\": \"<boolean>\",\n    \"force_authn\": \"<boolean>\"\n  },\n  \"oidc\": {\n    \"client_id\": \"<string>\",\n    \"client_secret\": \"<string>\",\n    \"discovery_url\": \"<string>\",\n    \"auth_url\": \"<string>\",\n    \"token_url\": \"<string>\",\n    \"user_info_url\": \"<string>\",\n    \"requires_pkce\": \"<boolean>\"\n  },\n  \"custom_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"key\": \"\\\\p76smOG-\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"key\": \"9F\",\n      \"sso_path\": \"<string>\",\n      \"scim_path\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/enterprise_connections",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "enterprise_connections"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:23:04.000Z",
+              "updatedAt": "2026-07-28T01:23:04.000Z",
+              "uid": "35240-eff2278a-9ce9-4de0-b928-32e9fdd9a3c1"
+            }
+          ],
+          "createdAt": "2026-07-28T01:23:04.000Z",
+          "updatedAt": "2026-07-28T01:23:04.000Z",
+          "uid": "35240-a0b8420c-6608-44be-b323-74b66fd1d62d"
+        }
+      ],
+      "id": "caf2b2cd-17a1-479d-a4f3-53616d39f2bd",
+      "createdAt": "2026-07-28T01:23:04.000Z",
+      "updatedAt": "2026-07-28T01:23:04.000Z",
+      "uid": "35240-caf2b2cd-17a1-479d-a4f3-53616d39f2bd"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}

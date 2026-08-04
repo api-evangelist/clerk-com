@@ -1,0 +1,2521 @@
+{
+  "info": {
+    "_postman_id": "51a8c561-5018-45d2-a07b-d5569f39959a",
+    "name": "Clerk Backend Account Portal Organization Invitations API",
+    "description": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:24:15.000Z",
+    "updatedAt": "2026-07-28T01:24:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-51a8c561-5018-45d2-a07b-d5569f39959a"
+  },
+  "item": [
+    {
+      "name": "organization_invitations",
+      "item": [
+        {
+          "name": "Get a List of Organization Invitations for the Current Instance",
+          "id": "8d532e62-29ac-4fce-a163-372e208f8f7c",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "organization_invitations"
+              ],
+              "query": [
+                {
+                  "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                  "key": "order_by",
+                  "value": "-created_at"
+                },
+                {
+                  "description": "Filter organization invitations based on their status",
+                  "key": "status",
+                  "value": "revoked"
+                },
+                {
+                  "description": "Filter organization invitations based on their `email_address`",
+                  "key": "query",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "This request returns the list of organization invitations for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nYou can change the order by providing the 'order' query parameter, that accepts multiple values.\nYou can filter by the invited user email address providing the `query` query parameter.\nThe organization invitations are ordered by descending creation date by default."
+          },
+          "response": [
+            {
+              "id": "117d81d9-91ef-41d2-800e-34eb5ae9490b",
+              "name": "A list of organization invitations with public organization data",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organization_invitations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their status",
+                      "key": "status",
+                      "value": "revoked"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their `email_address`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"anim_3c\": false\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"qui52\": 97664907.32941633,\n        \"labore_5\": \"aute eu\"\n      },\n      \"public_organization_data\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"slug\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\"\n      }\n    },\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"nisi_86\": 10801963\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"aliquip__b\": true,\n        \"esse68\": false\n      },\n      \"public_organization_data\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\",\n        \"slug\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"image_url\": \"<string>\"\n      }\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-117d81d9-91ef-41d2-800e-34eb5ae9490b"
+            },
+            {
+              "id": "d642bf40-fda9-414e-ac50-53415693f519",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organization_invitations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their status",
+                      "key": "status",
+                      "value": "revoked"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their `email_address`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-d642bf40-fda9-414e-ac50-53415693f519"
+            },
+            {
+              "id": "bf7e98cc-0ed3-4f6b-bb43-03665f5a1bea",
+              "name": "Resource not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organization_invitations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their status",
+                      "key": "status",
+                      "value": "revoked"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their `email_address`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-bf7e98cc-0ed3-4f6b-bb43-03665f5a1bea"
+            },
+            {
+              "id": "c8e1fcc2-9e12-4d18-9c31-6bf9511c93eb",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organization_invitations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their status",
+                      "key": "status",
+                      "value": "revoked"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their `email_address`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-c8e1fcc2-9e12-4d18-9c31-6bf9511c93eb"
+            },
+            {
+              "id": "ea2a0e26-1e08-4337-84f1-424fbf5dd4cc",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/organization_invitations?order_by=-created_at&status=revoked&query=<string>&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "organization_invitations"
+                  ],
+                  "query": [
+                    {
+                      "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their status",
+                      "key": "status",
+                      "value": "revoked"
+                    },
+                    {
+                      "description": "Filter organization invitations based on their `email_address`",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-ea2a0e26-1e08-4337-84f1-424fbf5dd4cc"
+            }
+          ],
+          "createdAt": "2026-07-28T01:24:15.000Z",
+          "updatedAt": "2026-07-28T01:24:15.000Z",
+          "uid": "35240-8d532e62-29ac-4fce-a163-372e208f8f7c"
+        }
+      ],
+      "id": "51eeed7c-790c-427e-9b18-3e2421e955b5",
+      "createdAt": "2026-07-28T01:24:15.000Z",
+      "updatedAt": "2026-07-28T01:24:15.000Z",
+      "uid": "35240-51eeed7c-790c-427e-9b18-3e2421e955b5"
+    },
+    {
+      "name": "organizations",
+      "item": [
+        {
+          "name": "{organization_id}",
+          "item": [
+            {
+              "name": "invitations",
+              "item": [
+                {
+                  "name": "bulk",
+                  "item": [
+                    {
+                      "name": "Bulk Create and Send Organization Invitations",
+                      "id": "f1c0b4c6-b831-4311-900b-956159ff6266",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations",
+                            "bulk"
+                          ],
+                          "variable": [
+                            {
+                              "id": "999ee85d-1f23-482d-809d-d87a6fcc7f2f",
+                              "key": "organization_id",
+                              "value": "<string>",
+                              "description": "(Required) The organization ID."
+                            }
+                          ]
+                        },
+                        "description": "Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.\n\nThis endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.\n\nYou can specify a different `role` for each invited organization member.\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\nThe request body supports passing an optional `redirect_url` parameter for each invitation.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.\nUse this parameter to implement a custom invitation acceptance flow.\nYou can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation\ncan have a different inviter user.\nInviter users must be members with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\nYou can optionally provide public and private metadata for each organization invitation. The public metadata are visible\nby both the Frontend and the Backend, whereas the private metadata are only visible by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership."
+                      },
+                      "response": [
+                        {
+                          "id": "30564780-65af-4b22-a30c-f32de8aaf5bf",
+                          "name": "A list of organization invitations",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "bulk"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"pariatur_ce\": -3806024\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"in_1bf\": 46781039\n      }\n    },\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"velit2d\": false\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"exercitation_40d\": \"minim\",\n        \"proident_3\": true\n      }\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-30564780-65af-4b22-a30c-f32de8aaf5bf"
+                        },
+                        {
+                          "id": "d9ad01a7-3b1c-4d76-aedd-c1d3e83a09e4",
+                          "name": "Request was not successful",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "bulk"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-d9ad01a7-3b1c-4d76-aedd-c1d3e83a09e4"
+                        },
+                        {
+                          "id": "6b4717dc-de74-4742-845f-08a995a530ec",
+                          "name": "Authorization invalid",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "bulk"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-6b4717dc-de74-4742-845f-08a995a530ec"
+                        },
+                        {
+                          "id": "98c52710-4ef8-425b-8a82-950db0eb6251",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "bulk"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-98c52710-4ef8-425b-8a82-950db0eb6251"
+                        },
+                        {
+                          "id": "ec56a8e3-6682-43b0-9c8f-67a7f33a7f37",
+                          "name": "Invalid request parameters",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "[\n  {\n    \"email_address\": \"<string>\",\n    \"role\": \"<string>\",\n    \"inviter_user_id\": \"<string>\",\n    \"public_metadata\": {\n      \"dolore_8c\": -3817838,\n      \"sunt_5df\": \"adipisicing sed\"\n    },\n    \"private_metadata\": {\n      \"sunt8eb\": \"do enim occaecat non\"\n    },\n    \"redirect_url\": \"<string>\",\n    \"expires_in_days\": \"<integer>\",\n    \"notify\": true\n  }\n]",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/bulk",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "bulk"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                          "code": 422,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-ec56a8e3-6682-43b0-9c8f-67a7f33a7f37"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-f1c0b4c6-b831-4311-900b-956159ff6266"
+                    }
+                  ],
+                  "id": "7f3a616e-2125-487b-9e63-aea95e84ce28",
+                  "createdAt": "2026-07-28T01:24:15.000Z",
+                  "updatedAt": "2026-07-28T01:24:15.000Z",
+                  "uid": "35240-7f3a616e-2125-487b-9e63-aea95e84ce28"
+                },
+                {
+                  "name": "pending",
+                  "item": [
+                    {
+                      "name": "Get a List of Pending Organization Invitations",
+                      "id": "df798894-02e5-46a3-93b1-42a48615a7a9",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations/pending?limit=10&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations",
+                            "pending"
+                          ],
+                          "query": [
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "a928a780-f3eb-48e1-afc0-80816eb708b4",
+                              "key": "organization_id",
+                              "value": "<string>",
+                              "description": "(Required) The organization ID."
+                            }
+                          ]
+                        },
+                        "description": "This request returns the list of organization invitations with \"pending\" status.\nThese are the organization invitations that can still be used to join the organization, but have not been accepted by the invited user yet.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included in the results."
+                      },
+                      "response": [
+                        {
+                          "id": "2d2ddce5-73d1-402c-9cc7-d27a9ef942d8",
+                          "name": "A list of organization invitations",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/pending?limit=10&offset=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "pending"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": [\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"pariatur_ce\": -3806024\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"in_1bf\": 46781039\n      }\n    },\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"velit2d\": false\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"exercitation_40d\": \"minim\",\n        \"proident_3\": true\n      }\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-2d2ddce5-73d1-402c-9cc7-d27a9ef942d8"
+                        },
+                        {
+                          "id": "98a69c8d-acb4-4201-aac4-af20579a4142",
+                          "name": "Request was not successful",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/pending?limit=10&offset=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "pending"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-98a69c8d-acb4-4201-aac4-af20579a4142"
+                        },
+                        {
+                          "id": "6b7c4175-2285-43cc-9da2-ab793d5692ea",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/pending?limit=10&offset=0",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                "pending"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                                  "key": "limit",
+                                  "value": "10"
+                                },
+                                {
+                                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                                  "key": "offset",
+                                  "value": "0"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-6b7c4175-2285-43cc-9da2-ab793d5692ea"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-df798894-02e5-46a3-93b1-42a48615a7a9"
+                    }
+                  ],
+                  "id": "2ab1a6fd-8a3c-4d19-96b9-ab61098312a6",
+                  "createdAt": "2026-07-28T01:24:15.000Z",
+                  "updatedAt": "2026-07-28T01:24:15.000Z",
+                  "uid": "35240-2ab1a6fd-8a3c-4d19-96b9-ab61098312a6"
+                },
+                {
+                  "name": "{invitation_id}",
+                  "item": [
+                    {
+                      "name": "revoke",
+                      "item": [
+                        {
+                          "name": "Revoke a Pending Organization Invitation",
+                          "id": "786892ce-0a77-4a55-b6ec-351c557bc11a",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"requesting_user_id\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id/revoke",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ":invitation_id",
+                                "revoke"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "4965357d-513c-4e10-abbc-d84ed312fcad",
+                                  "key": "organization_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The organization ID."
+                                },
+                                {
+                                  "id": "baed7fe0-5c08-4d2f-a1fc-486b238bf2d9",
+                                  "key": "invitation_id",
+                                  "value": "<string>",
+                                  "description": "(Required) The organization invitation ID."
+                                }
+                              ]
+                            },
+                            "description": "Use this request to revoke a previously issued organization invitation.\nRevoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.\nOnly organization invitations with \"pending\" status can be revoked.\nThe request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.\nOnly users with \"admin\" role can revoke invitations."
+                          },
+                          "response": [
+                            {
+                              "id": "b7be3e15-241a-4876-a716-3d25f57bfe7a",
+                              "name": "An organization invitation",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"requesting_user_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id/revoke",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "organizations",
+                                    ":organization_id",
+                                    "invitations",
+                                    ":invitation_id",
+                                    "revoke"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organization_id"
+                                    },
+                                    {
+                                      "key": "invitation_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"object\": \"organization_invitation\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"role_name\": \"<string>\",\n  \"public_metadata\": {\n    \"occaecatb_\": \"nostrud non\"\n  },\n  \"url\": \"<string>\",\n  \"expires_at\": \"<long>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"inviter_id\": \"<string>\",\n  \"public_inviter_data\": {\n    \"user_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"image_url\": \"<string>\",\n    \"has_image\": \"<boolean>\",\n    \"identifier\": \"<string>\"\n  },\n  \"organization_id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"private_metadata\": {\n    \"proident_3\": true\n  }\n}",
+                              "createdAt": "2026-07-28T01:24:15.000Z",
+                              "updatedAt": "2026-07-28T01:24:15.000Z",
+                              "uid": "35240-b7be3e15-241a-4876-a716-3d25f57bfe7a"
+                            },
+                            {
+                              "id": "ee3cdf51-c634-434d-b4e0-b4e59a228d71",
+                              "name": "Request was not successful",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"requesting_user_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id/revoke",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "organizations",
+                                    ":organization_id",
+                                    "invitations",
+                                    ":invitation_id",
+                                    "revoke"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organization_id"
+                                    },
+                                    {
+                                      "key": "invitation_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:24:15.000Z",
+                              "updatedAt": "2026-07-28T01:24:15.000Z",
+                              "uid": "35240-ee3cdf51-c634-434d-b4e0-b4e59a228d71"
+                            },
+                            {
+                              "id": "1614fe05-001c-48ee-a41b-e96de07fe136",
+                              "name": "Authorization invalid",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"requesting_user_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id/revoke",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "organizations",
+                                    ":organization_id",
+                                    "invitations",
+                                    ":invitation_id",
+                                    "revoke"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organization_id"
+                                    },
+                                    {
+                                      "key": "invitation_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Forbidden",
+                              "code": 403,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:24:15.000Z",
+                              "updatedAt": "2026-07-28T01:24:15.000Z",
+                              "uid": "35240-1614fe05-001c-48ee-a41b-e96de07fe136"
+                            },
+                            {
+                              "id": "d58b909d-e213-4b9c-ade1-67f89c9a16db",
+                              "name": "Resource not found",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"requesting_user_id\": \"<string>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id/revoke",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "organizations",
+                                    ":organization_id",
+                                    "invitations",
+                                    ":invitation_id",
+                                    "revoke"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "organization_id"
+                                    },
+                                    {
+                                      "key": "invitation_id"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T01:24:15.000Z",
+                              "updatedAt": "2026-07-28T01:24:15.000Z",
+                              "uid": "35240-d58b909d-e213-4b9c-ade1-67f89c9a16db"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-786892ce-0a77-4a55-b6ec-351c557bc11a"
+                        }
+                      ],
+                      "id": "1e6ca3da-bb83-4ec6-b645-ec476fee7d84",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-1e6ca3da-bb83-4ec6-b645-ec476fee7d84"
+                    },
+                    {
+                      "name": "Retrieve an Organization Invitation by ID",
+                      "id": "c1b1467b-105d-43f0-ae91-2c990fe451aa",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations",
+                            ":invitation_id"
+                          ],
+                          "variable": [
+                            {
+                              "id": "53977e82-8b06-424b-8ac7-082a22a805c3",
+                              "key": "organization_id",
+                              "value": "<string>",
+                              "description": "(Required) The organization ID."
+                            },
+                            {
+                              "id": "69f8eb19-cb64-43a3-b45a-8ad93dc3daf5",
+                              "key": "invitation_id",
+                              "value": "<string>",
+                              "description": "(Required) The organization invitation ID."
+                            }
+                          ]
+                        },
+                        "description": "Use this request to get an existing organization invitation by ID."
+                      },
+                      "response": [
+                        {
+                          "id": "adb1d8f2-8ac0-45b5-b4a5-c4b2109d691e",
+                          "name": "An organization invitation",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ":invitation_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                },
+                                {
+                                  "key": "invitation_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"object\": \"organization_invitation\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"role_name\": \"<string>\",\n  \"public_metadata\": {\n    \"occaecatb_\": \"nostrud non\"\n  },\n  \"url\": \"<string>\",\n  \"expires_at\": \"<long>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"inviter_id\": \"<string>\",\n  \"public_inviter_data\": {\n    \"user_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"image_url\": \"<string>\",\n    \"has_image\": \"<boolean>\",\n    \"identifier\": \"<string>\"\n  },\n  \"organization_id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"private_metadata\": {\n    \"proident_3\": true\n  }\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-adb1d8f2-8ac0-45b5-b4a5-c4b2109d691e"
+                        },
+                        {
+                          "id": "f4385e66-be8d-4d97-b775-e3ff86d07e22",
+                          "name": "Request was not successful",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ":invitation_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                },
+                                {
+                                  "key": "invitation_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-f4385e66-be8d-4d97-b775-e3ff86d07e22"
+                        },
+                        {
+                          "id": "904f08c3-8147-40d1-ab1a-1e32ec756115",
+                          "name": "Authorization invalid",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ":invitation_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                },
+                                {
+                                  "key": "invitation_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-904f08c3-8147-40d1-ab1a-1e32ec756115"
+                        },
+                        {
+                          "id": "7ac70024-8b86-4d31-a963-8cda87921710",
+                          "name": "Resource not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/organizations/:organization_id/invitations/:invitation_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "organizations",
+                                ":organization_id",
+                                "invitations",
+                                ":invitation_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "organization_id"
+                                },
+                                {
+                                  "key": "invitation_id"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:24:15.000Z",
+                          "updatedAt": "2026-07-28T01:24:15.000Z",
+                          "uid": "35240-7ac70024-8b86-4d31-a963-8cda87921710"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-c1b1467b-105d-43f0-ae91-2c990fe451aa"
+                    }
+                  ],
+                  "id": "33b11a25-5158-4e1c-a5b3-59a120b01ada",
+                  "createdAt": "2026-07-28T01:24:15.000Z",
+                  "updatedAt": "2026-07-28T01:24:15.000Z",
+                  "uid": "35240-33b11a25-5158-4e1c-a5b3-59a120b01ada"
+                },
+                {
+                  "name": "Create and Send an Organization Invitation",
+                  "id": "bad82884-8f6b-42e3-9906-588f0aab26c0",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "organizations",
+                        ":organization_id",
+                        "invitations"
+                      ],
+                      "variable": [
+                        {
+                          "id": "592419d7-127a-4dae-b157-4aab8c56e88f",
+                          "key": "organization_id",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the organization for which to send the invitation"
+                        }
+                      ]
+                    },
+                    "description": "Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.\nYou can specify the `role` for the invited organization member.\n\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\n\nThe request body supports passing an optional `redirect_url` parameter.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.\nUse this parameter to implement a custom invitation acceptance flow.\n\nYou can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.\nThat user must be a member with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\n\nYou can optionally provide public and private metadata for the organization invitation.\nThe public metadata are visible by both the Frontend and the Backend whereas the private ones only by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership."
+                  },
+                  "response": [
+                    {
+                      "id": "fc569399-6708-4905-ac02-985c97abbc98",
+                      "name": "An organization invitation",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"organization_invitation\",\n  \"id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"role_name\": \"<string>\",\n  \"public_metadata\": {\n    \"occaecatb_\": \"nostrud non\"\n  },\n  \"url\": \"<string>\",\n  \"expires_at\": \"<long>\",\n  \"created_at\": \"<long>\",\n  \"updated_at\": \"<long>\",\n  \"inviter_id\": \"<string>\",\n  \"public_inviter_data\": {\n    \"user_id\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"image_url\": \"<string>\",\n    \"has_image\": \"<boolean>\",\n    \"identifier\": \"<string>\"\n  },\n  \"organization_id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"private_metadata\": {\n    \"proident_3\": true\n  }\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-fc569399-6708-4905-ac02-985c97abbc98"
+                    },
+                    {
+                      "id": "15b43eec-b57b-4e46-84f3-7ac54d33f03a",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-15b43eec-b57b-4e46-84f3-7ac54d33f03a"
+                    },
+                    {
+                      "id": "23e3b7d5-c8eb-4f00-9741-aeee30811ed8",
+                      "name": "Payment required",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Payment Required",
+                      "code": 402,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-23e3b7d5-c8eb-4f00-9741-aeee30811ed8"
+                    },
+                    {
+                      "id": "f8407889-c655-4938-ac90-e7d1822623a6",
+                      "name": "Authorization invalid",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-f8407889-c655-4938-ac90-e7d1822623a6"
+                    },
+                    {
+                      "id": "123bde7a-344b-4cfb-9dd8-e5edc1f075cd",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-123bde7a-344b-4cfb-9dd8-e5edc1f075cd"
+                    },
+                    {
+                      "id": "dce121dd-3a16-42c5-89bd-f5ebde30bccc",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email_address\": \"<string>\",\n  \"role\": \"<string>\",\n  \"inviter_user_id\": \"<string>\",\n  \"public_metadata\": {\n    \"adipisicing3_\": -67626862.39540847,\n    \"incididunt_c9\": \"ut fugiat tempor\",\n    \"aliquip_a0d\": true\n  },\n  \"private_metadata\": {\n    \"ea_ab\": 37286285,\n    \"anim8e7\": \"Lorem dolore do eu deserunt\"\n  },\n  \"redirect_url\": \"<string>\",\n  \"expires_in_days\": \"<integer>\",\n  \"notify\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-dce121dd-3a16-42c5-89bd-f5ebde30bccc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:24:15.000Z",
+                  "updatedAt": "2026-07-28T01:24:15.000Z",
+                  "uid": "35240-bad82884-8f6b-42e3-9906-588f0aab26c0"
+                },
+                {
+                  "name": "Get a List of Organization Invitations",
+                  "id": "230a579d-d778-4908-9494-6736e9aaa5ff",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/organizations/:organization_id/invitations?status=revoked&email_address=<string>&order_by=-created_at&limit=10&offset=0",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "organizations",
+                        ":organization_id",
+                        "invitations"
+                      ],
+                      "query": [
+                        {
+                          "description": "Filter organization invitations based on their status",
+                          "key": "status",
+                          "value": "revoked"
+                        },
+                        {
+                          "description": "Returns organization invitations inviting the specified email address.",
+                          "key": "email_address",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                          "key": "order_by",
+                          "value": "-created_at"
+                        },
+                        {
+                          "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                          "key": "limit",
+                          "value": "10"
+                        },
+                        {
+                          "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                          "key": "offset",
+                          "value": "0"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "832875da-3ca7-4ef4-a2a6-71cd68a01f6f",
+                          "key": "organization_id",
+                          "value": "<string>",
+                          "description": "(Required) The organization ID."
+                        }
+                      ]
+                    },
+                    "description": "This request returns the list of organization invitations.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included in the results."
+                  },
+                  "response": [
+                    {
+                      "id": "7b923d57-c500-4546-a8cc-ee6d267d2ccc",
+                      "name": "A list of organization invitations",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations?status=revoked&email_address=<string>&order_by=-created_at&limit=10&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter organization invitations based on their status",
+                              "key": "status",
+                              "value": "revoked"
+                            },
+                            {
+                              "description": "Returns organization invitations inviting the specified email address.",
+                              "key": "email_address",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                              "key": "order_by",
+                              "value": "-created_at"
+                            },
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": [\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"pariatur_ce\": -3806024\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"in_1bf\": 46781039\n      }\n    },\n    {\n      \"object\": \"organization_invitation\",\n      \"id\": \"<string>\",\n      \"email_address\": \"<string>\",\n      \"role\": \"<string>\",\n      \"role_name\": \"<string>\",\n      \"public_metadata\": {\n        \"velit2d\": false\n      },\n      \"url\": \"<string>\",\n      \"expires_at\": \"<long>\",\n      \"created_at\": \"<long>\",\n      \"updated_at\": \"<long>\",\n      \"inviter_id\": \"<string>\",\n      \"public_inviter_data\": {\n        \"user_id\": \"<string>\",\n        \"first_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"image_url\": \"<string>\",\n        \"has_image\": \"<boolean>\",\n        \"identifier\": \"<string>\"\n      },\n      \"organization_id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"private_metadata\": {\n        \"exercitation_40d\": \"minim\",\n        \"proident_3\": true\n      }\n    }\n  ],\n  \"total_count\": \"<long>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-7b923d57-c500-4546-a8cc-ee6d267d2ccc"
+                    },
+                    {
+                      "id": "93e93106-fef4-409d-af4e-17f5675f949c",
+                      "name": "Request was not successful",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations?status=revoked&email_address=<string>&order_by=-created_at&limit=10&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter organization invitations based on their status",
+                              "key": "status",
+                              "value": "revoked"
+                            },
+                            {
+                              "description": "Returns organization invitations inviting the specified email address.",
+                              "key": "email_address",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                              "key": "order_by",
+                              "value": "-created_at"
+                            },
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-93e93106-fef4-409d-af4e-17f5675f949c"
+                    },
+                    {
+                      "id": "07763198-818c-45ef-85cb-cbe007334e3e",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations?status=revoked&email_address=<string>&order_by=-created_at&limit=10&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter organization invitations based on their status",
+                              "key": "status",
+                              "value": "revoked"
+                            },
+                            {
+                              "description": "Returns organization invitations inviting the specified email address.",
+                              "key": "email_address",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                              "key": "order_by",
+                              "value": "-created_at"
+                            },
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-07763198-818c-45ef-85cb-cbe007334e3e"
+                    },
+                    {
+                      "id": "dc5b71f1-cdcc-47e1-9521-b309ee2acf88",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/organizations/:organization_id/invitations?status=revoked&email_address=<string>&order_by=-created_at&limit=10&offset=0",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "organizations",
+                            ":organization_id",
+                            "invitations"
+                          ],
+                          "query": [
+                            {
+                              "description": "Filter organization invitations based on their status",
+                              "key": "status",
+                              "value": "revoked"
+                            },
+                            {
+                              "description": "Returns organization invitations inviting the specified email address.",
+                              "key": "email_address",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+                              "key": "order_by",
+                              "value": "-created_at"
+                            },
+                            {
+                              "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+                              "key": "limit",
+                              "value": "10"
+                            },
+                            {
+                              "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+                              "key": "offset",
+                              "value": "0"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "organization_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                      "code": 422,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"<string>\",\n      \"long_message\": \"<string>\",\n      \"code\": \"<string>\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:24:15.000Z",
+                      "updatedAt": "2026-07-28T01:24:15.000Z",
+                      "uid": "35240-dc5b71f1-cdcc-47e1-9521-b309ee2acf88"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:24:15.000Z",
+                  "updatedAt": "2026-07-28T01:24:15.000Z",
+                  "uid": "35240-230a579d-d778-4908-9494-6736e9aaa5ff"
+                }
+              ],
+              "id": "e281530a-af6a-4aeb-87be-160ae5fcdac5",
+              "createdAt": "2026-07-28T01:24:15.000Z",
+              "updatedAt": "2026-07-28T01:24:15.000Z",
+              "uid": "35240-e281530a-af6a-4aeb-87be-160ae5fcdac5"
+            }
+          ],
+          "id": "dc940e9c-b602-4715-86b8-5579fdb73504",
+          "createdAt": "2026-07-28T01:24:15.000Z",
+          "updatedAt": "2026-07-28T01:24:15.000Z",
+          "uid": "35240-dc940e9c-b602-4715-86b8-5579fdb73504"
+        }
+      ],
+      "id": "18165124-3082-4fa6-af21-6bd2a813ceec",
+      "createdAt": "2026-07-28T01:24:15.000Z",
+      "updatedAt": "2026-07-28T01:24:15.000Z",
+      "uid": "35240-18165124-3082-4fa6-af21-6bd2a813ceec"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.clerk.com/v1"
+    }
+  ]
+}
