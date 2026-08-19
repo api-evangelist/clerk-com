@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal OAuth2 Callbacks API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth2 Callbacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OAuth Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/oauth_callback",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "returned scopes from OAuth provider."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "returned exchange code from OAuth provider."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "returned state from OAuth provider."
+              },
+              {
+                "name": "error",
+                "value": "",
+                "type": "query",
+                "description": "returned error state from OAuth provider, if applicable"
+              }
+            ]
+          },
+          "docs": "The endpoint where the OAuth providers redirect to after a successful authentication attempt."
+        },
+        {
+          "info": {
+            "name": "OAuth Post Callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/oauth_callback",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "state",
+                  "value": ""
+                },
+                {
+                  "name": "error",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Converts a POST to a GET, because if it's a POST coming from an external account. This is necessary because some providers (e.g. Apple) issue a POST instead of a GET request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal User API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me"
+          },
+          "docs": "Returns all attributes of the current user."
+        },
+        {
+          "info": {
+            "name": "Update User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "first_name",
+                  "value": ""
+                },
+                {
+                  "name": "last_name",
+                  "value": ""
+                },
+                {
+                  "name": "primary_email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "primary_phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "primary_web3_wallet_id",
+                  "value": ""
+                },
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user with the given attributes."
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me"
+          },
+          "docs": "Delete the current user."
+        },
+        {
+          "info": {
+            "name": "Merge and Update the Current User's Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me/metadata",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "unsafe_metadata",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's metadata attributes by merging existing values with the provided parameters.\n\nThis endpoint behaves differently than the *Update User* endpoint.\nMetadata values will not be replaced entirely.\nInstead, a deep merge will be performed.\nDeep means that any nested JSON objects will be merged as well.\n\nYou can remove metadata keys at any level by setting their value to `null`.\n\nOnly `unsafe_metadata` can be updated through the Frontend API. `public_metadata` and `private_meta"
+        },
+        {
+          "info": {
+            "name": "createServiceToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/tokens",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "service",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a JWT for the requested user."
+        },
+        {
+          "info": {
+            "name": "Update Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/profile_image",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's profile image."
+        },
+        {
+          "info": {
+            "name": "Delete Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/profile_image"
+          },
+          "docs": "Remove the current user's profile image."
+        },
+        {
+          "info": {
+            "name": "Update Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/change_password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "current_password",
+                  "value": ""
+                },
+                {
+                  "name": "new_password",
+                  "value": ""
+                },
+                {
+                  "name": "sign_out_of_other_sessions",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the current user's password."
+        },
+        {
+          "info": {
+            "name": "Delete Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/remove_password",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "current_password",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Removes the current user's password."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

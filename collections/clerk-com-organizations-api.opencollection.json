@@ -1,0 +1,310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Organizations API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Organizations for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations",
+            "params": [
+              {
+                "name": "include_members_count",
+                "value": "",
+                "type": "query",
+                "description": "Flag to denote whether the member counts of each organization should be included in the response or not."
+              },
+              {
+                "name": "include_missing_member_with_elevated_permissions",
+                "value": "",
+                "type": "query",
+                "description": "Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns organizations with ID, name, or slug that match the given query.\nUses exact match for organization ID and partial match for name and slug."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns organizations that include any of the specified user IDs as members. Any user IDs not found are ignored.\nFor each user ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns organizations with the organization IDs specified. Any organization IDs not found are ignored.\nFor each organization ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set. Accepts up to 100 organization IDs.\nExample: ?organization_id=+org_1&organization_id=-org_2"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return organizations in a particular order.\nAt the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "This request returns the list of organizations for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organizations are ordered by descending creation date.\nMost recent organizations will be returned first."
+        },
+        {
+          "info": {
+            "name": "Create an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization with the given name for an instance.\nYou can specify an optional slug for the new organization.\nIf provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".\nOrganization slugs must be unique for the instance.\nYou can provide additional metadata for the organization and set any custom attribute you want.\nOrganizations support private and public metadata.\nPrivate metadata can only be accessed from the Backen"
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization by ID or Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID or slug of the organization"
+              },
+              {
+                "name": "include_members_count",
+                "value": "",
+                "type": "query",
+                "description": "Flag to denote whether or not the organization's members count should be included in the response."
+              },
+              {
+                "name": "include_missing_member_with_elevated_permissions",
+                "value": "",
+                "type": "query",
+                "description": "Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."
+              }
+            ]
+          },
+          "docs": "Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter."
+        },
+        {
+          "info": {
+            "name": "Update an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing organization"
+        },
+        {
+          "info": {
+            "name": "Delete an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to delete"
+              }
+            ]
+          },
+          "docs": "Deletes the given organization.\nPlease note that deleting an organization will also delete all memberships and invitations.\nThis is not reversible.\n\nAfter the organization is deleted, any user's active sessions that contain the deleted\norganization will be cleared."
+        },
+        {
+          "info": {
+            "name": "Merge and Update Metadata for an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/metadata",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which metadata will be merged or updated"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update organization metadata attributes by merging existing values with the provided parameters.\nMetadata values will be updated via a deep merge.\nDeep meaning that any nested JSON objects will be merged as well.\nYou can remove metadata keys at any level by setting their value to `null`."
+        },
+        {
+          "info": {
+            "name": "Upload a Logo for the Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/logo",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which to upload a logo"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "uploader_user_id",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Set or replace an organization's logo, by uploading an image file.\nThis endpoint uses the `multipart/form-data` request content type and accepts a file of image type.\nThe file size cannot exceed 10MB.\nOnly the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`."
+        },
+        {
+          "info": {
+            "name": "Delete the Organization's Logo.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/logo",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the logo will be deleted."
+              }
+            ]
+          },
+          "docs": "Delete the organization's logo."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/subscription",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose subscription to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the billing subscription for the specified organization.\nThis includes subscription details, active plans, billing information, and payment status.\nThe subscription contains subscription items which represent the individual plans the organization is subscribed to."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/credits",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose credit balance to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the current credit balance for the specified organization.\nCredits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges."
+        },
+        {
+          "info": {
+            "name": "Adjust an Organization's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/credits",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose credit balance to adjust"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Increases or decreases the credit balance for the specified organization.\nEach adjustment is recorded as a ledger entry. The idempotency_key parameter\nensures that duplicate requests are safely handled."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

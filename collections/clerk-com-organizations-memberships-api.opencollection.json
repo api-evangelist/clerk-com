@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Organizations Memberships API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations Memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/organization_memberships",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Get a list of the organization memberships of the current user."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/organization_memberships/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the membership will be deleted"
+              }
+            ]
+          },
+          "docs": "Delete the membership of the given organization."
+        },
+        {
+          "info": {
+            "name": "Get Current User's Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/organization_invitations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the organization invitations to filter by"
+              }
+            ]
+          },
+          "docs": "Get a list of the organization invitations of the current user."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/organization_invitations/:invitation_id/accept",
+            "params": [
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization invitation to accept"
+              }
+            ]
+          },
+          "docs": "Accept an organization invitation for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Organization Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/organization_suggestions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of the organization suggestions of the current user."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Suggestion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/organization_suggestions/:suggestion_id/accept",
+            "params": [
+              {
+                "name": "suggestion_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization suggestion to accept"
+              }
+            ]
+          },
+          "docs": "Accept an organization suggestion for the current user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

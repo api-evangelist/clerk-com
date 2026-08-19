@@ -1,0 +1,1119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Users API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users",
+            "params": [
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified email addresses.\nAccepts up to 100 email addresses.\nAny email addresses not found are ignored."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified phone numbers.\nAccepts up to 100 phone numbers.\nAny phone numbers not found are ignored."
+              },
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified external IDs.\nFor each external ID, the `+` and `-` can be\nprepended to the ID, which denote whether the\nrespective external ID should be included or\nexcluded from the result set.\nAccepts up to 100 external IDs.\nAny external IDs not found are ignored."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified usernames.\nAccepts up to 100 usernames.\nAny usernames not found are ignored."
+              },
+              {
+                "name": "web3_wallet",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified web3 wallet addresses.\nAccepts up to 100 web3 wallet addresses.\nAny web3 wallet addresses not found are ignored."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the user IDs specified.\nFor each user ID, the `+` and `-` can be\nprepended to the ID, which denote whether the\nrespective user ID should be included or\nexcluded from the result set.\nAccepts up to 100 user IDs.\nAny user IDs not found are ignored."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users that have memberships to the\ngiven organizations.\nFor each organization ID, the `+` and `-` can be\nprepended to the ID, which denote whether the\nrespective organization should be included or\nexcluded from the result set.\nAccepts up to 100 organization IDs."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users that match the given query.\nFor possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+              },
+              {
+                "name": "email_address_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with emails that match the given query, via case-insensitive partial match.\nFor example, `email_address_query=ello` will match a user with the email `HELLO@example.com`."
+              },
+              {
+                "name": "phone_number_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with phone numbers that match the given query, via case-insensitive partial match.\nFor example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`."
+              },
+              {
+                "name": "username_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with usernames that match the given query, via case-insensitive partial match.\nFor example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`."
+              },
+              {
+                "name": "name_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with names that match the given query, via case-insensitive partial match."
+              },
+              {
+                "name": "banned",
+                "value": "",
+                "type": "query",
+                "description": "Returns users which are either banned (`banned=true`) or not banned (`banned=false`)."
+              },
+              {
+                "name": "last_active_at_before",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was before the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23."
+              },
+              {
+                "name": "last_active_at_after",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was after the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23."
+              },
+              {
+                "name": "last_active_at_since",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users that had session activity since the given date.\nExample: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.\nDeprecated in favor of `last_active_at_after`."
+              },
+              {
+                "name": "created_at_before",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created before the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created before 2024-10-29."
+              },
+              {
+                "name": "created_at_after",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created after the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created after 2024-10-29."
+              },
+              {
+                "name": "last_sign_in_at_before",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last sign-in was before the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last sign-in was before 2023-11-23."
+              },
+              {
+                "name": "last_sign_in_at_after",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last sign-in was after the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last sign-in was after 2023-11-23."
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with external accounts for the specified OAuth provider.\nMust be used in combination with the `provider_user_id` parameter.\nFor example, use `provider=oauth_google&provider_user_id=12345` to retrieve a user with Google provider user ID 12345."
+              },
+              {
+                "name": "provider_user_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified provider user IDs for a specific provider.\nMust be used in combination with the `provider` parameter.\nFor example, use `provider=oauth_google&provider_user_id=12345` to retrieve a user with Google provider user ID 12345.\nAccepts up to 100 provider user IDs.\nAny provider user IDs not found are ignored."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return users in a particular order.\nAt the moment, you can order the returned users by their `created_at`,`updated_at`,`email_address`,`web3wallet`,`first_name`,`last_name`,`phone_number`,`username`,`last_active_at`,`last_sign_in_at`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want users to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=username&order_by=created_at`, we will consider only the first `order_by` parameter, which is `username`. The `created_at` parameter will be ignored in this case."
+              }
+            ]
+          },
+          "docs": "Returns a list of all users.\nThe users are returned sorted by creation date, with the newest users appearing first."
+        },
+        {
+          "info": {
+            "name": "Create a New User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user. Your user management settings determine how you should setup your user model.\n\nAny email address and phone number created using this method will be marked as verified.\n\nNote: If you are performing a migration, check out our guide on [zero downtime migrations](https://clerk.com/docs/deployments/migrate-overview).\n\nThe following rate limit rules apply to this endpoint: 1000 requests per 10 seconds for production instances and 100 requests per 10 seconds for development instance"
+        },
+        {
+          "info": {
+            "name": "Count Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/count",
+            "params": [
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified email addresses.\nAccepts up to 100 email addresses.\nAny email addresses not found are ignored."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified phone numbers.\nAccepts up to 100 phone numbers.\nAny phone numbers not found are ignored."
+              },
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified external IDs.\nAccepts up to 100 external IDs.\nAny external IDs not found are ignored."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified usernames.\nAccepts up to 100 usernames.\nAny usernames not found are ignored."
+              },
+              {
+                "name": "web3_wallet",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified web3 wallet addresses.\nAccepts up to 100 web3 wallet addresses.\nAny web3 wallet addresses not found are ignored."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the user IDs specified.\nAccepts up to 100 user IDs.\nAny user IDs not found are ignored."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users that have memberships to the given organizations. For each organization ID, the `+` and `-`\ncan be prepended to the ID, which denote whether the respective organization should be included or\nexcluded from the result set. Accepts up to 100 organization IDs."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Counts users that match the given query.\nFor possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+              },
+              {
+                "name": "email_address_query",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with emails that match the given query, via case-insensitive partial match.\nFor example, `email_address_query=ello` will match a user with the email `HELLO@example.com`,\nand will be included in the resulting count."
+              },
+              {
+                "name": "phone_number_query",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with phone numbers that match the given query, via case-insensitive partial match.\nFor example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`,\nand will be included in the resulting count."
+              },
+              {
+                "name": "username_query",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with usernames that match the given query, via case-insensitive partial match.\nFor example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`,\nand will be included in the resulting count."
+              },
+              {
+                "name": "name_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with names that match the given query, via case-insensitive partial match."
+              },
+              {
+                "name": "banned",
+                "value": "",
+                "type": "query",
+                "description": "Counts users which are either banned (`banned=true`) or not banned (`banned=false`)."
+              },
+              {
+                "name": "last_active_at_before",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was before the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23."
+              },
+              {
+                "name": "last_active_at_after",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was after the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23."
+              },
+              {
+                "name": "last_active_at_since",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users that had session activity since the given date.\nExample: use 1700690400000 to retrieve users that had session activity from 2023-11-23 until the current day.\nDeprecated in favor of `last_active_at_after`."
+              },
+              {
+                "name": "created_at_before",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created before the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created before 2024-10-29."
+              },
+              {
+                "name": "created_at_after",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created after the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created after 2024-10-29."
+              },
+              {
+                "name": "last_sign_in_at_before",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Counts users whose last sign-in was before the given date (with millisecond precision).\nExample: use 1700690400000 to count users whose last sign-in was before 2023-11-23."
+              },
+              {
+                "name": "last_sign_in_at_after",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Counts users whose last sign-in was after the given date (with millisecond precision).\nExample: use 1700690400000 to count users whose last sign-in was after 2023-11-23."
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with external accounts for the specified OAuth provider.\nMust be used in combination with the `provider_user_id` parameter.\nFor example, use `provider=oauth_google&provider_user_id=12345` to count users with Google provider user ID 12345.\nAccepts up to 100 providers."
+              },
+              {
+                "name": "provider_user_id",
+                "value": "",
+                "type": "query",
+                "description": "Counts users with the specified provider user IDs for a specific provider.\nMust be used in combination with the `provider` parameter.\nFor example, use `provider=oauth_google&provider_user_id=12345` to count users with Google provider user ID 12345.\nAccepts up to 100 provider user IDs.\nAny provider user IDs not found are ignored."
+              }
+            ]
+          },
+          "docs": "Returns a total count of all users that match the given filtering criteria."
+        },
+        {
+          "info": {
+            "name": "Retrieve a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a user"
+        },
+        {
+          "info": {
+            "name": "Update a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a user's attributes.\n\nYou can set the user's primary contact identifiers (email address and phone numbers) by updating the `primary_email_address_id` and `primary_phone_number_id` attributes respectively.\nBoth IDs should correspond to verified identifications that belong to the user.\n\nYou can remove a user's username by setting the username attribute to null or the blank string \"\".\nThis is a destructive action; the identification will be deleted forever.\nUsernames can be removed only if t"
+        },
+        {
+          "info": {
+            "name": "Delete a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to delete"
+              }
+            ]
+          },
+          "docs": "Delete the specified user"
+        },
+        {
+          "info": {
+            "name": "Ban a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/ban",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to ban"
+              }
+            ]
+          },
+          "docs": "Marks the given user as banned, which means that all their sessions are revoked and they are not allowed to sign in again."
+        },
+        {
+          "info": {
+            "name": "Unban a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/unban",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to unban"
+              }
+            ]
+          },
+          "docs": "Removes the ban mark from the given user."
+        },
+        {
+          "info": {
+            "name": "Ban Multiple Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/ban",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Marks multiple users as banned, which means that all their sessions are revoked and they are not allowed to sign in again."
+        },
+        {
+          "info": {
+            "name": "Unban Multiple Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/unban",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes the ban mark from multiple users."
+        },
+        {
+          "info": {
+            "name": "Lock a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/lock",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to lock"
+              }
+            ]
+          },
+          "docs": "Marks the given user as locked, which means they are not allowed to sign in again until the lock expires.\nLock duration can be configured in the instance's restrictions settings."
+        },
+        {
+          "info": {
+            "name": "Unlock a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/unlock",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to unlock"
+              }
+            ]
+          },
+          "docs": "Removes the lock from the given user."
+        },
+        {
+          "info": {
+            "name": "Set User Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/profile_image",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to update the profile image for"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update a user's profile image"
+        },
+        {
+          "info": {
+            "name": "Delete User Profile Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/profile_image",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to delete the profile image for"
+              }
+            ]
+          },
+          "docs": "Delete a user's profile image"
+        },
+        {
+          "info": {
+            "name": "Merge and Update a User's Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/users/:user_id/metadata",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose metadata will be updated and merged"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a user's metadata attributes by merging existing values with the provided parameters.\n\nThis endpoint behaves differently than the *Update a user* endpoint.\nMetadata values will not be replaced entirely.\nInstead, a deep merge will be performed.\nDeep means that any nested JSON objects will be merged as well.\n\nYou can remove metadata keys at any level by setting their value to `null`."
+        },
+        {
+          "info": {
+            "name": "Retrieve a User's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/subscription",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose subscription to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the billing subscription for the specified user.\nThis includes subscription details, active plans, billing information, and payment status.\nThe subscription contains subscription items which represent the individual plans the user is subscribed to."
+        },
+        {
+          "info": {
+            "name": "Retrieve a User's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/credits",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose credit balance to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the current credit balance for the specified user.\nCredits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges"
+        },
+        {
+          "info": {
+            "name": "Adjust a User's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/credits",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose credit balance to adjust"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Increases or decreases the credit balance for the specified user.\nEach adjustment is recorded as a ledger entry. The idempotency_key parameter\nensures that duplicate requests are safely handled."
+        },
+        {
+          "info": {
+            "name": "Retrieve the OAuth Access Token of a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/oauth_access_tokens/:provider",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user for which to retrieve the OAuth access token"
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth provider (e.g. `oauth_google`)"
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.\nFor OAuth 2.0, if the access token has expired and we have a corresponding refresh token, the access token will be refreshed transparently the new one will be returned."
+        },
+        {
+          "info": {
+            "name": "Retrieve All Memberships for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/organization_memberships",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose organization memberships we want to retrieve"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of the user's organization memberships"
+        },
+        {
+          "info": {
+            "name": "Retrieve All Invitations for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/organization_invitations",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose organization invitations we want to retrieve"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter organization invitations based on their status"
+              }
+            ]
+          },
+          "docs": "Retrieve a paginated list of the user's organization invitations"
+        },
+        {
+          "info": {
+            "name": "Verify the Password of a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/verify_password",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user for whom to verify the password"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check that the user's password matches the supplied input.\nUseful for custom auth flows and re-verification."
+        },
+        {
+          "info": {
+            "name": "Verify a TOTP or Backup Code for a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/verify_totp",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user for whom to verify the TOTP"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify that the provided TOTP or backup code is valid for the user.\nVerifying a backup code will result it in being consumed (i.e. it will\nbecome invalid).\nUseful for custom auth flows and re-verification."
+        },
+        {
+          "info": {
+            "name": "Disable a User's MFA Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/mfa",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose MFA methods are to be disabled"
+              }
+            ]
+          },
+          "docs": "Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authenticator app) at once."
+        },
+        {
+          "info": {
+            "name": "Disable All User's Backup Codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/backup_code",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose backup codes are to be deleted."
+              }
+            ]
+          },
+          "docs": "Disable all of a user's backup codes."
+        },
+        {
+          "info": {
+            "name": "Delete a User Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/passkeys/:passkey_identification_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user that owns the passkey identity"
+              },
+              {
+                "name": "passkey_identification_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the passkey identity to be deleted"
+              }
+            ]
+          },
+          "docs": "Delete the passkey identification for a given user and notify them through email."
+        },
+        {
+          "info": {
+            "name": "Delete a User Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/web3_wallets/:web3_wallet_identification_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user that owns the web3 wallet"
+              },
+              {
+                "name": "web3_wallet_identification_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the web3 wallet identity to be deleted"
+              }
+            ]
+          },
+          "docs": "Delete the web3 wallet identification for a given user."
+        },
+        {
+          "info": {
+            "name": "Delete All the User's TOTPs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/totp",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose TOTPs are to be deleted"
+              }
+            ]
+          },
+          "docs": "Deletes all of the user's TOTPs."
+        },
+        {
+          "info": {
+            "name": "Delete External Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/users/:user_id/external_accounts/:external_account_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user's external account"
+              },
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the external account to delete"
+              }
+            ]
+          },
+          "docs": "Delete an external account by ID."
+        },
+        {
+          "info": {
+            "name": "Set a User's Password as Compromised",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/password/set_compromised",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to set the password as compromised"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the given user's password as compromised. The user will be prompted to reset their password on their next sign-in."
+        },
+        {
+          "info": {
+            "name": "Unset a User's Password as Compromised",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/password/unset_compromised",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to unset the compromised status for"
+              }
+            ]
+          },
+          "docs": "Sets the given user's password as no longer compromised. The user will no longer be prompted to reset their password on their next sign-in."
+        },
+        {
+          "info": {
+            "name": "List Instance Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/users",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "A search query to filter users. Searches across email addresses, phone numbers,\nusernames, web3 wallets, user IDs, first names, and last names.\n"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by. Prefix with `+` for ascending or `-` for descending order.\nValid fields: `created_at`, `updated_at`, `last_sign_in_at`, `last_active_at`, `email_address`,\n`first_name`, `last_name`, `username`, `phone_number`, `web3_wallet`.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page (1-500, default 10)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              }
+            ]
+          },
+          "docs": "List all users for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nUse the `query` parameter to filter users by searching across email addresses, phone numbers,\nusernames, web3 wallets, user IDs, first names, and last names.\n\nUse the `order_by` parameter to sort the results. Prefix with `+` for ascending or `-` for descending order.\nValid fields: `created_at`, `updated_at`, `last_sign_in_at`, `last_act"
+        },
+        {
+          "info": {
+            "name": "Delete a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/users/:userID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "User ID."
+              }
+            ]
+          },
+          "docs": "Delete a user within an application instance. Returns the deleted user object.\n\nDeleting a user that does not exist (or has already been deleted) returns 404.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `users:delete` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Ban a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/users/:userID/ban",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "User ID."
+              }
+            ]
+          },
+          "docs": "Marks a user as banned within an application instance. This terminates their active sessions\n(marks them as revoked) and prevents them from signing in again.\n\nRequires the `users:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Unban a User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/users/:userID/unban",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "path",
+                "description": "User ID."
+              }
+            ]
+          },
+          "docs": "Removes the ban from a user within an application instance. This allows them to sign in again.\n\nRequires the `users:manage` scope.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

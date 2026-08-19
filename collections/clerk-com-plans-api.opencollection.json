@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Plans API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Billing Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/billing/plans",
+            "params": [
+              {
+                "name": "payer_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter plans by payer type"
+              }
+            ]
+          },
+          "docs": "Returns a list of all publicly visible billing plans."
+        },
+        {
+          "info": {
+            "name": "Get a Billing Plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/billing/plans/:planIdOrSlug",
+            "params": [
+              {
+                "name": "planIdOrSlug",
+                "value": "",
+                "type": "path",
+                "description": "The ID or slug of the plan"
+              }
+            ]
+          },
+          "docs": "Returns a billing plan by ID or slug."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

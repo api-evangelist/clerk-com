@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal SAML API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SAML",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "SAML Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/saml/metadata/:saml_connection_id.xml",
+            "params": [
+              {
+                "name": "saml_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SAML Connection"
+              }
+            ]
+          },
+          "docs": "The Service Provider's SAML metadata"
+        },
+        {
+          "info": {
+            "name": "SAML ACS",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/saml/acs/:saml_connection_id",
+            "params": [
+              {
+                "name": "saml_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SAML Connection"
+              }
+            ]
+          },
+          "docs": "The SAML Assertion Consumer Service (ACS) endpoint, which processes SAML Responses by the IdP.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Role Sets API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Role Sets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Role Sets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/role_sets",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns role sets with ID, name, or key that match the given query.\nUses exact match for role set ID and partial match for name and key."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return role sets in a particular order.\nAt the moment, you can order the returned role sets by their `created_at`, `name`, or `key`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want role sets to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns a list of role sets for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe role sets are ordered by descending creation date by default."
+        },
+        {
+          "info": {
+            "name": "Create a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/role_sets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new role set with the given name and roles.\nThe key must be unique for the instance and start with the 'role_set:' prefix, followed by lowercase alphanumeric characters and underscores only.\nYou must provide at least one role and specify a default role key and creator role key."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/role_sets/:role_set_key_or_id",
+            "params": [
+              {
+                "name": "role_set_key_or_id",
+                "value": "",
+                "type": "path",
+                "description": "The key or ID of the role set"
+              }
+            ]
+          },
+          "docs": "Retrieves an existing role set by its key or ID."
+        },
+        {
+          "info": {
+            "name": "Update a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/role_sets/:role_set_key_or_id",
+            "params": [
+              {
+                "name": "role_set_key_or_id",
+                "value": "",
+                "type": "path",
+                "description": "The key or ID of the role set to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing role set.\nYou can update the name, key, description, type, default role, or creator role.\nAll parameters are optional - you can update only the fields you want to change."
+        },
+        {
+          "info": {
+            "name": "Replace a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/role_sets/:role_set_key_or_id/replace",
+            "params": [
+              {
+                "name": "role_set_key_or_id",
+                "value": "",
+                "type": "path",
+                "description": "The key or ID of the role set to replace"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a role set with another role set. This is functionally equivalent to deleting\nthe role set but allows for atomic replacement with migration support.\nOrganizations using this role set will be migrated to the destination role set."
+        },
+        {
+          "info": {
+            "name": "Add Roles to a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/role_sets/:role_set_key_or_id/roles",
+            "params": [
+              {
+                "name": "role_set_key_or_id",
+                "value": "",
+                "type": "path",
+                "description": "The key or ID of the role set"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more roles to an existing role set.\nYou can optionally update the default role or creator role when adding new roles."
+        },
+        {
+          "info": {
+            "name": "Replace a Role in a Role Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/role_sets/:role_set_key_or_id/roles/replace",
+            "params": [
+              {
+                "name": "role_set_key_or_id",
+                "value": "",
+                "type": "path",
+                "description": "The key or ID of the role set"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a role in a role set with another role. This atomically removes\nthe source role and reassigns any members to the destination role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

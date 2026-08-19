@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Subscriptions API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User's Main Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/subscription"
+          },
+          "docs": "Returns the main billing subscription for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Organization's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/subscription",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Returns the billing subscription for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

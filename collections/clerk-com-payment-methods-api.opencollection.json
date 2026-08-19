@@ -1,0 +1,233 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Payment Methods API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User Payment Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/payment_methods",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of all payment methods for the current user."
+        },
+        {
+          "info": {
+            "name": "Create User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/billing/payment_methods",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "org_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "Initialize User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/billing/payment_methods/initialize"
+          },
+          "docs": "Initializes a payment method setup process for the current user."
+        },
+        {
+          "info": {
+            "name": "Delete User Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/billing/payment_methods/:paymentMethodID",
+            "params": [
+              {
+                "name": "paymentMethodID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment method to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a specific payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "Set User Default Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/v1/me/billing/payers/default_payment_method"
+          },
+          "docs": "Sets the default payment method for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization Payment Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/payment_methods",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Lists all payment methods for the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/payment_methods",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Initialize Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/payment_methods/initialize",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Initializes a payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/payment_methods/:paymentMethodID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "paymentMethodID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the payment method to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a payment method for the organization."
+        },
+        {
+          "info": {
+            "name": "Set Organization Default Payment Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/payers/default_payment_method",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the default payment method for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

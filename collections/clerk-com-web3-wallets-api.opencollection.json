@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Web3 Wallets API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Web3 Wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Web3 Wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all web3 wallets associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "web3_wallet",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Get Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets/:web3_wallet_id",
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties associated with a specific web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Delete Web3 Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets/:web3_wallet_id",
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ]
+          },
+          "docs": "Delete a web3 wallet by ID."
+        },
+        {
+          "info": {
+            "name": "Prepare Web3 Wallet Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets/:web3_wallet_id/prepare_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares verification for the provided web3 wallet."
+        },
+        {
+          "info": {
+            "name": "Attempt Web3 Wallet Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/web3_wallets/:web3_wallet_id/attempt_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "web3_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The web3 wallet ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "signature",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the provided web3 wallet."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,454 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Billing API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a User's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/subscription",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose subscription to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the billing subscription for the specified user.\nThis includes subscription details, active plans, billing information, and payment status.\nThe subscription contains subscription items which represent the individual plans the user is subscribed to."
+        },
+        {
+          "info": {
+            "name": "Retrieve a User's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/credits",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose credit balance to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the current credit balance for the specified user.\nCredits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges"
+        },
+        {
+          "info": {
+            "name": "Adjust a User's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/users/:user_id/billing/credits",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user whose credit balance to adjust"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Increases or decreases the credit balance for the specified user.\nEach adjustment is recorded as a ledger entry. The idempotency_key parameter\nensures that duplicate requests are safely handled."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization's Billing Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/subscription",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose subscription to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the billing subscription for the specified organization.\nThis includes subscription details, active plans, billing information, and payment status.\nThe subscription contains subscription items which represent the individual plans the organization is subscribed to."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/credits",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose credit balance to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves the current credit balance for the specified organization.\nCredits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges."
+        },
+        {
+          "info": {
+            "name": "Adjust an Organization's Credit Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/billing/credits",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization whose credit balance to adjust"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Increases or decreases the credit balance for the specified organization.\nEach adjustment is recorded as a ledger entry. The idempotency_key parameter\nensures that duplicate requests are safely handled."
+        },
+        {
+          "info": {
+            "name": "List All Billing Plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/plans",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "payer_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter plans by payer type"
+              }
+            ]
+          },
+          "docs": "Returns a list of all billing plans for the instance. The plans are returned sorted by creation date,\nwith the newest plans appearing first. This includes both free and paid plans. Pagination is supported."
+        },
+        {
+          "info": {
+            "name": "List All Billing Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/prices",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "plan_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter prices by plan ID"
+              }
+            ]
+          },
+          "docs": "Returns a list of all prices for the instance. The prices are returned sorted by amount ascending,\nthen by creation date descending. This includes both default and custom prices. Pagination is supported."
+        },
+        {
+          "info": {
+            "name": "Create a Custom Billing Price",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/billing/prices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a custom price for a billing plan. Custom prices allow you to offer different pricing\nto specific customers while maintaining the same plan structure."
+        },
+        {
+          "info": {
+            "name": "List All Subscription Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/subscription_items",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscription items by status"
+              },
+              {
+                "name": "payer_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscription items by payer type"
+              },
+              {
+                "name": "plan_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter subscription items by plan ID"
+              },
+              {
+                "name": "include_free",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include free plan subscription items"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter subscription items"
+              }
+            ]
+          },
+          "docs": "Returns a list of all subscription items for the instance. The subscription items are returned sorted by creation date,\nwith the newest appearing first. This includes subscriptions for both users and organizations. Pagination is supported."
+        },
+        {
+          "info": {
+            "name": "Cancel a Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/billing/subscription_items/:subscription_item_id",
+            "params": [
+              {
+                "name": "subscription_item_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to cancel"
+              },
+              {
+                "name": "end_now",
+                "value": "",
+                "type": "query",
+                "description": "Whether to cancel the subscription immediately (true) or at the end of the current billing period (false, default)"
+              }
+            ]
+          },
+          "docs": "Cancel a specific subscription item. The subscription item can be canceled immediately or at the end of the current billing period."
+        },
+        {
+          "info": {
+            "name": "Extend Free Trial for a Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/billing/subscription_items/:subscription_item_id/extend_free_trial",
+            "params": [
+              {
+                "name": "subscription_item_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to extend the free trial for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Extends the free trial period for a specific subscription item to the specified timestamp.\nThe subscription item must be currently in a free trial period, and the plan must support free trials.\nThe timestamp must be in the future and not more than 365 days from the end of the current trial period\nThis operation is idempotent - repeated requests with the same timestamp will not change the trial period."
+        },
+        {
+          "info": {
+            "name": "Create a Price Transition for a Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/billing/subscription_items/:subscription_item_id/price_transition",
+            "params": [
+              {
+                "name": "subscription_item_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to transition"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a price transition for the specified subscription item.\nThis may create an upcoming subscription item or activate immediately depending on plan and payer rules."
+        },
+        {
+          "info": {
+            "name": "List All Billing Statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/statements",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns a list of all billing statements for the instance. The statements are returned sorted by creation date,\nwith the newest statements appearing first. Pagination is supported."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Billing Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/statements/:statementID",
+            "params": [
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a billing statement."
+        },
+        {
+          "info": {
+            "name": "List Payment Attempts for a Billing Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/billing/statements/:statementID/payment_attempts",
+            "params": [
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve payment attempts for."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns a list of all payment attempts for a specific billing statement. The payment attempts are returned sorted by creation date,\nwith the newest payment attempts appearing first. Pagination is supported."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal External Accounts API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "External Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connect OAuth Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/external_accounts",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "enterprise_connection_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "additional_scope",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Connect a new External Account from the OAuth providers enabled."
+        },
+        {
+          "info": {
+            "name": "Reauthorize External Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me/external_accounts/:external_account_id/reauthorize",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "additional_scope",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Reauthorize an external account by ID."
+        },
+        {
+          "info": {
+            "name": "Delete External Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/external_accounts/:external_account_id",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ]
+          },
+          "docs": "Delete an external account by ID."
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/external_accounts/:external_account_id/tokens",
+            "params": [
+              {
+                "name": "external_account_id",
+                "value": "",
+                "type": "path",
+                "description": "External account ID"
+              }
+            ]
+          },
+          "docs": "Revoke the OAuth access and refresh token of an external account by ID, if supported by the provider."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,546 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Domains API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Instance Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/domains"
+          },
+          "docs": "Use this endpoint to get a list of all domains for an instance.\nThe response will contain the primary domain for the instance and any satellite domains. Each domain in the response contains information about the URLs where Clerk operates and the required CNAME targets."
+        },
+        {
+          "info": {
+            "name": "Add a Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/domains",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new domain for your instance.\nUseful in the case of multi-domain instances, allows adding satellite domains to an instance.\nThe new domain must have a `name`. The domain name can contain the port for development instances, like `localhost:3000`.\nAt the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.\nIf you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly."
+        },
+        {
+          "info": {
+            "name": "Update a Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/domains/:domain_id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the domain that will be updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The `proxy_url` can be updated only for production instances.\nUpdate one of the instance's domains. Both primary and satellite domains can be updated.\nIf you choose to use Clerk via proxy, use this endpoint to specify the `proxy_url`.\nWhenever you decide you'd rather switch to DNS setup for Clerk, simply set `proxy_url`\nto `null` for the domain. When you update a production instance's primary domain name,\nyou have to make sure that you've completed all the necessary setup steps for DNS and\nemail"
+        },
+        {
+          "info": {
+            "name": "Delete a Satellite Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/domains/:domain_id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the domain that will be deleted. Must be a satellite domain."
+              }
+            ]
+          },
+          "docs": "Deletes a satellite domain for the instance.\nIt is currently not possible to delete the instance's primary domain."
+        },
+        {
+          "info": {
+            "name": "Get All Organization Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether a domain is verified"
+              },
+              {
+                "name": "enrollment_mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by enrollment mode"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all the domains in an organization\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new organization domain.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties for a domain of an organization.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Delete Organization Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ]
+          },
+          "docs": "Remove a domain from an organization.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Update Organization Enrollment Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains/:domain_id/update_enrollment_mode",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "enrollment_mode",
+                  "value": ""
+                },
+                {
+                  "name": "delete_pending",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the enrollment mode for an organization domain.\n\nThis can be either `automatic_invitation` or `automatic_suggestion`.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Prepare Organization Domain Affiliation Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains/:domain_id/prepare_affiliation_verification",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "affiliation_email_address",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares affiliation verification for an organization domain.\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Attempt Organization Domain Affiliation Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/domains/:domain_id/attempt_affiliation_verification",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The domain ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts affiliation verification for organization domain\n\nThe current user must have permissions to manage the domains of the organization."
+        },
+        {
+          "info": {
+            "name": "Update Application Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domain",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the production domain for an application.\n"
+        },
+        {
+          "info": {
+            "name": "List Application Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ]
+          },
+          "docs": "List all domains for an application's production instance.\n"
+        },
+        {
+          "info": {
+            "name": "Create Application Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a provider domain for an application's production instance.\n"
+        },
+        {
+          "info": {
+            "name": "Get Application Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains/:domainIDOrName",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "domainIDOrName",
+                "value": "dmn_abcdefghijklmnopqrstuvwxyz0",
+                "type": "path",
+                "description": "Domain ID or domain name."
+              }
+            ]
+          },
+          "docs": "Get domain information for an application.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Application Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains/:domainIDOrName",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "domainIDOrName",
+                "value": "dmn_abcdefghijklmnopqrstuvwxyz0",
+                "type": "path",
+                "description": "Domain ID or domain name."
+              }
+            ]
+          },
+          "docs": "Delete a provider domain from an application's production instance.\n\nOnly provider domains can be deleted. The primary domain cannot be deleted.\n"
+        },
+        {
+          "info": {
+            "name": "Get Application Domain Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains/:domainIDOrName/status",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "domainIDOrName",
+                "value": "dmn_abcdefghijklmnopqrstuvwxyz0",
+                "type": "path",
+                "description": "Domain ID or domain name."
+              }
+            ]
+          },
+          "docs": "Get the status of a domain for an application.\n"
+        },
+        {
+          "info": {
+            "name": "Trigger DNS Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/domains/:domainIDOrName/dns_check",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "domainIDOrName",
+                "value": "dmn_abcdefghijklmnopqrstuvwxyz0",
+                "type": "path",
+                "description": "Domain ID or domain name."
+              }
+            ]
+          },
+          "docs": "Triggers a DNS check for a domain and returns the current domain status.\n\nThis endpoint ensures that at most one DNS check job is in-flight at any time.\nIf a check is already running or was recently performed, a 409 Conflict is returned.\n\nUse this endpoint to trigger a new DNS verification check after configuring DNS records.\n"
+        },
+        {
+          "info": {
+            "name": "List Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/domains",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter domains whose name contains this substring (case-insensitive)."
+              },
+              {
+                "name": "include_development",
+                "value": "",
+                "type": "query",
+                "description": "When `true`, include development instance domains. Defaults to production only."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page (1-500, default 10)."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Provide the ID of the last domain from the\nprevious page to get the next page of results.\n"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Provide the ID of the first domain from the\nprevious page to get the previous page of results.\n"
+              }
+            ]
+          },
+          "docs": "List production instance domains for applications in the authenticated workspace.\nResults are sorted by domain creation time in descending order (most recent first).\n\nSet `include_development` to include development instance domains.\n"
+        },
+        {
+          "info": {
+            "name": "Get Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/domains/:domainIDOrName",
+            "params": [
+              {
+                "name": "domainIDOrName",
+                "value": "dmn_abcdefghijklmnopqrstuvwxyz0",
+                "type": "path",
+                "description": "Domain ID or domain name."
+              }
+            ]
+          },
+          "docs": "Retrieve a single domain by ID or name for the authenticated workspace.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

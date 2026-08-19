@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Subscription Items API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscription Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User's Subscription Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/subscription_items",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of subscription items for the current user."
+        },
+        {
+          "info": {
+            "name": "Cancel User's Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/billing/subscription_items/:subscriptionItemID",
+            "params": [
+              {
+                "name": "subscriptionItemID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to cancel"
+              }
+            ]
+          },
+          "docs": "Cancels a subscription item for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization's Subscription Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/subscription_items",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Returns a list of subscription items for the organization."
+        },
+        {
+          "info": {
+            "name": "Cancel Organization's Subscription Item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/subscription_items/:subscriptionItemID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "subscriptionItemID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the subscription item to cancel"
+              }
+            ]
+          },
+          "docs": "Cancels a subscription item for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

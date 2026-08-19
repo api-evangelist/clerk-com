@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Statements API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List User Statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/statements",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              }
+            ]
+          },
+          "docs": "Returns a list of billing statements for the current user."
+        },
+        {
+          "info": {
+            "name": "Get User Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/statements/:statementID",
+            "params": [
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific billing statement for the current user."
+        },
+        {
+          "info": {
+            "name": "List Organization Statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/statements",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ]
+          },
+          "docs": "Lists all statements for the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/statements/:statementID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "statementID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the statement to retrieve"
+              }
+            ]
+          },
+          "docs": "Gets a specific statement for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

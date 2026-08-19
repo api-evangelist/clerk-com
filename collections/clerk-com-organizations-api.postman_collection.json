@@ -1,0 +1,3938 @@
+{
+  "item": [
+    {
+      "id": "b7574963-2b17-4a1d-99f0-7b3c4d2ffa0f",
+      "name": "Organizations",
+      "description": {
+        "content": "Organizations are used to group members under a common entity and provide shared access to resources.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "025a38fe-acf6-41bf-971f-d998cd5d4ec8",
+          "name": "Get a List of Organizations for an Instance",
+          "request": {
+            "name": "Get a List of Organizations for an Instance",
+            "description": {
+              "content": "This request returns the list of organizations for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organizations are ordered by descending creation date.\nMost recent organizations will be returned first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_members_count",
+                  "value": "<boolean>",
+                  "description": "Flag to denote whether the member counts of each organization should be included in the response or not."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_missing_member_with_elevated_permissions",
+                  "value": "<boolean>",
+                  "description": "Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Returns organizations with ID, name, or slug that match the given query.\nUses exact match for organization ID and partial match for name and slug."
+                },
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>",
+                  "description": "Returns organizations that include any of the specified user IDs as members. Any user IDs not found are ignored.\nFor each user ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>",
+                  "description": "Returns organizations that include any of the specified user IDs as members. Any user IDs not found are ignored.\nFor each user ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>",
+                  "description": "Returns organizations with the organization IDs specified. Any organization IDs not found are ignored.\nFor each organization ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set. Accepts up to 100 organization IDs.\nExample: ?organization_id=+org_1&organization_id=-org_2"
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>",
+                  "description": "Returns organizations with the organization IDs specified. Any organization IDs not found are ignored.\nFor each organization ID, the `+` and `-` can be prepended to the ID, which denote whether the\nrespective organization should be included or excluded from the result set. Accepts up to 100 organization IDs.\nExample: ?organization_id=+org_1&organization_id=-org_2"
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "-created_at",
+                  "description": "Allows to return organizations in a particular order.\nAt the moment, you can order the returned organizations either by their `name`, `created_at` or `members_count`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organizations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69dad3b1-d2cc-43e9-af27-33641b12a472",
+              "name": "A list of organizations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"object\": \"organization\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"has_image\": false,\n      \"max_allowed_memberships\": 9167,\n      \"admin_delete_enabled\": false,\n      \"public_metadata\": {\n        \"key_0\": 3376.973644931326,\n        \"key_1\": 1322\n      },\n      \"created_at\": 1614,\n      \"updated_at\": 2733,\n      \"image_url\": \"string\",\n      \"members_count\": 4111,\n      \"missing_member_with_elevated_permissions\": true,\n      \"pending_invitations_count\": 9863,\n      \"private_metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"created_by\": \"string\",\n      \"last_active_at\": 1686,\n      \"role_set_key\": \"string\"\n    },\n    {\n      \"object\": \"organization\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"has_image\": true,\n      \"max_allowed_memberships\": 3473,\n      \"admin_delete_enabled\": true,\n      \"public_metadata\": {\n        \"key_0\": 3429\n      },\n      \"created_at\": 2842,\n      \"updated_at\": 1148,\n      \"image_url\": \"string\",\n      \"members_count\": 2322,\n      \"missing_member_with_elevated_permissions\": true,\n      \"pending_invitations_count\": 6060,\n      \"private_metadata\": {\n        \"key_0\": 6706\n      },\n      \"created_by\": \"string\",\n      \"last_active_at\": 6590,\n      \"role_set_key\": \"string\"\n    }\n  ],\n  \"total_count\": 2688\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcf8e18a-f6a0-4511-aee3-a8cecccd241b",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d68e28a2-b35a-431d-9d3e-1f8b633b615f",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0547dd86-72e8-4cea-9124-fbd6f0c71dd2",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organization_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef7c2938-f7b3-4c84-b66a-eaf5a0ea5286",
+          "name": "Create an Organization",
+          "request": {
+            "name": "Create an Organization",
+            "description": {
+              "content": "Creates a new organization with the given name for an instance.\nYou can specify an optional slug for the new organization.\nIf provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".\nOrganization slugs must be unique for the instance.\nYou can provide additional metadata for the organization and set any custom attribute you want.\nOrganizations support private and public metadata.\nPrivate metadata can only be accessed from the Backend API.\nPublic metadata can be accessed from the Backend API, and are read-only from the Frontend API.\nThe `created_by` user will see this as their [active organization](https://clerk.com/docs/organizations/overview#active-organization)\nthe next time they create a session, presuming they don't explicitly set a different organization as active before then.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 4304,\n    \"key_1\": 5771,\n    \"key_2\": false\n  },\n  \"public_metadata\": {\n    \"key_0\": false\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "845b1035-3369-4234-bc97-c55eb43ee7a6",
+              "name": "An organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 39,\n    \"key_1\": \"string\"\n  },\n  \"public_metadata\": {\n    \"key_0\": 1335\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"organization\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"slug\": \"string\",\n  \"has_image\": true,\n  \"max_allowed_memberships\": 5211,\n  \"admin_delete_enabled\": false,\n  \"public_metadata\": {\n    \"key_0\": 1699.3265424479553,\n    \"key_1\": 7518,\n    \"key_2\": 2213\n  },\n  \"created_at\": 4254,\n  \"updated_at\": 7905,\n  \"image_url\": \"string\",\n  \"members_count\": 8605,\n  \"missing_member_with_elevated_permissions\": true,\n  \"pending_invitations_count\": 2376,\n  \"private_metadata\": {\n    \"key_0\": 6267.774083249286,\n    \"key_1\": 6405.024997037807\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 122,\n  \"role_set_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05ee0486-c974-4fef-a72f-78470e2f9243",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 39,\n    \"key_1\": \"string\"\n  },\n  \"public_metadata\": {\n    \"key_0\": 1335\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d726bac4-3551-4b9f-8206-dd4408f48e90",
+              "name": "Payment required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 39,\n    \"key_1\": \"string\"\n  },\n  \"public_metadata\": {\n    \"key_0\": 1335\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d329ab03-d108-44da-b1fd-4cc59addfbf5",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 39,\n    \"key_1\": \"string\"\n  },\n  \"public_metadata\": {\n    \"key_0\": 1335\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1e05ee0-63e0-4a39-83e6-16939fb4cae9",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"created_by\": \"<string>\",\n  \"private_metadata\": {\n    \"key_0\": 39,\n    \"key_1\": \"string\"\n  },\n  \"public_metadata\": {\n    \"key_0\": 1335\n  },\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb71366b-2201-4af0-bee4-edfc92d595ba",
+          "name": "Retrieve an Organization by ID or Slug",
+          "request": {
+            "name": "Retrieve an Organization by ID or Slug",
+            "description": {
+              "content": "Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_members_count",
+                  "value": "<boolean>",
+                  "description": "Flag to denote whether or not the organization's members count should be included in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_missing_member_with_elevated_permissions",
+                  "value": "<boolean>",
+                  "description": "Flag to denote whether or not to include a member with elevated permissions who is not currently a member of the organization."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID or slug of the organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5441c970-7d72-41d1-aee6-bbe6b018c4e7",
+              "name": "An organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID or slug of the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"organization\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"slug\": \"string\",\n  \"has_image\": true,\n  \"max_allowed_memberships\": 5211,\n  \"admin_delete_enabled\": false,\n  \"public_metadata\": {\n    \"key_0\": 1699.3265424479553,\n    \"key_1\": 7518,\n    \"key_2\": 2213\n  },\n  \"created_at\": 4254,\n  \"updated_at\": 7905,\n  \"image_url\": \"string\",\n  \"members_count\": 8605,\n  \"missing_member_with_elevated_permissions\": true,\n  \"pending_invitations_count\": 2376,\n  \"private_metadata\": {\n    \"key_0\": 6267.774083249286,\n    \"key_1\": 6405.024997037807\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 122,\n  \"role_set_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae3d8a43-b6e0-4f17-ad9e-3b4f16be766c",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID or slug of the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b3dd188-1bc8-49d8-bcd8-fbc3d5598af4",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_members_count",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "include_missing_member_with_elevated_permissions",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID or slug of the organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7c8aa94-20ae-46dd-831a-f342ec435be3",
+          "name": "Update an Organization",
+          "request": {
+            "name": "Update an Organization",
+            "description": {
+              "content": "Updates an existing organization",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"public_metadata\": {\n    \"key_0\": false\n  },\n  \"private_metadata\": {\n    \"key_0\": 9182\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f09b9429-94fe-44d1-8596-a24646c4fa52",
+              "name": "An organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"organization\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"slug\": \"string\",\n  \"has_image\": true,\n  \"max_allowed_memberships\": 5211,\n  \"admin_delete_enabled\": false,\n  \"public_metadata\": {\n    \"key_0\": 1699.3265424479553,\n    \"key_1\": 7518,\n    \"key_2\": 2213\n  },\n  \"created_at\": 4254,\n  \"updated_at\": 7905,\n  \"image_url\": \"string\",\n  \"members_count\": 8605,\n  \"missing_member_with_elevated_permissions\": true,\n  \"pending_invitations_count\": 2376,\n  \"private_metadata\": {\n    \"key_0\": 6267.774083249286,\n    \"key_1\": 6405.024997037807\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 122,\n  \"role_set_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "498f32d6-81d8-4aea-a3fc-4e3ca60b3ab7",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45dd5450-24bc-4137-be4e-86c9b903f440",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2072f65e-f562-48ba-9307-794be4d04d69",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96683b1c-a46e-48b3-b7f7-4db4c2365bac",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f45e675b-9bef-45f0-993c-480febf62b6f",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"private_metadata\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"max_allowed_memberships\": \"<integer>\",\n  \"admin_delete_enabled\": \"<boolean>\",\n  \"created_at\": \"<string>\",\n  \"role_set_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7bcf2ae-c352-4c31-b4d5-34225a9e910b",
+          "name": "Delete an Organization",
+          "request": {
+            "name": "Delete an Organization",
+            "description": {
+              "content": "Deletes the given organization.\nPlease note that deleting an organization will also delete all memberships and invitations.\nThis is not reversible.\n\nAfter the organization is deleted, any user's active sessions that contain the deleted\norganization will be cleared.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8a513b4-945e-41f8-bd38-e78e6db6ea5d",
+              "name": "Deleted Object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"deleted\": true,\n  \"id\": \"string\",\n  \"slug\": \"string\",\n  \"external_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0073a96-7580-4055-8ad3-8a0345372b60",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9949ed4-d439-423f-9e74-e15f1ec6b4ed",
+          "name": "Merge and Update Metadata for an Organization",
+          "request": {
+            "name": "Merge and Update Metadata for an Organization",
+            "description": {
+              "content": "Update organization metadata attributes by merging existing values with the provided parameters.\nMetadata values will be updated via a deep merge.\nDeep meaning that any nested JSON objects will be merged as well.\nYou can remove metadata keys at any level by setting their value to `null`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 7440.686272694743\n  },\n  \"private_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": 3387.32723028236\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6a129b17-ee0d-4619-bee9-60075bff6741",
+              "name": "An organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 5378,\n    \"key_1\": 6941.978403233677\n  },\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"organization\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"slug\": \"string\",\n  \"has_image\": true,\n  \"max_allowed_memberships\": 5211,\n  \"admin_delete_enabled\": false,\n  \"public_metadata\": {\n    \"key_0\": 1699.3265424479553,\n    \"key_1\": 7518,\n    \"key_2\": 2213\n  },\n  \"created_at\": 4254,\n  \"updated_at\": 7905,\n  \"image_url\": \"string\",\n  \"members_count\": 8605,\n  \"missing_member_with_elevated_permissions\": true,\n  \"pending_invitations_count\": 2376,\n  \"private_metadata\": {\n    \"key_0\": 6267.774083249286,\n    \"key_1\": 6405.024997037807\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 122,\n  \"role_set_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86f210a8-6d8a-40f5-af84-dfe0753344bd",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 5378,\n    \"key_1\": 6941.978403233677\n  },\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "194bda18-992f-463a-bf78-01fc2cb41b53",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 5378,\n    \"key_1\": 6941.978403233677\n  },\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a95d27f-97b2-4447-b97f-0ee981ce49f6",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 5378,\n    \"key_1\": 6941.978403233677\n  },\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de032805-a193-4b28-966a-eae7bcbc8664",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which metadata will be merged or updated"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_metadata\": {\n    \"key_0\": 5378,\n    \"key_1\": 6941.978403233677\n  },\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a9d3e35-2c56-4161-b49f-576ca45a29de",
+          "name": "Upload a Logo for the Organization",
+          "request": {
+            "name": "Upload a Logo for the Organization",
+            "description": {
+              "content": "Set or replace an organization's logo, by uploading an image file.\nThis endpoint uses the `multipart/form-data` request content type and accepts a file of image type.\nThe file size cannot exceed 10MB.\nOnly the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization for which to upload a logo"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "uploader_user_id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The ID of the user that will be credited with the image upload."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c4d22eec-ae9a-44c0-afd4-7f508e97686a",
+              "name": "An organization with a logo URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which to upload a logo"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The ID of the user that will be credited with the image upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "uploader_user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"admin_delete_enabled\": false,\n  \"created_at\": 3322,\n  \"has_image\": false,\n  \"id\": \"string\",\n  \"image_url\": \"string\",\n  \"max_allowed_memberships\": 9730,\n  \"name\": \"string\",\n  \"object\": \"organization\",\n  \"public_metadata\": {\n    \"key_0\": true\n  },\n  \"slug\": \"string\",\n  \"updated_at\": 8061,\n  \"members_count\": 6227,\n  \"missing_member_with_elevated_permissions\": false,\n  \"pending_invitations_count\": 4506,\n  \"private_metadata\": {\n    \"key_0\": false,\n    \"key_1\": 3684.7251721922858,\n    \"key_2\": false,\n    \"key_3\": 2113,\n    \"key_4\": true\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 3305,\n  \"role_set_key\": \"string\",\n  \"logo_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "879c9ea3-4e63-458f-acc9-a2afe32ce3b2",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which to upload a logo"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The ID of the user that will be credited with the image upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "uploader_user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffb7c56e-26b3-4bfe-95cc-ae851397b9ca",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which to upload a logo"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The ID of the user that will be credited with the image upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "uploader_user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99c58689-e9a9-4467-9ae4-12141489d59c",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which to upload a logo"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The ID of the user that will be credited with the image upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "uploader_user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acf591d2-5f34-4643-a73a-013aada9e921",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which to upload a logo"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The ID of the user that will be credited with the image upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "uploader_user_id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b7b920c-73d4-4641-b85c-f99c7c4ec04f",
+          "name": "Delete the Organization's Logo.",
+          "request": {
+            "name": "Delete the Organization's Logo.",
+            "description": {
+              "content": "Delete the organization's logo.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "logo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization for which the logo will be deleted."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6e6665a4-72f0-415d-89d2-c7ebb143442b",
+              "name": "An organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which the logo will be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"organization\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"slug\": \"string\",\n  \"has_image\": true,\n  \"max_allowed_memberships\": 5211,\n  \"admin_delete_enabled\": false,\n  \"public_metadata\": {\n    \"key_0\": 1699.3265424479553,\n    \"key_1\": 7518,\n    \"key_2\": 2213\n  },\n  \"created_at\": 4254,\n  \"updated_at\": 7905,\n  \"image_url\": \"string\",\n  \"members_count\": 8605,\n  \"missing_member_with_elevated_permissions\": true,\n  \"pending_invitations_count\": 2376,\n  \"private_metadata\": {\n    \"key_0\": 6267.774083249286,\n    \"key_1\": 6405.024997037807\n  },\n  \"created_by\": \"string\",\n  \"last_active_at\": 122,\n  \"role_set_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a7e0d85-b959-4b72-aae8-168ae78731d2",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "logo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization for which the logo will be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6ae00f1f-f632-433d-90e7-0cd2a28907bf",
+          "name": "Retrieve an Organization's Billing Subscription",
+          "request": {
+            "name": "Retrieve an Organization's Billing Subscription",
+            "description": {
+              "content": "Retrieves the billing subscription for the specified organization.\nThis includes subscription details, active plans, billing information, and payment status.\nThe subscription contains subscription items which represent the individual plans the organization is subscribed to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "billing",
+                "subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization whose subscription to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a34fa5d-9ec0-4715-9f90-b9da5a63ff7e",
+              "name": "A commerce subscription.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"commerce_subscription\",\n  \"id\": \"string\",\n  \"instance_id\": \"string\",\n  \"status\": \"canceled\",\n  \"payer_id\": \"string\",\n  \"created_at\": 1614,\n  \"updated_at\": 1975,\n  \"active_at\": 8230,\n  \"past_due_at\": 875,\n  \"subscription_items\": [\n    {\n      \"object\": \"commerce_subscription_item\",\n      \"id\": \"string\",\n      \"instance_id\": \"string\",\n      \"status\": \"active\",\n      \"plan_id\": \"string\",\n      \"plan_period\": \"month\",\n      \"payer_id\": \"string\",\n      \"is_free_trial\": false,\n      \"period_start\": 4871,\n      \"period_end\": 9824,\n      \"canceled_at\": 3661,\n      \"past_due_at\": 4065,\n      \"ended_at\": 9961,\n      \"credit\": {\n        \"amount\": {\n          \"amount\": 46,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"cycle_remaining_percent\": 2159.034578417587\n      },\n      \"credits\": {\n        \"proration\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_days_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_days_total\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_remaining_percent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"payer\": {\n          \"remaining_balance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"applied_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"total\": {\n          \"amount\": 4284,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        }\n      },\n      \"price_id\": \"string\",\n      \"plan\": {\n        \"object\": \"commerce_plan\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_monthly_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"description\": \"string\",\n        \"product_id\": \"string\",\n        \"is_default\": true,\n        \"is_recurring\": false,\n        \"publicly_visible\": true,\n        \"has_base_fee\": true,\n        \"for_payer_type\": \"string\",\n        \"slug\": \"string\",\n        \"avatar_url\": \"string\",\n        \"free_trial_enabled\": true,\n        \"free_trial_days\": 498,\n        \"features\": [\n          {\n            \"object\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"slug\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"avatar_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"object\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"slug\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"avatar_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"unit_prices\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"payment_method\": {\n        \"object\": \"commerce_payment_method\",\n        \"id\": \"string\",\n        \"payer_id\": \"string\",\n        \"payment_type\": \"link\",\n        \"gateway\": \"string\",\n        \"gateway_external_id\": \"string\",\n        \"gateway_external_account_id\": \"string\",\n        \"last4\": \"string\",\n        \"status\": \"disconnected\",\n        \"card_type\": \"string\",\n        \"is_default\": false,\n        \"wallet_type\": \"string\",\n        \"expiry_year\": 2938,\n        \"expiry_month\": 7650,\n        \"created_at\": 6770,\n        \"updated_at\": 9606,\n        \"is_removable\": true\n      },\n      \"lifetime_paid\": {\n        \"amount\": 3250,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"next_payment\": {\n        \"amount\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"date\": 9600\n      },\n      \"payer\": {\n        \"object\": \"commerce_payer\",\n        \"id\": \"string\",\n        \"instance_id\": \"string\",\n        \"user_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"organization_id\": \"string\",\n        \"organization_name\": \"string\",\n        \"image_url\": \"string\",\n        \"credits_balance\": {\n          \"amount\": 450,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"created_at\": 603,\n        \"updated_at\": 2387\n      },\n      \"proration_date\": \"2013-09-26\",\n      \"created_at\": 1720,\n      \"updated_at\": 8050,\n      \"seats\": {\n        \"quantity\": 2553,\n        \"tiers\": [\n          {\n            \"fee_per_block\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"fee_per_block\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"totals\": {\n        \"subtotal\": {\n          \"amount\": 6357,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"base_fee\": {\n          \"amount\": 7427,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"tax_total\": {\n          \"amount\": 767,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"grand_total\": {\n          \"amount\": 2372,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"per_unit_totals\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"credits\": {\n          \"proration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"object\": \"commerce_subscription_item\",\n      \"id\": \"string\",\n      \"instance_id\": \"string\",\n      \"status\": \"ended\",\n      \"plan_id\": \"string\",\n      \"plan_period\": \"annual\",\n      \"payer_id\": \"string\",\n      \"is_free_trial\": false,\n      \"period_start\": 8997,\n      \"period_end\": 5187,\n      \"canceled_at\": 916,\n      \"past_due_at\": 555,\n      \"ended_at\": 1455,\n      \"credit\": {\n        \"amount\": {\n          \"amount\": 3557,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"cycle_remaining_percent\": 4607.92979516519\n      },\n      \"credits\": {\n        \"proration\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_days_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_days_total\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cycle_remaining_percent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"payer\": {\n          \"remaining_balance\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"applied_amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"total\": {\n          \"amount\": 5740,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        }\n      },\n      \"price_id\": \"string\",\n      \"plan\": {\n        \"object\": \"commerce_plan\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_monthly_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"description\": \"string\",\n        \"product_id\": \"string\",\n        \"is_default\": true,\n        \"is_recurring\": false,\n        \"publicly_visible\": true,\n        \"has_base_fee\": true,\n        \"for_payer_type\": \"string\",\n        \"slug\": \"string\",\n        \"avatar_url\": \"string\",\n        \"free_trial_enabled\": true,\n        \"free_trial_days\": 9449,\n        \"features\": [\n          {\n            \"object\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"slug\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"avatar_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"object\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"slug\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"avatar_url\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"unit_prices\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"payment_method\": {\n        \"object\": \"commerce_payment_method\",\n        \"id\": \"string\",\n        \"payer_id\": \"string\",\n        \"payment_type\": \"link\",\n        \"gateway\": \"string\",\n        \"gateway_external_id\": \"string\",\n        \"gateway_external_account_id\": \"string\",\n        \"last4\": \"string\",\n        \"status\": \"disconnected\",\n        \"card_type\": \"string\",\n        \"is_default\": false,\n        \"wallet_type\": \"string\",\n        \"expiry_year\": 7099,\n        \"expiry_month\": 5023,\n        \"created_at\": 6772,\n        \"updated_at\": 5376,\n        \"is_removable\": true\n      },\n      \"lifetime_paid\": {\n        \"amount\": 8949,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"next_payment\": {\n        \"amount\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"date\": 8975\n      },\n      \"payer\": {\n        \"object\": \"commerce_payer\",\n        \"id\": \"string\",\n        \"instance_id\": \"string\",\n        \"user_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"organization_id\": \"string\",\n        \"organization_name\": \"string\",\n        \"image_url\": \"string\",\n        \"credits_balance\": {\n          \"amount\": 3649,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"created_at\": 367,\n        \"updated_at\": 4193\n      },\n      \"proration_date\": \"1947-07-15\",\n      \"created_at\": 3061,\n      \"updated_at\": 8224,\n      \"seats\": {\n        \"quantity\": 560,\n        \"tiers\": [\n          {\n            \"fee_per_block\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"fee_per_block\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"totals\": {\n        \"subtotal\": {\n          \"amount\": 6510,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"base_fee\": {\n          \"amount\": 3160,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"tax_total\": {\n          \"amount\": 9396,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"grand_total\": {\n          \"amount\": 7032,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"per_unit_totals\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"credits\": {\n          \"proration\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"next_payment\": {\n    \"date\": 4466,\n    \"amount\": {\n      \"amount\": 7457,\n      \"amount_formatted\": \"string\",\n      \"currency\": \"string\",\n      \"currency_symbol\": \"string\"\n    }\n  },\n  \"eligible_for_free_trial\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c234328-50fb-4390-ae46-8888ffccc42d",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04538b8c-9c77-4cd3-a23b-e55320038b87",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "153f468c-cb6d-482b-ae7a-9dd7238df9ae",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4a916c0-42f6-4abd-a42b-aa5c9ebdf45e",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fccab651-30df-47a1-abbe-d8fc19899652",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97d42b9d-979f-45c0-88d3-ff9fa4f55673",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose subscription to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e37a8f8-2ebc-4aea-a550-62d10980522b",
+          "name": "Retrieve an Organization's Credit Balance",
+          "request": {
+            "name": "Retrieve an Organization's Credit Balance",
+            "description": {
+              "content": "Retrieves the current credit balance for the specified organization.\nCredits can be applied during checkout to reduce the charge or automatically applied to upcoming recurring charges.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "billing",
+                "credits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "448b474b-f1e9-4f89-a1bd-36a7687cb61b",
+              "name": "A payer's credit balance.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"balance\": {\n    \"amount\": 3661,\n    \"amount_formatted\": \"string\",\n    \"currency\": \"string\",\n    \"currency_symbol\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dac5de68-b601-46dc-b53a-f917d963f04b",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72ba946d-76a0-40c7-bb68-3a0e3ea6e809",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8050f248-f3af-4544-8eee-050dea0075ca",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "536989bd-beb0-4997-9e09-541ccfc1727b",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4113432-1cfc-4cd2-8fdc-61c97a6f112b",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f2a7e57-c30f-4c17-aadf-ec4fb10acf87",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f4f1b33-c199-4f4c-b7d1-e1474c610186",
+          "name": "Adjust an Organization's Credit Balance",
+          "request": {
+            "name": "Adjust an Organization's Credit Balance",
+            "description": {
+              "content": "Increases or decreases the credit balance for the specified organization.\nEach adjustment is recorded as a ledger entry. The idempotency_key parameter\nensures that duplicate requests are safely handled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organization_id",
+                "billing",
+                "credits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The ID of the organization whose credit balance to adjust"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29603283-f456-43f5-a12d-d9e68ea67901",
+              "name": "A credit ledger entry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"string\",\n  \"payer_id\": \"string\",\n  \"amount\": 5381,\n  \"currency\": \"string\",\n  \"source_type\": \"string\",\n  \"source_id\": \"string\",\n  \"created_at\": \"2012-09-14T16:49:33.910Z\",\n  \"note\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f1fdc58-0d2a-447e-9002-0b44535b759f",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "112f910b-821c-4d5f-8134-1385d1cb51b1",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cd4d381-f3bf-407c-a39e-7033859726dd",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d9f3a2f-87d7-4e54-aa9c-3b904652d7d3",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79a81b56-bc2f-4679-94c0-3e428d24b4da",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe553f08-d4b2-4c33-93eb-b0d167607ff1",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5aa2b8c-242a-43f9-8169-d7e83016b532",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organization_id",
+                    "billing",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The ID of the organization whose credit balance to adjust"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<long>\",\n  \"action\": \"<string>\",\n  \"idempotency_key\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e37b89b3-fd0f-445a-813d-26f743b1b207",
+    "name": "Clerk Backend Account Portal Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

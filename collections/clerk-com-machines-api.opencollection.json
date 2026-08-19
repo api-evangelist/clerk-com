@@ -1,0 +1,227 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Machines API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Machines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Machines for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/machines",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns machines with ID or name that match the given query. Uses exact match for machine ID and partial match for name."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return machines in a particular order.\nYou can order the returned machines by their `name` or `created_at`.\nTo specify the direction, use the `+` or `-` symbols prepended to the property to order by.\nFor example, to return machines in descending order by `created_at`, use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              }
+            ]
+          },
+          "docs": "This request returns the list of machines for an instance. The machines are\nordered by descending creation date (i.e. most recent machines will be\nreturned first)"
+        },
+        {
+          "info": {
+            "name": "Create a Machine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/machines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new machine."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Machine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/machines/:machine_id",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns the details of a machine."
+        },
+        {
+          "info": {
+            "name": "Update a Machine",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/machines/:machine_id",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing machine.\nOnly the provided fields will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a Machine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/machines/:machine_id",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a machine."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Machine Secret Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/machines/:machine_id/secret_key",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine to retrieve the secret key for"
+              }
+            ]
+          },
+          "docs": "Returns the secret key for a machine."
+        },
+        {
+          "info": {
+            "name": "Rotate a Machine's Secret Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/machines/:machine_id/secret_key/rotate",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine to rotate the secret key for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotates the machine's secret key.\nWhen the secret key is rotated, make sure to update it in your machine/application.\nThe previous secret key will remain valid for the duration specified by the previous_token_ttl parameter."
+        },
+        {
+          "info": {
+            "name": "Create a Machine Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/machines/:machine_id/scopes",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine that will have access to another machine"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new machine scope, allowing the specified machine to access another machine.\nMaximum of 150 scopes per machine."
+        },
+        {
+          "info": {
+            "name": "Delete a Machine Scope",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/machines/:machine_id/scopes/:other_machine_id",
+            "params": [
+              {
+                "name": "machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine that has access to another machine"
+              },
+              {
+                "name": "other_machine_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the machine that is being accessed"
+              }
+            ]
+          },
+          "docs": "Deletes a machine scope, removing access from one machine to another."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

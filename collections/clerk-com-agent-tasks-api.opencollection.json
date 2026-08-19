@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Agent Tasks API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agent Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/agents/tasks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an agent task on behalf of a user.\nThe response contains a URL that, when visited, creates a session for the user.\nThe agent_id is stable per agent_name within an instance. The agent_task_id is unique per call."
+        },
+        {
+          "info": {
+            "name": "Revoke Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/agents/tasks/:agent_task_id/revoke",
+            "params": [
+              {
+                "name": "agent_task_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the agent task to be revoked."
+              }
+            ]
+          },
+          "docs": "Revokes a pending agent task."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,534 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Sessions API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/sessions",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "List sessions for the given client"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "List sessions for the given user"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by the provided status"
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns a list of sessions matching the provided criteria.\nThe sessions are returned sorted by creation date, with the newest sessions appearing first.\n\nNote: This endpoint does not return all sessions that have ever existed. Old and inactive sessions are periodically cleaned up and will not be included in the results.\n\n**Deprecation Notice (2024-01-01):** All parameters were initially considered optional, however\nmoving forward at least one of `client_id` or `user_id` parameters should be provi"
+        },
+        {
+          "info": {
+            "name": "Create a New Active Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new active session for the provided user ID.\n\n**This operation is intended only for use in testing, and is not available for production instances.** If you are looking to generate a user session from the backend,\nwe recommend using the [Sign-in Tokens](https://clerk.com/docs/reference/backend-api/tag/Sign-in-Tokens#operation/CreateSignInToken) resource instead."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the session"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a session"
+        },
+        {
+          "info": {
+            "name": "Refresh a Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sessions/:session_id/refresh",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the session"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refreshes a session by creating a new session token. A 401 is returned when there\nare validation errors, which signals the SDKs to fall back to the handshake flow."
+        },
+        {
+          "info": {
+            "name": "Revoke a Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sessions/:session_id/revoke",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the session"
+              }
+            ]
+          },
+          "docs": "Sets the status of a session as \"revoked\", which is an unauthenticated state.\nIn multi-session mode, a revoked session will still be returned along with its client object, however the user will need to sign in again."
+        },
+        {
+          "info": {
+            "name": "Create a Session Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sessions/:session_id/tokens",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the session"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a session JSON Web Token (JWT) based on a session."
+        },
+        {
+          "info": {
+            "name": "Create a Session Token from a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sessions/:session_id/tokens/:template_name",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the session"
+              },
+              {
+                "name": "template_name",
+                "value": "",
+                "type": "path",
+                "description": "The name of the JWT template defined in your instance (e.g. `custom_hasura`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a JSON Web Token (JWT) based on a session and a JWT Template name defined for your instance"
+        },
+        {
+          "info": {
+            "name": "Remove Client's Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/client/sessions"
+          },
+          "docs": "Removes all the sessions of the current client without removing the __client cookie"
+        },
+        {
+          "info": {
+            "name": "Get Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Returns the session with the given id"
+        },
+        {
+          "info": {
+            "name": "Touch Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/touch",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "active_organization_id",
+                  "value": ""
+                },
+                {
+                  "name": "intent",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Specify the active session for the client.\n\nWhen force organization selection is enabled and `active_organization_id` is sent as null or empty string,\nthe session will keep the previous active organization and will not attempt to switch to a personal account."
+        },
+        {
+          "info": {
+            "name": "End Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/end",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Marks the given session as ended."
+        },
+        {
+          "info": {
+            "name": "Remove Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/remove",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ]
+          },
+          "docs": "Delete the given session."
+        },
+        {
+          "info": {
+            "name": "Create Session Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/tokens",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "organization_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a session JWT for the authenticated requested user.\n\nWhen force organization selection is enabled and `organization_id` is sent as null or empty string,\nthe token will be created with the previous active organization and will not attempt to switch to a personal account."
+        },
+        {
+          "info": {
+            "name": "Create Session Token with JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/tokens/:template_name",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The user session ID."
+              },
+              {
+                "name": "template_name",
+                "value": "",
+                "type": "path",
+                "description": "the template name"
+              }
+            ]
+          },
+          "docs": "Create a session JWT for the authenticated requested user."
+        },
+        {
+          "info": {
+            "name": "Start a New Session Reverification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/verify",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "level",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Start a new session reverification flow by providing a verification level.\n\nIf the requested level equals 'secondFactor' or 'multiFactor' and the associated user\ndoesn't have any available second factor, then we fall back to 'firstFactor'"
+        },
+        {
+          "info": {
+            "name": "Prepare Session Reverification First Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/verify/prepare_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the first factor verification.\nDepending on the strategy, this request will do something different.\n\nParameter actions:\nIf the strategy equals email_code then this request will send an email with an OTP code.\nIf the strategy equals phone_code then this request will send an SMS with an OTP code."
+        },
+        {
+          "info": {
+            "name": "Attempt Session Reverification First Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/verify/attempt_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the first factor verification.\nRequires the first factor verification to be prepared, unless you're using a password.\n\nParameter rules:\nIf the strategy equals `email_code` then a code is required.\nIf the strategy equals `password` then a password is required."
+        },
+        {
+          "info": {
+            "name": "Prepare Session Reverification Second Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/verify/prepare_second_factor",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the second factor verification.\nRequires the `status` to be equal to `needs_second_factor`."
+        },
+        {
+          "info": {
+            "name": "Attempt Session Reverification Second Factor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sessions/:session_id/verify/attempt_second_factor",
+            "params": [
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "the user session ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the second factor verification.\nRequires the `status` to be equal to `needs_second_factor` and for the preparation step to have been called."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

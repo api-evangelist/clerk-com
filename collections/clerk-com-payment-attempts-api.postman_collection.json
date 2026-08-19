@@ -1,0 +1,656 @@
+{
+  "item": [
+    {
+      "id": "dfb2f504-6521-4f87-ac20-76099613e7cd",
+      "name": "Payment Attempts",
+      "description": {
+        "content": "Used to interact with payment attempts for users and organizations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6a64e1e-f76e-4005-beed-cde6528d7465",
+          "name": "List User Payment Attempts",
+          "request": {
+            "name": "List User Payment Attempts",
+            "description": {
+              "content": "Returns a list of payment attempts for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "billing",
+                "payment_attempts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+                },
+                {
+                  "disabled": false,
+                  "key": "paginated",
+                  "value": "<boolean>",
+                  "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e4fdf8f-a216-41c0-8b93-93719564e31f",
+              "name": "Returns a list of commerce payment attempts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"data\": [\n      {\n        \"object\": \"commerce_payment\",\n        \"id\": \"string\",\n        \"payment_id\": \"string\",\n        \"instance_id\": \"string\",\n        \"charge_type\": \"string\",\n        \"payee_id\": \"string\",\n        \"payee\": {\n          \"object\": \"commerce_payee\",\n          \"id\": \"string\",\n          \"gateway_type\": \"string\",\n          \"gateway_external_id\": \"string\",\n          \"gateway_status\": \"string\"\n        },\n        \"payer_id\": \"string\",\n        \"payer\": {\n          \"object\": \"commerce_payer\",\n          \"id\": \"string\",\n          \"instance_id\": \"string\",\n          \"user_id\": \"string\",\n          \"organization_id\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"email\": \"NV9MQT@VykttvTIXBQkJzXdLyCJQpUfjzJdzYS.huq\",\n          \"organization_name\": \"string\",\n          \"image_url\": \"http://BNRoESxekwtQeOxEMnyNOMCgWb.zfgkVxnpIfP-T0p+Yo+eNEbQ5IPyWhnG6T4ceCFL,gcwCkl9G9Lw3PBwSsEejhkyT\",\n          \"credits_balance\": {\n            \"amount\": 6780,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"created_at\": 42,\n          \"updated_at\": 2830\n        },\n        \"subscription_item_id\": \"string\",\n        \"subscription_item\": {\n          \"object\": \"commerce_subscription_item\",\n          \"id\": \"string\",\n          \"instance_id\": \"string\",\n          \"status\": \"abandoned\",\n          \"plan_id\": \"string\",\n          \"plan_period\": \"annual\",\n          \"payer_id\": \"string\",\n          \"is_free_trial\": true,\n          \"period_start\": 9783,\n          \"period_end\": 7242,\n          \"canceled_at\": 5137,\n          \"past_due_at\": 883,\n          \"ended_at\": 1430,\n          \"credit\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cycle_days_remaining\": 6323,\n            \"cycle_days_total\": 5833,\n            \"cycle_remaining_percent\": 8146.5506514492035\n          },\n          \"credits\": {\n            \"proration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"price_id\": \"string\",\n          \"plan\": {\n            \"object\": \"commerce_plan\",\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"annual_monthly_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"annual_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": \"string\",\n            \"product_id\": \"string\",\n            \"is_default\": false,\n            \"is_recurring\": false,\n            \"publicly_visible\": true,\n            \"has_base_fee\": false,\n            \"for_payer_type\": \"string\",\n            \"slug\": \"string\",\n            \"avatar_url\": \"string\",\n            \"free_trial_enabled\": false,\n            \"free_trial_days\": 3724,\n            \"unit_prices\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"features\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"payment_method_id\": \"string\",\n          \"payment_method\": {\n            \"object\": \"commerce_payment_method\",\n            \"id\": \"string\",\n            \"payer_id\": \"string\",\n            \"payment_type\": \"card\",\n            \"gateway\": \"string\",\n            \"gateway_external_id\": \"string\",\n            \"gateway_external_account_id\": \"string\",\n            \"last4\": \"string\",\n            \"status\": \"active\",\n            \"card_type\": \"string\",\n            \"is_default\": false,\n            \"wallet_type\": \"string\",\n            \"expiry_year\": 613,\n            \"expiry_month\": 2906,\n            \"created_at\": 7063,\n            \"updated_at\": 1448,\n            \"is_removable\": true\n          },\n          \"lifetime_paid\": {\n            \"amount\": 8787,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"amount\": {\n            \"amount\": 490,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"next_payment\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"date\": 6152,\n            \"per_unit_totals\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"payer\": {\n            \"object\": \"commerce_payer\",\n            \"id\": \"string\",\n            \"instance_id\": \"string\",\n            \"user_id\": \"string\",\n            \"organization_id\": \"string\",\n            \"first_name\": \"string\",\n            \"last_name\": \"string\",\n            \"email\": \"nw2sM@WLRDOolhXp.dgtv\",\n            \"organization_name\": \"string\",\n            \"image_url\": \"https://nJPJhQmDjdAuCHYQpAo.suztux6xx3uHZlcm7RnbJA4ys.MPaMiAxre7pLTIu0P1hpo1dCD.7i5q,aqQFCPprZ7jpWZ\",\n            \"credits_balance\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": 2879,\n            \"updated_at\": 504\n          },\n          \"proration_date\": \"string\",\n          \"created_at\": 5148,\n          \"updated_at\": 2575,\n          \"seats\": {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"totals\": {\n            \"subtotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"base_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tax_total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grand_total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total_due_after_free_trial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"credit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"past_due\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total_due_now\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"per_unit_totals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"credits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"proration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"amount\": {\n          \"amount\": 4590,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"payment_method_id\": \"string\",\n        \"payment_method\": {\n          \"object\": \"commerce_payment_method\",\n          \"id\": \"string\",\n          \"payer_id\": \"string\",\n          \"payment_type\": \"card\",\n          \"gateway\": \"string\",\n          \"gateway_external_id\": \"string\",\n          \"gateway_external_account_id\": \"string\",\n          \"last4\": \"string\",\n          \"status\": \"disconnected\",\n          \"card_type\": \"string\",\n          \"is_default\": true,\n          \"wallet_type\": \"string\",\n          \"expiry_year\": 9663,\n          \"expiry_month\": 2066,\n          \"created_at\": 6257,\n          \"updated_at\": 3132,\n          \"is_removable\": true\n        },\n        \"statement_id\": \"string\",\n        \"gateway_external_id\": \"string\",\n        \"gateway_external_url\": \"string\",\n        \"status\": \"string\",\n        \"paid_at\": 9255,\n        \"failed_at\": 1656,\n        \"created_at\": 9487,\n        \"updated_at\": 5781,\n        \"totals\": {\n          \"subtotal\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"base_fee\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"tax_total\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"grand_total\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"total_due_after_free_trial\": {\n            \"nullable\": true,\n            \"description\": \"Total amount due after free trial ends\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"credit\": {\n            \"nullable\": true,\n            \"description\": \"Credit amount\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"past_due\": {\n            \"nullable\": true,\n            \"description\": \"Past due amount\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total_due_now\": {\n            \"nullable\": true,\n            \"description\": \"Total amount due now\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"per_unit_totals\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"credits\": {\n            \"nullable\": true,\n            \"description\": \"Unified credits breakdown\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proration\": {\n            \"credit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"failed_reason\": {}\n      },\n      {\n        \"object\": \"commerce_payment\",\n        \"id\": \"string\",\n        \"payment_id\": \"string\",\n        \"instance_id\": \"string\",\n        \"charge_type\": \"string\",\n        \"payee_id\": \"string\",\n        \"payee\": {\n          \"object\": \"commerce_payee\",\n          \"id\": \"string\",\n          \"gateway_type\": \"string\",\n          \"gateway_external_id\": \"string\",\n          \"gateway_status\": \"string\"\n        },\n        \"payer_id\": \"string\",\n        \"payer\": {\n          \"object\": \"commerce_payer\",\n          \"id\": \"string\",\n          \"instance_id\": \"string\",\n          \"user_id\": \"string\",\n          \"organization_id\": \"string\",\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"email\": \"83Tq@NnXDdnupREpepgmHqkKQEADtMWZ.zldi\",\n          \"organization_name\": \"string\",\n          \"image_url\": \"http://XcbSxRmFIiycLtLyIKLI.xwoDv0.9Qo5BtD2Gk-OAbA,vz2\",\n          \"credits_balance\": {\n            \"amount\": 5255,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"created_at\": 9567,\n          \"updated_at\": 3505\n        },\n        \"subscription_item_id\": \"string\",\n        \"subscription_item\": {\n          \"object\": \"commerce_subscription_item\",\n          \"id\": \"string\",\n          \"instance_id\": \"string\",\n          \"status\": \"active\",\n          \"plan_id\": \"string\",\n          \"plan_period\": \"month\",\n          \"payer_id\": \"string\",\n          \"is_free_trial\": true,\n          \"period_start\": 5364,\n          \"period_end\": 5759,\n          \"canceled_at\": 1732,\n          \"past_due_at\": 3979,\n          \"ended_at\": 777,\n          \"credit\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cycle_days_remaining\": 1024,\n            \"cycle_days_total\": 9469,\n            \"cycle_remaining_percent\": 2481.1439823326077\n          },\n          \"credits\": {\n            \"proration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"payer\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"price_id\": \"string\",\n          \"plan\": {\n            \"object\": \"commerce_plan\",\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"annual_monthly_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"annual_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": \"string\",\n            \"product_id\": \"string\",\n            \"is_default\": false,\n            \"is_recurring\": false,\n            \"publicly_visible\": true,\n            \"has_base_fee\": false,\n            \"for_payer_type\": \"string\",\n            \"slug\": \"string\",\n            \"avatar_url\": \"string\",\n            \"free_trial_enabled\": true,\n            \"free_trial_days\": 3307,\n            \"unit_prices\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"features\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"payment_method_id\": \"string\",\n          \"payment_method\": {\n            \"object\": \"commerce_payment_method\",\n            \"id\": \"string\",\n            \"payer_id\": \"string\",\n            \"payment_type\": \"link\",\n            \"gateway\": \"string\",\n            \"gateway_external_id\": \"string\",\n            \"gateway_external_account_id\": \"string\",\n            \"last4\": \"string\",\n            \"status\": \"disconnected\",\n            \"card_type\": \"string\",\n            \"is_default\": true,\n            \"wallet_type\": \"string\",\n            \"expiry_year\": 3314,\n            \"expiry_month\": 5461,\n            \"created_at\": 2805,\n            \"updated_at\": 4465,\n            \"is_removable\": true\n          },\n          \"lifetime_paid\": {\n            \"amount\": 2381,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"amount\": {\n            \"amount\": 858,\n            \"amount_formatted\": \"string\",\n            \"currency\": \"string\",\n            \"currency_symbol\": \"string\"\n          },\n          \"next_payment\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"date\": 4442,\n            \"per_unit_totals\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          \"payer\": {\n            \"object\": \"commerce_payer\",\n            \"id\": \"string\",\n            \"instance_id\": \"string\",\n            \"user_id\": \"string\",\n            \"organization_id\": \"string\",\n            \"first_name\": \"string\",\n            \"last_name\": \"string\",\n            \"email\": \"kEc8IkLIRPYnZ@uIsaDQmsReAbqsHVFOeKeQ.ue\",\n            \"organization_name\": \"string\",\n            \"image_url\": \"http://dOzhBupgR.dacu9a-CcBx-ic0NG3hCeZ\",\n            \"credits_balance\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"created_at\": 2398,\n            \"updated_at\": 4852\n          },\n          \"proration_date\": \"string\",\n          \"created_at\": 9698,\n          \"updated_at\": 7301,\n          \"seats\": {\n            \"quantity\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"totals\": {\n            \"subtotal\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"base_fee\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tax_total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"grand_total\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total_due_after_free_trial\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"credit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"past_due\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"total_due_now\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"per_unit_totals\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"credits\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"proration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"amount\": {\n          \"amount\": 7577,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"payment_method_id\": \"string\",\n        \"payment_method\": {\n          \"object\": \"commerce_payment_method\",\n          \"id\": \"string\",\n          \"payer_id\": \"string\",\n          \"payment_type\": \"card\",\n          \"gateway\": \"string\",\n          \"gateway_external_id\": \"string\",\n          \"gateway_external_account_id\": \"string\",\n          \"last4\": \"string\",\n          \"status\": \"disconnected\",\n          \"card_type\": \"string\",\n          \"is_default\": true,\n          \"wallet_type\": \"string\",\n          \"expiry_year\": 9946,\n          \"expiry_month\": 1874,\n          \"created_at\": 7850,\n          \"updated_at\": 527,\n          \"is_removable\": true\n        },\n        \"statement_id\": \"string\",\n        \"gateway_external_id\": \"string\",\n        \"gateway_external_url\": \"string\",\n        \"status\": \"string\",\n        \"paid_at\": 8323,\n        \"failed_at\": 9884,\n        \"created_at\": 5651,\n        \"updated_at\": 1661,\n        \"totals\": {\n          \"subtotal\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"base_fee\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"tax_total\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"grand_total\": {\n            \"amount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"amount_formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"currency_symbol\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"total_due_after_free_trial\": {\n            \"nullable\": true,\n            \"description\": \"Total amount due after free trial ends\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"credit\": {\n            \"nullable\": true,\n            \"description\": \"Credit amount\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"past_due\": {\n            \"nullable\": true,\n            \"description\": \"Past due amount\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"total_due_now\": {\n            \"nullable\": true,\n            \"description\": \"Total amount due now\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"per_unit_totals\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"credits\": {\n            \"nullable\": true,\n            \"description\": \"Unified credits breakdown\",\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"proration\": {\n            \"credit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"failed_reason\": {}\n      }\n    ],\n    \"total_count\": 9229\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 165,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 82,\n        \"factor_verification_age\": [\n          7091,\n          9072\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 4313,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"removed\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 760\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 3441,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 7184,\n        \"factor_verification_age\": [\n          4472,\n          2746\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 4150,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"revoked\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": false,\n          \"key_1\": true\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"supported_identifiers\": [\n        \"web3_wallet\",\n        \"passkey\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": false,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"public_metadata\": {\n        \"key_0\": true\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 2127,\n    \"captcha_bypass\": true,\n    \"created_at\": 8687,\n    \"updated_at\": 8784\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f06a6965-dad2-4ce6-89d3-8cb3b273046b",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7272ec3b-4956-4845-9c58-4192e05dd7c6",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7b7c61d-ecd6-47eb-9d6b-8f057b960232",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1aa01e6f-790a-4d02-96bc-b67df43e88a3",
+          "name": "Get User Payment Attempt",
+          "request": {
+            "name": "Get User Payment Attempt",
+            "description": {
+              "content": "Returns details of a specific payment attempt for the current user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "billing",
+                "payment_attempts",
+                ":paymentAttemptID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentAttemptID",
+                  "description": "(Required) The ID of the payment attempt to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6ce3f21-2fef-4650-a40d-98804b3c769d",
+              "name": "Returns a commerce payment attempt.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts",
+                    ":paymentAttemptID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentAttemptID",
+                      "description": "(Required) The ID of the payment attempt to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"commerce_payment\",\n    \"id\": \"string\",\n    \"payment_id\": \"string\",\n    \"instance_id\": \"string\",\n    \"charge_type\": \"string\",\n    \"payee_id\": \"string\",\n    \"payee\": {\n      \"object\": \"commerce_payee\",\n      \"id\": \"string\",\n      \"gateway_type\": \"string\",\n      \"gateway_external_id\": \"string\",\n      \"gateway_status\": \"string\"\n    },\n    \"payer_id\": \"string\",\n    \"payer\": {\n      \"object\": \"commerce_payer\",\n      \"id\": \"string\",\n      \"instance_id\": \"string\",\n      \"user_id\": \"string\",\n      \"organization_id\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"email\": \"OoGzoLv3L@KOpU.tjv\",\n      \"organization_name\": \"string\",\n      \"image_url\": \"http://Y.wdpqpHDAnO+SkYGlFPd7fyvDdgl\",\n      \"credits_balance\": {\n        \"amount\": 4366,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"created_at\": 8440,\n      \"updated_at\": 4401\n    },\n    \"subscription_item_id\": \"string\",\n    \"subscription_item\": {\n      \"object\": \"commerce_subscription_item\",\n      \"id\": \"string\",\n      \"instance_id\": \"string\",\n      \"status\": \"past_due\",\n      \"plan_id\": \"string\",\n      \"plan_period\": \"annual\",\n      \"payer_id\": \"string\",\n      \"is_free_trial\": true,\n      \"period_start\": 8351,\n      \"period_end\": 7855,\n      \"canceled_at\": 6539,\n      \"past_due_at\": 117,\n      \"ended_at\": 2236,\n      \"credit\": {\n        \"amount\": {\n          \"amount\": 3211,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"cycle_days_remaining\": 8173,\n        \"cycle_days_total\": 9041,\n        \"cycle_remaining_percent\": 4470.122253616447\n      },\n      \"credits\": {\n        \"proration\": {},\n        \"payer\": {},\n        \"total\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"price_id\": \"string\",\n      \"plan\": {\n        \"object\": \"commerce_plan\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_monthly_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"annual_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"description\": \"string\",\n        \"product_id\": \"string\",\n        \"is_default\": true,\n        \"is_recurring\": true,\n        \"publicly_visible\": true,\n        \"has_base_fee\": true,\n        \"for_payer_type\": \"string\",\n        \"slug\": \"string\",\n        \"avatar_url\": \"string\",\n        \"free_trial_enabled\": true,\n        \"free_trial_days\": 5863,\n        \"unit_prices\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"features\": [\n          {\n            \"object\": \"feature\",\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"slug\": \"string\",\n            \"avatar_url\": \"string\"\n          },\n          {\n            \"object\": \"feature\",\n            \"id\": \"string\",\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"slug\": \"string\",\n            \"avatar_url\": \"string\"\n          }\n        ]\n      },\n      \"payment_method_id\": \"string\",\n      \"payment_method\": {\n        \"object\": \"commerce_payment_method\",\n        \"id\": \"string\",\n        \"payer_id\": \"string\",\n        \"payment_type\": \"card\",\n        \"gateway\": \"string\",\n        \"gateway_external_id\": \"string\",\n        \"gateway_external_account_id\": \"string\",\n        \"last4\": \"string\",\n        \"status\": \"active\",\n        \"card_type\": \"string\",\n        \"is_default\": true,\n        \"wallet_type\": \"string\",\n        \"expiry_year\": 732,\n        \"expiry_month\": 1849,\n        \"created_at\": 9964,\n        \"updated_at\": 5196,\n        \"is_removable\": false\n      },\n      \"lifetime_paid\": {\n        \"amount\": 6495,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"amount\": {\n        \"amount\": 1669,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"next_payment\": {\n        \"amount\": {\n          \"amount\": 8505,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"date\": 1337,\n        \"per_unit_totals\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"block_size\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"tiers\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"payer\": {\n        \"object\": \"commerce_payer\",\n        \"id\": \"string\",\n        \"instance_id\": \"string\",\n        \"user_id\": \"string\",\n        \"organization_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"kavXEJlQf7@BEgzKuw.hn\",\n        \"organization_name\": \"string\",\n        \"image_url\": \"https://EIDEKnOOlQpTJfpPCSfyoFB.sipTBMJG3TZZ+oWx65xq6sUHKzzH\",\n        \"credits_balance\": {\n          \"amount\": 9540,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        },\n        \"created_at\": 9407,\n        \"updated_at\": 4680\n      },\n      \"proration_date\": \"string\",\n      \"created_at\": 7071,\n      \"updated_at\": 1485,\n      \"seats\": {\n        \"quantity\": 4598,\n        \"tiers\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"totals\": {\n        \"subtotal\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"base_fee\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"tax_total\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"grand_total\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_formatted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"currency_symbol\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"total_due_after_free_trial\": {\n          \"nullable\": true,\n          \"description\": \"Total amount due after free trial ends\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"credit\": {\n          \"nullable\": true,\n          \"description\": \"Credit amount\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"past_due\": {\n          \"nullable\": true,\n          \"description\": \"Past due amount\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"total_due_now\": {\n          \"nullable\": true,\n          \"description\": \"Total amount due now\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"per_unit_totals\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"credits\": {\n          \"nullable\": true,\n          \"description\": \"Unified credits breakdown\",\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"proration\": {\n          \"credit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"amount\": {\n      \"amount\": 6293,\n      \"amount_formatted\": \"string\",\n      \"currency\": \"string\",\n      \"currency_symbol\": \"string\"\n    },\n    \"payment_method_id\": \"string\",\n    \"payment_method\": {\n      \"object\": \"commerce_payment_method\",\n      \"id\": \"string\",\n      \"payer_id\": \"string\",\n      \"payment_type\": \"link\",\n      \"gateway\": \"string\",\n      \"gateway_external_id\": \"string\",\n      \"gateway_external_account_id\": \"string\",\n      \"last4\": \"string\",\n      \"status\": \"active\",\n      \"card_type\": \"string\",\n      \"is_default\": true,\n      \"wallet_type\": \"string\",\n      \"expiry_year\": 7738,\n      \"expiry_month\": 9099,\n      \"created_at\": 8385,\n      \"updated_at\": 349,\n      \"is_removable\": true\n    },\n    \"statement_id\": \"string\",\n    \"gateway_external_id\": \"string\",\n    \"gateway_external_url\": \"string\",\n    \"status\": \"string\",\n    \"paid_at\": 601,\n    \"failed_at\": 4068,\n    \"created_at\": 1214,\n    \"updated_at\": 7593,\n    \"totals\": {\n      \"subtotal\": {\n        \"amount\": 976,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"base_fee\": {\n        \"amount\": 2979,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"tax_total\": {\n        \"amount\": 7530,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"grand_total\": {\n        \"amount\": 914,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"total_due_after_free_trial\": {\n        \"amount\": 8007,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"credit\": {\n        \"amount\": 1159,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"past_due\": {\n        \"amount\": 6290,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"total_due_now\": {\n        \"amount\": 299,\n        \"amount_formatted\": \"string\",\n        \"currency\": \"string\",\n        \"currency_symbol\": \"string\"\n      },\n      \"per_unit_totals\": [\n        {\n          \"name\": \"string\",\n          \"block_size\": 7139,\n          \"tiers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"block_size\": 2633,\n          \"tiers\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"credits\": {\n        \"proration\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"payer\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"total\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"proration\": {\n        \"credit\": {\n          \"amount\": 7748,\n          \"amount_formatted\": \"string\",\n          \"currency\": \"string\",\n          \"currency_symbol\": \"string\"\n        }\n      }\n    },\n    \"failed_reason\": {}\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 7053,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 6298,\n        \"factor_verification_age\": [\n          2618,\n          7067\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 9631,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"removed\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": true\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 4066,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 8335,\n        \"factor_verification_age\": [\n          489,\n          9492\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 9608,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"ended\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 875.6296951104136,\n          \"key_1\": true,\n          \"key_2\": 4618.00763187303,\n          \"key_3\": 5059,\n          \"key_4\": true\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"supported_identifiers\": [\n        \"web3_wallet\",\n        \"web3_wallet\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": false,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 8171.830041462264,\n        \"key_1\": 1398.5569674094022,\n        \"key_2\": 5660.553245898295,\n        \"key_3\": 5008\n      },\n      \"public_metadata\": {\n        \"key_0\": true\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 4982,\n    \"captcha_bypass\": false,\n    \"created_at\": 4251,\n    \"updated_at\": 5925\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90f127db-681c-4d77-ba17-a1cbb6879608",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts",
+                    ":paymentAttemptID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentAttemptID",
+                      "description": "(Required) The ID of the payment attempt to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44ce817d-e64e-4f69-b238-05274a7cd17c",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts",
+                    ":paymentAttemptID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentAttemptID",
+                      "description": "(Required) The ID of the payment attempt to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4858f3d7-1ddb-4f9c-8a52-c216b50e84d5",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts",
+                    ":paymentAttemptID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentAttemptID",
+                      "description": "(Required) The ID of the payment attempt to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65419d9c-e45f-4c62-bf3d-96dc42e9ee98",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "billing",
+                    "payment_attempts",
+                    ":paymentAttemptID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentAttemptID",
+                      "description": "(Required) The ID of the payment attempt to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fc867af3-35ad-4306-b6e8-1bbab70e092c",
+    "name": "Clerk Backend Account Portal Payment Attempts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Checkouts API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Checkouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/billing/checkouts",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "plan_id",
+                  "value": ""
+                },
+                {
+                  "name": "plan_period",
+                  "value": ""
+                },
+                {
+                  "name": "org_id",
+                  "value": ""
+                },
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Get Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/billing/checkouts/:checkoutID",
+            "params": [
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout"
+              }
+            ]
+          },
+          "docs": "Returns a billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Confirm Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me/billing/checkouts/:checkoutID/confirm",
+            "params": [
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout to confirm"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                },
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "use_test_card",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Confirms a billing checkout for the current user."
+        },
+        {
+          "info": {
+            "name": "Create Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/checkouts",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "plan_id",
+                  "value": ""
+                },
+                {
+                  "name": "plan_period",
+                  "value": ""
+                },
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new billing checkout for the organization."
+        },
+        {
+          "info": {
+            "name": "Get Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/checkouts/:checkoutID",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout"
+              }
+            ]
+          },
+          "docs": "Returns a billing checkout for the organization."
+        },
+        {
+          "info": {
+            "name": "Confirm Organization Billing Checkout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organizationID/billing/checkouts/:checkoutID/confirm",
+            "params": [
+              {
+                "name": "organizationID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization"
+              },
+              {
+                "name": "checkoutID",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the checkout to confirm"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "payment_method_id",
+                  "value": ""
+                },
+                {
+                  "name": "gateway",
+                  "value": ""
+                },
+                {
+                  "name": "payment_token",
+                  "value": ""
+                },
+                {
+                  "name": "use_test_card",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Confirms a billing checkout for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

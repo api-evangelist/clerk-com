@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Config API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Instance Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/config",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "keys",
+                "value": "",
+                "type": "query",
+                "description": "Config keys to retrieve. If not specified, all keys are returned."
+              }
+            ]
+          },
+          "docs": "Get the configuration for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nOptionally filter to specific config keys using the `keys` query parameter.\n\nRequires the `applications:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Replace Instance Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/config",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query",
+                "description": "If true, preview the changes without applying them."
+              },
+              {
+                "name": "destructive",
+                "value": "",
+                "type": "query",
+                "description": "If true, allow clearing config keys by setting them to null."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the full configuration for an application instance.\n\nUnlike PATCH, PUT requires all config keys to be included in the request body.\nIf any keys are missing, a 400 error is returned listing the missing keys.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nUse the `dry_run` query parameter to preview changes without applying them.\nUse the `destructive` query parameter to allow clearing config keys by setting them to null"
+        },
+        {
+          "info": {
+            "name": "Update Instance Config",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/config",
+            "headers": [
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query",
+                "description": "If true, preview the changes without applying them."
+              },
+              {
+                "name": "destructive",
+                "value": "",
+                "type": "query",
+                "description": "If true, allow clearing config keys by setting them to null."
+              },
+              {
+                "name": "keys",
+                "value": "",
+                "type": "query",
+                "description": "Config keys to return in the response. If not specified, only updated keys are returned."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the configuration for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nUse the `dry_run` query parameter to preview changes without applying them.\nUse the `destructive` query parameter to allow clearing config keys by setting them to null.\nUse the `If-Match` header to provide optimistic concurrency control via config version.\n\nRequires the `applications:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Get Instance Config Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/config/schema",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "keys",
+                "value": "",
+                "type": "query",
+                "description": "Config keys to retrieve schema for. If not specified, all keys are returned."
+              }
+            ]
+          },
+          "docs": "Get the JSON Schema for the instance configuration.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nOptionally filter to specific config keys using the `keys` query parameter.\n\nRequires the `applications:manage` scope.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

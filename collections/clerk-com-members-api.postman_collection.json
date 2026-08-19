@@ -1,0 +1,1810 @@
+{
+  "item": [
+    {
+      "id": "b0cba249-1266-4b0a-afd6-9e778e9d033f",
+      "name": "Members",
+      "description": {
+        "content": "Used to interact with the members of an organization. The current user must be an administrator to access them.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "409505ab-fa18-49b7-8098-9fa69f59d449",
+          "name": "Create Organization Membership",
+          "request": {
+            "name": "Create Organization Membership",
+            "description": {
+              "content": "Create a new organization membership.\n\nThe current user must have permissions to manage the members of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "organizations",
+                ":organization_id",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The organization ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "user_id",
+                  "value": "<string>",
+                  "description": "(Required) The ID of the user to be added as a member."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5191ac3d-d5b1-4849-bf3f-a18715e3ebd9",
+              "name": "Returns the response for Client wrapped OrganizationMembership object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The ID of the user to be added as a member.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"organization_membership\",\n    \"id\": \"string\",\n    \"public_metadata\": {\n      \"key_0\": 5005.479374925405,\n      \"key_1\": true,\n      \"key_2\": 2934.534811364011\n    },\n    \"role\": \"string\",\n    \"role_name\": \"string\",\n    \"permissions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": 1189,\n    \"updated_at\": 3979,\n    \"organization\": {\n      \"object\": \"organization\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"has_image\": false,\n      \"max_allowed_memberships\": 586,\n      \"admin_delete_enabled\": true,\n      \"public_metadata\": {\n        \"key_0\": 4920,\n        \"key_1\": 6011\n      },\n      \"created_at\": 9022,\n      \"updated_at\": 6322,\n      \"image_url\": \"string\",\n      \"members_count\": 2539,\n      \"pending_invitations_count\": 9060,\n      \"logo_url\": \"string\"\n    },\n    \"public_user_data\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"identifier\": \"string\",\n      \"has_image\": true,\n      \"image_url\": \"string\",\n      \"profile_image_url\": \"string\",\n      \"user_id\": \"string\",\n      \"username\": \"string\",\n      \"banned\": true\n    }\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 6188,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 3692,\n        \"factor_verification_age\": [\n          7214,\n          841\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 3696,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": true\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 8560,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 1881,\n        \"factor_verification_age\": [\n          8051,\n          1454\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 7468,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": false,\n          \"key_1\": 6015\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"complete\",\n      \"supported_identifiers\": [\n        \"email_address\",\n        \"phone_number\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 1662\n      },\n      \"public_metadata\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 3198,\n    \"captcha_bypass\": false,\n    \"created_at\": 3219,\n    \"updated_at\": 5452\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ae37fc6-0736-482b-bfc1-4e4d3e2292cc",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The ID of the user to be added as a member.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06965757-cf56-4982-8c8f-ba0567d3534f",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The ID of the user to be added as a member.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dba1473-a544-48cf-abe9-f556535b0fa9",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The ID of the user to be added as a member.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e1ae90e-1096-425a-9d41-62cdb7bf5d51",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The ID of the user to be added as a member.",
+                        "type": "text/plain"
+                      },
+                      "key": "user_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The role that will be assigned to the user after joining.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a62f3b95-aa90-43cd-9e29-c887cf0656b0",
+          "name": "Get All Organization Members",
+          "request": {
+            "name": "Get All Organization Members",
+            "description": {
+              "content": "Retrieve all members of an organization.\n\nThe current user must have permissions to manage the members of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "organizations",
+                ":organization_id",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+                },
+                {
+                  "disabled": false,
+                  "key": "paginated",
+                  "value": "<boolean>",
+                  "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Returns members that match the given query.\nFor possible matches, we check for any of the user's identifier, usernames, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+                },
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "Filter by roles. This can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The organization ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2feaf820-7145-4d7b-8721-88d6f8fa5a03",
+              "name": "Returns the response for Client wrapped array of OrganizationMembership objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"data\": [\n      {\n        \"object\": \"organization_membership\",\n        \"id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": 2411,\n          \"key_1\": false\n        },\n        \"role\": \"string\",\n        \"role_name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"created_at\": 6320,\n        \"updated_at\": 8945,\n        \"organization\": {\n          \"object\": \"organization\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"has_image\": true,\n          \"max_allowed_memberships\": 3557,\n          \"admin_delete_enabled\": false,\n          \"public_metadata\": {\n            \"key_0\": 5388.856389284597,\n            \"key_1\": \"string\",\n            \"key_2\": 654\n          },\n          \"created_at\": 1784,\n          \"updated_at\": 5139,\n          \"image_url\": \"string\",\n          \"members_count\": 9733,\n          \"pending_invitations_count\": 2603,\n          \"logo_url\": \"string\"\n        },\n        \"public_user_data\": {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"identifier\": \"string\",\n          \"has_image\": true,\n          \"image_url\": \"string\",\n          \"profile_image_url\": \"string\",\n          \"user_id\": \"string\",\n          \"username\": \"string\",\n          \"banned\": true\n        }\n      },\n      {\n        \"object\": \"organization_membership\",\n        \"id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": false,\n          \"key_1\": 8116.127174170741,\n          \"key_2\": 7157\n        },\n        \"role\": \"string\",\n        \"role_name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"created_at\": 6141,\n        \"updated_at\": 1962,\n        \"organization\": {\n          \"object\": \"organization\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"has_image\": false,\n          \"max_allowed_memberships\": 9666,\n          \"admin_delete_enabled\": false,\n          \"public_metadata\": {\n            \"key_0\": \"string\",\n            \"key_1\": true\n          },\n          \"created_at\": 6932,\n          \"updated_at\": 5730,\n          \"image_url\": \"string\",\n          \"members_count\": 4659,\n          \"pending_invitations_count\": 4338,\n          \"logo_url\": \"string\"\n        },\n        \"public_user_data\": {\n          \"first_name\": \"string\",\n          \"last_name\": \"string\",\n          \"identifier\": \"string\",\n          \"has_image\": false,\n          \"image_url\": \"string\",\n          \"profile_image_url\": \"string\",\n          \"user_id\": \"string\",\n          \"username\": \"string\",\n          \"banned\": true\n        }\n      }\n    ],\n    \"total_count\": 7311\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 2137,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 2396,\n        \"factor_verification_age\": [\n          8396,\n          5817\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 9029,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 9012,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 2277,\n        \"factor_verification_age\": [\n          532,\n          6318\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 5483,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"revoked\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": true,\n          \"key_1\": true\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_identifier\",\n      \"supported_identifiers\": [\n        \"phone_number\",\n        \"email_address\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": true,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"new\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": false,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": false,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 2349\n      },\n      \"public_metadata\": {\n        \"key_0\": true,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": true\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 6381,\n    \"captcha_bypass\": false,\n    \"created_at\": 9479,\n    \"updated_at\": 4299\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06806d00-faec-4bf2-9059-825a63627f64",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "385b25be-9888-4c41-8770-4ae630e4b7e5",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "514da938-0ca3-405a-aef0-9345ea99e0c8",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "paginated",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd10b966-7ce7-4ae5-8ae0-a1986b8eff79",
+          "name": "Update Organization Membership",
+          "request": {
+            "name": "Update Organization Membership",
+            "description": {
+              "content": "Update the attributes of an organization membership for a specific user.\nThe current user must have permissions to manage the members of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "organizations",
+                ":organization_id",
+                "memberships",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The organization ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The member ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "role",
+                  "value": "<string>",
+                  "description": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d2a23ef6-7ec5-4825-87ac-390461299234",
+              "name": "Returns the response for Client wrapped OrganizationMembership object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"organization_membership\",\n    \"id\": \"string\",\n    \"public_metadata\": {\n      \"key_0\": 4041,\n      \"key_1\": \"string\",\n      \"key_2\": 4428\n    },\n    \"role\": \"string\",\n    \"role_name\": \"string\",\n    \"permissions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": 4289,\n    \"updated_at\": 6129,\n    \"organization\": {\n      \"object\": \"organization\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"has_image\": false,\n      \"max_allowed_memberships\": 7344,\n      \"admin_delete_enabled\": true,\n      \"public_metadata\": {\n        \"key_0\": 4550.319610030627,\n        \"key_1\": 787.5474133144266\n      },\n      \"created_at\": 9265,\n      \"updated_at\": 2153,\n      \"image_url\": \"string\",\n      \"members_count\": 1808,\n      \"pending_invitations_count\": 306,\n      \"logo_url\": \"string\"\n    },\n    \"public_user_data\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"identifier\": \"string\",\n      \"has_image\": false,\n      \"image_url\": \"string\",\n      \"profile_image_url\": \"string\",\n      \"user_id\": \"string\",\n      \"username\": \"string\",\n      \"banned\": true\n    }\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 5129,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 1418,\n        \"factor_verification_age\": [\n          2750,\n          1820\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 8907,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"pending\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": false,\n          \"key_1\": false,\n          \"key_2\": false,\n          \"key_3\": 684.4614248869607,\n          \"key_4\": 2116.314202286851\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 2445,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 3947,\n        \"factor_verification_age\": [\n          1503,\n          5195\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 5124,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"pending\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\"\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_client_trust\",\n      \"supported_identifiers\": [\n        \"email_address\",\n        \"web3_wallet\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": true,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"new\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 4224,\n        \"key_1\": \"string\",\n        \"key_2\": 542.5557775053247\n      },\n      \"public_metadata\": {\n        \"key_0\": 7166,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 9027,\n    \"captcha_bypass\": true,\n    \"created_at\": 7728,\n    \"updated_at\": 9062\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0f51086-97bc-437e-bc8c-bb9cdc137ee3",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e59dd782-0088-4d53-8022-0e89ff6bf36d",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5286a24-1874-49d3-8939-6b95e37c4813",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1603cbe-99cd-4166-9459-0947dd329f45",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3877b5c9-3a02-4336-b028-88410ad0ab97",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The new role that will be assigned to the member.\nThis can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined.",
+                        "type": "text/plain"
+                      },
+                      "key": "role",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "605b5cc1-0aac-4b83-b19d-348f4b5142a1",
+          "name": "Remove Organization Member",
+          "request": {
+            "name": "Remove Organization Member",
+            "description": {
+              "content": "Remove a member from an organization.\n\nThe current user must have permissions to manage the members of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "organizations",
+                ":organization_id",
+                "memberships",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) The organization ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The member ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6196cd31-021a-40fe-9787-2f0a697e3fcc",
+              "name": "Returns the response for Client wrapped OrganizationMembership object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"organization_membership\",\n    \"id\": \"string\",\n    \"public_metadata\": {\n      \"key_0\": 4041,\n      \"key_1\": \"string\",\n      \"key_2\": 4428\n    },\n    \"role\": \"string\",\n    \"role_name\": \"string\",\n    \"permissions\": [\n      \"string\",\n      \"string\"\n    ],\n    \"created_at\": 4289,\n    \"updated_at\": 6129,\n    \"organization\": {\n      \"object\": \"organization\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"slug\": \"string\",\n      \"has_image\": false,\n      \"max_allowed_memberships\": 7344,\n      \"admin_delete_enabled\": true,\n      \"public_metadata\": {\n        \"key_0\": 4550.319610030627,\n        \"key_1\": 787.5474133144266\n      },\n      \"created_at\": 9265,\n      \"updated_at\": 2153,\n      \"image_url\": \"string\",\n      \"members_count\": 1808,\n      \"pending_invitations_count\": 306,\n      \"logo_url\": \"string\"\n    },\n    \"public_user_data\": {\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"identifier\": \"string\",\n      \"has_image\": false,\n      \"image_url\": \"string\",\n      \"profile_image_url\": \"string\",\n      \"user_id\": \"string\",\n      \"username\": \"string\",\n      \"banned\": true\n    }\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 5129,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 1418,\n        \"factor_verification_age\": [\n          2750,\n          1820\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 8907,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"pending\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": false,\n          \"key_1\": false,\n          \"key_2\": false,\n          \"key_3\": 684.4614248869607,\n          \"key_4\": 2116.314202286851\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 2445,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 3947,\n        \"factor_verification_age\": [\n          1503,\n          5195\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 5124,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"pending\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\"\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_client_trust\",\n      \"supported_identifiers\": [\n        \"email_address\",\n        \"web3_wallet\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": true,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"new\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"missing_requirements\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 4224,\n        \"key_1\": \"string\",\n        \"key_2\": 542.5557775053247\n      },\n      \"public_metadata\": {\n        \"key_0\": 7166,\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 9027,\n    \"captcha_bypass\": true,\n    \"created_at\": 7728,\n    \"updated_at\": 9062\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d396ab7-31d5-4cb5-8d75-595fd9c98e66",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a15fb0f1-d090-4164-b5b4-a071fe450ae9",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a6ea3b5-7fa5-4ffd-8139-2036d8cae4cc",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "966ae31e-1211-4b0b-9e49-b4d867361c36",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e826bb8d-cbc8-4cda-b6be-9a2fad0208fb",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "organizations",
+                    ":organization_id",
+                    "memberships",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) The organization ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The member ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "22186afc-8052-4ff9-9774-c881a91d6b0c",
+    "name": "Clerk Backend Account Portal Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

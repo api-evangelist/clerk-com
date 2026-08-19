@@ -1,0 +1,190 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal OAuth Applications API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of OAuth Applications for an Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/oauth_applications",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return OAuth applications in a particular order.\nAt the moment, you can order the returned OAuth applications by their `created_at` and `name`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want OAuth applications to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied. We only support one `order_by` parameter, and if multiple `order_by` parameters are provided, we will only keep the first one. For example,\nif you pass `order_by=name&order_by=created_at`, we will consider only the first `order_by` parameter, which is `name`. The `created_at` parameter will be ignored in this case."
+              },
+              {
+                "name": "name_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns OAuth applications with names that match the given query, via case-insensitive partial match."
+              }
+            ]
+          },
+          "docs": "This request returns the list of OAuth applications for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe OAuth applications are ordered by descending creation date.\nMost recent OAuth applications will be returned first."
+        },
+        {
+          "info": {
+            "name": "Create an OAuth Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth_applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new OAuth application with the given name and callback URL for an instance.\nThe callback URL must be a valid URL.\nAll URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc..."
+        },
+        {
+          "info": {
+            "name": "Retrieve an OAuth Application by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/oauth_applications/:oauth_application_id",
+            "params": [
+              {
+                "name": "oauth_application_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth application"
+              }
+            ]
+          },
+          "docs": "Fetches the OAuth application whose ID matches the provided `id` in the path."
+        },
+        {
+          "info": {
+            "name": "Update an OAuth Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/oauth_applications/:oauth_application_id",
+            "params": [
+              {
+                "name": "oauth_application_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth application to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing OAuth application"
+        },
+        {
+          "info": {
+            "name": "Delete an OAuth Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/oauth_applications/:oauth_application_id",
+            "params": [
+              {
+                "name": "oauth_application_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth application to delete"
+              }
+            ]
+          },
+          "docs": "Deletes the given OAuth application.\nThis is not reversible."
+        },
+        {
+          "info": {
+            "name": "Upload a Logo for the OAuth Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/oauth_applications/:oauth_application_id/logo",
+            "params": [
+              {
+                "name": "oauth_application_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth application for which to upload a logo"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "uploader_user_id",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Set or replace an OAuth application's logo by uploading an image file.\nThis endpoint uses the `multipart/form-data` request content type and accepts a file of image type.\nThe file size cannot exceed 10MB.\nOnly the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`."
+        },
+        {
+          "info": {
+            "name": "Rotate the Client Secret of the Given OAuth Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth_applications/:oauth_application_id/rotate_secret",
+            "params": [
+              {
+                "name": "oauth_application_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth application for which to rotate the client secret"
+              }
+            ]
+          },
+          "docs": "Rotates the OAuth application's client secret.\nWhen the client secret is rotated, make sure to update it in authorized OAuth clients."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Actor Tokens API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Actor Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Actor Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/actor_tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an actor token that can be used to impersonate the given user.\nThe `actor` parameter needs to include at least a \"sub\" key whose value is the ID of the actor (impersonating) user."
+        },
+        {
+          "info": {
+            "name": "Revoke Actor Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/actor_tokens/:actor_token_id/revoke",
+            "params": [
+              {
+                "name": "actor_token_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the actor token to be revoked."
+              }
+            ]
+          },
+          "docs": "Revokes a pending actor token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

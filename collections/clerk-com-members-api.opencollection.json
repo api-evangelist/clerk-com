@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Members API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Organization Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns members that match the given query.\nFor possible matches, we check for any of the user's identifier, usernames, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Filter by roles. This can be one of the predefined roles (`org:admin`, `org:basic_member`) or a custom role defined."
+              }
+            ]
+          },
+          "docs": "Retrieve all members of an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "user_id",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new organization membership.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Update Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The member ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the attributes of an organization membership for a specific user.\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Remove Organization Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The member ID."
+              }
+            ]
+          },
+          "docs": "Remove a member from an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

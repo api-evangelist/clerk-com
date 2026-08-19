@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal JWT Templates API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "JWT Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/jwt_templates",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "List All Templates"
+        },
+        {
+          "info": {
+            "name": "Create a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/jwt_templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new JWT template"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/jwt_templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "JWT Template ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a given JWT template"
+        },
+        {
+          "info": {
+            "name": "Update a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/jwt_templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the JWT template to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing JWT template"
+        },
+        {
+          "info": {
+            "name": "Delete a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/jwt_templates/:template_id",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "JWT Template ID"
+              }
+            ]
+          },
+          "docs": "Delete a Template"
+        },
+        {
+          "info": {
+            "name": "List JWT Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/jwt_templates",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              }
+            ]
+          },
+          "docs": "List all JWT templates for an application instance.\n\nRequires the `jwt_templates:read` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Create a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/jwt_templates",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new JWT template for an application instance.\n\nRequires the `jwt_templates:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Get a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/jwt_templates/:templateID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path",
+                "description": "JWT Template ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a specific JWT template for an application instance.\n\nRequires the `jwt_templates:read` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Update a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/jwt_templates/:templateID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path",
+                "description": "JWT Template ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing JWT template for an application instance.\n\nRequires the `jwt_templates:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a JWT Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/jwt_templates/:templateID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "templateID",
+                "value": "",
+                "type": "path",
+                "description": "JWT Template ID."
+              }
+            ]
+          },
+          "docs": "Delete a JWT template from an application instance.\n\nRequires the `jwt_templates:manage` scope.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1855 @@
+{
+  "item": [
+    {
+      "id": "6425c76b-f583-427d-a04e-e611aa4be891",
+      "name": "External Accounts",
+      "description": {
+        "content": "Used to interact with the external accounts of the current user.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed3b80c5-ac0c-4864-92d8-002c4802d93d",
+          "name": "Connect OAuth Accounts",
+          "request": {
+            "name": "Connect OAuth Accounts",
+            "description": {
+              "content": "Connect a new External Account from the OAuth providers enabled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "external_accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The origin of the request.",
+                "key": "Origin",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "strategy",
+                  "value": "<string>",
+                  "description": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "enterprise_connection_id",
+                  "value": "<string>",
+                  "description": "The ID of an enterprise connection to link. When provided, strategy is not required."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_url",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "action_complete_redirect_url",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "additional_scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies."
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies."
+                },
+                {
+                  "disabled": false,
+                  "key": "oidc_login_hint",
+                  "value": "<string>",
+                  "description": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "oidc_prompt",
+                  "value": "<string>",
+                  "description": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5a0e09de-abdb-4e1c-b03b-c707c247f3b9",
+              "name": "Returns the response for Session wrapped Verification object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"facebook_account\",\n    \"id\": \"string\",\n    \"provider\": \"string\",\n    \"identification_id\": \"string\",\n    \"provider_user_id\": \"string\",\n    \"approved_scopes\": \"string\",\n    \"email_address\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"public_metadata\": {\n      \"key_0\": 4726.047057019303,\n      \"key_1\": 4461,\n      \"key_2\": true,\n      \"key_3\": 8384,\n      \"key_4\": 6627.505334180412\n    },\n    \"created_at\": 5365,\n    \"updated_at\": 5274,\n    \"verification\": {\n      \"status\": \"verified\",\n      \"strategy\": \"oauth_rzfvug\",\n      \"attempts\": 4990,\n      \"expire_at\": 6251,\n      \"object\": \"verification_oauth\",\n      \"external_verification_redirect_url\": \"string\",\n      \"error\": {\n        \"message\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"long_message\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"code\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"meta\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"verified_at_client\": \"string\"\n    },\n    \"email_address_verified\": false,\n    \"avatar_url\": \"string\",\n    \"image_url\": \"string\",\n    \"username\": \"string\",\n    \"phone_number\": \"string\",\n    \"label\": \"string\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 5221,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 4814,\n        \"factor_verification_age\": [\n          1590,\n          8686\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 6826,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"removed\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 5456.318930650813,\n          \"key_1\": false\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 5660,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 1084,\n        \"factor_verification_age\": [\n          4268,\n          2854\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 8691,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 6806\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_identifier\",\n      \"supported_identifiers\": [\n        \"email_address\",\n        \"phone_number\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": true,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"pending\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"complete\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 4599.534255930868,\n        \"key_1\": 7388\n      },\n      \"public_metadata\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 9461,\n    \"captcha_bypass\": false,\n    \"created_at\": 3781,\n    \"updated_at\": 7166\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78272d14-0ee0-40d6-bc3b-08aef71ac033",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f22892c2-4490-40e2-895e-07686d4651f7",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34506245-4c0b-45ba-90eb-46ea8ede9336",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71b3b73e-c896-4e61-8f92-064abdda10ec",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c908be2-4fd1-482b-8c04-f31c544265fb",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The origin of the request.",
+                    "key": "Origin",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth strategy that the external account provider supports. Optional when `enterprise_connection_id` is provided.\nCan be one of `oauth_[provider]` or `oauth_token_[provider]`.\nThe `oauth_[provider]` strategy can be used for regular OAuth flows with redirects and a `redirect_url` parameter is also required.\nThe `oauth_token_[provider]` strategy can be used for native flows, along with a `token` or `code` parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID of an enterprise connection to link. When provided, strategy is not required.",
+                        "type": "text/plain"
+                      },
+                      "key": "enterprise_connection_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization or grant code that an OAuth provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The ID token that an OpenID Connect provider returns during authentication. Can be used with `oauth_token_[provider]` strategies.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "160ed1b1-4687-4d32-b115-1aadc249e513",
+          "name": "Reauthorize External Account",
+          "request": {
+            "name": "Reauthorize External Account",
+            "description": {
+              "content": "Reauthorize an external account by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "external_accounts",
+                ":external_account_id",
+                "reauthorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "external_account_id",
+                  "description": "(Required) External account ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "redirect_url",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "additional_scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "additional_scope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "action_complete_redirect_url",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "oidc_login_hint",
+                  "value": "<string>",
+                  "description": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "oidc_prompt",
+                  "value": "<string>",
+                  "description": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f91a393d-ee36-4fad-9ca7-5d04ee33429c",
+              "name": "Returns the response for Session wrapped Verification object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "reauthorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"external_account\",\n    \"id\": \"string\",\n    \"provider\": \"string\",\n    \"identification_id\": \"string\",\n    \"provider_user_id\": \"string\",\n    \"approved_scopes\": \"string\",\n    \"email_address\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"public_metadata\": {\n      \"key_0\": 5574.510464532416,\n      \"key_1\": true\n    },\n    \"created_at\": 6113,\n    \"updated_at\": 8142,\n    \"verification\": {\n      \"status\": \"expired\",\n      \"strategy\": \"oauth_gtnj\",\n      \"attempts\": 1924,\n      \"expire_at\": 3499,\n      \"object\": \"verification_oauth\",\n      \"external_verification_redirect_url\": \"string\",\n      \"error\": {\n        \"message\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"long_message\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"code\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"meta\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"verified_at_client\": \"string\"\n    },\n    \"email_address_verified\": true,\n    \"avatar_url\": \"string\",\n    \"image_url\": \"string\",\n    \"username\": \"string\",\n    \"phone_number\": \"string\",\n    \"label\": \"string\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 8885,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 3760,\n        \"factor_verification_age\": [\n          4361,\n          9848\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 9404,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\"\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 9269,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 7323,\n        \"factor_verification_age\": [\n          3401,\n          40\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 6013,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"removed\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": false,\n          \"key_1\": true,\n          \"key_2\": 7021.418235862003\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_first_factor\",\n      \"supported_identifiers\": [\n        \"username\",\n        \"web3_wallet\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"new\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": false,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": true,\n        \"key_1\": true\n      },\n      \"public_metadata\": {\n        \"key_0\": 6147\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 9970,\n    \"captcha_bypass\": false,\n    \"created_at\": 3795,\n    \"updated_at\": 8453\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ebb08b5-9cec-4d92-bc15-1f463e9e15a8",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "reauthorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b8de31e-4ef0-4cd0-96f1-5e48ec42bdbc",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "reauthorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abaa288f-a04c-4530-9d16-6ae87474b665",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "reauthorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "additional_scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "action_complete_redirect_url",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]`. The given value will be forwarded to the OIDC `login_hint` parameter of the generated redirect URL.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_login_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Used with `oauth_[provider]` or `enterprise_sso`. The given value will be forwarded to the OIDC `prompt` parameter of the generated redirect URL. When using shared credentials this value might be adjusted for security reasons.",
+                        "type": "text/plain"
+                      },
+                      "key": "oidc_prompt",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f489499e-3df2-4108-a3bc-b8e4acef960e",
+          "name": "Delete External Account",
+          "request": {
+            "name": "Delete External Account",
+            "description": {
+              "content": "Delete an external account by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "external_accounts",
+                ":external_account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "external_account_id",
+                  "description": "(Required) External account ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7188fbe9-594c-4d22-8b04-f83513bc824e",
+              "name": "Returns a deleted external account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"object\": \"string\",\n    \"deleted\": false,\n    \"id\": \"string\",\n    \"slug\": \"string\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 8857,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 6345,\n        \"factor_verification_age\": [\n          8665,\n          5658\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 3646,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"revoked\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\",\n          \"key_1\": 1002,\n          \"key_2\": \"string\"\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 7938,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 7841,\n        \"factor_verification_age\": [\n          9234,\n          6459\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 8900,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"active\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": \"string\",\n          \"key_1\": 2216,\n          \"key_2\": false\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_protect_check\",\n      \"supported_identifiers\": [\n        \"username\",\n        \"username\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"pending\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": true,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"public_metadata\": {\n        \"key_0\": 1594.732337706326,\n        \"key_1\": 1072.0008836644633\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 1698,\n    \"captcha_bypass\": false,\n    \"created_at\": 4227,\n    \"updated_at\": 2618\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5256e41e-5a56-4629-9f91-747972b04d70",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a50bacc-ec75-486e-a1b8-83e2101ecc88",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab64836e-e3ab-4bf6-8042-bce2aa2f1987",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7a6f3f3-6879-4cf1-a306-a1b2b99f1fc4",
+          "name": "Revoke OAuth Tokens",
+          "request": {
+            "name": "Revoke OAuth Tokens",
+            "description": {
+              "content": "Revoke the OAuth access and refresh token of an external account by ID, if supported by the provider.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "external_accounts",
+                ":external_account_id",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "external_account_id",
+                  "description": "(Required) External account ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "817be1bb-1ce6-4faa-8f3b-4e01dd3bc269",
+              "name": "Returns the response for Session wrapped User object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"id\": \"string\",\n    \"object\": \"user\",\n    \"username\": \"string\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"has_image\": true,\n    \"primary_email_address_id\": \"string\",\n    \"primary_phone_number_id\": \"string\",\n    \"primary_web3_wallet_id\": \"string\",\n    \"password_enabled\": true,\n    \"two_factor_enabled\": false,\n    \"totp_enabled\": false,\n    \"backup_code_enabled\": true,\n    \"email_addresses\": [\n      {\n        \"id\": \"string\",\n        \"object\": \"email_address\",\n        \"email_address\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"linked_to\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reserved\": false,\n        \"created_at\": 6534,\n        \"updated_at\": 5659,\n        \"matches_sso_connection\": false\n      },\n      {\n        \"id\": \"string\",\n        \"object\": \"email_address\",\n        \"email_address\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"linked_to\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reserved\": true,\n        \"created_at\": 572,\n        \"updated_at\": 2906,\n        \"matches_sso_connection\": false\n      }\n    ],\n    \"phone_numbers\": [\n      {\n        \"id\": \"string\",\n        \"object\": \"phone_number\",\n        \"phone_number\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"linked_to\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reserved\": true,\n        \"created_at\": 8604,\n        \"updated_at\": 6110,\n        \"reserved_for_second_factor\": false,\n        \"default_second_factor\": false,\n        \"backup_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"object\": \"phone_number\",\n        \"phone_number\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"linked_to\": [\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"reserved\": true,\n        \"created_at\": 3025,\n        \"updated_at\": 5046,\n        \"reserved_for_second_factor\": false,\n        \"default_second_factor\": false,\n        \"backup_codes\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"web3_wallets\": [\n      {\n        \"id\": \"string\",\n        \"object\": \"web3_wallet\",\n        \"web3_wallet\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonce\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": 8660,\n        \"updated_at\": 4854\n      },\n      {\n        \"id\": \"string\",\n        \"object\": \"web3_wallet\",\n        \"web3_wallet\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonce\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"message\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"created_at\": 1401,\n        \"updated_at\": 5803\n      }\n    ],\n    \"passkeys\": [\n      {\n        \"id\": \"string\",\n        \"object\": \"passkey\",\n        \"name\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonce\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"last_used_at\": 5851,\n        \"created_at\": 893,\n        \"updated_at\": 7822\n      },\n      {\n        \"id\": \"string\",\n        \"object\": \"passkey\",\n        \"name\": \"string\",\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonce\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"last_used_at\": 8819,\n        \"created_at\": 2053,\n        \"updated_at\": 268\n      }\n    ],\n    \"external_accounts\": [\n      {\n        \"object\": \"google_account\",\n        \"id\": \"string\",\n        \"provider\": \"string\",\n        \"identification_id\": \"string\",\n        \"provider_user_id\": \"string\",\n        \"approved_scopes\": \"string\",\n        \"email_address\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": 8381.287997126305\n        },\n        \"created_at\": 9177,\n        \"updated_at\": 2606,\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_verification_redirect_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"error\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verified_at_client\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"email_address_verified\": false,\n        \"avatar_url\": \"string\",\n        \"image_url\": \"string\",\n        \"username\": \"string\",\n        \"phone_number\": \"string\",\n        \"label\": \"string\"\n      },\n      {\n        \"object\": \"facebook_account\",\n        \"id\": \"string\",\n        \"provider\": \"string\",\n        \"identification_id\": \"string\",\n        \"provider_user_id\": \"string\",\n        \"approved_scopes\": \"string\",\n        \"email_address\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": false,\n          \"key_1\": 9709.200170830445\n        },\n        \"created_at\": 171,\n        \"updated_at\": 73,\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_verification_redirect_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"error\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verified_at_client\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"email_address_verified\": true,\n        \"avatar_url\": \"string\",\n        \"image_url\": \"string\",\n        \"username\": \"string\",\n        \"phone_number\": \"string\",\n        \"label\": \"string\"\n      }\n    ],\n    \"saml_accounts\": [\n      {\n        \"id\": \"string\",\n        \"object\": \"saml_account\",\n        \"provider\": \"string\",\n        \"active\": false,\n        \"email_address\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"provider_user_id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": 9423\n        },\n        \"saml_connection\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_verification_redirect_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"error\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"enterprise_connection_id\": \"string\",\n        \"last_authenticated_at\": 23\n      },\n      {\n        \"id\": \"string\",\n        \"object\": \"saml_account\",\n        \"provider\": \"string\",\n        \"active\": false,\n        \"email_address\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"provider_user_id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": false,\n          \"key_1\": 1693.6527118309652,\n          \"key_2\": \"string\",\n          \"key_3\": 4444\n        },\n        \"saml_connection\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"verification\": {\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"strategy\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_verification_redirect_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"error\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expire_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"attempts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"enterprise_connection_id\": \"string\",\n        \"last_authenticated_at\": 130\n      }\n    ],\n    \"public_metadata\": {\n      \"key_0\": 8063,\n      \"key_1\": \"string\"\n    },\n    \"external_id\": \"string\",\n    \"last_sign_in_at\": 1700690400000,\n    \"banned\": true,\n    \"locked\": true,\n    \"lockout_expires_in_seconds\": 300,\n    \"verification_attempts_remaining\": 3429,\n    \"created_at\": 1700690400000,\n    \"updated_at\": 1700690400000,\n    \"delete_self_enabled\": false,\n    \"create_organization_enabled\": false,\n    \"last_active_at\": 1700690400000,\n    \"mfa_enabled_at\": 1700690400000,\n    \"mfa_disabled_at\": 1700690400000,\n    \"legal_accepted_at\": 1700690400000,\n    \"image_url\": \"string\",\n    \"organization_memberships\": [\n      {\n        \"object\": \"organization_membership\",\n        \"id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": 1230,\n          \"key_1\": \"string\",\n          \"key_2\": false\n        },\n        \"role\": \"string\",\n        \"role_name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"created_at\": 3590,\n        \"updated_at\": 6075,\n        \"organization\": {\n          \"object\": \"organization\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"has_image\": true,\n          \"max_allowed_memberships\": 6185,\n          \"admin_delete_enabled\": true,\n          \"public_metadata\": {\n            \"key_0\": 9007.248785594405,\n            \"key_1\": 166,\n            \"key_2\": 8037.494621414725\n          },\n          \"created_at\": 6079,\n          \"updated_at\": 3979,\n          \"image_url\": \"string\",\n          \"members_count\": 6638,\n          \"pending_invitations_count\": 5892,\n          \"logo_url\": \"string\"\n        },\n        \"public_user_data\": {\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"identifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"object\": \"organization_membership\",\n        \"id\": \"string\",\n        \"public_metadata\": {\n          \"key_0\": true,\n          \"key_1\": 9112,\n          \"key_2\": 402\n        },\n        \"role\": \"string\",\n        \"role_name\": \"string\",\n        \"permissions\": [\n          \"string\",\n          \"string\"\n        ],\n        \"created_at\": 2563,\n        \"updated_at\": 7909,\n        \"organization\": {\n          \"object\": \"organization\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"has_image\": true,\n          \"max_allowed_memberships\": 7574,\n          \"admin_delete_enabled\": true,\n          \"public_metadata\": {\n            \"key_0\": 1002\n          },\n          \"created_at\": 8423,\n          \"updated_at\": 1882,\n          \"image_url\": \"string\",\n          \"members_count\": 7446,\n          \"pending_invitations_count\": 1582,\n          \"logo_url\": \"string\"\n        },\n        \"public_user_data\": {\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"identifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"password_last_updated_at\": 1700690400000,\n    \"private_metadata\": {\n      \"key_0\": false,\n      \"key_1\": true\n    },\n    \"unsafe_metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 7964,\n      \"key_2\": 1027\n    },\n    \"deprovisioned\": true,\n    \"create_organizations_limit\": 5378,\n    \"profile_image_url\": \"string\"\n  },\n  \"client\": {\n    \"object\": \"client\",\n    \"id\": \"string\",\n    \"sessions\": [\n      {\n        \"abandon_at\": 3944,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 1436,\n        \"factor_verification_age\": [\n          3553,\n          6477\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 7869,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"abandoned\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 7548,\n          \"key_1\": false\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"abandon_at\": 3705,\n        \"created_at\": 1700690400000,\n        \"expire_at\": 6960,\n        \"factor_verification_age\": [\n          8928,\n          6745\n        ],\n        \"id\": \"string\",\n        \"last_active_at\": 7864,\n        \"last_active_organization_id\": \"string\",\n        \"object\": \"session\",\n        \"public_user_data\": {},\n        \"status\": \"revoked\",\n        \"updated_at\": 1700690400000,\n        \"last_active_token\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"actor\": {\n          \"key_0\": 8353,\n          \"key_1\": true,\n          \"key_2\": 9556\n        },\n        \"tasks\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"user\": {\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"object\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"username\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"has_image\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_email_address_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_phone_number_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"primary_web3_wallet_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"two_factor_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totp_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backup_code_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"email_addresses\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"phone_numbers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"web3_wallets\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"passkeys\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"saml_accounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"public_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"external_id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_sign_in_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"banned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"locked\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lockout_expires_in_seconds\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"verification_attempts_remaining\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"created_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delete_self_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organization_enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last_active_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_enabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mfa_disabled_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"legal_accepted_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"organization_memberships\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"password_last_updated_at\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"private_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unsafe_metadata\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deprovisioned\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"create_organizations_limit\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"profile_image_url\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sign_in\": {\n      \"object\": \"sign_in_attempt\",\n      \"id\": \"string\",\n      \"status\": \"needs_new_password\",\n      \"supported_identifiers\": [\n        \"passkey\",\n        \"username\"\n      ],\n      \"supported_first_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"supported_second_factors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"first_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"second_factor_verification\": {\n        \"status\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"strategy\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"expire_at\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"object\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"attempts\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"identifier\": \"string\",\n      \"user_data\": {\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"has_image\": false,\n        \"image_url\": \"string\",\n        \"profile_image_url\": \"string\"\n      },\n      \"created_session_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"client_trust_state\": \"known\"\n    },\n    \"sign_up\": {\n      \"object\": \"sign_up_attempt\",\n      \"id\": \"string\",\n      \"status\": \"abandoned\",\n      \"required_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"optional_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"missing_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"unverified_fields\": [\n        \"string\",\n        \"string\"\n      ],\n      \"verifications\": {\n        \"email_address\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"phone_number\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"web3_wallet\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"external_account\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"username\": \"string\",\n      \"email_address\": \"string\",\n      \"phone_number\": \"string\",\n      \"web3_wallet\": \"string\",\n      \"password_enabled\": true,\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"custom_action\": false,\n      \"external_id\": \"string\",\n      \"created_session_id\": \"string\",\n      \"created_user_id\": \"string\",\n      \"abandon_at\": 1700690400000,\n      \"legal_accepted_at\": 1700690400000,\n      \"unsafe_metadata\": {\n        \"key_0\": 2331.7400589533454\n      },\n      \"public_metadata\": {\n        \"key_0\": 5726,\n        \"key_1\": 7027.835989306021,\n        \"key_2\": 4753.6510882689645\n      }\n    },\n    \"last_active_session_id\": \"string\",\n    \"last_authentication_strategy\": \"string\",\n    \"cookie_expires_at\": 8941,\n    \"captcha_bypass\": true,\n    \"created_at\": 3338,\n    \"updated_at\": 2071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1874b22-3804-4c89-9479-51bd0ab61885",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f60fde6e-5f1f-46cb-848d-2f0ed2b2415f",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "external_accounts",
+                    ":external_account_id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "external_account_id",
+                      "description": "(Required) External account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "915f0b39-9db7-428a-8678-49c2ed6ea887",
+    "name": "Clerk Backend Account Portal External Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

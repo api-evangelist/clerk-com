@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Organization Memberships API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization Memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of All Members of an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.\nBy prepending one of those values with + or -, we can choose to sort in ascending (ASC) or descending (DESC) order.\""
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the user IDs specified. For each user ID, the `+` and `-` can be\nprepended to the ID, which denote whether the respective user ID should be included or\nexcluded from the result set. Accepts up to 100 user IDs. Any user IDs not found are ignored."
+              },
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified email addresses. Accepts up to 100 email addresses. Any email addresses not found are ignored."
+              },
+              {
+                "name": "phone_number",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified phone numbers. Accepts up to 100 phone numbers. Any phone numbers not found are ignored."
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified usernames.\nAccepts up to 100 usernames.\nAny usernames not found are ignored."
+              },
+              {
+                "name": "web3_wallet",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified web3 wallet addresses.\nAccepts up to 100 web3 wallet addresses.\nAny web3 wallet addresses not found are ignored."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with the specified roles. Accepts up to 100 roles. Any roles not found are ignored."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users that match the given query.\nFor possible matches, we check the email addresses, phone numbers, usernames, web3 wallets, user IDs, first and last names.\nThe query value doesn't need to match the exact value you are looking for, it is capable of partial matches as well."
+              },
+              {
+                "name": "email_address_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with emails that match the given query, via case-insensitive partial match.\nFor example, `email_address_query=ello` will match a user with the email `HELLO@example.com`."
+              },
+              {
+                "name": "phone_number_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with phone numbers that match the given query, via case-insensitive partial match.\nFor example, `phone_number_query=555` will match a user with the phone number `+1555xxxxxxx`."
+              },
+              {
+                "name": "username_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with usernames that match the given query, via case-insensitive partial match.\nFor example, `username_query=CoolUser` will match a user with the username `SomeCoolUser`."
+              },
+              {
+                "name": "name_query",
+                "value": "",
+                "type": "query",
+                "description": "Returns users with names that match the given query, via case-insensitive partial match."
+              },
+              {
+                "name": "last_active_at_before",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was before the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was before 2023-11-23."
+              },
+              {
+                "name": "last_active_at_after",
+                "value": "1700690400000",
+                "type": "query",
+                "description": "Returns users whose last session activity was after the given date (with millisecond precision).\nExample: use 1700690400000 to retrieve users whose last session activity was after 2023-11-23."
+              },
+              {
+                "name": "created_at_before",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created before the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created before 2024-10-29."
+              },
+              {
+                "name": "created_at_after",
+                "value": "1730160000000",
+                "type": "query",
+                "description": "Returns users who have been created after the given date (with millisecond precision).\nExample: use 1730160000000 to retrieve users who have been created after 2024-10-29."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Retrieves all user memberships for the given organization"
+        },
+        {
+          "info": {
+            "name": "Create a New Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/memberships",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization where the new membership will be created"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a user as a member to the given organization.\nOnly users in the same instance as the organization can be added as members.\n\nThis organization will be the user's [active organization] (https://clerk.com/docs/organizations/overview#active-organization)\nthe next time they create a session, presuming they don't explicitly set a\ndifferent organization as active before then."
+        },
+        {
+          "info": {
+            "name": "Update an Organization Membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to which this membership belongs"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to which this membership belongs"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing organization membership"
+        },
+        {
+          "info": {
+            "name": "Remove a Member from an Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/memberships/:user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to which this membership belongs"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to which this membership belongs"
+              }
+            ]
+          },
+          "docs": "Removes the given membership from the organization"
+        },
+        {
+          "info": {
+            "name": "Merge and Update Organization Membership Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/memberships/:user_id/metadata",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to which this membership belongs"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to which this membership belongs"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an organization membership's metadata attributes by merging existing values with the provided parameters.\nMetadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.\nYou can remove metadata keys at any level by setting their value to `null`."
+        },
+        {
+          "info": {
+            "name": "Get a List of All Organization Memberships Within an Instance.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organization_memberships",
+            "params": [
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.\nBy prepending one of those values with + or -,\nwe can choose to sort in ascending (ASC) or descending (DESC) order."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Retrieves all organization user memberships for the given instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

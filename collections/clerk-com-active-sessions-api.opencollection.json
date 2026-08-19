@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Active Sessions API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Active Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Active Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/sessions/active",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Returns all active session for user, including activity information."
+        },
+        {
+          "info": {
+            "name": "Revoke Given Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/sessions/:session_id/revoke",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              },
+              {
+                "name": "session_id",
+                "value": "",
+                "type": "path",
+                "description": "The session ID to be revoked."
+              }
+            ]
+          },
+          "docs": "Revokes given session."
+        },
+        {
+          "info": {
+            "name": "Get Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/sessions",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Get all the sessions of the current user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

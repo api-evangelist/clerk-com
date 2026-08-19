@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Organization Invitations API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization Invitations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of Organization Invitations for the Current Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organization_invitations",
+            "params": [
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter organization invitations based on their status"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filter organization invitations based on their `email_address`"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "This request returns the list of organization invitations for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nYou can change the order by providing the 'order' query parameter, that accepts multiple values.\nYou can filter by the invited user email address providing the `query` query parameter.\nThe organization invitations are ordered by descending creation"
+        },
+        {
+          "info": {
+            "name": "Get a List of Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter organization invitations based on their status"
+              },
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query",
+                "description": "Returns organization invitations inviting the specified email address."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return organization invitations in a particular order.\nYou can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "This request returns the list of organization invitations.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included in the results."
+        },
+        {
+          "info": {
+            "name": "Create and Send an Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which to send the invitation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.\nYou can specify the `role` for the invited organization member.\n\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\n\nThe request body supports passing an optional `redirect_url` parameter.\nWhen the invited user clicks the link to accept the invitation, they will"
+        },
+        {
+          "info": {
+            "name": "Bulk Create and Send Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations/bulk",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.\n\nThis endpoint is limited to a maximum of 10 invitations per API call. If you need to send more invitations, please make multiple requests.\n\nYou can specify a different `role` for each invited organization member.\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by t"
+        },
+        {
+          "info": {
+            "name": "Get a List of Pending Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations/pending",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "This request returns the list of organization invitations with \"pending\" status.\nThese are the organization invitations that can still be used to join the organization, but have not been accepted by the invited user yet.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included"
+        },
+        {
+          "info": {
+            "name": "Retrieve an Organization Invitation by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations/:invitation_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization invitation ID."
+              }
+            ]
+          },
+          "docs": "Use this request to get an existing organization invitation by ID."
+        },
+        {
+          "info": {
+            "name": "Revoke a Pending Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/invitations/:invitation_id/revoke",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization invitation ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this request to revoke a previously issued organization invitation.\nRevoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.\nOnly organization invitations with \"pending\" status can be revoked.\nThe request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.\nOnly users with \"admin\" role can revoke invitations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

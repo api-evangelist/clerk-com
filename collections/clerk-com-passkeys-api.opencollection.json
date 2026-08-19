@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Passkeys API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Passkeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/passkeys",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              },
+              {
+                "name": "X-Original-Host",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Create a new passkey."
+        },
+        {
+          "info": {
+            "name": "Get Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties associated with a specific passkey."
+        },
+        {
+          "info": {
+            "name": "Update Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "name",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update properties of a specific passkey."
+        },
+        {
+          "info": {
+            "name": "Delete Passkey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/passkeys/:passkey_id",
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ]
+          },
+          "docs": "Delete a passkey by ID."
+        },
+        {
+          "info": {
+            "name": "Attempt Passkey Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/passkeys/:passkey_id/attempt_verification",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "passkey_id",
+                "value": "",
+                "type": "path",
+                "description": "The passkey identification ID."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the provided passkey."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

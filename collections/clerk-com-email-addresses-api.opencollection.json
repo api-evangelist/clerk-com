@@ -1,0 +1,273 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Email Addresses API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/email_addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new email address"
+        },
+        {
+          "info": {
+            "name": "Retrieve an Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/email_addresses/:email_address_id",
+            "params": [
+              {
+                "name": "email_address_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the email address to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns the details of an email address."
+        },
+        {
+          "info": {
+            "name": "Update an Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/email_addresses/:email_address_id",
+            "params": [
+              {
+                "name": "email_address_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the email address to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an email address."
+        },
+        {
+          "info": {
+            "name": "Delete an Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/email_addresses/:email_address_id",
+            "params": [
+              {
+                "name": "email_address_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the email address to delete"
+              }
+            ]
+          },
+          "docs": "Delete the email address with the given ID"
+        },
+        {
+          "info": {
+            "name": "Get Email Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all the email addresses associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add an email address to the current user. The address then needs to be verified using the `prepare_verification` and `attempt_verification` endpoints."
+        },
+        {
+          "info": {
+            "name": "Attempt Email Address Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses/:email_id/attempt_verification",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt to verify an email address that was previously created."
+        },
+        {
+          "info": {
+            "name": "Prepare Email Address Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses/:email_id/prepare_verification",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Depending on the given strategy, the API will prepare the verification for the email address.\nIn particular, * for `email_code`, the API will send a verification email to the address containing a code. * for `email_link`, the API will send a verification email to the address containing a link to the verification attempt endpoint. * for `enterprise_sso`, the API will send an external redirect URL to the browser containing a link to the SSO verification endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve an email address by ID."
+        },
+        {
+          "info": {
+            "name": "Delete Email Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/email_addresses/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The email_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Delete an email address by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,347 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal OAuth2 Identity Provider API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth2 Identity Provider",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request OAuth2 Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/oauth/authorize",
+            "params": [
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "The authorization flow type. Must be `code` for authorization code flow."
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The OAuth2 client ID of the OAuth application."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI to redirect to after authorization. Must be registered for the OAuth application."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided."
+              },
+              {
+                "name": "prompt",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen)."
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query",
+                "description": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients."
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query",
+                "description": "The method used to generate the code challenge. Must be `S256`."
+              },
+              {
+                "name": "response_mode",
+                "value": "",
+                "type": "query",
+                "description": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body)."
+              },
+              {
+                "name": "nonce",
+                "value": "",
+                "type": "query",
+                "description": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows."
+              }
+            ]
+          },
+          "docs": "Request OAuth2 authorization. If successful, receive authorization grant via redirect."
+        },
+        {
+          "info": {
+            "name": "Request OAuth2 Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/authorize",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "response_type",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "state",
+                  "value": ""
+                },
+                {
+                  "name": "prompt",
+                  "value": ""
+                },
+                {
+                  "name": "code_challenge",
+                  "value": ""
+                },
+                {
+                  "name": "code_challenge_method",
+                  "value": ""
+                },
+                {
+                  "name": "response_mode",
+                  "value": ""
+                },
+                {
+                  "name": "nonce",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Request OAuth2 authorization. If successful, receive authorization grant via redirect."
+        },
+        {
+          "info": {
+            "name": "Register OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new OAuth 2.0 client with the authorization server according to RFC 7591\n(OAuth 2.0 Dynamic Client Registration Protocol).\n\nThis endpoint allows clients to dynamically register by submitting client metadata.\nUpon successful registration, the authorization server assigns a unique client identifier\nand optionally a client secret (for confidential clients).\n\n**Authentication:** This endpoint does not require authentication as it is used for\ninitial client registration. However, the endp"
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "code_verifier",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchange an authorization grant for OAuth2 tokens (access token, refresh token, and optionally ID token).\n\nThis endpoint implements the OAuth 2.0 Token Endpoint (RFC 6749) and OpenID Connect token endpoint.\nIt supports two grant types: `authorization_code` and `refresh_token`.\n\n#### Grant Types\n\n- **`authorization_code`**: Exchange an authorization code for tokens\n- **`refresh_token`**: Refresh an access token using a refresh token\n\n#### Authentication\n\n- **Confidential clients**: Must authentic"
+        },
+        {
+          "info": {
+            "name": "Get User Info After OAuth2 Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/oauth/userinfo"
+          },
+          "docs": "Get user info in exchange for a valid OAuth2 access token."
+        },
+        {
+          "info": {
+            "name": "Get User Info After OAuth2 Flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/userinfo"
+          },
+          "docs": "Get user info in exchange for a valid OAuth2 access token."
+        },
+        {
+          "info": {
+            "name": "Get Information for an Access or Refresh Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/token_info",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "token_type_hint",
+                  "value": ""
+                },
+                {
+                  "name": "scope",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Get information for an access or refresh token"
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth2 Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/oauth/token/revoke",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "token_type_hint",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Revoke OAuth2 token by token.\n\n#### Authentication\n\n- **Confidential clients**: Must authenticate using HTTP Basic Authentication with Client ID as username and Client Secret as password in the Authorization header."
+        },
+        {
+          "info": {
+            "name": "Get Consent Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/oauth/consent/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The OAuth Application Client ID to get consent information for."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Optional space-separated list of scopes to restrict the response to only those requested."
+              }
+            ]
+          },
+          "docs": "Returns the scopes for a given OAuth Application Client ID.\nAn optional `scope` query parameter can restrict the returned scopes to only those requested.\nThe OAuth application must have consent screen enabled.\n"
+        },
+        {
+          "info": {
+            "name": "Submit OAuth2 Consent Decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/oauth/consent/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The OAuth Application Client ID the consent decision applies to."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "consented",
+                  "value": ""
+                },
+                {
+                  "name": "organization_id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submits the user's consent decision for an OAuth2 authorization request.\nThis endpoint allows building custom consent portals as a replacement for\nthe default account-portal-rendered consent screen.\n\nThe OAuth application must have the consent screen enabled. On grant, the\nflow continues just like the standard `/oauth/authorize` endpoint and\nreturns the appropriate redirect.\n\nIn addition to the fields documented below, the request body must\nre-submit the standard OAuth2 authorize parameters from"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

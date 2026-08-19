@@ -1,0 +1,4131 @@
+{
+  "item": [
+    {
+      "id": "f08f40ce-4f8d-4d68-a361-23b630745e17",
+      "name": "OAuth2 Identity Provider",
+      "description": {
+        "content": "Requests for the OAuth2 authorization flow.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6aec22fa-2c40-4d29-ae02-cf07c8dfc55c",
+          "name": "Request OAuth2 Authorization",
+          "request": {
+            "name": "Request OAuth2 Authorization",
+            "description": {
+              "content": "Request OAuth2 authorization. If successful, receive authorization grant via redirect.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) The authorization flow type. Must be `code` for authorization code flow."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The OAuth2 client ID of the OAuth application."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "The URI to redirect to after authorization. Must be registered for the OAuth application."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>%20<string>",
+                  "description": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "prompt",
+                  "value": "<string>%20<string>",
+                  "description": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen)."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge",
+                  "value": "<string>",
+                  "description": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge_method",
+                  "value": "<string>",
+                  "description": "The method used to generate the code challenge. Must be `S256`."
+                },
+                {
+                  "disabled": false,
+                  "key": "response_mode",
+                  "value": "<string>",
+                  "description": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body)."
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f526e709-02eb-49a8-b06f-3dd4a4396bb1",
+              "name": "Success for 'form_post' response mode",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d48901d-9586-4c8d-8a7d-7541957bed2c",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "382662c6-cead-4c99-9098-0fe790777dce",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "See Other",
+              "code": 303,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "18bbd5a9-dc47-46f4-946a-b10e3044e465",
+              "name": "Bad request error, for example a request parameter is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "969ef486-2154-4736-a97a-165b23374fa3",
+              "name": "Unauthorized error, for example the provided client is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f292c724-ce1b-4a5d-9107-50748d8e55ed",
+              "name": "Forbidden error, for example you are trying to use a satellite domain",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt",
+                      "value": "<string>%20<string>"
+                    },
+                    {
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "925610c8-af72-467d-92f5-f60233f68ff9",
+          "name": "Request OAuth2 Authorization",
+          "request": {
+            "name": "Request OAuth2 Authorization",
+            "description": {
+              "content": "Request OAuth2 authorization. If successful, receive authorization grant via redirect.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) The authorization flow type. Must be `code` for authorization code flow."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The OAuth2 client ID of the OAuth application."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "The URI to redirect to after authorization. Must be registered for the OAuth application."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\")."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "prompt",
+                  "value": "<string>",
+                  "description": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\")."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge",
+                  "value": "<string>",
+                  "description": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_challenge_method",
+                  "value": "<string>",
+                  "description": "The method used to generate the code challenge. Must be `S256`."
+                },
+                {
+                  "disabled": false,
+                  "key": "response_mode",
+                  "value": "<string>",
+                  "description": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body)."
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<string>",
+                  "description": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "45773760-71a8-4574-b175-dd1417720c8c",
+              "name": "Success for 'form_post' response mode",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c24db11-bc5b-4ecc-b28a-4171b31b956b",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6736c27-ce2d-4eb0-97c6-6a685852a352",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "See Other",
+              "code": 303,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2c89e23-35fe-4188-9aab-90b1300b45c7",
+              "name": "Bad request error, for example a request parameter is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8baaf803-ed63-4acc-8420-ce821425d059",
+              "name": "Unauthorized error, for example the provided client is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "76cc61d7-6371-4b58-b44a-3887343c0d21",
+              "name": "Forbidden error, for example you are trying to use a satellite domain",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization flow type. Must be `code` for authorization code flow.",
+                        "type": "text/plain"
+                      },
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The OAuth2 client ID of the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The URI to redirect to after authorization. Must be registered for the OAuth application.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of scopes being requested. Available scopes are `email`, `profile`, `openid`, `public_metadata`, and `private_metadata`. Defaults to `profile email` if not provided. Multiple values should be space-delimited (e.g., \"email profile openid\").",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An opaque value used to maintain state between the request and callback (minimum 8 characters). Required to prevent CSRF attacks unless PKCE parameters (`code_challenge` and `code_challenge_method`) are provided.",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Space-separated list of prompts. Supported values are `none` (no user interaction), `login` (force re-authentication), and `consent` (force consent screen). Multiple values should be space-delimited (e.g., \"login consent\").",
+                        "type": "text/plain"
+                      },
+                      "key": "prompt",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The code challenge for PKCE (Proof Key for Code Exchange). Required for public clients.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to generate the code challenge. Must be `S256`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code_challenge_method",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The method used to return authorization response parameters. Supported values are `query` (parameters in URL query string) and `form_post` (parameters in POST body).",
+                        "type": "text/plain"
+                      },
+                      "key": "response_mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "String value used to associate a client session with an ID Token and to mitigate replay attacks. Used in OpenID Connect flows.",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce6a33bd-3faa-4b27-8069-f8b5f4263a24",
+          "name": "Register OAuth 2.0 Client",
+          "request": {
+            "name": "Register OAuth 2.0 Client",
+            "description": {
+              "content": "Registers a new OAuth 2.0 client with the authorization server according to RFC 7591\n(OAuth 2.0 Dynamic Client Registration Protocol).\n\nThis endpoint allows clients to dynamically register by submitting client metadata.\nUpon successful registration, the authorization server assigns a unique client identifier\nand optionally a client secret (for confidential clients).\n\n**Authentication:** This endpoint does not require authentication as it is used for\ninitial client registration. However, the endpoint is disabled by default and must\nbe enabled in the Instance settings.\n\n**Client Types:**\n- **Confidential clients** receive both a `client_id` and `client_secret`\n- **Public clients** (using `token_endpoint_auth_method: none`) receive only a `client_id`\n\n**Key Points:**\n- All dynamically registered clients must use the consent screen (cannot be disabled)\n- PKCE is not required for dynamically registered clients\n- The `redirect_uris` field is required and must contain at least one valid redirect URI\n- If `client_name` is not provided, the `client_id` will be used as the display name\n- If `scope` is not provided, default scopes will be assigned\n- The `token_endpoint_auth_method` values `client_secret_basic` and `client_secret_post` are\n  treated equivalently in the current implementation; both methods can be used at the\n  token endpoint\n\nSee [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591) for complete specification details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"redirect_uris\": [\n    \"<uri>\"\n  ],\n  \"token_endpoint_auth_method\": \"client_secret_basic\",\n  \"client_name\": \"<string>\",\n  \"client_uri\": \"<uri>\",\n  \"logo_uri\": \"<uri>\",\n  \"scope\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f7e145af-a834-4766-aa57-37d9590780b2",
+              "name": "Client information response after successful OAuth 2.0 dynamic client registration.\nReturns the client identifier, client secret (for confidential clients), and client metadata\naccording to RFC 7591.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Confidential App\",\n  \"client_uri\": \"https://example.com\",\n  \"logo_uri\": \"https://example.com/logo.png\",\n  \"redirect_uris\": [\n    \"https://example.com/oauth/callback\"\n  ],\n  \"token_endpoint_auth_method\": \"client_secret_basic\",\n  \"scope\": \"openid email profile\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"client_id\": \"string\",\n  \"client_id_issued_at\": 9253,\n  \"client_secret_expires_at\": 700,\n  \"client_name\": \"string\",\n  \"redirect_uris\": [\n    \"https://fijTgKTpHXkueXgggRDzP.mhgW4KRtLxreoe578c\",\n    \"https://PlXISCmpicHKRdZSJxoBBHZZKta.pnwf3ej4-EJ6c\"\n  ],\n  \"grant_types\": [\n    \"string\",\n    \"string\"\n  ],\n  \"response_types\": [\n    \"string\",\n    \"string\"\n  ],\n  \"scope\": \"string\",\n  \"token_endpoint_auth_method\": \"client_secret_post\",\n  \"client_secret\": \"string\",\n  \"client_uri\": \"https://PLSwxeQLHsDqsUwacJxfMNGBdg.qfPsnoLDYgOBuintCyIFr,\",\n  \"logo_uri\": \"https://foZPvaNcsLgDqeWOVKIFqiNY.gvSSE7Rk3DU5Oh5yFi.auk9iXO1oZFRexBh\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "399166c9-6c73-46cb-8501-63442c06c3f4",
+              "name": "OAuth 2.0 dynamic client registration error response according to RFC 7591.\nIndicates that the client registration request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Confidential App\",\n  \"client_uri\": \"https://example.com\",\n  \"logo_uri\": \"https://example.com/logo.png\",\n  \"redirect_uris\": [\n    \"https://example.com/oauth/callback\"\n  ],\n  \"token_endpoint_auth_method\": \"client_secret_basic\",\n  \"scope\": \"openid email profile\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_software_statement\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfb2f114-155f-408a-941e-35c6de3e661f",
+              "name": "Unprocessable entity error. The dynamic client registration feature may not be enabled\nfor this instance.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Confidential App\",\n  \"client_uri\": \"https://example.com\",\n  \"logo_uri\": \"https://example.com/logo.png\",\n  \"redirect_uris\": [\n    \"https://example.com/oauth/callback\"\n  ],\n  \"token_endpoint_auth_method\": \"client_secret_basic\",\n  \"scope\": \"openid email profile\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5e5a6d4d-e1e2-4a1c-9b2d-48c789f4248e",
+              "name": "Internal server error. The authorization server encountered an unexpected condition\nthat prevented it from fulfilling the registration request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_name\": \"My Confidential App\",\n  \"client_uri\": \"https://example.com\",\n  \"logo_uri\": \"https://example.com/logo.png\",\n  \"redirect_uris\": [\n    \"https://example.com/oauth/callback\"\n  ],\n  \"token_endpoint_auth_method\": \"client_secret_basic\",\n  \"scope\": \"openid email profile\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e00ce5af-3ccb-4cc8-a724-b25f3fb2fb59",
+          "name": "Get OAuth2 Token",
+          "request": {
+            "name": "Get OAuth2 Token",
+            "description": {
+              "content": "Exchange an authorization grant for OAuth2 tokens (access token, refresh token, and optionally ID token).\n\nThis endpoint implements the OAuth 2.0 Token Endpoint (RFC 6749) and OpenID Connect token endpoint.\nIt supports two grant types: `authorization_code` and `refresh_token`.\n\n#### Grant Types\n\n- **`authorization_code`**: Exchange an authorization code for tokens\n- **`refresh_token`**: Refresh an access token using a refresh token\n\n#### Authentication\n\n- **Confidential clients**: Must authenticate using one of the following methods:\n  - HTTP Basic Authentication: `Authorization: Basic base64(client_id:client_secret)`\n  - Client credentials in request body: Include `client_id` and `client_secret` in form fields\n  - *Note: Both methods (`client_secret_basic` and `client_secret_post`) are treated equivalently*\n- **Public clients** (PKCE flow): No client secret required. Must provide `client_id` and `code_verifier` in request body.\n\n#### PKCE (Proof Key for Code Exchange)\n\nPublic clients and clients that cannot securely store a client secret must use PKCE (RFC 7636).\nWhen using PKCE:\n- Include `code_challenge` and `code_challenge_method` in the authorization request\n- Include `code_verifier` in the token request (instead of `client_secret`)\n\n#### Scopes\n\nAvailable scopes:\n- `openid` - Enables OpenID Connect features, returns an `id_token` in the response\n- `email` - User's email address\n- `profile` - Basic profile information (name, username, picture, etc.)\n- `public_metadata` - Clerk custom scope for public metadata\n- `private_metadata` - Clerk custom scope for private metadata\n\nDefault scopes (if not specified): `email profile`\n\n#### Token Lifespans\n\n- **Access token**: 1 day (86400 seconds)\n- **Refresh token**: 10 years\n- **ID token**: 1 day (86400 seconds)\n- **Authorization code**: 10 minutes (must be exchanged within this time)\n\n#### OpenID Connect\n\nWhen the `openid` scope is included in the authorization request, the token response will include\nan `id_token` field containing a signed JWT with user identity information per the OpenID Connect specification.\nThe `id_token` will be refreshed along with the access token when using the `refresh_token` grant type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) The grant type being used.\n- `authorization_code`: Exchange an authorization code for tokens\n- `refresh_token`: Refresh an access token"
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "The authorization code received from the authorization endpoint.\n**Required when `grant_type=authorization_code`**."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<string>",
+                  "description": "The redirect URI used in the authorization request. Must match exactly.\n**Required when `grant_type=authorization_code`**."
+                },
+                {
+                  "disabled": false,
+                  "key": "code_verifier",
+                  "value": "<string>",
+                  "description": "The PKCE code verifier that corresponds to the `code_challenge` sent in the authorization request.\n**Required for public clients using PKCE with `grant_type=authorization_code`**.\nConfidential clients using `client_secret` should not include this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "The OAuth 2.0 client identifier.\n**Required for public clients** (those not using HTTP Basic Authentication).\nFor confidential clients, can be provided here or via HTTP Basic Authentication."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "The OAuth 2.0 client secret.\n**Required for confidential clients** (unless using HTTP Basic Authentication).\nPublic clients using PKCE should not include this parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "The refresh token issued to the client.\n**Required when `grant_type=refresh_token`**."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Space-separated list of scopes for the access token.\n**Optional when `grant_type=refresh_token`**.\nIf provided, the requested scope must not exceed the scope originally granted.\nIf omitted, the same scope as originally granted will be used."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2cc99223-a8d2-4c8c-83df-c3dbc54b0c6b",
+              "name": "Successfully issued OAuth2 tokens.\n\nThe response includes an `access_token` and `refresh_token`. If the `openid` scope was\ngranted, an `id_token` (JWT) will also be included in the response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The grant type being used.\n- `authorization_code`: Exchange an authorization code for tokens\n- `refresh_token`: Refresh an access token",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization code received from the authorization endpoint.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "clk_code_abc123xyz"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The redirect URI used in the authorization request. Must match exactly.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://example.com/oauth/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client identifier.\n**Required for public clients** (those not using HTTP Basic Authentication).\nFor confidential clients, can be provided here or via HTTP Basic Authentication.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "client_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client secret.\n**Required for confidential clients** (unless using HTTP Basic Authentication).\nPublic clients using PKCE should not include this parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "secret_xyz789"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"oat_abc123xyz...\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 86400,\n  \"refresh_token\": \"clk_refresh_abc123xyz...\",\n  \"scope\": \"email profile\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "208c73fc-655f-4321-b3a5-8b2ac70c9d76",
+              "name": "Bad request error. Common causes:\n- Missing required parameters\n- Invalid `grant_type` value\n- Malformed request\n- Expired authorization code\n- Invalid `redirect_uri` (doesn't match authorization request)\n- Unsupported token type for revocation (e.g., JWT access tokens)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The grant type being used.\n- `authorization_code`: Exchange an authorization code for tokens\n- `refresh_token`: Refresh an access token",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization code received from the authorization endpoint.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "clk_code_abc123xyz"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The redirect URI used in the authorization request. Must match exactly.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://example.com/oauth/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client identifier.\n**Required for public clients** (those not using HTTP Basic Authentication).\nFor confidential clients, can be provided here or via HTTP Basic Authentication.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "client_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client secret.\n**Required for confidential clients** (unless using HTTP Basic Authentication).\nPublic clients using PKCE should not include this parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "secret_xyz789"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_request\",\n  \"error_description\": \"The request is missing a required parameter\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c547b9c-d4d3-4081-9133-478ab4f74e52",
+              "name": "Unauthorized error. Common causes:\n- Invalid client credentials (`client_id` or `client_secret`)\n- Invalid or expired authorization code\n- Invalid or expired refresh token\n- Invalid `code_verifier` for PKCE flow",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The grant type being used.\n- `authorization_code`: Exchange an authorization code for tokens\n- `refresh_token`: Refresh an access token",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization code received from the authorization endpoint.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "clk_code_abc123xyz"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The redirect URI used in the authorization request. Must match exactly.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://example.com/oauth/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client identifier.\n**Required for public clients** (those not using HTTP Basic Authentication).\nFor confidential clients, can be provided here or via HTTP Basic Authentication.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "client_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client secret.\n**Required for confidential clients** (unless using HTTP Basic Authentication).\nPublic clients using PKCE should not include this parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "secret_xyz789"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_client\",\n  \"error_description\": \"Client authentication failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e12e98af-fbe0-4d4f-86a1-2ba866c17f58",
+              "name": "Forbidden error, for example you are trying to use a satellite domain",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The grant type being used.\n- `authorization_code`: Exchange an authorization code for tokens\n- `refresh_token`: Refresh an access token",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "authorization_code"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The authorization code received from the authorization endpoint.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "clk_code_abc123xyz"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The redirect URI used in the authorization request. Must match exactly.\n**Required when `grant_type=authorization_code`**.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "https://example.com/oauth/callback"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client identifier.\n**Required for public clients** (those not using HTTP Basic Authentication).\nFor confidential clients, can be provided here or via HTTP Basic Authentication.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "client_abc123"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The OAuth 2.0 client secret.\n**Required for confidential clients** (unless using HTTP Basic Authentication).\nPublic clients using PKCE should not include this parameter.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "secret_xyz789"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42e52059-6391-4ea6-b291-9f3286cad5f4",
+          "name": "Get User Info After OAuth2 Flow",
+          "request": {
+            "name": "Get User Info After OAuth2 Flow",
+            "description": {
+              "content": "Get user info in exchange for a valid OAuth2 access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db5f5b06-ea31-45fc-a8ca-5c89ee671a30",
+              "name": "Get user info after successful OAuth2 flow",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"instance_id\": \"string\",\n  \"user_id\": \"string\",\n  \"sub\": \"string\",\n  \"email\": \"string\",\n  \"email_verified\": false,\n  \"family_name\": \"string\",\n  \"given_name\": \"string\",\n  \"name\": \"string\",\n  \"username\": \"string\",\n  \"preferred_username\": \"string\",\n  \"picture\": \"string\",\n  \"public_metadata\": {\n    \"key_0\": 8837,\n    \"key_1\": 6070,\n    \"key_2\": true\n  },\n  \"private_metadata\": {\n    \"key_0\": 5075,\n    \"key_1\": \"string\",\n    \"key_2\": 150.87687210786237\n  },\n  \"unsafe_metadata\": {\n    \"key_0\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ee1fcdb-15f3-4269-ae3c-cc2eca850241",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0c5bae5-4a89-437d-a8a9-f51a7c9fec66",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b4a0508-22c0-4f33-8b61-0d02d71dc7e3",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea7d790c-d402-4af3-bf38-4c91869a55ec",
+          "name": "Get User Info After OAuth2 Flow",
+          "request": {
+            "name": "Get User Info After OAuth2 Flow",
+            "description": {
+              "content": "Get user info in exchange for a valid OAuth2 access token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eee734ba-61f0-4403-9d8f-82abdc7c68e4",
+              "name": "Get user info after successful OAuth2 flow",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"instance_id\": \"string\",\n  \"user_id\": \"string\",\n  \"sub\": \"string\",\n  \"email\": \"string\",\n  \"email_verified\": false,\n  \"family_name\": \"string\",\n  \"given_name\": \"string\",\n  \"name\": \"string\",\n  \"username\": \"string\",\n  \"preferred_username\": \"string\",\n  \"picture\": \"string\",\n  \"public_metadata\": {\n    \"key_0\": 8837,\n    \"key_1\": 6070,\n    \"key_2\": true\n  },\n  \"private_metadata\": {\n    \"key_0\": 5075,\n    \"key_1\": \"string\",\n    \"key_2\": 150.87687210786237\n  },\n  \"unsafe_metadata\": {\n    \"key_0\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9e94cd8-8570-4da0-ad46-dc2f681a320e",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b8a2406-3419-489b-9e01-85a2c78256e4",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "986887f9-0531-446f-b43a-31ad52904fe9",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2488921d-f249-4a73-af3b-4b7c7d496eda",
+          "name": "Get Information for an Access or Refresh Token",
+          "request": {
+            "name": "Get Information for an Access or Refresh Token",
+            "description": {
+              "content": "Get information for an access or refresh token",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "token_info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) The value of the access or the refresh token"
+                },
+                {
+                  "disabled": false,
+                  "key": "token_type_hint",
+                  "value": "<string>",
+                  "description": "A hint about the type of the token submitted for introspection. Can be one of the following `access_token` and `refresh_token`"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "The granted scopes for the token to check against"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "08e803f6-7ec5-4704-9a89-78dced1092a3",
+              "name": "Get information for an access or refresh token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the access or the refresh token",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token submitted for introspection. Can be one of the following `access_token` and `refresh_token`",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The granted scopes for the token to check against",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"active\": true,\n  \"client_id\": \"string\",\n  \"iat\": 8316,\n  \"scope\": \"string\",\n  \"sub\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57312d93-e42c-4162-be8d-69bf271e734a",
+              "name": "Unauthorized error, for example the provided client is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the access or the refresh token",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token submitted for introspection. Can be one of the following `access_token` and `refresh_token`",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The granted scopes for the token to check against",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "02ebe140-cf7f-47e6-8833-a54e965aa71c",
+              "name": "You are currently using the legacy OAuth 2.0 provider, please migrate to the new one via Clerk Dashboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token_info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The value of the access or the refresh token",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token submitted for introspection. Can be one of the following `access_token` and `refresh_token`",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The granted scopes for the token to check against",
+                        "type": "text/plain"
+                      },
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "034e5c8b-dd59-472e-b0f3-14a9a439b3e1",
+          "name": "Revoke OAuth2 Token",
+          "request": {
+            "name": "Revoke OAuth2 Token",
+            "description": {
+              "content": "Revoke OAuth2 token by token.\n\n#### Authentication\n\n- **Confidential clients**: Must authenticate using HTTP Basic Authentication with Client ID as username and Client Secret as password in the Authorization header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "token",
+                "revoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "The token to revoke."
+                },
+                {
+                  "disabled": false,
+                  "key": "token_type_hint",
+                  "value": "<string>",
+                  "description": "A hint about the type of the token to be revoked."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "23807432-de34-4466-b8da-5cf221f51208",
+              "name": "Success, no content.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The token to revoke.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token to be revoked.",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "efe78887-12bc-4395-af58-2c5559edee7a",
+              "name": "Bad request error. Common causes:\n- Missing required parameters\n- Invalid `grant_type` value\n- Malformed request\n- Expired authorization code\n- Invalid `redirect_uri` (doesn't match authorization request)\n- Unsupported token type for revocation (e.g., JWT access tokens)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The token to revoke.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token to be revoked.",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_request\",\n  \"error_description\": \"The request is missing a required parameter\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09f123d9-b2e1-4d4c-add4-af74d2baa064",
+              "name": "Unauthorized error. Common causes:\n- Invalid client credentials (`client_id` or `client_secret`)\n- Invalid or expired authorization code\n- Invalid or expired refresh token\n- Invalid `code_verifier` for PKCE flow",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token",
+                    "revoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The token to revoke.",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "A hint about the type of the token to be revoked.",
+                        "type": "text/plain"
+                      },
+                      "key": "token_type_hint",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_client\",\n  \"error_description\": \"Client authentication failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "314057e3-7f7e-4c18-996b-e6f579adca1c",
+          "name": "Get Consent Information",
+          "request": {
+            "name": "Get Consent Information",
+            "description": {
+              "content": "Returns the scopes for a given OAuth Application Client ID.\nAn optional `scope` query parameter can restrict the returned scopes to only those requested.\nThe OAuth application must have consent screen enabled.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "oauth",
+                "consent",
+                ":client_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Optional space-separated list of scopes to restrict the response to only those requested."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) The OAuth Application Client ID to get consent information for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "4377bae7-b3d0-4ba3-aa9a-3b30ba1b9318",
+              "name": "OAuth2 consent information (scopes with descriptions) for a given OAuth Application Client ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"oauth_application_name\": \"string\",\n  \"client_id\": \"string\",\n  \"scopes\": [\n    {\n      \"scope\": \"string\",\n      \"requires_consent\": false,\n      \"description\": \"string\"\n    },\n    {\n      \"scope\": \"string\",\n      \"requires_consent\": true,\n      \"description\": \"string\"\n    }\n  ],\n  \"oauth_application_logo_url\": \"string\",\n  \"oauth_application_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4fa243c-8fbd-4504-8cb5-77c20e28d97d",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac95c3cb-6cd0-4ee5-be83-6b583bf5d444",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b73633a-4c15-4a15-96e8-a343ee725e61",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed1fdd52-5044-4886-b2a6-d6dad6e54cc6",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c03f8973-b6da-41ea-86a5-36073547e418",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID to get consent information for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3e635da-c3d8-45ed-9742-f380c4266a1e",
+          "name": "Submit OAuth2 Consent Decision",
+          "request": {
+            "name": "Submit OAuth2 Consent Decision",
+            "description": {
+              "content": "Submits the user's consent decision for an OAuth2 authorization request.\nThis endpoint allows building custom consent portals as a replacement for\nthe default account-portal-rendered consent screen.\n\nThe OAuth application must have the consent screen enabled. On grant, the\nflow continues just like the standard `/oauth/authorize` endpoint and\nreturns the appropriate redirect.\n\nIn addition to the fields documented below, the request body must\nre-submit the standard OAuth2 authorize parameters from the original\n`/oauth/authorize` request: `response_type`, `redirect_uri`, `scope`,\n`state`, `nonce`, `code_challenge`, and `code_challenge_method`. These\nare forwarded as-is to the authorize flow.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "me",
+                "oauth",
+                "consent",
+                ":client_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "client_id",
+                  "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "consented",
+                  "value": "<boolean>",
+                  "description": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "organization_id",
+                  "value": "<string>",
+                  "description": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d5d96bd9-4b38-4c52-9e44-cfb76ac795b3",
+              "name": "Success for 'form_post' response mode",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "112766d9-6dc2-41fb-b603-3a6533a42d36",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46fd0c49-b335-40be-a7d0-c93431b396cb",
+              "name": "Redirect, no body.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "See Other",
+              "code": 303,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f425db95-fa1f-41ca-a6d1-a711240050be",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d098ad2-636b-4ed2-b021-55ed8d53d97e",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a54f321c-536e-46a6-bb42-8edb3392259d",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f0cb258-664c-4e90-9537-afeefe4a0780",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "912963c7-3477-477b-8d8d-004772b13d03",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "me",
+                    "oauth",
+                    "consent",
+                    ":client_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "client_id",
+                      "description": "(Required) The OAuth Application Client ID the consent decision applies to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The user's consent decision. `true` grants the requested\nscopes and continues the authorization flow; any other value\nis treated as a denial and returns an `access_denied` error\nin the redirect.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "consented",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Optional. The organization to scope the issued token to. The\nauthenticated user must be a member of this organization. If\nomitted, the user's currently active organization is used.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "organization_id",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7db188ba-3f23-4453-b4f0-4b1ce505f1f3",
+    "name": "Clerk Backend Account Portal OAuth2 Identity Provider API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

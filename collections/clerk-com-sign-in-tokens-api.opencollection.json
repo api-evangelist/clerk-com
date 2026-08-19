@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Sign-in Tokens API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sign-in Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Sign-in Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sign_in_tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sign-in token and associates it with the given user.\nBy default, sign-in tokens expire in 30 days.\nYou can optionally supply a different duration in seconds using the `expires_in_seconds` property."
+        },
+        {
+          "info": {
+            "name": "Revoke the Given Sign-in Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/sign_in_tokens/:sign_in_token_id/revoke",
+            "params": [
+              {
+                "name": "sign_in_token_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign-in token to be revoked"
+              }
+            ]
+          },
+          "docs": "Revokes a pending sign-in token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

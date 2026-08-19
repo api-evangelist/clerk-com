@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Allow-list / Block-list API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Allow-list / Block-list",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Identifiers on the Allow-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/allowlist_identifiers",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Get a list of all identifiers allowed to sign up to an instance"
+        },
+        {
+          "info": {
+            "name": "Add Identifier to the Allow-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/allowlist_identifiers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an identifier allowed to sign up to an instance"
+        },
+        {
+          "info": {
+            "name": "Delete Identifier from Allow-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/allowlist_identifiers/:identifier_id",
+            "params": [
+              {
+                "name": "identifier_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the identifier to delete from the allow-list"
+              }
+            ]
+          },
+          "docs": "Delete an identifier from the instance allow-list"
+        },
+        {
+          "info": {
+            "name": "List All Identifiers on the Block-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/blocklist_identifiers"
+          },
+          "docs": "Get a list of all identifiers which are not allowed to access an instance"
+        },
+        {
+          "info": {
+            "name": "Add Identifier to the Block-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/blocklist_identifiers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an identifier that is blocked from accessing an instance"
+        },
+        {
+          "info": {
+            "name": "Delete Identifier from Block-list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/blocklist_identifiers/:identifier_id",
+            "params": [
+              {
+                "name": "identifier_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the identifier to delete from the block-list"
+              }
+            ]
+          },
+          "docs": "Delete an identifier from the instance block-list"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,266 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Invitations API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invitations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/invitations",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter invitations based on their status"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filter invitations based on their `email_address` or `id`"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return invitations in a particular order.\nAt the moment, you can order the returned invitations either by their `created_at`, `email_address` or `expires_at`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns all non-revoked invitations for your application, sorted by creation date"
+        },
+        {
+          "info": {
+            "name": "Create an Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/invitations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new invitation for the given email address and sends the invitation email.\nKeep in mind that you cannot create an invitation if there is already one for the given email address.\nAlso, trying to create an invitation for an email address that already exists in your application will result to an error."
+        },
+        {
+          "info": {
+            "name": "Create Multiple Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/invitations/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this API operation to create multiple invitations for the provided email addresses. You can choose to send the\ninvitations as emails by setting the `notify` parameter to `true`. There cannot be an existing invitation for any\nof the email addresses you provide unless you set `ignore_existing` to `true` for specific email addresses. Please\nnote that there must be no existing user for any of the email addresses you provide, and this rule cannot be bypassed.\n\nThis endpoint is limited to a maximu"
+        },
+        {
+          "info": {
+            "name": "Revokes an Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/invitations/:invitation_id/revoke",
+            "params": [
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the invitation to be revoked"
+              }
+            ]
+          },
+          "docs": "Revokes the given invitation.\nRevoking an invitation will prevent the user from using the invitation link that was sent to them.\nHowever, it doesn't prevent the user from signing up if they follow the sign up flow.\nOnly active (i.e. non-revoked) invitations can be revoked."
+        },
+        {
+          "info": {
+            "name": "Get All Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitation will be retrieved."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve all invitations for an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Create Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/invitations",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitation will be created."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create an invitation for a user to join an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Bulk Create Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/invitations/bulk",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be created."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "email_address",
+                  "value": ""
+                },
+                {
+                  "name": "role",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create an invitation for a user to join an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Get All Pending Organization Invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/invitations/pending",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be retrieved."
+              }
+            ]
+          },
+          "docs": "Get a list of pending invitations for an organization.\n\nThis endpoint is deprecated. Instead use the `/v1/organizations/{organization_id}/invitations`\nwith a query parameter of `status=pending`."
+        },
+        {
+          "info": {
+            "name": "Revoke Pending Organization Invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/invitations/:invitation_id/revoke",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization for which the invitations will be retrieved."
+              },
+              {
+                "name": "invitation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the invitation to revoke."
+              }
+            ]
+          },
+          "docs": "Revoke a pending organization invitation.\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

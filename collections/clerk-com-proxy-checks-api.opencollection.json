@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Proxy Checks API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Proxy Checks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify the Proxy Configuration for Your Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/proxy_checks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint can be used to validate that a proxy-enabled domain is operational.\nIt tries to verify that the proxy URL provided in the parameters maps to a functional proxy that can reach the Clerk Frontend API.\n\nYou can use this endpoint before you set a proxy URL for a domain. This way you can ensure that switching to proxy-based\nconfiguration will not lead to downtime for your instance.\n\nThe `proxy_url` parameter allows for testing proxy configurations for domains that don't have a proxy URL"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

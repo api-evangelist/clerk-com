@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Membership Requests API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Membership Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organization Membership Requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/membership_requests",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all membership requests of an organization.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Accept Organization Membership Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/membership_requests/:request_id/accept",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The request ID."
+              }
+            ]
+          },
+          "docs": "Accepts an organization membership request.\n\nThe current user must have permissions to manage the members of the organization."
+        },
+        {
+          "info": {
+            "name": "Reject Organization Membership Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/organizations/:organization_id/membership_requests/:request_id/reject",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "The request ID."
+              }
+            ]
+          },
+          "docs": "Rejects an organization membership request\n\nThe current user must have permissions to manage the members of the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

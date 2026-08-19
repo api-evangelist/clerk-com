@@ -1,0 +1,178 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Client API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Client",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client"
+          },
+          "docs": "Returns the current client that is present either in the browser cookies or authorization header."
+        },
+        {
+          "info": {
+            "name": "Create New Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client"
+          },
+          "docs": "Creates a new Client and sets it either in the response cookies or the response authorization header."
+        },
+        {
+          "info": {
+            "name": "Create New Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/v1/client"
+          },
+          "docs": "Creates a new Client and sets it either in the response cookies or the response authorization header."
+        },
+        {
+          "info": {
+            "name": "Delete Client's Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/client"
+          },
+          "docs": "Ends all Sessions of the Current Client"
+        },
+        {
+          "info": {
+            "name": "Sync Clients Across Multiple Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client/sync",
+            "params": [
+              {
+                "name": "link_domain",
+                "value": "",
+                "type": "query",
+                "description": "The satellite domain which should be synced with its primary."
+              },
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect to after the syncing process has been completed."
+              }
+            ]
+          },
+          "docs": "Start the syncing process between a satellite and primary domain."
+        },
+        {
+          "info": {
+            "name": "Link Clients Across Multiple Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client/link",
+            "params": [
+              {
+                "name": "__clerk_token",
+                "value": "",
+                "type": "query",
+                "description": "The token generated from a sync request."
+              }
+            ]
+          },
+          "docs": "Complete a syncing process between a satellite and primary domains by linking their clients."
+        },
+        {
+          "info": {
+            "name": "Generate and Return a New Session Token for a Given Client.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client/handshake",
+            "headers": [
+              {
+                "name": "Clerk-Proxy-Url",
+                "value": ""
+              },
+              {
+                "name": "Clerk-Secret-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "redirect_url",
+                "value": "",
+                "type": "query",
+                "description": "The URL to redirect back to after the handshake"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The supported format of the handshake payload."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "The organization ID or slug to attempt to set as active for the session. If this param is present but has no value,\nthe personal account will be set as active. If the organization cannot be set as active (because it does not\nexist, or the user is not a member), the active organization for the session will not change.\n"
+              },
+              {
+                "name": "satellite_fapi",
+                "value": "",
+                "type": "query",
+                "description": "The Frontend API of the satellite domain"
+              }
+            ]
+          },
+          "docs": "When the authentication status cannot be determined from the current session token, we initiate a handshake to refresh the token and send it back to the application. Called in server environments."
+        },
+        {
+          "info": {
+            "name": "Create Session from Agent Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/agents/tasks",
+            "params": [
+              {
+                "name": "ticket",
+                "value": "",
+                "type": "query",
+                "description": "The agent task ticket value obtained from the Backend API."
+              }
+            ]
+          },
+          "docs": "Creates a new session directly from an agent task without requiring navigation to the sign-in page.\nAgent tasks are single-use tokens created via the Backend API that bypass MFA requirements.\n\nThe endpoint returns a redirect with a handshake cookie containing all session cookies,\nenabling cookie sync to the app domain in a single step. This is useful for browser\nautomation tools (Puppeteer, Playwright) that need cookies on the application domain.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

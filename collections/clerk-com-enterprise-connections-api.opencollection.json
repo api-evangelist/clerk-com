@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Enterprise Connections API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Enterprise Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Enterprise Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/enterprise_connections",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter enterprise connections by organization ID"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Filter by active status. If true, only active connections are returned. If false, only inactive connections are returned. If omitted, all connections are returned."
+              }
+            ]
+          },
+          "docs": "Returns the list of enterprise connections for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters."
+        },
+        {
+          "info": {
+            "name": "Create an Enterprise Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/enterprise_connections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new enterprise connection."
+        },
+        {
+          "info": {
+            "name": "Retrieve an Enterprise Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/enterprise_connections/:enterprise_connection_id",
+            "params": [
+              {
+                "name": "enterprise_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the enterprise connection"
+              }
+            ]
+          },
+          "docs": "Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path."
+        },
+        {
+          "info": {
+            "name": "Update an Enterprise Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/enterprise_connections/:enterprise_connection_id",
+            "params": [
+              {
+                "name": "enterprise_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the enterprise connection to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.\nWhen enabling the connection (setting `active` to true), any existing verified organization domains that match the connection's domains (e.g. used for enrollment modes like automatic invitation) may be deleted so the connection can be enabled."
+        },
+        {
+          "info": {
+            "name": "Delete an Enterprise Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/enterprise_connections/:enterprise_connection_id",
+            "params": [
+              {
+                "name": "enterprise_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the enterprise connection to delete"
+              }
+            ]
+          },
+          "docs": "Deletes the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

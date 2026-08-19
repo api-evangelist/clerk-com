@@ -1,0 +1,2754 @@
+{
+  "item": [
+    {
+      "id": "bf59e2c7-b2a2-48ff-acc7-eacc442ad34b",
+      "name": "Role Sets",
+      "description": {
+        "content": "Role sets define collections of roles that can be assigned to organization members.\nEach organization uses one role set to determine the available roles for its members.\nRole sets support default roles for new members and creator roles for organization founders.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1997f539-20e7-43a7-a902-775111a28eb0",
+          "name": "Get a List of Role Sets",
+          "request": {
+            "name": "Get a List of Role Sets",
+            "description": {
+              "content": "Returns a list of role sets for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe role sets are ordered by descending creation date by default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "Returns role sets with ID, name, or key that match the given query.\nUses exact match for role set ID and partial match for name and key."
+                },
+                {
+                  "disabled": false,
+                  "key": "order_by",
+                  "value": "-created_at",
+                  "description": "Allows to return role sets in a particular order.\nAt the moment, you can order the returned role sets by their `created_at`, `name`, or `key`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want role sets to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4100433-7768-4507-be13-0f91b04508f1",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"object\": \"role_set\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"roles\": [\n        {\n          \"object\": \"role_set_item\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"description\": \"string\",\n          \"created_at\": 5391,\n          \"updated_at\": 7362,\n          \"members_count\": 3784,\n          \"has_members\": true\n        },\n        {\n          \"object\": \"role_set_item\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"description\": \"string\",\n          \"created_at\": 3611,\n          \"updated_at\": 756,\n          \"members_count\": 4549,\n          \"has_members\": true\n        }\n      ],\n      \"type\": \"initial\",\n      \"created_at\": 5318,\n      \"updated_at\": 7423,\n      \"default_role\": {\n        \"object\": \"role_set_item\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"description\": \"string\",\n        \"created_at\": 3931,\n        \"updated_at\": 3920,\n        \"members_count\": 7126,\n        \"has_members\": false\n      },\n      \"creator_role\": {\n        \"object\": \"role_set_item\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"description\": \"string\",\n        \"created_at\": 4683,\n        \"updated_at\": 9184,\n        \"members_count\": 9645,\n        \"has_members\": true\n      },\n      \"role_set_migration\": {\n        \"object\": \"role_set_migration\",\n        \"id\": \"string\",\n        \"instance_id\": \"string\",\n        \"source_role_set_id\": \"string\",\n        \"trigger_type\": \"string\",\n        \"status\": \"string\",\n        \"migrated_members\": 9590,\n        \"created_at\": 9501,\n        \"updated_at\": 1246,\n        \"organization_id\": \"string\",\n        \"dest_role_set_id\": \"string\",\n        \"mappings\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"started_at\": 4162,\n        \"completed_at\": 3923\n      }\n    },\n    {\n      \"object\": \"role_set\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"roles\": [\n        {\n          \"object\": \"role_set_item\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"description\": \"string\",\n          \"created_at\": 1143,\n          \"updated_at\": 6106,\n          \"members_count\": 9536,\n          \"has_members\": true\n        },\n        {\n          \"object\": \"role_set_item\",\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"key\": \"string\",\n          \"description\": \"string\",\n          \"created_at\": 3918,\n          \"updated_at\": 5145,\n          \"members_count\": 5677,\n          \"has_members\": true\n        }\n      ],\n      \"type\": \"custom\",\n      \"created_at\": 6566,\n      \"updated_at\": 2479,\n      \"default_role\": {\n        \"object\": \"role_set_item\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"description\": \"string\",\n        \"created_at\": 4329,\n        \"updated_at\": 6547,\n        \"members_count\": 7227,\n        \"has_members\": true\n      },\n      \"creator_role\": {\n        \"object\": \"role_set_item\",\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"key\": \"string\",\n        \"description\": \"string\",\n        \"created_at\": 6305,\n        \"updated_at\": 1835,\n        \"members_count\": 9050,\n        \"has_members\": false\n      },\n      \"role_set_migration\": {\n        \"object\": \"role_set_migration\",\n        \"id\": \"string\",\n        \"instance_id\": \"string\",\n        \"source_role_set_id\": \"string\",\n        \"trigger_type\": \"string\",\n        \"status\": \"string\",\n        \"migrated_members\": 1784,\n        \"created_at\": 5754,\n        \"updated_at\": 6488,\n        \"organization_id\": \"string\",\n        \"dest_role_set_id\": \"string\",\n        \"mappings\": {\n          \"key_0\": \"string\"\n        },\n        \"started_at\": 9516,\n        \"completed_at\": 5209\n      }\n    }\n  ],\n  \"total_count\": 4170\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a732f9bd-428c-4646-821b-873394fd4093",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "063496ab-875d-4104-8ab0-e83d69e1b8ec",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3cd1d06-6369-4977-89fa-9bfc9e21ca37",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f4286dd-2699-4d11-add1-6f5c0d4feaca",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order_by",
+                      "value": "-created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81cc607a-302b-468f-911e-1b9117c8d178",
+          "name": "Create a Role Set",
+          "request": {
+            "name": "Create a Role Set",
+            "description": {
+              "content": "Creates a new role set with the given name and roles.\nThe key must be unique for the instance and start with the 'role_set:' prefix, followed by lowercase alphanumeric characters and underscores only.\nYou must provide at least one role and specify a default role key and creator role key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe6d0de0-2a78-41f8-a7f7-a21f9c69ed6d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"role_set\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"description\": \"string\",\n  \"roles\": [\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 9551,\n      \"updated_at\": 6138,\n      \"members_count\": 9390,\n      \"has_members\": true\n    },\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 5710,\n      \"updated_at\": 3942,\n      \"members_count\": 3783,\n      \"has_members\": false\n    }\n  ],\n  \"type\": \"custom\",\n  \"created_at\": 3075,\n  \"updated_at\": 4132,\n  \"default_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 4380,\n    \"updated_at\": 9155,\n    \"members_count\": 4422,\n    \"has_members\": false\n  },\n  \"creator_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 3948,\n    \"updated_at\": 3042,\n    \"members_count\": 964,\n    \"has_members\": false\n  },\n  \"role_set_migration\": {\n    \"object\": \"role_set_migration\",\n    \"id\": \"string\",\n    \"instance_id\": \"string\",\n    \"source_role_set_id\": \"string\",\n    \"trigger_type\": \"string\",\n    \"status\": \"string\",\n    \"migrated_members\": 2492,\n    \"created_at\": 1278,\n    \"updated_at\": 4251,\n    \"organization_id\": \"string\",\n    \"dest_role_set_id\": \"string\",\n    \"mappings\": {\n      \"key_0\": \"string\"\n    },\n    \"started_at\": 7104,\n    \"completed_at\": 5071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "445f9ba2-068f-429c-bcda-5af558947d4a",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ee76509-3580-4ccb-8298-a181e7538987",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f70ccbd-b68e-4602-a742-1ae4da9346ca",
+              "name": "Payment required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba87fade-3b60-4123-8ff8-7e682f6ea8f8",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0667a4f-8a7a-4183-8c9f-8bdef2df9892",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e93ebb71-e46d-4746-8e6a-5d739afc04eb",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7936c8a2-1ef3-492c-b6ca-60d95a2883a1",
+          "name": "Retrieve a Role Set",
+          "request": {
+            "name": "Retrieve a Role Set",
+            "description": {
+              "content": "Retrieves an existing role set by its key or ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets",
+                ":role_set_key_or_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_set_key_or_id",
+                  "description": "(Required) The key or ID of the role set"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6df6ab10-df43-40fe-b9b9-09ee03e92e37",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"role_set\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"description\": \"string\",\n  \"roles\": [\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 9551,\n      \"updated_at\": 6138,\n      \"members_count\": 9390,\n      \"has_members\": true\n    },\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 5710,\n      \"updated_at\": 3942,\n      \"members_count\": 3783,\n      \"has_members\": false\n    }\n  ],\n  \"type\": \"custom\",\n  \"created_at\": 3075,\n  \"updated_at\": 4132,\n  \"default_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 4380,\n    \"updated_at\": 9155,\n    \"members_count\": 4422,\n    \"has_members\": false\n  },\n  \"creator_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 3948,\n    \"updated_at\": 3042,\n    \"members_count\": 964,\n    \"has_members\": false\n  },\n  \"role_set_migration\": {\n    \"object\": \"role_set_migration\",\n    \"id\": \"string\",\n    \"instance_id\": \"string\",\n    \"source_role_set_id\": \"string\",\n    \"trigger_type\": \"string\",\n    \"status\": \"string\",\n    \"migrated_members\": 2492,\n    \"created_at\": 1278,\n    \"updated_at\": 4251,\n    \"organization_id\": \"string\",\n    \"dest_role_set_id\": \"string\",\n    \"mappings\": {\n      \"key_0\": \"string\"\n    },\n    \"started_at\": 7104,\n    \"completed_at\": 5071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e6691a7-7028-45de-9e79-ac93501876ba",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86865448-47cf-42a8-9694-ccf96ac9425c",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44f64501-3ecc-4536-abc7-858a75e36325",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "599dedbd-d04c-4755-9f52-1aa328d203fe",
+          "name": "Update a Role Set",
+          "request": {
+            "name": "Update a Role Set",
+            "description": {
+              "content": "Updates an existing role set.\nYou can update the name, key, description, type, default role, or creator role.\nAll parameters are optional - you can update only the fields you want to change.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets",
+                ":role_set_key_or_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_set_key_or_id",
+                  "description": "(Required) The key or ID of the role set to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d1750e13-4750-4db5-90c9-ffe3007bc351",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"role_set\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"description\": \"string\",\n  \"roles\": [\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 9551,\n      \"updated_at\": 6138,\n      \"members_count\": 9390,\n      \"has_members\": true\n    },\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 5710,\n      \"updated_at\": 3942,\n      \"members_count\": 3783,\n      \"has_members\": false\n    }\n  ],\n  \"type\": \"custom\",\n  \"created_at\": 3075,\n  \"updated_at\": 4132,\n  \"default_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 4380,\n    \"updated_at\": 9155,\n    \"members_count\": 4422,\n    \"has_members\": false\n  },\n  \"creator_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 3948,\n    \"updated_at\": 3042,\n    \"members_count\": 964,\n    \"has_members\": false\n  },\n  \"role_set_migration\": {\n    \"object\": \"role_set_migration\",\n    \"id\": \"string\",\n    \"instance_id\": \"string\",\n    \"source_role_set_id\": \"string\",\n    \"trigger_type\": \"string\",\n    \"status\": \"string\",\n    \"migrated_members\": 2492,\n    \"created_at\": 1278,\n    \"updated_at\": 4251,\n    \"organization_id\": \"string\",\n    \"dest_role_set_id\": \"string\",\n    \"mappings\": {\n      \"key_0\": \"string\"\n    },\n    \"started_at\": 7104,\n    \"completed_at\": 5071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1cef38e-5761-434d-b653-b2ac7b81ba57",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5d0a861-6207-402c-a49d-35f056a2d208",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b04827d7-28c7-4c05-bb6d-b41b94ec2b2a",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91b24f94-0049-4d63-b992-f255c08315d5",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ae2700a-ce23-42d1-804f-2c7963e71dca",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"key\": \"<string>\",\n  \"description\": \"<string>\",\n  \"type\": \"<string>\",\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "094f2e9e-4441-4e0a-9b62-e7de58e8230f",
+          "name": "Replace a Role Set",
+          "request": {
+            "name": "Replace a Role Set",
+            "description": {
+              "content": "Replaces a role set with another role set. This is functionally equivalent to deleting\nthe role set but allows for atomic replacement with migration support.\nOrganizations using this role set will be migrated to the destination role set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets",
+                ":role_set_key_or_id",
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_set_key_or_id",
+                  "description": "(Required) The key or ID of the role set to replace"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "47955a31-415a-4da6-b292-1bbf533590ae",
+              "name": "Deleted Object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"deleted\": false,\n  \"id\": \"string\",\n  \"slug\": \"string\",\n  \"external_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5902afcc-e1b0-4d5e-babf-39fdc9eeadbf",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54edc8b2-c4d8-4c67-b65f-212d82ac3aef",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "145b343d-afb8-4c46-8b7a-a94c286dfc0e",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3463c462-cad6-43a9-aaeb-18d5b2d38b49",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f30a0f53-123d-4e3d-b128-3646609d6d49",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set to replace"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dest_role_set_key\": \"<string>\",\n  \"reassignment_mappings\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "709d4dd7-f789-4137-801e-2e855483d7f8",
+          "name": "Add Roles to a Role Set",
+          "request": {
+            "name": "Add Roles to a Role Set",
+            "description": {
+              "content": "Adds one or more roles to an existing role set.\nYou can optionally update the default role or creator role when adding new roles.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets",
+                ":role_set_key_or_id",
+                "roles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_set_key_or_id",
+                  "description": "(Required) The key or ID of the role set"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49b927f8-a2ce-4908-bce9-4592cfd76448",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"role_set\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"description\": \"string\",\n  \"roles\": [\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 9551,\n      \"updated_at\": 6138,\n      \"members_count\": 9390,\n      \"has_members\": true\n    },\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 5710,\n      \"updated_at\": 3942,\n      \"members_count\": 3783,\n      \"has_members\": false\n    }\n  ],\n  \"type\": \"custom\",\n  \"created_at\": 3075,\n  \"updated_at\": 4132,\n  \"default_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 4380,\n    \"updated_at\": 9155,\n    \"members_count\": 4422,\n    \"has_members\": false\n  },\n  \"creator_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 3948,\n    \"updated_at\": 3042,\n    \"members_count\": 964,\n    \"has_members\": false\n  },\n  \"role_set_migration\": {\n    \"object\": \"role_set_migration\",\n    \"id\": \"string\",\n    \"instance_id\": \"string\",\n    \"source_role_set_id\": \"string\",\n    \"trigger_type\": \"string\",\n    \"status\": \"string\",\n    \"migrated_members\": 2492,\n    \"created_at\": 1278,\n    \"updated_at\": 4251,\n    \"organization_id\": \"string\",\n    \"dest_role_set_id\": \"string\",\n    \"mappings\": {\n      \"key_0\": \"string\"\n    },\n    \"started_at\": 7104,\n    \"completed_at\": 5071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fe728b0-907d-4d3a-985b-6db3c87fe84c",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3fd0980-3785-44e6-afc9-97e53d0db428",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc7cf4e7-3333-4696-aa3c-4759dc29d488",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68bc2036-5608-4fcf-b2b6-0bf74cf563a0",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba425e66-bd10-47c8-b705-553f80ff3d62",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_keys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"default_role_key\": \"<string>\",\n  \"creator_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f8eb2754-80a8-4734-b9a2-a61e5543d132",
+          "name": "Replace a Role in a Role Set",
+          "request": {
+            "name": "Replace a Role in a Role Set",
+            "description": {
+              "content": "Replaces a role in a role set with another role. This atomically removes\nthe source role and reassigns any members to the destination role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "role_sets",
+                ":role_set_key_or_id",
+                "roles",
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "role_set_key_or_id",
+                  "description": "(Required) The key or ID of the role set"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cea21f73-9eb2-409e-8987-00d675cafb90",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"role_set\",\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"key\": \"string\",\n  \"description\": \"string\",\n  \"roles\": [\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 9551,\n      \"updated_at\": 6138,\n      \"members_count\": 9390,\n      \"has_members\": true\n    },\n    {\n      \"object\": \"role_set_item\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"key\": \"string\",\n      \"description\": \"string\",\n      \"created_at\": 5710,\n      \"updated_at\": 3942,\n      \"members_count\": 3783,\n      \"has_members\": false\n    }\n  ],\n  \"type\": \"custom\",\n  \"created_at\": 3075,\n  \"updated_at\": 4132,\n  \"default_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 4380,\n    \"updated_at\": 9155,\n    \"members_count\": 4422,\n    \"has_members\": false\n  },\n  \"creator_role\": {\n    \"object\": \"role_set_item\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"description\": \"string\",\n    \"created_at\": 3948,\n    \"updated_at\": 3042,\n    \"members_count\": 964,\n    \"has_members\": false\n  },\n  \"role_set_migration\": {\n    \"object\": \"role_set_migration\",\n    \"id\": \"string\",\n    \"instance_id\": \"string\",\n    \"source_role_set_id\": \"string\",\n    \"trigger_type\": \"string\",\n    \"status\": \"string\",\n    \"migrated_members\": 2492,\n    \"created_at\": 1278,\n    \"updated_at\": 4251,\n    \"organization_id\": \"string\",\n    \"dest_role_set_id\": \"string\",\n    \"mappings\": {\n      \"key_0\": \"string\"\n    },\n    \"started_at\": 7104,\n    \"completed_at\": 5071\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "215ec30c-b42c-400b-9220-9592648f8af1",
+              "name": "Request was not successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f7991be-28a4-4e23-a7c8-fb3222986817",
+              "name": "Authentication invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9728d754-15cc-4b8a-8c22-e4def2d99bc0",
+              "name": "Authorization invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e431263b-fd48-436b-909d-a18bdfc02d75",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3427404-4e75-483c-ab45-5756fb452aa5",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "role_sets",
+                    ":role_set_key_or_id",
+                    "roles",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "role_set_key_or_id",
+                      "description": "(Required) The key or ID of the role set"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role_key\": \"<string>\",\n  \"to_role_key\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    },\n    {\n      \"message\": \"string\",\n      \"long_message\": \"string\",\n      \"code\": \"string\",\n      \"meta\": {}\n    }\n  ],\n  \"meta\": {},\n  \"clerk_trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.clerk.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5c8d7183-89d5-4176-817c-1dcdb5fdb2a8",
+    "name": "Clerk Backend Account Portal Role Sets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Clerk REST Backend API, meant to be accessed by backend servers.\n\n### Versions\n\nWhen the API changes in a way that isn't compatible with older versions, a new version is released.\nEach version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).\n\nPlease see https://clerk.com/docs for more information.\n\nContact Support:\n Name: Clerk Platform Team\n Email: support@clerk.com",
+      "type": "text/plain"
+    }
+  }
+}

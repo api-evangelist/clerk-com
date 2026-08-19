@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Redirect URLs API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Redirect URLs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Redirect URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/redirect_urls",
+            "params": [
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Lists all whitelisted redirect_urls for the instance"
+        },
+        {
+          "info": {
+            "name": "Create a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/redirect_urls",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a redirect URL"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/redirect_urls/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the redirect URL"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of the redirect URL with the given ID"
+        },
+        {
+          "info": {
+            "name": "Delete a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/redirect_urls/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the redirect URL"
+              }
+            ]
+          },
+          "docs": "Remove the selected redirect URL from the whitelist of the instance"
+        },
+        {
+          "info": {
+            "name": "List Redirect URLs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/redirect_urls",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page (1-500, default 10)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip for pagination."
+              }
+            ]
+          },
+          "docs": "List all redirect URLs for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `applications:read` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Create a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/redirect_urls",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a redirect URL for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `applications:manage` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Get a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/redirect_urls/:redirectURLID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "redirectURLID",
+                "value": "",
+                "type": "path",
+                "description": "Redirect URL ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a redirect URL for an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `applications:read` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a Redirect URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/redirect_urls/:redirectURLID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "redirectURLID",
+                "value": "",
+                "type": "path",
+                "description": "Redirect URL ID."
+              }
+            ]
+          },
+          "docs": "Delete a redirect URL from an application instance.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `applications:manage` scope.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal TOTP API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TOTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create TOTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/totp"
+          },
+          "docs": "Initializes TOTP by generating a new secret. This then needs to be added to an authenticator app and verified. A user can have only one TOTP secret and this endpoint will return an error if it is already present."
+        },
+        {
+          "info": {
+            "name": "Delete TOTP",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/totp"
+          },
+          "docs": "Deletes the current TOTP secret. This will invalidate all authenticators that where previously added."
+        },
+        {
+          "info": {
+            "name": "Attempt TOTP Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/totp/attempt_verification",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempts to verify the TOTP secret previously created using a code from an authenticator."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

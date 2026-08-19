@@ -1,0 +1,273 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Applications API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications",
+            "params": [
+              {
+                "name": "include_secret_keys",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include secret keys in the response."
+              }
+            ]
+          },
+          "docs": "List applications.\n"
+        },
+        {
+          "info": {
+            "name": "Create an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new application.\n"
+        },
+        {
+          "info": {
+            "name": "Get an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "include_secret_keys",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include secret keys in the response. If 'true', the response will include the secret keys for each instance."
+              }
+            ]
+          },
+          "docs": "Get application details.\n"
+        },
+        {
+          "info": {
+            "name": "Update an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an application.\n"
+        },
+        {
+          "info": {
+            "name": "Delete an Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ]
+          },
+          "docs": "Delete an application.\n"
+        },
+        {
+          "info": {
+            "name": "Upload Application Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/logo",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Set or replace an application's logo by uploading an image file.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Application Logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/logo",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ]
+          },
+          "docs": "Delete an application's logo.\n"
+        },
+        {
+          "info": {
+            "name": "Upload Application Favicon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/favicon",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Set or replace an application's favicon by uploading an image file.\n"
+        },
+        {
+          "info": {
+            "name": "Delete Application Favicon",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/favicon",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ]
+          },
+          "docs": "Delete an application's favicon.\n"
+        },
+        {
+          "info": {
+            "name": "Get Instance Usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/instances/:envOrInsID/usage",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "envOrInsID",
+                "value": "",
+                "type": "path",
+                "description": "Environment type (e.g., \"development\", \"production\") or instance ID.\n"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range for usage data in YYYY-MM-DD format.\nBoth `start` and `end` must be provided together.\nWhen omitted, the current billing cycle is used.\n"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive end of the date range for usage data in YYYY-MM-DD format.\nBoth `start` and `end` must be provided together.\nWhen omitted, the current billing cycle is used.\n"
+              }
+            ]
+          },
+          "docs": "Get usage totals for an application instance across meters such as MAU, MAO,\nSMS, custom domains, and enterprise connections.\n\nThe `envOrInsID` parameter can be either an environment type (e.g., \"development\", \"production\")\nor an instance ID.\n\nRequires the `application_usage:read` scope.\n"
+        },
+        {
+          "info": {
+            "name": "Claim an Accountless Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/accountless_applications/claim",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Claim an accountless application by assigning it to the authenticated principal's workspace.\nThe application is identified by a single-use claim token that was generated when the\naccountless application was created. Once claimed, the token is invalidated and cannot be reused.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

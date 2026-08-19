@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Email & SMS Templates API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email & SMS Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/templates/:template_type",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of templates to list (email or SMS)"
+              },
+              {
+                "name": "paginated",
+                "value": "",
+                "type": "query",
+                "description": "Whether to paginate the results.\nIf true, the results will be paginated.\nIf false, the results will not be paginated."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Returns a list of all templates.\nThe templates are returned sorted by position."
+        },
+        {
+          "info": {
+            "name": "Retrieve a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/templates/:template_type/:slug",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of templates to retrieve (email or SMS)"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug (i.e. machine-friendly name) of the template to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns the details of a template"
+        },
+        {
+          "info": {
+            "name": "Update a Template for a Given Type and Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.clerk.com/v1/templates/:template_type/:slug",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of template to update"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the template to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the existing template of the given type and slug"
+        },
+        {
+          "info": {
+            "name": "Revert a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/templates/:template_type/:slug/revert",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of template to revert"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the template to revert"
+              }
+            ]
+          },
+          "docs": "Reverts an updated template to its default state"
+        },
+        {
+          "info": {
+            "name": "Preview Changes to a Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/templates/:template_type/:slug/preview",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of template to preview"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the template to preview"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a preview of a template for a given template_type, slug and body"
+        },
+        {
+          "info": {
+            "name": "Toggle the Delivery by Clerk for a Template of a Given Type and Slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/templates/:template_type/:slug/toggle_delivery",
+            "params": [
+              {
+                "name": "template_type",
+                "value": "",
+                "type": "path",
+                "description": "The type of template to toggle delivery for"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The slug of the template for which to toggle delivery"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Toggles the delivery by Clerk for a template of a given type and slug.\nIf disabled, Clerk will not deliver the resulting email or SMS.\nThe app developer will need to listen to the `email.created` or `sms.created` webhooks in order to handle delivery themselves."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

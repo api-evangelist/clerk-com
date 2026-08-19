@@ -1,0 +1,375 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Sign Ins API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sign Ins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a New Sign in or Replace the Current One.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "identifier",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "transfer",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates or replaces the current Sign in object.\nIn order to authenticate a Sign in in as few requests as possible,\nyou can pass in parameters to this request that can identify and verify the Sign in.\n\nParameter rules:\n\nIf the strategy equals `phone_code`, `email_code`, `web3_[provider]_signature`, `reset_password_code` or `reset_password_phone_code` then an identifier is required.\n\nIf the strategy equals `email_link` then an identifier is required and optionally redirect_url can be supplied.\n\nIf"
+        },
+        {
+          "info": {
+            "name": "Retrieve Sign-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ]
+          },
+          "docs": "Returns the sign-in with the given ID.\nThe sign in is returned only if it belongs to the requesting client and is not abandoned."
+        },
+        {
+          "info": {
+            "name": "Reset Password on Sign-in",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id/reset_password",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "sign_out_of_other_sessions",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Reset password on sign-in."
+        },
+        {
+          "info": {
+            "name": "Prepare First Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id/prepare_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in to be retrieved."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "web3_wallet_id",
+                  "value": ""
+                },
+                {
+                  "name": "passkey_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "action_complete_redirect_url",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_login_hint",
+                  "value": ""
+                },
+                {
+                  "name": "oidc_prompt",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepares the verification object for the identified Sign in.\nThis step authenticates that the user is who they say they are.\nDepending on the strategy, this request will do something different.\n\nParameter actions:\nIf the strategy equals email_code then this request will send an email with an OTP code.\nIf the strategy equals phone_code then this request will send an SMS with an OTP code.\nIf the strategy equals oauth_[provider] then this request generate a URL that the User needs to visit in order"
+        },
+        {
+          "info": {
+            "name": "Attempt First Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id/attempt_first_factor",
+            "headers": [
+              {
+                "name": "Origin",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                },
+                {
+                  "name": "signature",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "ticket",
+                  "value": ""
+                },
+                {
+                  "name": "public_key_credential",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the first verification.\nRequires the sign in attempt to be identified, and the first factor verification to be prepared, unless you're using a password.\n\nParameter rules:\nIf the strategy equals `email_code` or `phone_code` then a code is required.\nIf the strategy equals `password` then a password is required."
+        },
+        {
+          "info": {
+            "name": "Prepare Second Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id/prepare_second_factor",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "phone_number_id",
+                  "value": ""
+                },
+                {
+                  "name": "email_address_id",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_url",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Prepare the second verification.\nRequires the sign in attempt `status` to be equal to `needs_second_factor` or `needs_client_trust`."
+        },
+        {
+          "info": {
+            "name": "Attempt Second Factor Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/client/sign_ins/:sign_in_id/attempt_second_factor",
+            "params": [
+              {
+                "name": "sign_in_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the sign in."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt the second verification.\nRequires the sign in attempt `status` to be equal to `needs_second_factor` or `needs_client_trust`, and for the preparation step to have been called."
+        },
+        {
+          "info": {
+            "name": "Accept Ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/tickets/accept",
+            "params": [
+              {
+                "name": "ticket",
+                "value": "",
+                "type": "query",
+                "description": "The JWT with verification information"
+              }
+            ]
+          },
+          "docs": "Parses a ticket JWT and performs the necessary actions depending on the ticket's source type.\nDepending on the ticket source type, a successful response can either redirect to a new location\nwith the ticket in the query string, or respond directly with a text/html content type for the response body."
+        },
+        {
+          "info": {
+            "name": "Attempt Email Link Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/verify",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query",
+                "description": "The JWT with verification information"
+              }
+            ]
+          },
+          "docs": "Attempt to verify a verification with email_link strategy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,205 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Organization Domains API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a List of All Domains of an Organization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter domains by their verification status. `true` or `false`"
+              },
+              {
+                "name": "enrollment_mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter domains by their enrollment mode"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              }
+            ]
+          },
+          "docs": "Get a list of all domains of an organization."
+        },
+        {
+          "info": {
+            "name": "Create a New Organization Domain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization where the new domain will be created."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization domain. By default the domain is verified, but can be optionally set to unverified."
+        },
+        {
+          "info": {
+            "name": "Update an Organization Domain.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to which the domain belongs"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the domain"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing organization domain."
+        },
+        {
+          "info": {
+            "name": "Remove a Domain from an Organization.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/organizations/:organization_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the organization to which the domain belongs"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the domain"
+              }
+            ]
+          },
+          "docs": "Removes the given domain from the organization."
+        },
+        {
+          "info": {
+            "name": "List All Organization Domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/organization_domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the organization to filter domains by"
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter by verification status"
+              },
+              {
+                "name": "enrollment_mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by enrollment mode"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search domains by name or organization ID.\nIf the query starts with \"org_\", it will search by exact organization ID match.\nOtherwise, it performs a case-insensitive partial match on the domain name.\n\nNote: An empty string or whitespace-only value is not allowed and will result in a validation error.\n"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact domain names. Accepts multiple values (e.g. domains=example.com&domains=test.org)."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Allows to return organization domains in a particular order.\nAt the moment, you can order the returned domains by their `name` or `created_at`.\nIn order to specify the direction, you can use the `+/-` symbols prepended to the property to order by.\nFor example, if you want domains to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all organization domains within the current instance.\nThis endpoint can be used to list all domains across all organizations\nor filter domains by organization, verification status, enrollment mode, or search query.\n\nThe response includes pagination information and details about each domain\nincluding its verification status, enrollment mode, and associated counts.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

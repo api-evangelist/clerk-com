@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Application Transfers API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Application Transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/application_transfers",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer status. Multiple values can be provided by repeating\nthe parameter (e.g., `?status=pending&status=canceled`).\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page (1-500, default 10)."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Provide the ID of the last transfer from the\nprevious page to get the next page of results.\n"
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Provide the ID of the first transfer from the\nprevious page to get the previous page of results.\n"
+              }
+            ]
+          },
+          "docs": "List all transfer requests created by the authenticated workspace. Returns\ntransfers sorted by creation date in descending order (most recent first).\n\nUse the `status` parameter to filter by transfer status.\n"
+        },
+        {
+          "info": {
+            "name": "Create an Application Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/transfers",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              }
+            ]
+          },
+          "docs": "Create a new transfer request for an application. This initiates the process of\ntransferring ownership of the application to another workspace.\n\nOnly one pending transfer can exist for an application at a time. The transfer\nwill expire after 24 hours if not completed.\n"
+        },
+        {
+          "info": {
+            "name": "Get an Application Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/transfers/:transferID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "transferID",
+                "value": "",
+                "type": "path",
+                "description": "Application Transfer ID."
+              }
+            ]
+          },
+          "docs": "Retrieve details of an application transfer by its ID.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel an Application Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/platform/applications/:applicationID/transfers/:transferID",
+            "params": [
+              {
+                "name": "applicationID",
+                "value": "",
+                "type": "path",
+                "description": "Application ID."
+              },
+              {
+                "name": "transferID",
+                "value": "",
+                "type": "path",
+                "description": "Application Transfer ID."
+              }
+            ]
+          },
+          "docs": "Cancel an existing application transfer. Only transfers in 'pending' status can be canceled.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Waitlist Entries API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Waitlist Entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List All Waitlist Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/waitlist_entries",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Filter waitlist entries by `email_address` or `id`"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter waitlist entries by their status"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Specify the order of results. Supported values are:\n- `created_at`\n- `email_address`\n- `invited_at`\n\nUse `+` for ascending or `-` for descending order. Defaults to `-created_at`."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of waitlist entries for the instance.\nEntries are ordered by creation date in descending order by default.\nSupports filtering by email address or status and pagination with limit and offset parameters."
+        },
+        {
+          "info": {
+            "name": "Create a Waitlist Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/waitlist_entries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new waitlist entry for the given email address.\nIf the email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned."
+        },
+        {
+          "info": {
+            "name": "Create Multiple Waitlist Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/waitlist_entries/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates multiple waitlist entries for the provided email addresses.\nYou can choose whether to send confirmation emails by setting the `notify` parameter to `true` or `false` for each entry.\nIf the `notify` parameter is omitted, it defaults to `true`.\n\nIf an email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned.\nDuplicate email addresses within the same request are not allowed.\n\nThis endpoint is limited to a maximum of 50 entries p"
+        },
+        {
+          "info": {
+            "name": "Delete a Pending Waitlist Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/waitlist_entries/:waitlist_entry_id",
+            "params": [
+              {
+                "name": "waitlist_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the waitlist entry to delete"
+              }
+            ]
+          },
+          "docs": "Delete a pending waitlist entry."
+        },
+        {
+          "info": {
+            "name": "Invite a Waitlist Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/waitlist_entries/:waitlist_entry_id/invite",
+            "params": [
+              {
+                "name": "waitlist_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the waitlist entry to invite"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an invite to the email address in a waitlist entry."
+        },
+        {
+          "info": {
+            "name": "Reject a Waitlist Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/waitlist_entries/:waitlist_entry_id/reject",
+            "params": [
+              {
+                "name": "waitlist_entry_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the waitlist entry to reject"
+              }
+            ]
+          },
+          "docs": "Reject a waitlist entry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

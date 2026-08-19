@@ -1,0 +1,307 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clerk Backend Account Portal Phone Numbers API",
+    "version": "2025-11-10"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Phone Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/phone_numbers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new phone number"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the phone number to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns the details of a phone number"
+        },
+        {
+          "info": {
+            "name": "Update a Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the phone number to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a phone number"
+        },
+        {
+          "info": {
+            "name": "Delete a Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the phone number to delete"
+              }
+            ]
+          },
+          "docs": "Delete the phone number with the given ID"
+        },
+        {
+          "info": {
+            "name": "Get Phone Numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all phone numbers associated with the current user."
+        },
+        {
+          "info": {
+            "name": "Create Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers",
+            "params": [
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "phone_number",
+                  "value": ""
+                },
+                {
+                  "name": "reserved_for_second_factor",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add a phone number to the current user. The phone number then needs to be verified using the sms `prepare_verification` and `attempt_verification` endpoints."
+        },
+        {
+          "info": {
+            "name": "Attempt Phone Number Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers/:phone_number_id/attempt_verification",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Attempt to verify the given phone number using the code sent during the `prepare_verification` step."
+        },
+        {
+          "info": {
+            "name": "Prepare Phone Number Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers/:phone_number_id/prepare_verification",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "strategy",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Sends an SMS to the phone number with the code needed to verify it."
+        },
+        {
+          "info": {
+            "name": "Retrieve Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Retrieve all properties for the given phone number."
+        },
+        {
+          "info": {
+            "name": "Update Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "reserved_for_second_factor",
+                  "value": ""
+                },
+                {
+                  "name": "default_second_factor",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update the properties of the given phone number."
+        },
+        {
+          "info": {
+            "name": "Delete Phone Number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.clerk.com/v1/v1/me/phone_numbers/:phone_number_id",
+            "params": [
+              {
+                "name": "phone_number_id",
+                "value": "",
+                "type": "path",
+                "description": "The phone_number_id."
+              },
+              {
+                "name": "_clerk_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The session_id associated with the requesting user."
+              }
+            ]
+          },
+          "docs": "Deletes the phone number with the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
