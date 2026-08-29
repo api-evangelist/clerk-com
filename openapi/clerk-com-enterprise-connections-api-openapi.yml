@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Enterprise Connections API
+  title: Clerk Backend Enterprise Connections API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -113,106 +113,131 @@ paths:
                   minItems: 1
                   description: Domains associated with the enterprise connection (required; at least one). Values are normalized to lowercase. Each domain must be a valid fully qualified domain name.
                 organization_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Organization ID when the connection is linked to an organization
-                  nullable: true
                 allow_organization_account_linking:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether this connection supports account linking via organization membership
-                  nullable: true
                 active:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether the enterprise connection is active. When true, IdP metadata must be provided via the `saml` object.
-                  nullable: true
                 saml:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: 'SAML connection-specific properties. Only applied when the enterprise connection uses SAML (e.g. provider is saml_custom).
 
                     Use this to set IdP configuration, attribute mapping, and other SAML-specific settings at creation time.'
-                  nullable: true
                   additionalProperties: false
                   properties:
                     idp_entity_id:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP entity ID
-                      nullable: true
                     idp_sso_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP SSO URL
-                      nullable: true
                     idp_certificate:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP certificate (PEM)
-                      nullable: true
                     idp_metadata_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: URL to IdP metadata
-                      nullable: true
                     idp_metadata:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: Raw IdP metadata XML
-                      nullable: true
                     attribute_mapping:
-                      type: object
+                      type:
+                      - object
+                      - 'null'
                       description: Attribute mapping for SAML attributes
-                      nullable: true
                       additionalProperties: false
                       properties:
                         user_id:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         last_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                     allow_subdomains:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                     allow_idp_initiated:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                     force_authn:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                 oidc:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. provider is oidc_custom, oidc_github_enterprise, or oidc_gitlab).
-                  nullable: true
                   additionalProperties: false
                   properties:
                     client_id:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC client ID
-                      nullable: true
                     client_secret:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC client secret
-                      nullable: true
                     discovery_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC discovery URL
-                      nullable: true
                     auth_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC authorization URL
-                      nullable: true
                     token_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC token URL
-                      nullable: true
                     user_info_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC userinfo URL
-                      nullable: true
                     requires_pkce:
-                      type: boolean
+                      type:
+                      - boolean
+                      - 'null'
                       description: Whether PKCE is required (must be true for public clients with no client secret)
-                      nullable: true
                 custom_attributes:
                   type: array
                   description: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
@@ -302,134 +327,165 @@ paths:
               additionalProperties: false
               properties:
                 name:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The display name of the enterprise connection
-                  nullable: true
                 domains:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   description: 'Domains associated with the enterprise connection. Values are normalized to lowercase.
 
                     Empty array means ignored (no change); non-empty array means set domains to the given list (replaces existing).'
-                  nullable: true
                 active:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether the enterprise connection is active. When set to true (enabling), any existing verified organization domains for the same domain(s) will be removed so the connection can be enabled.
-                  nullable: true
                 sync_user_attributes:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether to sync user attributes on sign-in
-                  nullable: true
                 disable_additional_identifications:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether to disable additional identifications
-                  nullable: true
                 allow_organization_account_linking:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether this connection supports account linking via organization membership
-                  nullable: true
                 organization_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Organization ID to link to this enterprise connection. Only linking is supported; sending this field sets or changes the linked organization. There is no way to unlink an organization once linked.
-                  nullable: true
                 saml:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: 'SAML connection-specific properties. Only applied when the enterprise connection uses SAML.
 
                     Use this to update IdP configuration, attribute mapping, and other SAML-specific settings.'
-                  nullable: true
                   additionalProperties: false
                   properties:
                     name:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: Display name of the SAML connection
-                      nullable: true
                     idp_entity_id:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP entity ID
-                      nullable: true
                     idp_sso_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP SSO URL
-                      nullable: true
                     idp_certificate:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: IdP certificate (PEM)
-                      nullable: true
                     idp_metadata_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: URL to IdP metadata
-                      nullable: true
                     idp_metadata:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: Raw IdP metadata XML
-                      nullable: true
                     attribute_mapping:
-                      type: object
+                      type:
+                      - object
+                      - 'null'
                       description: Attribute mapping for SAML attributes
-                      nullable: true
                       additionalProperties: false
                       properties:
                         user_id:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         email_address:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         first_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                         last_name:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                     allow_subdomains:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                     allow_idp_initiated:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                     force_authn:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                 oidc:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: OIDC connection-specific properties. Only applied when the enterprise connection uses OIDC (e.g. oidc_custom, oidc_github_enterprise, or oidc_gitlab).
-                  nullable: true
                   additionalProperties: false
                   properties:
                     client_id:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC client ID
-                      nullable: true
                     client_secret:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC client secret
-                      nullable: true
                     discovery_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC discovery URL
-                      nullable: true
                     auth_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC authorization URL
-                      nullable: true
                     token_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC token URL
-                      nullable: true
                     user_info_url:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       description: OIDC userinfo URL
-                      nullable: true
                     requires_pkce:
-                      type: boolean
+                      type:
+                      - boolean
+                      - 'null'
                       description: Whether PKCE is required (must be true for public clients with no client secret)
-                      nullable: true
                 custom_attributes:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   description: Custom attributes to map from the IdP to the user's profile via SSO or SCIM provisioning. Requires the custom attributes feature to be enabled for the instance.
-                  nullable: true
                   items:
                     type: object
                     additionalProperties: false
@@ -491,8 +547,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -503,8 +559,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -515,6 +571,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
+    EnterpriseConnections:
+      description: A list of enterprise connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnections'
     EnterpriseConnection:
       description: An enterprise connection
       content:
@@ -527,34 +589,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    EnterpriseConnections:
-      description: A list of enterprise connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnections'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     EnterpriseConnections:
       type: object
       additionalProperties: false
@@ -570,6 +611,51 @@ components:
       required:
       - data
       - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     EnterpriseConnection:
       type: object
       required:
@@ -591,8 +677,9 @@ components:
         provider:
           type: string
         logo_public_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         active:
           type: boolean
           description: Whether the enterprise connection is active
@@ -602,9 +689,10 @@ components:
             type: string
           description: Domains associated with the enterprise connection
         organization_id:
-          type: string
+          type:
+          - string
+          - 'null'
           description: Organization ID when the connection is linked to an organization
-          nullable: true
         sync_user_attributes:
           type: boolean
           description: Controls whether to update the user's attributes on each sign-in
@@ -637,8 +725,9 @@ components:
                 type: string
                 description: GJSON path to extract the attribute value from SCIM user resources
         saml_connection:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Present when the enterprise connection uses SAML
           properties:
             id:
@@ -648,29 +737,35 @@ components:
               type: string
               description: SAML connection display name
             idp_entity_id:
-              type: string
+              type:
+              - string
+              - 'null'
               description: IdP entity ID (optional, when connection details are loaded)
-              nullable: true
             idp_sso_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: IdP SSO URL (optional, when connection details are loaded)
-              nullable: true
             idp_metadata_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: IdP metadata URL (optional, when connection details are loaded)
-              nullable: true
             acs_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: Assertion Consumer Service URL
-              nullable: true
             sp_entity_id:
-              type: string
+              type:
+              - string
+              - 'null'
               description: Service Provider entity ID
-              nullable: true
             sp_metadata_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: Service Provider metadata URL
-              nullable: true
             active:
               type: boolean
               description: Whether the SAML connection is active
@@ -684,8 +779,9 @@ components:
               type: boolean
               description: Whether to force re-authentication
         oauth_config:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Present when the enterprise connection uses OIDC or EASIE
           properties:
             id:
@@ -698,32 +794,38 @@ components:
               type: string
               description: OAuth provider key (e.g. oidc_custom, oidc_ghe_*, oidc_gitlab_ent_*)
             client_id:
-              type: string
+              type:
+              - string
+              - 'null'
               description: OAuth client ID
-              nullable: true
             discovery_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: OIDC discovery URL
-              nullable: true
             auth_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: OAuth authorization endpoint URL (present when configured or resolved from discovery)
-              nullable: true
             token_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: OAuth token endpoint URL (present when configured or resolved from discovery)
-              nullable: true
             user_info_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: OIDC userinfo endpoint URL (present when configured or resolved from discovery)
-              nullable: true
             requires_pkce:
               type: boolean
               description: Whether PKCE is required for this OAuth client
             logo_public_url:
-              type: string
+              type:
+              - string
+              - 'null'
               description: Logo URL for the provider
-              nullable: true
             created_at:
               type: integer
               format: int64
@@ -740,37 +842,19 @@ components:
           type: integer
           format: int64
           description: Unix timestamp in milliseconds when the connection was last updated
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -784,18 +868,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

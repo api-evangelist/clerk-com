@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Webhooks API
+  title: Clerk Backend Webhooks API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -79,18 +79,18 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   responses:
-    SvixURL:
-      description: Response that contains a temporary Svix URL to access management dashboard
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SvixURL'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    SvixURL:
+      description: Response that contains a temporary Svix URL to access management dashboard
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SvixURL'
   schemas:
     ClerkError:
       type: object
@@ -107,14 +107,6 @@ components:
       - message
       - long_message
       - code
-    SvixURL:
-      type: object
-      additionalProperties: false
-      properties:
-        svix_url:
-          type: string
-      required:
-      - svix_url
     ClerkErrors:
       type: object
       properties:
@@ -128,6 +120,14 @@ components:
           type: string
       required:
       - errors
+    SvixURL:
+      type: object
+      additionalProperties: false
+      properties:
+        svix_url:
+          type: string
+      required:
+      - svix_url
   securitySchemes:
     bearerAuth:
       type: http

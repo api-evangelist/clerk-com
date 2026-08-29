@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Machines API
+  title: Clerk Backend Machines API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -391,8 +391,8 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -412,8 +412,8 @@ components:
                   type: string
                   readOnly: true
                   description: The secret key for the machine, only returned upon creation.
-    ClerkErrors:
-      description: Request was not successful
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -424,29 +424,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Machine.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - data
-            - total_count
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Machine'
-              total_count:
-                type: integer
-                description: Total number of machines
     MachineScope.Deleted:
       description: Machine scope deleted successfully for a machine
       content:
@@ -475,12 +452,72 @@ components:
                 enum:
                 - true
                 description: Whether the machine scope was successfully deleted
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - data
+            - total_count
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Machine'
+              total_count:
+                type: integer
+                description: Total number of machines
     MachineScope:
       description: Machine scope created successfully for a machine
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MachineScope'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.SecretKey:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - secret
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_secret_key
+                description: String representing the object's type.
+              secret:
+                type: string
+                readOnly: true
+                description: The secret key for the machine.
+    Machine:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Machine'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     Machine.Deleted:
       description: Success
       content:
@@ -505,44 +542,45 @@ components:
                 enum:
                 - true
                 description: Whether the machine was successfully deleted
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Machine:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Machine'
-    Machine.SecretKey:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - secret
-            properties:
-              object:
-                type: string
-                enum:
-                - machine_secret_key
-                description: String representing the object's type.
-              secret:
-                type: string
-                readOnly: true
-                description: The secret key for the machine.
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   schemas:
+    Machine:
+      allOf:
+      - $ref: '#/components/schemas/MachineWithoutScopedMachines'
+      - type: object
+        required:
+        - scoped_machines
+        properties:
+          scoped_machines:
+            type: array
+            items:
+              $ref: '#/components/schemas/MachineWithoutScopedMachines'
+            description: Array of machines this machine has access to.
     MachineWithoutScopedMachines:
       type: object
       required:
@@ -581,33 +619,19 @@ components:
           description: The default time-to-live (TTL) in seconds for tokens created by this machine.
           minimum: 1
           default: 3600
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
-    Machine:
-      allOf:
-      - $ref: '#/components/schemas/MachineWithoutScopedMachines'
-      - type: object
-        required:
-        - scoped_machines
-        properties:
-          scoped_machines:
-            type: array
-            items:
-              $ref: '#/components/schemas/MachineWithoutScopedMachines'
-            description: Array of machines this machine has access to.
+      - errors
     MachineScope:
       type: object
       required:
@@ -630,45 +654,21 @@ components:
           type: integer
           format: int64
           description: Unix timestamp of creation.
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
       required:
-      - errors
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Proxy Checks API
+  title: Clerk Backend Proxy Checks API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -75,6 +75,25 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ProxyCheck:
+      description: Health check information about a domain's proxy configuration validation attempt.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProxyCheck'
   schemas:
     ClerkError:
       type: object
@@ -91,6 +110,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ProxyCheck:
       type: object
       additionalProperties: false
@@ -104,9 +136,10 @@ components:
         domain_id:
           type: string
         last_run_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: 'Unix timestamp of last run.
 
             '
@@ -135,38 +168,6 @@ components:
       - successful
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ProxyCheck:
-      description: Health check information about a domain's proxy configuration validation attempt.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProxyCheck'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,15 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Proxy Health API
-  x-logo:
-    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
-    altText: Clerk docs
-    href: https://clerk.com/docs
-  contact:
-    email: support@clerk.com
-    name: Clerk Platform Team
-    url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+  title: Clerk Frontend Proxy Health API
+  version: v1
+  description: 'The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
+
+
+    This is a Form Based API and all the data must be sent and formatted according to the `application/x-www-form-urlencoded` content type.
 
 
     ### Versions
@@ -17,19 +13,42 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
+
+
+    ### Using the Try It Console
+
+
+    The `Try It` feature of the docs only works for **Development Instances** when using the `DevBrowser` security scheme.
+
+    To use it, first generate a dev instance token from the `/v1/dev_browser` endpoint.
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Team
+    url: https://clerk.com/support
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
-    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+    url: https://github.com/clerk/javascript/blob/main/LICENSE
 servers:
-- url: https://api.clerk.com/v1
+- url: https://{domain}.clerk.accounts.dev
+  variables:
+    domain:
+      default: example-destined-camel-13
+      description: Your Development Instance Frontend API Domain.
 security:
-- bearerAuth: []
+- {}
+- DevBrowser: []
+- ProductionBrowser: []
+- ProductionNativeApp: []
+  ProductionNativeFlag: []
 tags:
 - name: Proxy Health
 paths:
@@ -152,20 +171,95 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
-    bearerAuth:
+    ProductionBrowser:
+      type: apiKey
+      in: cookie
+      name: __client
+      description: 'The Client API token sent in the form of a browser cookie.
+
+
+        Used to authenticate production browser applications.'
+    DevBrowser:
+      type: apiKey
+      in: query
+      name: __dev_session
+      description: 'A Dev Browser API token sent as a query parameter.
+
+
+        Used to authenticate only dev instances.
+
+
+        To generate a dev instance API token you must first make a request to `/v1/dev_browser`
+
+        and copy it from the response.'
+    ProductionNativeApp:
       type: http
       scheme: bearer
-      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
-      bearerFormat: sk_<environment>_<secret value>
-externalDocs:
-  url: https://clerk.com/docs
-x-speakeasy-retries:
-  strategy: backoff
-  backoff:
-    initialInterval: 500
-    maxInterval: 60000
-    maxElapsedTime: 3600000
-    exponent: 1.5
-  statusCodes:
-  - 5XX
-  retryConnectionErrors: true
+      description: 'The Client API token sent in the `Authorization` header.
+
+
+        Used to authenticate native applications.'
+    ProductionNativeFlag:
+      type: apiKey
+      in: query
+      name: _is_native
+      description: 'If sent and the value is true, it instructs the server to parse the API token from the `Authorization` header.
+
+
+        It should always be set to true when using the `Authorization` header authentication strategy.'
+    ClientCredentials:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Client ID as username and Client Secret as password.
+x-tagGroups:
+- name: Environment
+  tags:
+  - Environment
+- name: Client
+  tags:
+  - Client
+  - Sessions
+  - Sign Ins
+  - Sign Ups
+- name: User
+  tags:
+  - User
+  - Active Sessions
+  - Email Addresses
+  - Phone Numbers
+  - Web3 Wallets
+  - Passkeys
+  - External Accounts
+  - TOTP
+  - Backup Codes
+  - Organizations Memberships
+  - API Keys
+- name: Organizations
+  tags:
+  - Organization
+  - Organization Creation Defaults
+  - Invitations
+  - Membership Requests
+  - Members
+  - Domains
+  - Roles
+- name: Billing
+  tags:
+  - Plans
+  - Subscriptions
+  - Subscription Items
+  - Checkouts
+  - Payment Methods
+  - Statements
+  - Payment Attempts
+- name: Other
+  tags:
+  - Well Known
+  - DevBrowser
+  - DevTools
+  - Health
+  - OAuth2 Identity Provider
+  - OAuth2 Callbacks
+  - SAML
+  - Waitlist
+  - Enterprise Connections

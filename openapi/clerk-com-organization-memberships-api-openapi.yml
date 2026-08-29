@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Organization Memberships API
+  title: Clerk Backend Organization Memberships API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -77,15 +77,17 @@ paths:
                   type: string
                   description: The role that the new member will have in the organization.
                 public_metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Metadata saved on the organization membership, that is visible to both your frontend and backend.
                   additionalProperties: true
-                  nullable: true
                 private_metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Metadata saved on the organization membership that is only visible to your backend.
                   additionalProperties: true
-                  nullable: true
               required:
               - user_id
               - role
@@ -421,50 +423,59 @@ paths:
         '500':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationMembership:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMembership'
-    OrganizationMemberships:
-      description: A list of organization memberships
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMemberships'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    OrganizationMembership:
+      description: A user's membership in an organization
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_membership
+        role:
+          type: string
+        role_name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        public_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible from both Frontend and Backend APIs
+          additionalProperties: true
+        private_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible only from the Backend API
+          additionalProperties: true
+        organization:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Organization'
+        public_user_data:
+          $ref: '#/components/schemas/OrganizationMembershipPublicUserData'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+      required:
+      - object
+      - id
+      - role
+      - permissions
+      - public_metadata
+      - created_at
+      - updated_at
+      - organization
     ClerkError:
       type: object
       properties:
@@ -480,6 +491,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     Organization:
       type: object
       properties:
@@ -534,11 +558,12 @@ components:
 
             '
         role_set_key:
-          type: string
+          type:
+          - string
+          - 'null'
           description: 'The key of the [role set](https://clerk.com/docs/guides/organizations/control-access/role-sets) assigned to this organization.
 
             '
-          nullable: true
       required:
       - object
       - id
@@ -550,109 +575,6 @@ components:
       - public_metadata
       - created_at
       - updated_at
-    OrganizationMembership:
-      description: A user's membership in an organization
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization_membership
-        role:
-          type: string
-        role_name:
-          type: string
-        permissions:
-          type: array
-          items:
-            type: string
-        public_metadata:
-          type: object
-          description: Metadata saved on the organization membership, accessible from both Frontend and Backend APIs
-          additionalProperties: true
-        private_metadata:
-          type: object
-          description: Metadata saved on the organization membership, accessible only from the Backend API
-          additionalProperties: true
-        organization:
-          type: object
-          nullable: false
-          allOf:
-          - $ref: '#/components/schemas/Organization'
-        public_user_data:
-          $ref: '#/components/schemas/OrganizationMembershipPublicUserData'
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-      required:
-      - object
-      - id
-      - role
-      - permissions
-      - public_metadata
-      - created_at
-      - updated_at
-      - organization
-    OrganizationMembershipPublicUserData:
-      description: An organization membership with public user data populated
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-          nullable: false
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-        profile_image_url:
-          type: string
-          nullable: true
-          deprecated: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-          nullable: true
-        username:
-          type: string
-          nullable: true
-        banned:
-          type: boolean
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - profile_image_url
-      - image_url
-      - has_image
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OrganizationMemberships:
       type: object
       additionalProperties: false
@@ -670,7 +592,103 @@ components:
       required:
       - data
       - total_count
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - profile_image_url
+      - image_url
+      - has_image
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMemberships:
+      description: A list of organization memberships
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMemberships'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -684,18 +702,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

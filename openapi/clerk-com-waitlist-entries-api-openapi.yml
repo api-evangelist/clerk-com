@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Waitlist Entries API
+  title: Clerk Backend Waitlist Entries API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -106,12 +106,13 @@ paths:
                   type: string
                   description: The email address to add to the waitlist
                 notify:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: 'Optional flag which denotes whether a confirmation email should be sent to the given email address.
 
                     Defaults to `true`.'
                   default: true
-                  nullable: true
               required:
               - email_address
       responses:
@@ -159,11 +160,12 @@ paths:
                     format: email
                     description: The email address to add to the waitlist
                   notify:
-                    type: boolean
+                    type:
+                    - boolean
+                    - 'null'
                     description: 'Optional flag which denotes whether a confirmation email should be sent to the given email address.
 
                       Defaults to `true`.'
-                    nullable: true
                     default: true
                 required:
                 - email_address
@@ -224,9 +226,10 @@ paths:
               type: object
               properties:
                 ignore_existing:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.
-                  nullable: true
                   default: false
       responses:
         '200':
@@ -267,22 +270,69 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    WaitlistEntry.List:
+      description: Array of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/WaitlistEntry'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    WaitlistEntry:
+      description: A Waitlist Entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WaitlistEntry'
+    WaitlistEntries:
+      description: List of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaitlistEntry'
+              total_count:
+                type: integer
+                description: Total number of waitlist entries
+            required:
+            - data
+            - total_count
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     DeletedObject:
       type: object
       additionalProperties: false
@@ -300,62 +350,21 @@ components:
       required:
       - object
       - deleted
-    Invitation:
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        object:
+        message:
           type: string
-          enum:
-          - invitation
-        id:
+        long_message:
           type: string
-        email_address:
+        code:
           type: string
-          format: email
-        public_metadata:
+        meta:
           type: object
-          additionalProperties: true
-        revoked:
-          type: boolean
-          example: false
-        status:
-          type: string
-          enum:
-          - pending
-          - accepted
-          - revoked
-          - expired
-          example: pending
-        url:
-          type: string
-        expires_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: 'Unix timestamp of expiration.
-
-            '
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation.
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
       required:
-      - object
-      - id
-      - email_address
-      - public_metadata
-      - status
-      - created_at
-      - updated_at
+      - message
+      - long_message
+      - code
     ClerkErrors:
       type: object
       properties:
@@ -408,8 +417,9 @@ components:
 
             '
         invitation:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/Invitation'
       required:
@@ -419,69 +429,76 @@ components:
       - status
       - created_at
       - updated_at
-  responses:
-    WaitlistEntry:
-      description: A Waitlist Entry
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WaitlistEntry'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    WaitlistEntries:
-      description: List of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/WaitlistEntry'
-              total_count:
-                type: integer
-                description: Total number of waitlist entries
-            required:
-            - data
-            - total_count
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    WaitlistEntry.List:
-      description: Array of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/WaitlistEntry'
+    Invitation:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - invitation
+        id:
+          type: string
+        email_address:
+          type: string
+          format: email
+        public_metadata:
+          type: object
+          additionalProperties: true
+        revoked:
+          type: boolean
+          example: false
+        status:
+          type: string
+          enum:
+          - pending
+          - accepted
+          - revoked
+          - expired
+          example: pending
+        url:
+          type: string
+        expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp of expiration.
+
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+      required:
+      - object
+      - id
+      - email_address
+      - public_metadata
+      - status
+      - created_at
+      - updated_at
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -495,18 +512,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

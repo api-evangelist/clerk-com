@@ -1,35 +1,22 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Redirect URLs API
-  x-logo:
-    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
-    altText: Clerk docs
-    href: https://clerk.com/docs
+  title: Clerk Com Redirect URLs API
   contact:
     email: support@clerk.com
     name: Clerk Platform Team
     url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
-
-
-    ### Versions
-
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
-
-
-    Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
-  termsOfService: https://clerk.com/terms
   license:
     name: MIT
     url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+  termsOfService: https://clerk.com/terms
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  version: '1.0'
+  description: 'Operations tagged Redirect URLs across 2 of this provider''s published API definitions: clerk-backend-api-openapi.yml, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.clerk.com/v1
-security:
-- bearerAuth: []
 tags:
 - name: Redirect URLs
   description: 'Redirect URLs are whitelisted URLs that facilitate secure authentication flows in native applications (e.g. React Native, Expo).
@@ -52,6 +39,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/RedirectURL.List'
+      security:
+      - bearerAuth: []
     post:
       summary: Create a Redirect URL
       x-speakeasy-group: redirectUrls
@@ -78,6 +67,10 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /redirect_urls/{id}:
     get:
       summary: Retrieve a Redirect URL
@@ -99,6 +92,8 @@ paths:
           $ref: '#/components/responses/RedirectURL'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+      security:
+      - bearerAuth: []
     delete:
       summary: Delete a Redirect URL
       x-speakeasy-group: redirectUrls
@@ -119,6 +114,10 @@ paths:
           $ref: '#/components/responses/DeletedObject'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls:
     get:
       operationId: PlatformListRedirectURLs
@@ -255,6 +254,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+    servers:
+    - url: https://api.clerk.com/v1
   /platform/applications/{applicationID}/instances/{envOrInsID}/redirect_urls/{redirectURLID}:
     get:
       operationId: PlatformGetRedirectURL
@@ -364,34 +365,24 @@ paths:
           $ref: '#/components/responses/AuthorizationInvalid'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+    servers:
+    - url: https://api.clerk.com/v1
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     RedirectURL:
       description: Success
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/RedirectURL'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -416,71 +407,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    PlatformListRedirectURLsResponse:
-      title: List Redirect URLs Response
-      description: A paginated list of redirect URLs for an application instance.
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          description: The list of redirect URLs.
-          items:
-            $ref: '#/components/schemas/RedirectURL'
-        total_count:
-          type: integer
-          format: int64
-          description: The total number of redirect URLs in the instance.
-          example: 3
-      required:
-      - data
-      - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     RedirectURL:
       type: object
       additionalProperties: false
@@ -511,20 +450,71 @@ components:
       - url
       - created_at
       - updated_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    PlatformListRedirectURLsResponse:
+      title: List Redirect URLs Response
+      description: A paginated list of redirect URLs for an application instance.
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          description: The list of redirect URLs.
+          items:
+            $ref: '#/components/schemas/RedirectURL'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of redirect URLs in the instance.
+          example: 3
+      required:
+      - data
+      - total_count
   parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
     LimitParameter:
       name: limit
       in: query
@@ -548,14 +538,34 @@ components:
       required: false
       schema:
         type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
       bearerFormat: sk_<environment>_<secret value>
+    platform_api_access_token:
+      type: http
+      scheme: bearer
+      description: Platform API access token.
 externalDocs:
   url: https://clerk.com/docs
+x-refined-from:
+- clerk-backend-api-openapi.yml
+- clerk-platform-api-openapi.yml
 x-speakeasy-retries:
   strategy: backoff
   backoff:

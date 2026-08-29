@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal OAuth Applications API
+  title: Clerk Backend OAuth Applications API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -108,38 +108,44 @@ paths:
 
                     Max length: 256'
                 redirect_uris:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   description: An array of redirect URIs of the new OAuth application
-                  nullable: true
                 callback_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 1024
                   description: The callback URL of the new OAuth application
-                  nullable: true
                   deprecated: true
                 scopes:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 1024
                   description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
                   default: profile email
                   example: profile email public_metadata
-                  nullable: true
                 consent_screen_enabled:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   default: true
                   description: True to enable a consent screen to display in the authentication flow.
-                  nullable: true
                 pkce_required:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   default: false
                   description: True to require the Proof Key of Code Exchange (PKCE) flow.
-                  nullable: true
                 public:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
-                  nullable: true
               required:
               - name
       responses:
@@ -198,42 +204,49 @@ paths:
               additionalProperties: false
               properties:
                 name:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The new name of the OAuth application.
 
                     Max length: 256'
-                  nullable: true
                 redirect_uris:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
                   description: An array of redirect URIs of the new OAuth application
-                  nullable: true
                 callback_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 1024
                   description: The new callback URL of the OAuth application
-                  nullable: true
                   deprecated: true
                 scopes:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 1024
                   description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
                   default: profile email
                   example: profile email public_metadata private_metadata
-                  nullable: true
                 consent_screen_enabled:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: True to enable a consent screen to display in the authentication flow. This cannot be disabled for dynamically registered OAuth Applications.
-                  nullable: true
                 pkce_required:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: True to require the Proof Key of Code Exchange (PKCE) flow.
-                  nullable: true
                 public:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: If true, this client is public and you can use the Proof Key of Code Exchange (PKCE) flow.
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/OAuthApplication'
@@ -343,65 +356,6 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   schemas:
-    OAuthApplications:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuthApplication'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of OAuth applications
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    OAuthApplicationWithSecret:
-      allOf:
-      - $ref: '#/components/schemas/OAuthApplication'
-      - type: object
-        properties:
-          client_secret:
-            type: string
-            description: 'Empty if public client.
-
-              '
     OAuthApplication:
       type: object
       properties:
@@ -418,11 +372,13 @@ components:
         client_id:
           type: string
         client_uri:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         client_image_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         dynamically_registered:
           type: boolean
         consent_screen_enabled:
@@ -487,6 +443,38 @@ components:
       - token_introspection_url
       - created_at
       - updated_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     ClerkErrors:
       type: object
       properties:
@@ -500,33 +488,42 @@ components:
           type: string
       required:
       - errors
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OAuthApplicationWithSecret:
-      description: An OAuth application with client secret
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplicationWithSecret'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     OAuthApplications:
-      description: A list of OAuth applications
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplications'
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of OAuth applications
+
+            '
+      required:
+      - data
+      - total_count
+    OAuthApplicationWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/OAuthApplication'
+      - type: object
+        properties:
+          client_secret:
+            type: string
+            description: 'Empty if public client.
+
+              '
+  responses:
     ResourceNotFound:
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -543,13 +540,43 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OAuthApplication'
+    OAuthApplicationWithSecret:
+      description: An OAuth application with client secret
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationWithSecret'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplications:
+      description: A list of OAuth applications
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplications'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -563,18 +590,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

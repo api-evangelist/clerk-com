@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Allow-list / Block-list API
+  title: Clerk Backend Allow-list / Block-list API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -192,56 +192,6 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    BlocklistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifiers'
-    AllowlistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AllowlistIdentifier'
-    AllowlistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AllowlistIdentifier'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifier'
     ResourceNotFound:
       description: Resource not found
       content:
@@ -254,22 +204,125 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
+    BlocklistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifiers'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AllowlistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AllowlistIdentifier'
+    BlocklistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifier'
+    AllowlistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllowlistIdentifier'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    BlocklistIdentifier:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - blocklist_identifier
+        id:
+          type: string
+        identifier:
+          type: string
+          description: 'An email address, email domain, phone number or web3 wallet.
+
+            '
+        identifier_type:
+          type: string
+          enum:
+          - email_address
+          - phone_number
+          - web3_wallet
+        instance_id:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - errors
     BlocklistIdentifiers:
       type: object
       additionalProperties: false
@@ -327,75 +380,45 @@ components:
           description: 'Unix timestamp of last update.
 
             '
-    BlocklistIdentifier:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - blocklist_identifier
-        id:
-          type: string
-        identifier:
-          type: string
-          description: 'An email address, email domain, phone number or web3 wallet.
-
-            '
-        identifier_type:
-          type: string
-          enum:
-          - email_address
-          - phone_number
-          - web3_wallet
-        instance_id:
-          type: string
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
       required:
-      - errors
+      - message
+      - long_message
+      - code
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
     OffsetParameter:
       name: offset
       in: query
@@ -409,29 +432,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

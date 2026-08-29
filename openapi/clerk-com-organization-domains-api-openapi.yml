@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Organization Domains API
+  title: Clerk Backend Organization Domains API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -61,15 +61,14 @@ paths:
                 name:
                   type: string
                   description: The name of the new domain
-                  nullable: false
                 enrollment_mode:
                   type: string
                   description: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
-                  nullable: false
                 verified:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: The status of domain's verification. Defaults to true
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/OrganizationDomain'
@@ -147,13 +146,15 @@ paths:
               type: object
               properties:
                 enrollment_mode:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`
-                  nullable: true
                 verified:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: The status of the domain's verification
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/OrganizationDomain'
@@ -300,114 +301,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    OrganizationDomains:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationDomain'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization domains
-
-            '
-      required:
-      - data
-      - total_count
-    OrganizationInvitationPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-      required:
-      - id
-      - name
-      - slug
-      - has_image
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    OrganizationDomainVerification:
-      description: The verification object from an organization domain
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the verification. It can be `unverified` or `verified`
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          description: Name of the strategy used to verify the domain
-        attempts:
-          type: integer
-          description: How many attempts have been made to verify the domain
-          nullable: true
-        expire_at:
-          type: integer
-          nullable: true
-          format: int64
-          description: Unix timestamp of when the verification will expire
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OrganizationDomain:
       description: An organization domain
       type: object
@@ -436,12 +329,14 @@ components:
           - automatic_invitation
           - automatic_suggestion
         affiliation_email_address:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Affiliation email address for the domain, if available.
         verification:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/OrganizationDomainVerification'
           description: Verification details for the domain
@@ -454,8 +349,9 @@ components:
           format: int32
           description: Total number of pending suggestions associated with this domain
         public_organization_data:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/OrganizationInvitationPublicOrganizationData'
           description: Public organization data associated with this domain
@@ -479,9 +375,119 @@ components:
       - total_pending_suggestions
       - created_at
       - updated_at
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OrganizationDomains:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationDomain'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization domains
+
+            '
+      required:
+      - data
+      - total_count
+    OrganizationDomainVerification:
+      description: The verification object from an organization domain
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the verification. It can be `unverified` or `verified`
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          description: Name of the strategy used to verify the domain
+        attempts:
+          type:
+          - integer
+          - 'null'
+          description: How many attempts have been made to verify the domain
+        expire_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of when the verification will expire
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -492,8 +498,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    OrganizationDomains:
+      description: A list of organization domains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomains'
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -504,31 +522,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OrganizationDomain'
-    ResourceNotFound:
-      description: Resource not found
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    OrganizationDomains:
-      description: A list of organization domains
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationDomains'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -542,18 +560,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

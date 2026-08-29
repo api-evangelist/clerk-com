@@ -1,35 +1,20 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal API Keys API
+  title: Clerk Com API Keys API
+  termsOfService: https://clerk.com/terms
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
     href: https://clerk.com/docs
-  contact:
-    email: support@clerk.com
-    name: Clerk Platform Team
-    url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
-
-
-    ### Versions
-
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
-
-
-    Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
-  termsOfService: https://clerk.com/terms
-  license:
-    name: MIT
-    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+  version: '1.0'
+  description: 'Operations tagged API Keys across 2 of this provider''s published API definitions: clerk-backend-api-openapi.yml, clerk-frontend-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.clerk.com/v1
-security:
-- bearerAuth: []
+- url: https://{domain}.clerk.accounts.dev
+  variables:
+    domain:
+      default: example-destined-camel-13
+      description: Your Development Instance Frontend API Domain.
 tags:
 - name: API Keys
   description: Endpoints for managing API Keys
@@ -57,28 +42,29 @@ paths:
                   minLength: 3
                   pattern: ^(\S(.*\S)?)?$
                 description:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 255
                 subject:
                   type: string
                   pattern: ^(user|org|mch|scim)_\w{27}$
-                claims:
-                  nullable: true
+                claims: {}
                 scopes:
                   type: array
                   items:
                     type: string
                   default: []
                 created_by:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   pattern: ^user_\w{27}$
                 seconds_until_expiration:
-                  type: number
-                  nullable: true
-                  minimum: 0
-                  exclusiveMinimum: true
+                  type:
+                  - number
+                  - 'null'
+                  exclusiveMinimum: 0
               required:
               - name
               - subject
@@ -111,12 +97,12 @@ paths:
                     type: string
                     example: MY_SERVICE_API_KEY
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     maxLength: 255
                     example: This is my API Key
                   claims:
-                    nullable: true
                     example:
                       foo: bar
                   scopes:
@@ -133,25 +119,29 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key will expire, in milliseconds
                     example: 1716883200
                   created_by:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     pattern: ^user_\w{27}$
                     example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -234,6 +224,8 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
     get:
       operationId: getApiKeys
       summary: Get API Keys
@@ -271,8 +263,9 @@ paths:
         name: limit
         in: query
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           minimum: 0
           default: 0
         required: false
@@ -316,12 +309,12 @@ paths:
                           type: string
                           example: MY_SERVICE_API_KEY
                         description:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           maxLength: 255
                           example: This is my API Key
                         claims:
-                          nullable: true
                           example:
                             foo: bar
                         scopes:
@@ -335,25 +328,29 @@ paths:
                           type: boolean
                           example: false
                         revocation_reason:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           example: Revoked by user
                         expired:
                           type: boolean
                           example: false
                         expiration:
-                          type: number
-                          nullable: true
+                          type:
+                          - number
+                          - 'null'
                           description: The timestamp for when the API key will expire, in milliseconds
                           example: 1716883200
                         created_by:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           pattern: ^user_\w{27}$
                           example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                         last_used_at:
-                          type: number
-                          nullable: true
+                          type:
+                          - number
+                          - 'null'
                           description: The timestamp for when the API key was last used, in milliseconds
                           example: 1716883200
                         created_at:
@@ -440,6 +437,10 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /api_keys/{apiKeyID}:
     get:
       operationId: getApiKey
@@ -481,12 +482,12 @@ paths:
                     type: string
                     example: MY_SERVICE_API_KEY
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     maxLength: 255
                     example: This is my API Key
                   claims:
-                    nullable: true
                     example:
                       foo: bar
                   scopes:
@@ -500,25 +501,29 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key will expire, in milliseconds
                     example: 1716883200
                   created_by:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     pattern: ^user_\w{27}$
                     example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -600,6 +605,8 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
     patch:
       operationId: updateApiKey
       summary: Update an API Key
@@ -619,24 +626,24 @@ paths:
             schema:
               type: object
               properties:
-                claims:
-                  nullable: true
+                claims: {}
                 scopes:
                   type: array
                   items:
                     type: string
                 description:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 255
                 subject:
                   type: string
                   pattern: ^(user|org|mch|scim)_\w{27}$
                 seconds_until_expiration:
-                  type: number
-                  nullable: true
-                  minimum: 0
-                  exclusiveMinimum: true
+                  type:
+                  - number
+                  - 'null'
+                  exclusiveMinimum: 0
               additionalProperties: false
       responses:
         '200':
@@ -666,12 +673,12 @@ paths:
                     type: string
                     example: MY_SERVICE_API_KEY
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     maxLength: 255
                     example: This is my API Key
                   claims:
-                    nullable: true
                     example:
                       foo: bar
                   scopes:
@@ -685,25 +692,29 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key will expire, in milliseconds
                     example: 1716883200
                   created_by:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     pattern: ^user_\w{27}$
                     example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -785,6 +796,8 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
     delete:
       operationId: deleteApiKey
       summary: Delete an API Key
@@ -874,6 +887,10 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /api_keys/{apiKeyID}/secret:
     get:
       operationId: getApiKeySecret
@@ -953,6 +970,10 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /api_keys/{apiKeyID}/revoke:
     post:
       operationId: revokeApiKey
@@ -974,8 +995,9 @@ paths:
               type: object
               properties:
                 revocation_reason:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               additionalProperties: false
       responses:
         '200':
@@ -1005,12 +1027,12 @@ paths:
                     type: string
                     example: MY_SERVICE_API_KEY
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     maxLength: 255
                     example: This is my API Key
                   claims:
-                    nullable: true
                     example:
                       foo: bar
                   scopes:
@@ -1024,25 +1046,29 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key will expire, in milliseconds
                     example: 1716883200
                   created_by:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     pattern: ^user_\w{27}$
                     example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -1124,6 +1150,10 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
   /api_keys/verify:
     post:
       operationId: verifyApiKey
@@ -1170,12 +1200,12 @@ paths:
                     type: string
                     example: MY_SERVICE_API_KEY
                   description:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     maxLength: 255
                     example: This is my API Key
                   claims:
-                    nullable: true
                     example:
                       foo: bar
                   scopes:
@@ -1189,25 +1219,29 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key will expire, in milliseconds
                     example: 1716883200
                   created_by:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     pattern: ^user_\w{27}$
                     example: user_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the API key was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -1289,6 +1323,10 @@ paths:
                       - code
                 required:
                 - errors
+      security:
+      - bearerAuth: []
+    servers:
+    - url: https://api.clerk.com/v1
 components:
   securitySchemes:
     bearerAuth:
@@ -1296,8 +1334,51 @@ components:
       scheme: bearer
       description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
       bearerFormat: sk_<environment>_<secret value>
+    ProductionBrowser:
+      type: apiKey
+      in: cookie
+      name: __client
+      description: 'The Client API token sent in the form of a browser cookie.
+
+
+        Used to authenticate production browser applications.'
+    DevBrowser:
+      type: apiKey
+      in: query
+      name: __dev_session
+      description: 'A Dev Browser API token sent as a query parameter.
+
+
+        Used to authenticate only dev instances.
+
+
+        To generate a dev instance API token you must first make a request to `/v1/dev_browser`
+
+        and copy it from the response.'
+    ProductionNativeApp:
+      type: http
+      scheme: bearer
+      description: 'The Client API token sent in the `Authorization` header.
+
+
+        Used to authenticate native applications.'
+    ProductionNativeFlag:
+      type: apiKey
+      in: query
+      name: _is_native
+      description: 'If sent and the value is true, it instructs the server to parse the API token from the `Authorization` header.
+
+
+        It should always be set to true when using the `Authorization` header authentication strategy.'
+    ClientCredentials:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Client ID as username and Client Secret as password.
 externalDocs:
   url: https://clerk.com/docs
+x-refined-from:
+- clerk-backend-api-openapi.yml
+- clerk-frontend-api-openapi.yml
 x-speakeasy-retries:
   strategy: backoff
   backoff:

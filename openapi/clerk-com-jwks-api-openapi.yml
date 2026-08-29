@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal JWKS API
+  title: Clerk Backend JWKS API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -47,7 +47,101 @@ paths:
         '200':
           $ref: '#/components/responses/WellKnown.JWKS'
 components:
+  responses:
+    WellKnown.JWKS:
+      description: Get the JSON Web Key Set
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWKS'
   schemas:
+    JWKS.ecdsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - EC
+        crv:
+          type: string
+        x:
+          type: string
+        y:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - y
+    JWKS.rsa.PrivateKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - RSA
+        n:
+          type: string
+        e:
+          type: string
+        d:
+          type: string
+        p:
+          type: string
+        q:
+          type: string
+        dp:
+          type: string
+        dq:
+          type: string
+        qi:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - n
+      - e
+      - d
+      - p
+      - q
     JWKS.ed25519.PrivateKey:
       type: object
       properties:
@@ -127,90 +221,6 @@ components:
       - x
       - y
       - d
-    JWKS.rsa.PrivateKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - RSA
-        n:
-          type: string
-        e:
-          type: string
-        d:
-          type: string
-        p:
-          type: string
-        q:
-          type: string
-        dp:
-          type: string
-        dq:
-          type: string
-        qi:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - crv
-      - n
-      - e
-      - d
-      - p
-      - q
-    JWKS.rsa.PublicKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - RSA
-        n:
-          type: string
-        e:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - n
-      - e
     JWKS.symmetric.Key:
       type: object
       properties:
@@ -242,58 +252,6 @@ components:
       - use
       - kty
       - k
-    JWKS.ecdsa.PublicKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - EC
-        crv:
-          type: string
-        x:
-          type: string
-        y:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - crv
-      - x
-      - y
-    JWKS:
-      type: object
-      additionalProperties: false
-      properties:
-        keys:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/JWKS.ed25519.PublicKey'
-            - $ref: '#/components/schemas/JWKS.ecdsa.PublicKey'
-            - $ref: '#/components/schemas/JWKS.rsa.PublicKey'
-            - $ref: '#/components/schemas/JWKS.ed25519.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.ecdsa.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.rsa.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.symmetric.Key'
     JWKS.ed25519.PublicKey:
       type: object
       properties:
@@ -330,13 +288,55 @@ components:
       - kty
       - crv
       - x
-  responses:
-    WellKnown.JWKS:
-      description: Get the JSON Web Key Set
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/JWKS'
+    JWKS:
+      type: object
+      additionalProperties: false
+      properties:
+        keys:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/JWKS.ed25519.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ed25519.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.symmetric.Key'
+    JWKS.rsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - RSA
+        n:
+          type: string
+        e:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - n
+      - e
   securitySchemes:
     bearerAuth:
       type: http

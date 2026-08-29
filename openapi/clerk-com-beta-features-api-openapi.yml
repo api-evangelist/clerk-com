@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Beta Features API
+  title: Clerk Backend Beta Features API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -51,28 +51,32 @@ paths:
               additionalProperties: false
               properties:
                 restricted_to_allowlist:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether sign up is restricted to email addresses, phone numbers and usernames that are on the allowlist.
-                  nullable: true
                   default: false
                 from_email_address:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The local part of the email address from which authentication-related emails (e.g. OTP code, magic links) will be sent.
 
                     Only alphanumeric values are allowed.
 
                     Note that this value should contain only the local part of the address (e.g. `foo` for `foo@example.com`).'
-                  nullable: true
                 progressive_sign_up:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Enable the Progressive Sign Up algorithm. This feature is deprecated, please contact support if you need assistance.
-                  nullable: true
                 test_mode:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: 'Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
 
                     Defaults to true for development instances.'
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/InstanceSettings'
@@ -156,6 +160,47 @@ paths:
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    InstanceSettings:
+      description: InstanceSettings Server API
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              object:
+                type: string
+                description: String representing the object's type. Objects of the same type share the same value.
+                enum:
+                - instance_settings
+              id:
+                type: string
+              restricted_to_allowlist:
+                type: boolean
+              from_email_address:
+                type: string
+              progressive_sign_up:
+                type: boolean
+              enhanced_email_deliverability:
+                type: boolean
   schemas:
     ClerkError:
       type: object
@@ -185,47 +230,6 @@ components:
           type: string
       required:
       - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    InstanceSettings:
-      description: InstanceSettings Server API
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              object:
-                type: string
-                description: String representing the object's type. Objects of the same type share the same value.
-                enum:
-                - instance_settings
-              id:
-                type: string
-              restricted_to_allowlist:
-                type: boolean
-              from_email_address:
-                type: string
-              progressive_sign_up:
-                type: boolean
-              enhanced_email_deliverability:
-                type: boolean
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Email & SMS Templates API
+  title: Clerk Backend Email & SMS Templates API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -141,22 +141,25 @@ paths:
                   type: string
                   description: The user-friendly name of the template
                 subject:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The email subject.
 
                     Applicable only to email templates.'
-                  nullable: true
                 markup:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The editor markup used to generate the body of the template
-                  nullable: true
                 body:
                   type: string
                   description: The template body before variable interpolation
                 delivered_by_clerk:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether Clerk should deliver emails or SMS messages based on the current template
-                  nullable: true
                 from_email_name:
                   type: string
                   description: 'The local part of the From email address that will be used for emails.
@@ -255,11 +258,12 @@ paths:
               additionalProperties: false
               properties:
                 subject:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The email subject.
 
                     Applicable only to email templates.'
-                  nullable: true
                 body:
                   type: string
                   description: The template body before variable interpolation
@@ -342,6 +346,51 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Template.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Template'
+    Template:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Template'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     ClerkError:
       type: object
@@ -358,6 +407,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     Template:
       type: object
       additionalProperties: false
@@ -372,8 +434,9 @@ components:
           enum:
           - template
         instance_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           description: The ID of the instance to which the template belongs
         resource_type:
           type: string
@@ -403,9 +466,10 @@ components:
           type: boolean
           description: whether this template can be enabled or disabled, true only for notification SMS templates
         subject:
-          type: string
+          type:
+          - string
+          - 'null'
           description: email subject
-          nullable: true
         markup:
           type: string
           description: the editor markup used to generate the body of the template
@@ -444,78 +508,7 @@ components:
           description: 'Unix timestamp of creation.
 
             '
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Template:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Template'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Template.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Template'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
     LimitParameter:
       name: limit
       in: query
@@ -539,6 +532,19 @@ components:
       required: false
       schema:
         type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

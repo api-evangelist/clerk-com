@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Config API
+  title: Clerk Platform Config API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -9,19 +9,13 @@ info:
     email: support@clerk.com
     name: Clerk Platform Team
     url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+  description: 'The Clerk REST Platform API, for programmatic management of resources of a workspace.
 
 
-    ### Versions
+    > [!note]
 
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
-
-
-    Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our [request form](https://clerkdev.notion.site/2df2b9ab44fe803f9031e9f3185c5e19).'
+  version: BETA
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -29,7 +23,7 @@ info:
 servers:
 - url: https://api.clerk.com/v1
 security:
-- bearerAuth: []
+- platform_api_access_token: []
 tags:
 - name: Config
   description: Operations for managing instance configuration. The config API provides a unified interface for reading and updating instance settings, including authentication methods, SSO connections, and other instance-level configuration options.
@@ -359,20 +353,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
@@ -383,8 +365,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -395,8 +383,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -417,6 +411,36 @@ components:
       - message
       - long_message
       - code
+    PlatformConfigSchemaResponse:
+      type: object
+      description: JSON Schema describing the available configuration options.
+      properties:
+        $schema:
+          type: string
+          description: JSON Schema version.
+        $id:
+          type: string
+          description: Schema identifier.
+        type:
+          type: string
+        properties:
+          type: object
+          description: Schema definitions for each configuration key.
+          additionalProperties: true
+      additionalProperties: true
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     PlatformConfigResponse:
       type: object
       description: Instance configuration response containing key-value pairs and metadata.
@@ -424,6 +448,10 @@ components:
         config_version:
           type: string
           description: Configuration version for optimistic concurrency control.
+      additionalProperties: true
+    PlatformConfigPatchRequest:
+      type: object
+      description: Configuration updates to apply. Keys should match config key names.
       additionalProperties: true
     PlatformConfigPatchResponse:
       type: object
@@ -444,55 +472,20 @@ components:
           description: Configuration state after the patch was applied.
           additionalProperties: true
       additionalProperties: true
-    PlatformConfigSchemaResponse:
-      type: object
-      description: JSON Schema describing the available configuration options.
-      properties:
-        $schema:
-          type: string
-          description: JSON Schema version.
-        $id:
-          type: string
-          description: Schema identifier.
-        type:
-          type: string
-        properties:
-          type: object
-          description: Schema definitions for each configuration key.
-          additionalProperties: true
-      additionalProperties: true
-    PlatformConfigPatchRequest:
-      type: object
-      description: Configuration updates to apply. Keys should match config key names.
-      additionalProperties: true
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   securitySchemes:
-    bearerAuth:
+    platform_api_access_token:
       type: http
       scheme: bearer
-      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
-      bearerFormat: sk_<environment>_<secret value>
+      description: Platform API access token.
 externalDocs:
   url: https://clerk.com/docs
-x-speakeasy-retries:
-  strategy: backoff
-  backoff:
-    initialInterval: 500
-    maxInterval: 60000
-    maxElapsedTime: 3600000
-    exponent: 1.5
-  statusCodes:
-  - 5XX
-  retryConnectionErrors: true
+x-tagGroups:
+- name: Core Resources
+  tags:
+  - Applications
+  - Domains
+  - Application Transfers
+  - Users
+  - JWT Templates
+  - Redirect URLs
+  - Config

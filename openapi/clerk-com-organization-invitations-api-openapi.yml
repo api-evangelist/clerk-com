@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Organization Invitations API
+  title: Clerk Backend Organization Invitations API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -155,8 +155,9 @@ paths:
                   type: string
                   description: The email address of the new member that is going to be invited to the organization
                 inviter_user_id:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: 'The ID of the user that invites the new member to the organization.
 
                     Must be an administrator in the organization.'
@@ -164,35 +165,40 @@ paths:
                   type: string
                   description: The role of the new member in the organization
                 public_metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: 'Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
 
                     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.'
                   additionalProperties: true
-                  nullable: true
                 private_metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: 'Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
 
                     When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.'
                   additionalProperties: true
-                  nullable: true
                 redirect_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
-                  nullable: true
                 expires_in_days:
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   description: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
-                  nullable: true
                   minimum: 1
                   maximum: 365
                 notify:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: 'Optional flag which denotes whether an email invitation should be sent to the given email address.
 
                     Defaults to `true`.'
-                  nullable: true
                   default: true
               required:
               - email_address
@@ -339,8 +345,9 @@ paths:
                     type: string
                     description: The email address of the new member that is going to be invited to the organization
                   inviter_user_id:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: 'The ID of the user that invites the new member to the organization.
 
                       Must be an administrator in the organization.'
@@ -348,35 +355,40 @@ paths:
                     type: string
                     description: The role of the new member in the organization
                   public_metadata:
-                    type: object
+                    type:
+                    - object
+                    - 'null'
                     description: 'Metadata saved on the organization invitation, read-only from the Frontend API and fully accessible (read/write) from the Backend API.
 
                       When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.'
                     additionalProperties: true
-                    nullable: true
                   private_metadata:
-                    type: object
+                    type:
+                    - object
+                    - 'null'
                     description: 'Metadata saved on the organization invitation, fully accessible (read/write) from the Backend API but not visible from the Frontend API.
 
                       When the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.'
                     additionalProperties: true
-                    nullable: true
                   redirect_url:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     description: Optional URL that the invitee will be redirected to once they accept the invitation by clicking the join link in the invitation email.
-                    nullable: true
                   expires_in_days:
-                    type: integer
+                    type:
+                    - integer
+                    - 'null'
                     description: The number of days the invitation will be valid for. By default, the invitation has a 30 days expire.
-                    nullable: true
                     minimum: 1
                     maximum: 365
                   notify:
-                    type: boolean
+                    type:
+                    - boolean
+                    - 'null'
                     description: 'Optional flag which denotes whether an email invitation should be sent to the given email address.
 
                       Defaults to `true`.'
-                    nullable: true
                     default: true
                 required:
                 - email_address
@@ -497,8 +509,9 @@ paths:
               type: object
               properties:
                 requesting_user_id:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: 'The ID of the user that revokes the invitation.
 
                     Must be an administrator in the organization.'
@@ -512,71 +525,71 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitation:
-      description: An organization invitation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitation'
-    OrganizationInvitationsWithPublicOrganizationData:
-      description: A list of organization invitations with public organization data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitations:
-      description: A list of organization invitations
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitations'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
+    OrganizationInvitationPublicUserData:
+      description: An organization inviter's public user data
+      type:
+      - object
+      - 'null'
+      additionalProperties: false
       properties:
-        message:
+        user_id:
           type: string
-        long_message:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
           type: string
-        code:
+        has_image:
+          type: boolean
+        identifier:
           type: string
-        meta:
-          type: object
       required:
-      - message
-      - long_message
-      - code
+      - user_id
+      - first_name
+      - last_name
+      - image_url
+      - has_image
+      - identifier
+    OrganizationInvitations:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitation'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
+
+            '
+      required:
+      - data
+      - total_count
+    OrganizationInvitationsWithPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
+
+            '
+      required:
+      - data
+      - total_count
     OrganizationInvitationPublicOrganizationData:
       type: object
       additionalProperties: false
@@ -596,40 +609,101 @@ components:
       - name
       - slug
       - has_image
-    OrganizationInvitationsWithPublicOrganizationData:
+    OrganizationInvitation:
+      description: An organization invitation
       type: object
       additionalProperties: false
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
 
             '
+          enum:
+          - organization_invitation
+        id:
+          type: string
+        email_address:
+          type: string
+        role:
+          type: string
+        role_name:
+          type: string
+        organization_id:
+          type: string
+        inviter_id:
+          type:
+          - string
+          - 'null'
+        public_inviter_data:
+          $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
+        status:
+          type: string
+        public_metadata:
+          type: object
+          additionalProperties: true
+        private_metadata:
+          type: object
+          additionalProperties: true
+        url:
+          type:
+          - string
+          - 'null'
+        expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of expiration.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
       required:
-      - data
-      - total_count
-    OrganizationInvitations:
+      - object
+      - id
+      - email_address
+      - role
+      - role_name
+      - public_metadata
+      - url
+      - expires_at
+      - created_at
+      - updated_at
+      - inviter_id
+      - public_inviter_data
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        data:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/OrganizationInvitation'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
-
-            '
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
       required:
-      - data
-      - total_count
+      - errors
     OrganizationInvitationWithPublicOrganizationData:
       description: An organization invitation with public organization data populated
       type: object
@@ -653,8 +727,9 @@ components:
           organization_id:
             type: string
           inviter_id:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
           public_inviter_data:
             $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
           status:
@@ -666,12 +741,14 @@ components:
             type: object
             additionalProperties: true
           url:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
           expires_at:
-            type: integer
+            type:
+            - integer
+            - 'null'
             format: int64
-            nullable: true
             description: Unix timestamp of expiration.
           created_at:
             type: integer
@@ -697,112 +774,68 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitations:
+      description: A list of organization invitations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitations'
+    OrganizationInvitationsWithPublicOrganizationData:
+      description: A list of organization invitations with public organization data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     OrganizationInvitation:
       description: An organization invitation
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization_invitation
-        id:
-          type: string
-        email_address:
-          type: string
-        role:
-          type: string
-        role_name:
-          type: string
-        organization_id:
-          type: string
-        inviter_id:
-          type: string
-          nullable: true
-        public_inviter_data:
-          $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
-        status:
-          type: string
-        public_metadata:
-          type: object
-          additionalProperties: true
-        private_metadata:
-          type: object
-          additionalProperties: true
-        url:
-          type: string
-          nullable: true
-        expires_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp of expiration.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-      required:
-      - object
-      - id
-      - email_address
-      - role
-      - role_name
-      - public_metadata
-      - url
-      - expires_at
-      - created_at
-      - updated_at
-      - inviter_id
-      - public_inviter_data
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    OrganizationInvitationPublicUserData:
-      description: An organization inviter's public user data
-      type: object
-      additionalProperties: false
-      nullable: true
-      properties:
-        user_id:
-          type: string
-          nullable: false
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - image_url
-      - has_image
-      - identifier
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitation'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -816,18 +849,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

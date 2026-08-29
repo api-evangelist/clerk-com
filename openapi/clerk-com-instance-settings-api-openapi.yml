@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Instance Settings API
+  title: Clerk Backend Instance Settings API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -62,40 +62,47 @@ paths:
               additionalProperties: false
               properties:
                 test_mode:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: 'Toggles test mode for this instance, allowing the use of test email addresses and phone numbers.
 
                     Defaults to true for development instances.'
-                  nullable: true
                 hibp:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether the instance should be using the HIBP service to check passwords for breaches
-                  nullable: true
                 support_email:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 clerk_js_version:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 development_origin:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 allowed_origins:
                   type: array
                   items:
                     type: string
                   description: For browser-like stacks such as browser extensions, Electron (not officially supported), or Capacitor.js (not officially supported), the instance allowed origins need to be updated with the request origin value. For Chrome extensions popup, background, or service worker pages, the origin is chrome-extension://extension_uuid. For Electron apps the default origin is http://localhost:3000. For Capacitor, the origin is capacitor://localhost.
                 cookieless_dev:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: 'Whether the instance should operate in cookieless development mode (i.e. without third-party cookies).
 
                     Deprecated: Please use `url_based_session_syncing` instead.'
                   deprecated: true
-                  nullable: true
                 url_based_session_syncing:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether the instance should use URL-based session syncing in development mode (i.e. without third-party cookies).
-                  nullable: true
       responses:
         '204':
           description: Accepted
@@ -118,20 +125,25 @@ paths:
               additionalProperties: false
               properties:
                 allowlist:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 blocklist:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 allowlist_blocklist_disabled_on_sign_in:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 block_email_subaddresses:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 block_disposable_email_domains:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
       responses:
         '200':
           $ref: '#/components/responses/InstanceRestrictions'
@@ -161,11 +173,13 @@ paths:
               additionalProperties: false
               properties:
                 rules_enabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 specter_enabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
       responses:
         '200':
           $ref: '#/components/responses/InstanceProtect'
@@ -207,8 +221,9 @@ paths:
               additionalProperties: false
               properties:
                 blocked_country_codes:
-                  type: array
-                  nullable: true
+                  type:
+                  - array
+                  - 'null'
                   description: ISO 3166-1 alpha-2 country codes to block for SMS delivery. Whole-list replacement. Codes must be uppercase, 2-letter, and unique within the array.
                   maxItems: 250
                   uniqueItems: true
@@ -248,12 +263,14 @@ paths:
               additionalProperties: false
               properties:
                 dynamic_oauth_client_registration:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether dynamic OAuth client registration is enabled for the instance (RFC 7591).
                 oauth_jwt_access_tokens:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens).
       responses:
         '200':
@@ -294,20 +311,25 @@ paths:
               additionalProperties: false
               properties:
                 enabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 max_allowed_memberships:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                 admin_delete_enabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 domains_enabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 slug_disabled:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 domains_enrollment_modes:
                   type: array
                   items:
@@ -316,13 +338,15 @@ paths:
 
                     Supported modes are ''automatic_invitation'' & ''automatic_suggestion''.'
                 creator_role_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Specify what the default organization role is for an organization creator.
-                  nullable: true
                 domains_default_role_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Specify what the default organization role is for the organization domains.
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/OrganizationSettings'
@@ -336,12 +360,12 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    OrganizationSettings:
-      description: Success
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OrganizationSettings'
+            $ref: '#/components/schemas/ClerkErrors'
     InstanceProtect:
       description: Success
       content:
@@ -354,30 +378,30 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    InstanceOAuthApplicationSettings:
-      description: Success
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OAuthApplicationSettings'
+            $ref: '#/components/schemas/ClerkErrors'
     Instance:
       description: Success
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Instance'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    InstanceRestrictions:
+    InstanceOAuthApplicationSettings:
       description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/InstanceRestrictions'
+            $ref: '#/components/schemas/OAuthApplicationSettings'
+    OrganizationSettings:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationSettings'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -390,12 +414,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/InstanceCommunication'
-    PaymentRequired:
-      description: Payment required
+    InstanceRestrictions:
+      description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/InstanceRestrictions'
   schemas:
     ClerkError:
       type: object
@@ -412,21 +436,19 @@ components:
       - message
       - long_message
       - code
-    InstanceProtect:
+    ClerkErrors:
       type: object
       properties:
-        object:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
           type: string
-          enum:
-          - instance_protect
-        rules_enabled:
-          type: boolean
-        specter_enabled:
-          type: boolean
       required:
-      - object
-      - rules_enabled
-      - specter_enabled
+      - errors
     InstanceRestrictions:
       type: object
       properties:
@@ -452,6 +474,21 @@ components:
       - allowlist_blocklist_disabled_on_sign_in
       - block_email_subaddresses
       - block_disposable_email_domains
+    InstanceProtect:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - instance_protect
+        rules_enabled:
+          type: boolean
+        specter_enabled:
+          type: boolean
+      required:
+      - object
+      - rules_enabled
+      - specter_enabled
     OAuthApplicationSettings:
       type: object
       properties:
@@ -515,8 +552,9 @@ components:
           type: string
           description: The role key that it will be used in order to create an organization invitation or suggestion.
         initial_role_set_key:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The role set key that it will be used to create new organizations.
       required:
       - object
@@ -543,8 +581,9 @@ components:
           type: string
           example: development
         allowed_origins:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: string
           example:
@@ -555,19 +594,6 @@ components:
       - id
       - environment_type
       - allowed_origins
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     InstanceCommunication:
       type: object
       description: Per-instance SMS communication settings, including the SMS country blocklist.

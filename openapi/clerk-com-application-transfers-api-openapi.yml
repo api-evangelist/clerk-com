@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Application Transfers API
+  title: Clerk Platform Application Transfers API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -9,19 +9,13 @@ info:
     email: support@clerk.com
     name: Clerk Platform Team
     url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+  description: 'The Clerk REST Platform API, for programmatic management of resources of a workspace.
 
 
-    ### Versions
+    > [!note]
 
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
-
-
-    Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our [request form](https://clerkdev.notion.site/2df2b9ab44fe803f9031e9f3185c5e19).'
+  version: BETA
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -29,7 +23,7 @@ info:
 servers:
 - url: https://api.clerk.com/v1
 security:
-- bearerAuth: []
+- platform_api_access_token: []
 tags:
 - name: Application Transfers
   description: 'An object representing a transfer request for an application between workspaces.
@@ -246,14 +240,8 @@ paths:
           $ref: '#/components/responses/Conflict'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
@@ -264,14 +252,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -292,6 +286,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     PlatformListApplicationTransfersResponse:
       title: List Application Transfers Response
       description: A paginated list of application transfers.
@@ -311,19 +318,6 @@ components:
       required:
       - data
       - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     PlatformApplicationTransferResponse:
       title: Application Transfer
       description: Represents an application transfer request. Application transfers allow transferring ownership of an application from one organization to another.
@@ -367,15 +361,17 @@ components:
           description: The timestamp when the transfer was created.
           example: '2024-01-15T12:00:00Z'
         canceled_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: The timestamp when the transfer was canceled, or null if not canceled.
           example: null
         completed_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: The timestamp when the transfer was completed, or null if not completed.
           example: null
       required:
@@ -389,20 +385,19 @@ components:
       - canceled_at
       - completed_at
   securitySchemes:
-    bearerAuth:
+    platform_api_access_token:
       type: http
       scheme: bearer
-      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
-      bearerFormat: sk_<environment>_<secret value>
+      description: Platform API access token.
 externalDocs:
   url: https://clerk.com/docs
-x-speakeasy-retries:
-  strategy: backoff
-  backoff:
-    initialInterval: 500
-    maxInterval: 60000
-    maxElapsedTime: 3600000
-    exponent: 1.5
-  statusCodes:
-  - 5XX
-  retryConnectionErrors: true
+x-tagGroups:
+- name: Core Resources
+  tags:
+  - Applications
+  - Domains
+  - Application Transfers
+  - Users
+  - JWT Templates
+  - Redirect URLs
+  - Config

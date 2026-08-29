@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal SAML Connections API
+  title: Clerk Backend SAML Connections API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -138,33 +138,40 @@ paths:
                   - saml_google
                   - saml_microsoft
                 idp_entity_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The Entity ID as provided by the IdP
-                  nullable: true
                 idp_sso_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The Single-Sign On URL as provided by the IdP
-                  nullable: true
                 idp_certificate:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The X.509 certificate as provided by the IdP
-                  nullable: true
                 idp_metadata_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties
-                  nullable: true
                 idp_metadata:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-                  nullable: true
                 organization_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The ID of the organization to which users of this SAML Connection will be added
-                  nullable: true
                 attribute_mapping:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Define the attribute name mapping between Identity Provider and Clerk's user properties
-                  nullable: true
                   additionalProperties: false
                   properties:
                     user_id:
@@ -254,48 +261,58 @@ paths:
               additionalProperties: false
               properties:
                 name:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The name of the new SAML Connection
-                  nullable: true
                 domain:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The domain to use for the new SAML Connection
                   deprecated: true
-                  nullable: true
                 domains:
-                  type: array
+                  type:
+                  - array
+                  - 'null'
                   items:
                     type: string
-                  nullable: true
                   description: A list of the domains on use for the SAML connection
                 idp_entity_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The Entity ID as provided by the IdP
-                  nullable: true
                 idp_sso_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The SSO URL as provided by the IdP
-                  nullable: true
                 idp_certificate:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The x509 certificated as provided by the IdP
-                  nullable: true
                 idp_metadata_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL which serves the IdP metadata. If present, it takes priority over the corresponding individual properties and replaces them
-                  nullable: true
                 idp_metadata:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The XML content of the IdP metadata file. If present, it takes priority over the corresponding individual properties
-                  nullable: true
                 organization_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The ID of the organization to which users of this SAML Connection will be added
-                  nullable: true
                 attribute_mapping:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Define the attribute name mapping between Identity Provider and Clerk's user properties
-                  nullable: true
                   additionalProperties: false
                   properties:
                     user_id:
@@ -307,36 +324,43 @@ paths:
                     last_name:
                       type: string
                 active:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Activate or de-activate the SAML Connection
-                  nullable: true
                 sync_user_attributes:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Controls whether to update the user's attributes in each sign-in
-                  nullable: true
                 allow_subdomains:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Allow users with an email address subdomain to use this connection in order to authenticate
-                  nullable: true
                 allow_idp_initiated:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Enable or deactivate IdP-initiated flows
-                  nullable: true
                 disable_additional_identifications:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Enable or deactivate additional identifications
-                  nullable: true
                 allow_organization_account_linking:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: Whether this connection supports account linking via organization membership
-                  nullable: true
                 force_authn:
                   type: boolean
                   description: Enable or deactivate ForceAuthn
                 consent_verified_domains_deletion:
-                  type: boolean
+                  type:
+                  - boolean
+                  - 'null'
                   description: When enabling the connection, controls behavior when verified domains used for enrollment modes like automatic invitation or automatic suggestion already exist for the same domain. If true, those verified domains are removed and the connection is enabled. If false or omitted, the request fails when any such verified domain exists.
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/SAMLConnection'
@@ -378,71 +402,24 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    SAMLConnections:
-      description: A list of SAML Connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SAMLConnections'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    SAMLConnection:
-      description: A SAML Connection
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SAMLConnection'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
+    SAMLConnectionAttributeMapping:
       type: object
+      additionalProperties: false
       properties:
-        message:
+        user_id:
           type: string
-        long_message:
+        email_address:
           type: string
-        code:
+        first_name:
           type: string
-        meta:
-          type: object
+        last_name:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - user_id
+      - email_address
+      - first_name
+      - last_name
     DeletedObject:
       type: object
       additionalProperties: false
@@ -460,6 +437,34 @@ components:
       required:
       - object
       - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     SAMLConnection:
       type: object
       properties:
@@ -479,20 +484,25 @@ components:
           items:
             type: string
         idp_entity_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         idp_sso_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         idp_certificate:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         idp_metadata_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         idp_metadata:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         acs_url:
           type: string
         sp_entity_id:
@@ -500,8 +510,9 @@ components:
         sp_metadata_url:
           type: string
         organization_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         attribute_mapping:
           $ref: '#/components/schemas/SAMLConnectionAttributeMapping'
         active:
@@ -524,8 +535,9 @@ components:
           type: boolean
           description: Enable or deactivate ForceAuthn
         enterprise_connection_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         created_at:
           type: integer
           format: int64
@@ -565,23 +577,6 @@ components:
         - domain
       - required:
         - domains
-    SAMLConnectionAttributeMapping:
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        email_address:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-      required:
-      - user_id
-      - email_address
-      - first_name
-      - last_name
     SAMLConnections:
       type: object
       additionalProperties: false
@@ -599,20 +594,68 @@ components:
       required:
       - data
       - total_count
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    SAMLConnection:
+      description: A SAML Connection
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SAMLConnection'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    SAMLConnections:
+      description: A list of SAML Connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SAMLConnections'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -626,18 +669,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Clients API
+  title: Clerk Backend Clients API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -122,6 +122,51 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeprecatedEndpoint:
+      description: The endpoint is considered deprecated and is pending removal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Client'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     Session:
       type: object
@@ -141,8 +186,9 @@ components:
         client_id:
           type: string
         actor:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         status:
           type: string
           enum:
@@ -155,8 +201,9 @@ components:
           - replaced
           - pending
         last_active_organization_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         last_active_at:
           type: integer
         latest_activity:
@@ -186,8 +233,9 @@ components:
 
             '
         tasks:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SessionTask'
       required:
@@ -216,13 +264,19 @@ components:
       - message
       - long_message
       - code
-    SessionTask:
+    ClerkErrors:
       type: object
       properties:
-        key:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
           type: string
       required:
-      - key
+      - errors
     Client:
       type: object
       additionalProperties: false
@@ -248,20 +302,24 @@ components:
           items:
             $ref: '#/components/schemas/Session'
         sign_in_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         sign_up_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         last_active_session_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           description: 'Last active session_id.
 
             '
         last_authentication_strategy:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           description: 'The authentication strategy that was last used to authenticate the user on this client.
 
             '
@@ -289,8 +347,9 @@ components:
       - updated_at
       - created_at
     SessionActivityResponse:
-      type: object
-      nullable: true
+      type:
+      - object
+      - 'null'
       properties:
         object:
           type: string
@@ -314,78 +373,14 @@ components:
       - id
       - object
       - is_mobile
-    ClerkErrors:
+    SessionTask:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
+        key:
           type: string
       required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeprecatedEndpoint:
-      description: The endpoint is considered deprecated and is pending removal.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Client:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Client.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Client'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
+      - key
   parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
     LimitParameter:
       name: limit
       in: query
@@ -409,6 +404,19 @@ components:
       required: false
       schema:
         type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

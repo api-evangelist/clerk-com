@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal M2M Tokens API
+  title: Clerk Backend M2M Tokens API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -57,12 +57,11 @@ paths:
                   - jwt
                   default: opaque
                 seconds_until_expiration:
-                  type: number
-                  nullable: true
-                  minimum: 0
-                  exclusiveMinimum: true
-                claims:
-                  nullable: true
+                  type:
+                  - number
+                  - 'null'
+                  exclusiveMinimum: 0
+                claims: {}
                 min_remaining_ttl_seconds:
                   type: integer
                   minimum: 0
@@ -99,7 +98,6 @@ paths:
                     pattern: ^mch_\w{27}$
                     example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   claims:
-                    nullable: true
                     example:
                       important_metadata: Some useful data
                   scopes:
@@ -118,20 +116,23 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token will expire, in milliseconds
                     example: 1716883200
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -236,15 +237,17 @@ paths:
         name: subject
         in: query
       - schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           default: false
         required: false
         name: revoked
         in: query
       - schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           default: false
         required: false
         name: expired
@@ -258,8 +261,9 @@ paths:
         name: limit
         in: query
       - schema:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           minimum: 0
           default: 0
         required: false
@@ -291,7 +295,6 @@ paths:
                           pattern: ^mch_\w{27}$
                           example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                         claims:
-                          nullable: true
                           example:
                             important_metadata: Some useful data
                         scopes:
@@ -307,20 +310,23 @@ paths:
                           type: boolean
                           example: false
                         revocation_reason:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           example: Revoked by user
                         expired:
                           type: boolean
                           example: false
                         expiration:
-                          type: number
-                          nullable: true
+                          type:
+                          - number
+                          - 'null'
                           description: The timestamp for when the token will expire, in milliseconds
                           example: 1716883200
                         last_used_at:
-                          type: number
-                          nullable: true
+                          type:
+                          - number
+                          - 'null'
                           description: The timestamp for when the token was last used, in milliseconds
                           example: 1716883200
                         created_at:
@@ -465,8 +471,9 @@ paths:
               type: object
               properties:
                 revocation_reason:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
               additionalProperties: false
       responses:
         '200':
@@ -489,7 +496,6 @@ paths:
                     pattern: ^mch_\w{27}$
                     example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   claims:
-                    nullable: true
                     example:
                       important_metadata: Some useful data
                   scopes:
@@ -505,20 +511,23 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token will expire, in milliseconds
                     example: 1716883200
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token was last used, in milliseconds
                     example: 1716883200
                   created_at:
@@ -645,7 +654,6 @@ paths:
                     pattern: ^mch_\w{27}$
                     example: mch_2xhFjEI5X2qWRvtV13BzSj8H6Dk
                   claims:
-                    nullable: true
                     example:
                       important_metadata: Some useful data
                   scopes:
@@ -661,20 +669,23 @@ paths:
                     type: boolean
                     example: false
                   revocation_reason:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: Revoked by user
                   expired:
                     type: boolean
                     example: false
                   expiration:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token will expire, in milliseconds
                     example: 1716883200
                   last_used_at:
-                    type: number
-                    nullable: true
+                    type:
+                    - number
+                    - 'null'
                     description: The timestamp for when the token was last used, in milliseconds
                     example: 1716883200
                   created_at:

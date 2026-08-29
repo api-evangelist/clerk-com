@@ -1,15 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Subscriptions API
-  x-logo:
-    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
-    altText: Clerk docs
-    href: https://clerk.com/docs
-  contact:
-    email: support@clerk.com
-    name: Clerk Platform Team
-    url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+  title: Clerk Frontend Subscriptions API
+  version: v1
+  description: 'The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
+
+
+    This is a Form Based API and all the data must be sent and formatted according to the `application/x-www-form-urlencoded` content type.
 
 
     ### Versions
@@ -17,19 +13,42 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
+
+
+    ### Using the Try It Console
+
+
+    The `Try It` feature of the docs only works for **Development Instances** when using the `DevBrowser` security scheme.
+
+    To use it, first generate a dev instance token from the `/v1/dev_browser` endpoint.
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Team
+    url: https://clerk.com/support
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
-    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+    url: https://github.com/clerk/javascript/blob/main/LICENSE
 servers:
-- url: https://api.clerk.com/v1
+- url: https://{domain}.clerk.accounts.dev
+  variables:
+    domain:
+      default: example-destined-camel-13
+      description: Your Development Instance Frontend API Domain.
 security:
-- bearerAuth: []
+- {}
+- DevBrowser: []
+- ProductionBrowser: []
+- ProductionNativeApp: []
+  ProductionNativeFlag: []
 tags:
 - name: Subscriptions
   description: Used to interact with subscriptions belonging to users and organizations.
@@ -80,144 +99,7 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Client.BillingSubscription:
-      description: Returns a commerce subscription.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.BillingSubscription'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    Stubs.Verification.GoogleOneTap:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_google_one_tap
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
-          - google_one_tap
-        expire_at:
-          type: integer
-          nullable: true
-        attempts:
-          type: integer
-          nullable: true
-      required:
-      - status
-      - strategy
-    BillingPayer:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: String representing the object's type
-          enum:
-          - commerce_payer
-        id:
-          type: string
-          description: Unique identifier for the payer
-        instance_id:
-          type: string
-          description: Unique identifier for the Clerk instance
-        user_id:
-          type: string
-          description: User ID for user-type payers
-          nullable: true
-        first_name:
-          type: string
-          description: First name of the payer (only set when user_id isn't null)
-          nullable: true
-        last_name:
-          type: string
-          description: Last name of the payer (only set when user_id isn't null)
-          nullable: true
-        email:
-          type: string
-          format: email
-          description: Email address of the payer (only set when user_id isn't null)
-          nullable: true
-        organization_id:
-          type: string
-          description: Organization ID for org-type payers
-          nullable: true
-        organization_name:
-          type: string
-          description: Organization name for org-type payers (only set when organization_id isn't null)
-          nullable: true
-        image_url:
-          type: string
-          format: uri
-          description: URL of the payer's image/avatar
-        credits_balance:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Current credits balance for the payer
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payer was created
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payer was last updated
-      required:
-      - object
-      - id
-      - instance_id
-      - user_id
-      - organization_id
-    Token:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - token
-        jwt:
-          type: string
-          description: 'String representing the encoded JWT value.
-
-            '
-      required:
-      - object
-      - jwt
     Stubs.Verification.SAML:
       type: object
       properties:
@@ -238,515 +120,33 @@ components:
           enum:
           - saml
         external_verification_redirect_url:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         error:
           allOf:
           - $ref: '#/components/schemas/ClerkError'
-          - type: object
-            nullable: true
+          - type:
+            - object
+            - 'null'
         expire_at:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - status
       - strategy
-    Client.PublicUserData:
-      type: object
-      additionalProperties: false
-      properties:
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-        image_url:
-          type: string
-          nullable: true
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-        profile_image_url:
-          type: string
-          nullable: true
-          deprecated: true
-          description: Use `image_url` instead.
-        user_id:
-          type: string
-          nullable: true
-        username:
-          type: string
-          nullable: true
-        banned:
-          type: boolean
-      required:
-      - first_name
-      - last_name
-      - identifier
-      - has_image
-    Client.BillingSubscription:
-      type: object
-      additionalProperties: false
-      properties:
-        response:
-          $ref: '#/components/schemas/BillingSubscription'
-        client:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.Client'
-      required:
-      - response
-      - client
-    Stubs.Verification.Password:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_password
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
-          - password
-        attempts:
-          type: integer
-          nullable: true
-        expire_at:
-          type: integer
-          nullable: true
-      required:
-      - status
-      - strategy
-    BillingPlanUnitPrice:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: Name of the billable unit (for example, seats)
-        block_size:
-          type: integer
-          format: int64
-          description: Number of units included in each pricing block
-        tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingPlanUnitPriceTier'
-          description: Tiered pricing configuration for this unit
-      required:
-      - name
-      - block_size
-      - tiers
-    BillingSubscriptionCreditResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Credit amount with formatting
-        cycle_days_remaining:
-          type: integer
-          format: int64
-          description: Number of days remaining in the billing cycle
-        cycle_days_total:
-          type: integer
-          format: int64
-          description: Total number of days in the billing cycle
-        cycle_remaining_percent:
-          type: number
-          format: double
-          description: Percentage of the billing cycle remaining
-      required:
-      - amount
-      - cycle_days_remaining
-      - cycle_days_total
-      - cycle_remaining_percent
-    BillingPerUnitTotalTier:
-      type: object
-      additionalProperties: false
-      properties:
-        quantity:
-          type: integer
-          format: int64
-          nullable: true
-          description: Units billed in this tier; null means unlimited
-        fee_per_block:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Price charged per block in this tier
-        total:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Total charge for this tier
-      required:
-      - fee_per_block
-      - total
-    Client.EmailAddress:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - email_address
-        email_address:
-          type: string
-        reserved:
-          type: boolean
-        verification:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Invitation'
-          - $ref: '#/components/schemas/Stubs.Verification.Link'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-          - $ref: '#/components/schemas/Stubs.Verification.Admin'
-          - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
-          - $ref: '#/components/schemas/Stubs.Verification.SAML'
-        linked_to:
-          type: array
-          items:
-            $ref: '#/components/schemas/Stubs.Identification.Link'
-        matches_sso_connection:
-          description: 'Indicates whether this email address domain matches an active enterprise connection.
-
-            '
-          type: boolean
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-      required:
-      - id
-      - object
-      - email_address
-      - verification
-      - linked_to
-      - reserved
-      - created_at
-      - updated_at
-    Client.PhoneNumber:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - phone_number
-        phone_number:
-          type: string
-        reserved_for_second_factor:
-          type: boolean
-        default_second_factor:
-          type: boolean
-        reserved:
-          type: boolean
-        verification:
-          nullable: true
-          type: object
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Admin'
-        linked_to:
-          type: array
-          items:
-            $ref: '#/components/schemas/Stubs.Identification.Link'
-        backup_codes:
-          type: array
-          items:
-            type: string
-          nullable: true
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-      required:
-      - id
-      - object
-      - phone_number
-      - verification
-      - linked_to
-      - reserved
-      - created_at
-      - updated_at
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    BillingCreditsResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        proration:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/BillingProrationCreditDetail'
-          description: Proration credit details from unused subscription time
-        payer:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/BillingPayerCreditResponse'
-          description: Payer credit details from the payer's credit balance
-        total:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Total credits applied
-      required:
-      - proration
-      - payer
-      - total
-    Stubs.SignUpVerification.AdditionalFields:
-      type: object
-      properties:
-        next_action:
-          type: string
-          enum:
-          - needs_prepare
-          - needs_attempt
-          - ''
-        supported_strategies:
-          type: array
-          items:
-            type: string
-      required:
-      - next_action
-      - supported_strategies
-    schemas-Client.Session:
-      allOf:
-      - $ref: '#/components/schemas/schemas-Client.SessionBase'
-      - type: object
-        properties:
-          last_active_organization_id:
-            type: string
-            nullable: true
-          user:
-            $ref: '#/components/schemas/Client.User'
-          public_user_data:
-            type: object
-            nullable: true
-            allOf:
-            - $ref: '#/components/schemas/Client.PublicUserData'
-          factor_verification_age:
-            type: array
-            description: Each item represents the minutes that have passed since the last time a first or second factor were verified.
-            items:
-              type: integer
-          created_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of creation.
-            example: 1700690400000
-          updated_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of last update.
-            example: 1700690400000
-        required:
-        - last_active_organization_id
-        - public_user_data
-        - factor_verification_age
-        - created_at
-        - updated_at
-    BillingPayerCreditResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        remaining_balance:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: The payer's remaining credit balance after credit is applied for this checkout (in cents)
-        applied_amount:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: The amount of payer credit applied to this checkout (in cents)
-      required:
-      - remaining_balance
-      - applied_amount
-    Client.SAMLAccount:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - saml_account
-        provider:
-          type: string
-        active:
-          type: boolean
-        email_address:
-          type: string
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-        provider_user_id:
-          description: The unique ID of the user in the external provider's system
-          type: string
-          nullable: true
-        enterprise_connection_id:
-          type: string
-          nullable: true
-        last_authenticated_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: 'Unix timestamp of last authentication.
-
-            '
-        public_metadata:
-          type: object
-          additionalProperties: true
-        verification:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.SAML'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-        saml_connection:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.SAMLConnection.SAMLAccount'
-      required:
-      - id
-      - object
-      - provider
-      - active
-      - email_address
-      - first_name
-      - last_name
-      - provider_user_id
-      - public_metadata
-      - saml_connection
-      - verification
-    schemas-Client.SessionBase:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - session
-        status:
-          type: string
-          enum:
-          - active
-          - revoked
-          - ended
-          - expired
-          - removed
-          - abandoned
-          - pending
-        expire_at:
-          type: integer
-          format: int64
-        abandon_at:
-          type: integer
-          format: int64
-        last_active_at:
-          type: integer
-          format: int64
-        last_active_token:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/Token'
-        actor:
-          type: object
-          nullable: true
-          additionalProperties: true
-        tasks:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/Client.SessionTask'
-      required:
-      - id
-      - object
-      - status
-      - expire_at
-      - abandon_at
-      - last_active_at
-    BillingSubscriptionNextPayment:
-      type: object
-      additionalProperties: false
-      properties:
-        date:
-          type: integer
-          format: int64
-          description: Unix timestamp (milliseconds) of the next payment date
-        amount:
-          $ref: '#/components/schemas/BillingFee'
-          description: The amount of the next payment
-      required:
-      - date
-      - amount
-    Stubs.Verification.OTP:
+    Stubs.Verification.Link:
       type: object
       properties:
         object:
           type: string
           enum:
-          - verification_otp
+          - verification_email_link
         status:
           type: string
           enum:
@@ -754,22 +154,89 @@ components:
           - verified
           - failed
           - expired
+          - transferable
         strategy:
           type: string
           enum:
-          - phone_code
-          - email_code
-          - reset_password_email_code
-          - reset_password_phone_code
+          - email_link
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
           type: integer
+        verified_at_client:
+          type: string
       required:
       - status
       - strategy
       - expire_at
+    BillingPlanUnitPriceTier:
+      type: object
+      additionalProperties: false
+      properties:
+        starts_at_block:
+          type: integer
+          format: int64
+          description: Start block (inclusive) for this tier
+        ends_after_block:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End block (inclusive) for this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Price charged per block in this tier
+      required:
+      - starts_at_block
+      - fee_per_block
+    Client.Passkey:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - passkey
+        name:
+          type: string
+        last_used_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp of when the passkey was last used.
+
+            '
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of update
+
+            '
+      required:
+      - id
+      - object
+      - name
+      - verification
     Stubs.SignInFactor:
       type: object
       additionalProperties: false
@@ -818,42 +285,70 @@ components:
         passkey_id:
           type: string
         primary:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         external_verification_redirect_url:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         default:
           type: boolean
       required:
       - strategy
-    Stubs.Verification.Ticket:
+    Stubs.Verification.BackupCode:
       type: object
+      additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_ticket
+          - verification_backup_code
         status:
           type: string
           enum:
           - unverified
           - verified
-          - expired
         strategy:
           type: string
           enum:
-          - ticket
+          - backup_code
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - status
       - strategy
-    BillingSubscriptionItem:
+    BillingSubscriptionCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Credit amount with formatting
+        cycle_days_remaining:
+          type: integer
+          format: int64
+          description: Number of days remaining in the billing cycle
+        cycle_days_total:
+          type: integer
+          format: int64
+          description: Total number of days in the billing cycle
+        cycle_remaining_percent:
+          type: number
+          format: double
+          description: Percentage of the billing cycle remaining
+      required:
+      - amount
+      - cycle_days_remaining
+      - cycle_days_total
+      - cycle_remaining_percent
+    BillingPayer:
       type: object
       additionalProperties: false
       properties:
@@ -861,424 +356,413 @@ components:
           type: string
           description: String representing the object's type
           enum:
-          - commerce_subscription_item
+          - commerce_payer
         id:
           type: string
-          description: Unique identifier for the subscription item
+          description: Unique identifier for the payer
         instance_id:
           type: string
           description: Unique identifier for the Clerk instance
-        status:
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: User ID for user-type payers
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: First name of the payer (only set when user_id isn't null)
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Last name of the payer (only set when user_id isn't null)
+        email:
+          type:
+          - string
+          - 'null'
+          format: email
+          description: Email address of the payer (only set when user_id isn't null)
+        organization_id:
+          type:
+          - string
+          - 'null'
+          description: Organization ID for org-type payers
+        organization_name:
+          type:
+          - string
+          - 'null'
+          description: Organization name for org-type payers (only set when organization_id isn't null)
+        image_url:
           type: string
-          description: Current status of the subscription item
-          enum:
-          - active
-          - canceled
-          - ended
-          - past_due
-          - upcoming
-          - incomplete
-          - abandoned
-        credit:
-          $ref: '#/components/schemas/BillingSubscriptionCreditResponse'
-          description: Credit information for this subscription (available in payment attempt events)
-        credits:
-          allOf:
-          - $ref: '#/components/schemas/BillingCreditsResponse'
-          nullable: true
-          description: Unified credits breakdown for this subscription item
-        plan_id:
-          type: string
-          description: Unique identifier for the associated plan
-        price_id:
-          type: string
-          description: Unique identifier for the associated price
-        plan:
-          $ref: '#/components/schemas/BillingPlan'
-          description: The associated plan
-        plan_period:
-          type: string
-          description: The billing period for this subscription
-          enum:
-          - month
-          - annual
-        payment_method_id:
-          type: string
-          description: Unique identifier for the payment method
-        payment_method:
-          $ref: '#/components/schemas/BillingPaymentMethod'
-          description: The payment method associated with this subscription
-        lifetime_paid:
-          $ref: '#/components/schemas/BillingFee'
-          description: Total amount paid over the lifetime of this subscription
-        amount:
-          $ref: '#/components/schemas/BillingFee'
-          description: Current amount due every period for this subscription
-        next_payment:
-          $ref: '#/components/schemas/BillingSubscriptionItemNextPayment'
-          nullable: true
-          description: Information about the next payment
-        payer_id:
-          type: string
-          description: Unique identifier for the payer
-        payer:
-          $ref: '#/components/schemas/BillingPayer'
-          description: The payer associated with this subscription
-        is_free_trial:
-          type: boolean
-          description: Whether this subscription is currently on a free trial
-        period_start:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the current period started
-        period_end:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp (in milliseconds) when the current period ends
-        proration_date:
-          type: string
-          description: Date used for proration calculations
-        canceled_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp (in milliseconds) when the subscription was canceled
-        past_due_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp (in milliseconds) when the subscription became past due
-        ended_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp (in milliseconds) when the subscription ended
+          format: uri
+          description: URL of the payer's image/avatar
+        credits_balance:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Current credits balance for the payer
         created_at:
           type: integer
           format: int64
-          description: Unix timestamp (in milliseconds) when the subscription was created
+          description: Unix timestamp (in milliseconds) when the payer was created
         updated_at:
           type: integer
           format: int64
-          description: Unix timestamp (in milliseconds) when the subscription was last updated
-        seats:
-          allOf:
-          - $ref: '#/components/schemas/BillingSubscriptionItemSeats'
-          nullable: true
-          description: Seat quantity for seat-based billing
-        totals:
-          allOf:
-          - $ref: '#/components/schemas/BillingTotalsResponse'
-          nullable: true
-          description: Totals for this subscription item
+          description: Unix timestamp (in milliseconds) when the payer was last updated
       required:
       - object
       - id
       - instance_id
-      - status
-      - plan_id
-      - plan_period
-      - payer_id
-      - is_free_trial
-      - period_start
-      - period_end
-      - canceled_at
-      - past_due_at
-      - ended_at
-    BillingPerUnitTotal:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: Name of the billable unit (for example, seats)
-        block_size:
-          type: integer
-          format: int64
-          description: Number of units included in each pricing block
-        tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingPerUnitTotalTier'
-          description: Computed totals for each pricing tier
-      required:
-      - name
-      - block_size
-      - tiers
-    Stubs.Verification.Web3Signature:
+      - user_id
+      - organization_id
+    Stubs.Verification.FromOauth:
       type: object
       properties:
         object:
           type: string
           enum:
-          - verification_web3
+          - verification_from_oauth
         status:
           type: string
           enum:
-          - unverified
           - verified
-          - failed
-          - expired
+          - unverified
         strategy:
           type: string
           enum:
-          - web3_metamask_signature
-          - web3_base_signature
-          - web3_coinbase_wallet_signature
-          - web3_okx_wallet_signature
-          - web3_solana_signature
+          - from_oauth_apple
+          - from_oauth_google
+          - from_oauth_mock
+          - from_oauth_custom_mock
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
-          type: integer
-          nullable: true
-        nonce:
-          type: string
-          nullable: true
-        message:
-          type: string
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - status
       - strategy
-    Stubs.Verification.Invitation:
+    Token:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - token
+        jwt:
+          type: string
+          description: 'String representing the encoded JWT value.
+
+            '
+      required:
+      - object
+      - jwt
+    Stubs.Verification.Admin:
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_invitation
+          - verification_admin
         status:
           type: string
           enum:
           - verified
-        strategy:
-          type: string
-          enum:
-          - invitation
-        attempts:
-          type: integer
-          nullable: true
-        expire_at:
-          type: integer
-          nullable: true
-      required:
-      - status
-      - strategy
-    Stubs.Verification.Link:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_email_link
-        status:
-          type: string
-          enum:
           - unverified
-          - verified
           - failed
           - expired
-          - transferable
         strategy:
           type: string
           enum:
-          - email_link
+          - admin
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
-          type: integer
-        verified_at_client:
-          type: string
+          type:
+          - integer
+          - 'null'
       required:
       - status
       - strategy
-      - expire_at
-    verification_oauth:
-      x-speakeasy-name-override: Oauth
+    BillingCreditsResponse:
       type: object
       additionalProperties: false
       properties:
+        proration:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BillingProrationCreditDetail'
+          description: Proration credit details from unused subscription time
+        payer:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/BillingPayerCreditResponse'
+          description: Payer credit details from the payer's credit balance
+        total:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Total credits applied
+      required:
+      - proration
+      - payer
+      - total
+    Client.EmailAddress:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
         object:
           type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
           enum:
-          - verification_oauth
-        status:
+          - email_address
+        email_address:
           type: string
-          x-speakeasy-unknown-values: allow
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-          - transferable
-        strategy:
-          type: string
-          x-speakeasy-unknown-values: allow
-          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
-        external_verification_redirect_url:
-          type: string
-        error:
-          type: object
-          nullable: true
+        reserved:
+          type: boolean
+        verification:
+          type:
+          - object
+          - 'null'
           oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
-          type: integer
-        attempts:
-          type: integer
-          nullable: true
-        verified_at_client:
-          type: string
-          nullable: true
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    BillingSubscriptionItemNextPayment:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          $ref: '#/components/schemas/BillingFee'
-          description: Amount for the next payment
-        date:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) for the next payment date
-        per_unit_totals:
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Invitation'
+          - $ref: '#/components/schemas/Stubs.Verification.Link'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+          - $ref: '#/components/schemas/Stubs.Verification.Admin'
+          - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
+          - $ref: '#/components/schemas/Stubs.Verification.SAML'
+        linked_to:
           type: array
           items:
-            $ref: '#/components/schemas/BillingPerUnitTotal'
-          description: Per-unit total breakdown for the next payment
-    schemas-Client.SignIn:
+            $ref: '#/components/schemas/Stubs.Identification.Link'
+        matches_sso_connection:
+          description: 'Indicates whether this email address domain matches an active enterprise connection.
+
+            '
+          type: boolean
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+      required:
+      - id
+      - object
+      - email_address
+      - verification
+      - linked_to
+      - reserved
+      - created_at
+      - updated_at
+    ExternalAccountWithVerification:
       type: object
-      additionalProperties: false
+      additionalProperties: true
       properties:
         object:
           type: string
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
-          - sign_in_attempt
+          - external_account
+          - facebook_account
+          - google_account
         id:
           type: string
-        status:
+        provider:
           type: string
-          enum:
-          - abandoned
-          - needs_identifier
-          - needs_first_factor
-          - needs_second_factor
-          - needs_client_trust
-          - needs_new_password
-          - needs_protect_check
-          - complete
-        supported_identifiers:
-          type: array
-          description: List of supported identifiers that can be used to sign in.
-          items:
-            type: string
-            enum:
-            - email_address
-            - phone_number
-            - username
-            - web3_wallet
-            - passkey
-        supported_first_factors:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/Stubs.SignInFactor'
-        supported_second_factors:
-          type: array
-          nullable: true
-          items:
-            $ref: '#/components/schemas/Stubs.SignInFactor'
-        first_factor_verification:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Password'
-          - $ref: '#/components/schemas/Stubs.Verification.Oauth'
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Link'
-          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-          - $ref: '#/components/schemas/Stubs.Verification.SAML'
-          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
-          - $ref: '#/components/schemas/Stubs.Verification.GoogleOneTap'
-        second_factor_verification:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Link'
-          - $ref: '#/components/schemas/Stubs.Verification.TOTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-          - $ref: '#/components/schemas/Stubs.Verification.BackupCode'
-        identifier:
-          nullable: true
+        identification_id:
           type: string
-        user_data:
-          type: object
-          additionalProperties: false
-          nullable: true
-          properties:
-            first_name:
-              type: string
-              nullable: true
-            last_name:
-              type: string
-              nullable: true
-            image_url:
-              type: string
-            has_image:
-              type: boolean
-            profile_image_url:
-              type: string
-              nullable: true
-              deprecated: true
-              description: Use `image_url` instead.
-          required:
-          - first_name
-          - last_name
-          - has_image
-        created_session_id:
-          nullable: true
+        provider_user_id:
+          description: The unique ID of the user in the external provider's system
           type: string
-        abandon_at:
-          type: integer
-          format: int64
-          description: Unix timestamp at which the sign in will be abandoned.
-          example: 1700690400000
-        client_trust_state:
+        approved_scopes:
           type: string
-          nullable: true
-          description: 'The trust state of the client for this sign-in attempt. - `pending`: The identifier has not been set yet. - `new`: The user has not had a session on this client before. - `known`: The user has had a session on this client before.
+        email_address:
+          type: string
+        email_address_verified:
+          type:
+          - boolean
+          - 'null'
+          description: 'Whether the email was verified by the OAuth provider at creation time. null = unknown (pre-migration data or custom OAuth providers), true = provider confirmed email was verified, false = provider confirmed email was NOT verified
 
             '
-          enum:
-          - pending
-          - new
-          - known
+        first_name:
+          type: string
+        last_name:
+          type: string
+        avatar_url:
+          type: string
+          deprecated: true
+          description: Please use `image_url` instead
+        image_url:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        phone_number:
+          type:
+          - string
+          - 'null'
+        public_metadata:
+          type: object
+          additionalProperties: true
+        label:
+          type:
+          - string
+          - 'null'
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_oauth'
+          - $ref: '#/components/schemas/verification_google_one_tap'
+          discriminator:
+            propertyName: object
       required:
       - object
       - id
-      - status
-      - supported_identifiers
-      - supported_first_factors
-      - supported_second_factors
-      - first_factor_verification
-      - second_factor_verification
+      - provider
+      - identification_id
+      - provider_user_id
+      - approved_scopes
+      - email_address
+      - first_name
+      - last_name
+      - public_metadata
+      - created_at
+      - updated_at
+      - verification
+    Client.OrganizationMembership:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_membership
+        public_metadata:
+          type: object
+          additionalProperties: true
+        role:
+          type: string
+        role_name:
+          type: string
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+        organization:
+          $ref: '#/components/schemas/Client.Organization'
+        public_user_data:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Client.PublicUserData'
+      required:
+      - object
+      - id
+      - public_metadata
+      - role
+      - role_name
+      - permissions
+      - created_at
+      - updated_at
+      - organization
+    Client.PublicUserData:
+      type: object
+      additionalProperties: false
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Use `image_url` instead.
+        user_id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+      required:
+      - first_name
+      - last_name
       - identifier
-      - user_data
-      - created_session_id
-      - abandon_at
+      - has_image
     BillingPlan:
       type: object
       additionalProperties: false
@@ -1297,22 +781,20 @@ components:
         fee:
           allOf:
           - $ref: '#/components/schemas/BillingFee'
-          nullable: true
           description: The monthly fee for this plan
         annual_monthly_fee:
           allOf:
           - $ref: '#/components/schemas/BillingFee'
-          nullable: true
           description: The monthly equivalent when billed annually
         annual_fee:
           allOf:
           - $ref: '#/components/schemas/BillingFee'
-          nullable: true
           description: The annual fee for this plan
         description:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The description of the plan
-          nullable: true
         product_id:
           type: string
           description: The ID of the product this plan belongs to
@@ -1336,15 +818,17 @@ components:
           type: string
           description: The URL-friendly slug for the plan
         avatar_url:
-          type: string
+          type:
+          - string
+          - 'null'
           description: The URL of the plan's avatar image
-          nullable: true
         free_trial_enabled:
           type: boolean
           description: Whether free trial is enabled for this plan
         free_trial_days:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Number of free trial days for this plan
         unit_prices:
           type: array
@@ -1369,15 +853,17 @@ components:
                 type: string
                 description: Name of the feature
               description:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
                 description: Description of the feature
               slug:
                 type: string
                 description: URL-friendly representation of the feature's name
               avatar_url:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
                 description: URL for an image to represent the feature
             required:
             - object
@@ -1404,159 +890,50 @@ components:
       - avatar_url
       - free_trial_enabled
       - free_trial_days
-    verification_google_one_tap:
-      x-speakeasy-name-override: GoogleOneTap
+    verification_oauth:
+      x-speakeasy-name-override: Oauth
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_google_one_tap
+          - verification_oauth
         status:
           type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
-          - google_one_tap
-        expire_at:
-          type: integer
-          nullable: true
-        attempts:
-          type: integer
-          nullable: true
-        verified_at_client:
-          type: string
-          nullable: true
-        error:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    ExternalAccountWithVerification:
-      type: object
-      additionalProperties: true
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - external_account
-          - facebook_account
-          - google_account
-        id:
-          type: string
-        provider:
-          type: string
-        identification_id:
-          type: string
-        provider_user_id:
-          description: The unique ID of the user in the external provider's system
-          type: string
-        approved_scopes:
-          type: string
-        email_address:
-          type: string
-        email_address_verified:
-          type: boolean
-          nullable: true
-          description: 'Whether the email was verified by the OAuth provider at creation time. null = unknown (pre-migration data or custom OAuth providers), true = provider confirmed email was verified, false = provider confirmed email was NOT verified
-
-            '
-        first_name:
-          type: string
-        last_name:
-          type: string
-        avatar_url:
-          type: string
-          deprecated: true
-          description: Please use `image_url` instead
-        image_url:
-          type: string
-          nullable: true
-        username:
-          type: string
-          nullable: true
-        phone_number:
-          type: string
-          nullable: true
-        public_metadata:
-          type: object
-          additionalProperties: true
-        label:
-          type: string
-          nullable: true
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        verification:
-          type: object
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/verification_oauth'
-          - $ref: '#/components/schemas/verification_google_one_tap'
-          discriminator:
-            propertyName: object
-      required:
-      - object
-      - id
-      - provider
-      - identification_id
-      - provider_user_id
-      - approved_scopes
-      - email_address
-      - first_name
-      - last_name
-      - public_metadata
-      - created_at
-      - updated_at
-      - verification
-    Stubs.Verification.Passkey:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_passkey
-        status:
-          type: string
+          x-speakeasy-unknown-values: allow
           enum:
           - unverified
           - verified
           - failed
           - expired
+          - transferable
         strategy:
           type: string
-          enum:
-          - passkey
-        attempts:
-          type: integer
-          nullable: true
+          x-speakeasy-unknown-values: allow
+          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
+        external_verification_redirect_url:
+          type: string
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError'
         expire_at:
           type: integer
-        nonce:
-          type: string
+        attempts:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
       required:
       - status
       - strategy
+      - attempts
       - expire_at
     BillingSubscription:
       type: object
@@ -1595,14 +972,16 @@ components:
           format: int64
           description: Unix timestamp (milliseconds) of last update
         active_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp (milliseconds) when the subscription became active
         past_due_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp (milliseconds) when the subscription became past due
         subscription_items:
           type: array
@@ -1612,7 +991,6 @@ components:
         next_payment:
           allOf:
           - $ref: '#/components/schemas/BillingSubscriptionNextPayment'
-          nullable: true
           description: Information about the next scheduled payment
         eligible_for_free_trial:
           type: boolean
@@ -1628,29 +1006,6 @@ components:
       - active_at
       - past_due_at
       - subscription_items
-    BillingFee:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: Amount in the smallest currency unit (e.g., cents)
-          minimum: 0
-        amount_formatted:
-          type: string
-          description: The formatted amount as a string (e.g., "$49.99")
-        currency:
-          type: string
-          description: The currency code (e.g., "USD")
-        currency_symbol:
-          type: string
-          description: The currency symbol (e.g., "$")
-      required:
-      - amount
-      - amount_formatted
-      - currency
-      - currency_symbol
     ClerkErrors:
       type: object
       properties:
@@ -1664,82 +1019,256 @@ components:
           type: string
       required:
       - errors
-    Stubs.Verification.TOTP:
+    Stubs.Verification.Ticket:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_ticket
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - expired
+        strategy:
+          type: string
+          enum:
+          - ticket
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    schemas-Client.Session:
+      allOf:
+      - $ref: '#/components/schemas/schemas-Client.SessionBase'
+      - type: object
+        properties:
+          last_active_organization_id:
+            type:
+            - string
+            - 'null'
+          user:
+            $ref: '#/components/schemas/Client.User'
+          public_user_data:
+            type:
+            - object
+            - 'null'
+            allOf:
+            - $ref: '#/components/schemas/Client.PublicUserData'
+          factor_verification_age:
+            type: array
+            description: Each item represents the minutes that have passed since the last time a first or second factor were verified.
+            items:
+              type: integer
+          created_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of creation.
+            example: 1700690400000
+          updated_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of last update.
+            example: 1700690400000
+        required:
+        - last_active_organization_id
+        - public_user_data
+        - factor_verification_age
+        - created_at
+        - updated_at
+    Stubs.Verification.Passkey:
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_totp
+          - verification_passkey
         status:
           type: string
           enum:
           - unverified
           - verified
+          - failed
+          - expired
         strategy:
           type: string
           enum:
-          - totp
+          - passkey
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
           type: integer
-          nullable: true
+        nonce:
+          type: string
       required:
       - status
       - strategy
-    Stubs.Verification.BackupCode:
+      - expire_at
+    BillingPlanUnitPrice:
       type: object
       additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
+          type: integer
+          format: int64
+          description: Number of units included in each pricing block
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPlanUnitPriceTier'
+          description: Tiered pricing configuration for this unit
+      required:
+      - name
+      - block_size
+      - tiers
+    BillingPayerCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        remaining_balance:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: The payer's remaining credit balance after credit is applied for this checkout (in cents)
+        applied_amount:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: The amount of payer credit applied to this checkout (in cents)
+      required:
+      - remaining_balance
+      - applied_amount
+    Stubs.Verification.Web3Signature:
+      type: object
       properties:
         object:
           type: string
           enum:
-          - verification_backup_code
+          - verification_web3
         status:
           type: string
           enum:
           - unverified
           - verified
+          - failed
+          - expired
         strategy:
           type: string
           enum:
-          - backup_code
+          - web3_metamask_signature
+          - web3_base_signature
+          - web3_coinbase_wallet_signature
+          - web3_okx_wallet_signature
+          - web3_solana_signature
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
+        nonce:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
       required:
       - status
       - strategy
-    Client.OrganizationMembership:
+    Client.SessionTask:
       type: object
       properties:
+        key:
+          type: string
+      required:
+      - key
+    BillingMoneyResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Amount in cents
+        amount_formatted:
+          type: string
+          description: Formatted amount as a string (e.g., "$10.00")
+        currency:
+          type: string
+          description: Currency code (e.g., "USD")
+        currency_symbol:
+          type: string
+          description: Currency symbol (e.g., "$")
+      required:
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
+    schemas-Client.Client:
+      type:
+      - object
+      - 'null'
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - client
         id:
           type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
+          description: String representing the identifier of the session.
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/schemas-Client.Session'
+        sign_in:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/schemas-Client.SignIn'
+        sign_up:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Client.SignUp'
+        last_active_session_id:
+          type:
+          - string
+          - 'null'
+          description: Last active session_id.
+        last_authentication_strategy:
+          type:
+          - string
+          - 'null'
+          description: 'The authentication strategy that was last used to authenticate the user on this client.
 
             '
-          enum:
-          - organization_membership
-        public_metadata:
-          type: object
-          additionalProperties: true
-        role:
-          type: string
-        role_name:
-          type: string
-        permissions:
-          type: array
-          nullable: true
-          items:
-            type: string
+        cookie_expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of the cookie expiration.
+        captcha_bypass:
+          type: boolean
+          description: Whether the client can bypass CAPTCHA.
         created_at:
           type: integer
           format: int64
@@ -1748,386 +1277,38 @@ components:
           type: integer
           format: int64
           description: Unix timestamp of last update.
-        organization:
-          $ref: '#/components/schemas/Client.Organization'
-        public_user_data:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/Client.PublicUserData'
       required:
       - object
       - id
-      - public_metadata
-      - role
-      - role_name
-      - permissions
+      - sessions
+      - sign_in
+      - sign_up
+      - last_active_session_id
+      - last_authentication_strategy
+      - cookie_expires_at
+      - captcha_bypass
       - created_at
       - updated_at
-      - organization
-    BillingPlanUnitPriceTier:
+    BillingPerUnitTotal:
       type: object
       additionalProperties: false
       properties:
-        starts_at_block:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
           type: integer
           format: int64
-          description: Start block (inclusive) for this tier
-        ends_after_block:
-          type: integer
-          format: int64
-          nullable: true
-          description: End block (inclusive) for this tier; null means unlimited
-        fee_per_block:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Price charged per block in this tier
-      required:
-      - starts_at_block
-      - fee_per_block
-    BillingProrationCreditDetail:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Credit amount with formatting
-        cycle_days_remaining:
-          type: integer
-          format: int64
-          description: Number of days remaining in the billing cycle
-        cycle_days_total:
-          type: integer
-          format: int64
-          description: Total number of days in the billing cycle
-        cycle_remaining_percent:
-          type: number
-          format: double
-          description: Percentage of the billing cycle remaining
-      required:
-      - amount
-      - cycle_days_remaining
-      - cycle_days_total
-      - cycle_remaining_percent
-    BillingSubscriptionItemSeats:
-      type: object
-      additionalProperties: false
-      properties:
-        quantity:
-          type: integer
-          format: int64
-          nullable: true
-          description: Seat quantity being billed; null means unlimited
+          description: Number of units included in each pricing block
         tiers:
           type: array
           items:
             $ref: '#/components/schemas/BillingPerUnitTotalTier'
-          description: Per-unit cost breakdown by pricing tier
+          description: Computed totals for each pricing tier
       required:
-      - quantity
-    BillingPaymentMethod:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: String representing the object's type
-          enum:
-          - commerce_payment_method
-        id:
-          type: string
-          description: Unique identifier for the payment method
-        payer_id:
-          type: string
-          description: Unique identifier for the payer
-        payment_type:
-          type: string
-          description: The payment method type
-          enum:
-          - card
-          - link
-        is_default:
-          type: boolean
-          description: Whether this is the default payment method for the payer
-        gateway:
-          type: string
-          description: The payment gateway
-        gateway_external_id:
-          type: string
-          description: External ID in the payment gateway
-        gateway_external_account_id:
-          type: string
-          nullable: true
-          description: External account ID in the payment gateway
-        last4:
-          type: string
-          description: Last 4 digits of the card (for card payment methods)
-          nullable: true
-        status:
-          type: string
-          description: Status of the payment method
-          enum:
-          - active
-          - disconnected
-        wallet_type:
-          type: string
-          description: Type of wallet (if applicable)
-          nullable: true
-        card_type:
-          type: string
-          description: Type of card (if applicable)
-          nullable: true
-        expiry_year:
-          type: integer
-          description: Card expiration year (for card payment methods)
-          nullable: true
-        expiry_month:
-          type: integer
-          description: Card expiration month (for card payment methods)
-          nullable: true
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payment method was created
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payment method was last updated
-        is_removable:
-          type: boolean
-          description: Whether this payment method can be removed
-      required:
-      - object
-      - id
-      - payer_id
-      - payment_type
-      - gateway
-      - gateway_external_id
-      - gateway_external_account_id
-      - last4
-      - status
-      - card_type
-    Client.Web3Wallet:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - web3_wallet
-        web3_wallet:
-          type: string
-        verification:
-          nullable: true
-          type: object
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
-          - $ref: '#/components/schemas/Stubs.Verification.Admin'
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-      required:
-      - id
-      - object
-      - web3_wallet
-      - verification
-      - created_at
-      - updated_at
-    Stubs.Identification.Link:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          type: string
-          enum:
-          - oauth_apple
-          - oauth_google
-          - oauth_mock
-          - oauth_custom_mock
-          - saml
-        id:
-          type: string
-      required:
-      - type
-      - id
-    Client.SignUp:
-      type: object
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - sign_up_attempt
-        id:
-          type: string
-          description: Unique identifier for this sign up.
-        status:
-          type: string
-          enum:
-          - abandoned
-          - missing_requirements
-          - complete
-        required_fields:
-          type: array
-          items:
-            type: string
-          description: 'List of required fields which need to be supplied to the current sign-up. These fields are mandatory in order for the sign-up to satisfy the attached registration policy and be marked as complete.
-
-            '
-        optional_fields:
-          type: array
-          items:
-            type: string
-          description: 'List of optional fields which can be supplied to the current sign-up. These fields are not required and their absence does not prevent the sign-up to be marked as complete.
-
-            '
-        missing_fields:
-          type: array
-          items:
-            type: string
-          description: 'List of the missing fields which still need to be supplied to the current sign-up. These fields are mandatory in order for the sign-up to satisfy the attached registration policy and be marked as complete.
-
-            '
-        unverified_fields:
-          type: array
-          items:
-            type: string
-          description: 'List of fields which are already supplied to the current sign-up but they need to be verified. Example of such fields are email addresses and phone numbers.
-
-            '
-        verifications:
-          description: 'Group for all available verifications.
-
-            '
-          allOf:
-          - $ref: '#/components/schemas/Client.SignUp.Verifications'
-        username:
-          type: string
-          nullable: true
-        email_address:
-          type: string
-          nullable: true
-        phone_number:
-          type: string
-          nullable: true
-        web3_wallet:
-          type: string
-          nullable: true
-        password_enabled:
-          type: boolean
-        first_name:
-          type: string
-          nullable: true
-        last_name:
-          type: string
-          nullable: true
-        unsafe_metadata:
-          description: 'Custom JSON that callers can use to store arbitrary values that make sense in the context of the current sign up.
-
-            '
-          type: object
-          additionalProperties: true
-        public_metadata:
-          description: 'Custom JSON that can be used to store arbitrary values which will end up in the user''s public metadata. This field can only be populated from the application''s BE. At this point, this can be done via invitations.
-
-            '
-          type: object
-          additionalProperties: true
-        custom_action:
-          type: boolean
-        external_id:
-          type: string
-          nullable: true
-        created_session_id:
-          type: string
-          nullable: true
-        created_user_id:
-          type: string
-          nullable: true
-        abandon_at:
-          type: integer
-          format: int64
-          description: Unix timestamp at which the sign up will be abandoned.
-          example: 1700690400000
-        legal_accepted_at:
-          type: integer
-          format: int64
-          nullable: true
-          description: Unix timestamp at which the user accepted the legal requirements.
-          example: 1700690400000
-      required:
-      - object
-      - id
-      - status
-      - required_fields
-      - optional_fields
-      - missing_fields
-      - unverified_fields
-      - verifications
-      - username
-      - email_address
-      - phone_number
-      - web3_wallet
-      - password_enabled
-      - first_name
-      - last_name
-      - custom_action
-      - external_id
-      - created_session_id
-      - created_user_id
-      - abandon_at
-      - legal_accepted_at
-    Stubs.Verification.Oauth:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_oauth
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-          - transferable
-        strategy:
-          type: string
-          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z0-9_]+$
-        external_verification_redirect_url:
-          nullable: true
-          type: string
-        error:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
-          type: integer
-        attempts:
-          type: integer
-          nullable: true
-      required:
-      - status
-      - strategy
-      - expire_at
+      - name
+      - block_size
+      - tiers
     Client.User:
       type: object
       properties:
@@ -2141,27 +1322,33 @@ components:
           enum:
           - user
         username:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         first_name:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         last_name:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         image_url:
           type: string
         has_image:
           type: boolean
         primary_email_address_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         primary_phone_number_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         primary_web3_wallet_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         password_enabled:
           type: boolean
         two_factor_enabled:
@@ -2199,8 +1386,9 @@ components:
           items:
             $ref: '#/components/schemas/Client.SAMLAccount'
         password_last_updated_at:
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
           description: Unix timestamp of last update.
           example: 1700690400000
@@ -2214,12 +1402,14 @@ components:
           type: object
           additionalProperties: true
         external_id:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         last_sign_in_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp of last sign-in.
           example: 1700690400000
         banned:
@@ -2236,17 +1426,19 @@ components:
 
             '
         lockout_expires_in_seconds:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: 'The number of seconds remaining until the lockout period expires for a locked user. A null value for a locked user indicates that lockout never expires.
 
             '
           example: 300
         verification_attempts_remaining:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: 'The number of verification attempts remaining until the user is locked. Null if account lockout is not enabled. Note: if a user is locked explicitly via the Backend API, they may still have verification attempts remaining.
 
             '
@@ -2270,27 +1462,31 @@ components:
           type: integer
           description: The maximum number of organizations the user can create. 0 means unlimited.
         last_active_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp of the latest session activity, with day precision.
           example: 1700690400000
         mfa_enabled_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp at which the user enabled MFA.
           example: 1700690400000
         mfa_disabled_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp at which the user disabled MFA.
           example: 1700690400000
         legal_accepted_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp at which the user accepted the legal requirements.
           example: 1700690400000
         profile_image_url:
@@ -2333,7 +1529,70 @@ components:
       - mfa_enabled_at
       - mfa_disabled_at
       - legal_accepted_at
-    Client.Passkey:
+    Stubs.Verification.Oauth:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_oauth
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+          - transferable
+        strategy:
+          type: string
+          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z0-9_]+$
+        external_verification_redirect_url:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/ClerkError'
+        expire_at:
+          type: integer
+        attempts:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+      - expire_at
+    BillingProrationCreditDetail:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Credit amount with formatting
+        cycle_days_remaining:
+          type: integer
+          format: int64
+          description: Number of days remaining in the billing cycle
+        cycle_days_total:
+          type: integer
+          format: int64
+          description: Total number of days in the billing cycle
+        cycle_remaining_percent:
+          type: number
+          format: double
+          description: Percentage of the billing cycle remaining
+      required:
+      - amount
+      - cycle_days_remaining
+      - cycle_days_total
+      - cycle_remaining_percent
+    Client.Organization:
       type: object
       additionalProperties: false
       properties:
@@ -2345,132 +1604,70 @@ components:
 
             '
           enum:
-          - passkey
+          - organization
         name:
           type: string
-        last_used_at:
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        members_count:
           type: integer
-          format: int64
-          description: 'Unix timestamp of when the passkey was last used.
-
-            '
-          nullable: true
-        verification:
-          nullable: true
+        pending_invitations_count:
+          type: integer
+        max_allowed_memberships:
+          type: integer
+        admin_delete_enabled:
+          type: boolean
+        public_metadata:
           type: object
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
+          additionalProperties: true
         created_at:
           type: integer
           format: int64
-          description: 'Unix timestamp of creation
+          description: 'Unix timestamp of creation.
 
             '
         updated_at:
           type: integer
           format: int64
-          description: 'Unix timestamp of update
+          description: 'Unix timestamp of last update.
 
             '
+        logo_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated. Use `image_url` instead.
       required:
-      - id
       - object
+      - id
       - name
-      - verification
-    Client.SessionTask:
-      type: object
-      properties:
-        key:
-          type: string
-      required:
-      - key
-    BillingTotalsResponse:
+      - slug
+      - has_image
+      - max_allowed_memberships
+      - admin_delete_enabled
+      - public_metadata
+      - created_at
+      - updated_at
+    Client.BillingSubscription:
       type: object
       additionalProperties: false
       properties:
-        subtotal:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Subtotal before adjustments
-        base_fee:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Base fee component before per-unit charges and adjustments
-        tax_total:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Total tax amount
-        grand_total:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Grand total amount
-        total_due_after_free_trial:
+        response:
+          $ref: '#/components/schemas/BillingSubscription'
+        client:
+          type:
+          - object
+          - 'null'
           allOf:
-          - $ref: '#/components/schemas/BillingMoneyResponse'
-          nullable: true
-          description: Total amount due after free trial ends
-        credit:
-          allOf:
-          - $ref: '#/components/schemas/BillingMoneyResponse'
-          nullable: true
-          description: Credit amount
-        past_due:
-          allOf:
-          - $ref: '#/components/schemas/BillingMoneyResponse'
-          nullable: true
-          description: Past due amount
-        total_due_now:
-          allOf:
-          - $ref: '#/components/schemas/BillingMoneyResponse'
-          nullable: true
-          description: Total amount due now
-        per_unit_totals:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingPerUnitTotal'
-          description: Per-unit total breakdown (for example, seats)
-        credits:
-          allOf:
-          - $ref: '#/components/schemas/BillingCreditsResponse'
-          nullable: true
-          description: Unified credits breakdown
-        proration:
-          type: object
-          nullable: true
-          additionalProperties: false
-          properties:
-            credit:
-              $ref: '#/components/schemas/BillingMoneyResponse'
-              description: Proration credit amount
+          - $ref: '#/components/schemas/schemas-Client.Client'
       required:
-      - subtotal
-      - base_fee
-      - tax_total
-      - grand_total
-    Stubs.Verification.FromOauth:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_from_oauth
-        status:
-          type: string
-          enum:
-          - verified
-          - unverified
-        strategy:
-          type: string
-          enum:
-          - from_oauth_apple
-          - from_oauth_google
-          - from_oauth_mock
-          - from_oauth_custom_mock
-        attempts:
-          type: integer
-          nullable: true
-        expire_at:
-          type: integer
-          nullable: true
-      required:
-      - status
-      - strategy
+      - response
+      - client
     Stubs.SAMLConnection.SAMLAccount:
       type: object
       additionalProperties: false
@@ -2525,7 +1722,146 @@ components:
         - domain
       - required:
         - domains
-    Client.Organization:
+    Client.SignUp:
+      type: object
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - sign_up_attempt
+        id:
+          type: string
+          description: Unique identifier for this sign up.
+        status:
+          type: string
+          enum:
+          - abandoned
+          - missing_requirements
+          - complete
+        required_fields:
+          type: array
+          items:
+            type: string
+          description: 'List of required fields which need to be supplied to the current sign-up. These fields are mandatory in order for the sign-up to satisfy the attached registration policy and be marked as complete.
+
+            '
+        optional_fields:
+          type: array
+          items:
+            type: string
+          description: 'List of optional fields which can be supplied to the current sign-up. These fields are not required and their absence does not prevent the sign-up to be marked as complete.
+
+            '
+        missing_fields:
+          type: array
+          items:
+            type: string
+          description: 'List of the missing fields which still need to be supplied to the current sign-up. These fields are mandatory in order for the sign-up to satisfy the attached registration policy and be marked as complete.
+
+            '
+        unverified_fields:
+          type: array
+          items:
+            type: string
+          description: 'List of fields which are already supplied to the current sign-up but they need to be verified. Example of such fields are email addresses and phone numbers.
+
+            '
+        verifications:
+          description: 'Group for all available verifications.
+
+            '
+          allOf:
+          - $ref: '#/components/schemas/Client.SignUp.Verifications'
+        username:
+          type:
+          - string
+          - 'null'
+        email_address:
+          type:
+          - string
+          - 'null'
+        phone_number:
+          type:
+          - string
+          - 'null'
+        web3_wallet:
+          type:
+          - string
+          - 'null'
+        password_enabled:
+          type: boolean
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        unsafe_metadata:
+          description: 'Custom JSON that callers can use to store arbitrary values that make sense in the context of the current sign up.
+
+            '
+          type: object
+          additionalProperties: true
+        public_metadata:
+          description: 'Custom JSON that can be used to store arbitrary values which will end up in the user''s public metadata. This field can only be populated from the application''s BE. At this point, this can be done via invitations.
+
+            '
+          type: object
+          additionalProperties: true
+        custom_action:
+          type: boolean
+        external_id:
+          type:
+          - string
+          - 'null'
+        created_session_id:
+          type:
+          - string
+          - 'null'
+        created_user_id:
+          type:
+          - string
+          - 'null'
+        abandon_at:
+          type: integer
+          format: int64
+          description: Unix timestamp at which the sign up will be abandoned.
+          example: 1700690400000
+        legal_accepted_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp at which the user accepted the legal requirements.
+          example: 1700690400000
+      required:
+      - object
+      - id
+      - status
+      - required_fields
+      - optional_fields
+      - missing_fields
+      - unverified_fields
+      - verifications
+      - username
+      - email_address
+      - phone_number
+      - web3_wallet
+      - password_enabled
+      - first_name
+      - last_name
+      - custom_action
+      - external_id
+      - created_session_id
+      - created_user_id
+      - abandon_at
+      - legal_accepted_at
+    Client.Web3Wallet:
       type: object
       additionalProperties: false
       properties:
@@ -2537,124 +1873,290 @@ components:
 
             '
           enum:
-          - organization
-        name:
+          - web3_wallet
+        web3_wallet:
           type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        members_count:
-          type: integer
-        pending_invitations_count:
-          type: integer
-        max_allowed_memberships:
-          type: integer
-        admin_delete_enabled:
-          type: boolean
-        public_metadata:
-          type: object
-          additionalProperties: true
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
+          - $ref: '#/components/schemas/Stubs.Verification.Admin'
         created_at:
           type: integer
           format: int64
-          description: 'Unix timestamp of creation.
+          description: 'Unix timestamp of creation
 
             '
         updated_at:
           type: integer
           format: int64
-          description: 'Unix timestamp of last update.
+          description: 'Unix timestamp of creation
 
             '
-        logo_url:
-          type: string
-          nullable: true
-          deprecated: true
-          description: Deprecated. Use `image_url` instead.
       required:
-      - object
       - id
-      - name
-      - slug
-      - has_image
-      - max_allowed_memberships
-      - admin_delete_enabled
-      - public_metadata
+      - object
+      - web3_wallet
+      - verification
       - created_at
       - updated_at
-    schemas-Client.Client:
+    schemas-Client.SignIn:
       type: object
-      nullable: true
+      additionalProperties: false
       properties:
         object:
           type: string
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
-          - client
+          - sign_in_attempt
         id:
           type: string
-          description: String representing the identifier of the session.
-        sessions:
+        status:
+          type: string
+          enum:
+          - abandoned
+          - needs_identifier
+          - needs_first_factor
+          - needs_second_factor
+          - needs_client_trust
+          - needs_new_password
+          - needs_protect_check
+          - complete
+        supported_identifiers:
           type: array
+          description: List of supported identifiers that can be used to sign in.
           items:
-            $ref: '#/components/schemas/schemas-Client.Session'
-        sign_in:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.SignIn'
-        sign_up:
-          type: object
-          nullable: true
-          allOf:
-          - $ref: '#/components/schemas/Client.SignUp'
-        last_active_session_id:
-          nullable: true
-          type: string
-          description: Last active session_id.
-        last_authentication_strategy:
-          nullable: true
-          type: string
-          description: 'The authentication strategy that was last used to authenticate the user on this client.
+            type: string
+            enum:
+            - email_address
+            - phone_number
+            - username
+            - web3_wallet
+            - passkey
+        supported_first_factors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Stubs.SignInFactor'
+        supported_second_factors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Stubs.SignInFactor'
+        first_factor_verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Password'
+          - $ref: '#/components/schemas/Stubs.Verification.Oauth'
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Link'
+          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+          - $ref: '#/components/schemas/Stubs.Verification.SAML'
+          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
+          - $ref: '#/components/schemas/Stubs.Verification.GoogleOneTap'
+        second_factor_verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Link'
+          - $ref: '#/components/schemas/Stubs.Verification.TOTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+          - $ref: '#/components/schemas/Stubs.Verification.BackupCode'
+        identifier:
+          type:
+          - string
+          - 'null'
+        user_data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            first_name:
+              type:
+              - string
+              - 'null'
+            last_name:
+              type:
+              - string
+              - 'null'
+            image_url:
+              type: string
+            has_image:
+              type: boolean
+            profile_image_url:
+              type:
+              - string
+              - 'null'
+              deprecated: true
+              description: Use `image_url` instead.
+          required:
+          - first_name
+          - last_name
+          - has_image
+        created_session_id:
+          type:
+          - string
+          - 'null'
+        abandon_at:
+          type: integer
+          format: int64
+          description: Unix timestamp at which the sign in will be abandoned.
+          example: 1700690400000
+        client_trust_state:
+          type:
+          - string
+          - 'null'
+          description: 'The trust state of the client for this sign-in attempt. - `pending`: The identifier has not been set yet. - `new`: The user has not had a session on this client before. - `known`: The user has had a session on this client before.
 
             '
-        cookie_expires_at:
-          nullable: true
-          type: integer
-          format: int64
-          description: Unix timestamp of the cookie expiration.
-        captcha_bypass:
-          type: boolean
-          description: Whether the client can bypass CAPTCHA.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
+          enum:
+          - pending
+          - new
+          - known
       required:
       - object
       - id
-      - sessions
-      - sign_in
-      - sign_up
-      - last_active_session_id
-      - last_authentication_strategy
-      - cookie_expires_at
-      - captcha_bypass
+      - status
+      - supported_identifiers
+      - supported_first_factors
+      - supported_second_factors
+      - first_factor_verification
+      - second_factor_verification
+      - identifier
+      - user_data
+      - created_session_id
+      - abandon_at
+    schemas-Client.SessionBase:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - session
+        status:
+          type: string
+          enum:
+          - active
+          - revoked
+          - ended
+          - expired
+          - removed
+          - abandoned
+          - pending
+        expire_at:
+          type: integer
+          format: int64
+        abandon_at:
+          type: integer
+          format: int64
+        last_active_at:
+          type: integer
+          format: int64
+        last_active_token:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Token'
+        actor:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        tasks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Client.SessionTask'
+      required:
+      - id
+      - object
+      - status
+      - expire_at
+      - abandon_at
+      - last_active_at
+    Client.PhoneNumber:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - phone_number
+        phone_number:
+          type: string
+        reserved_for_second_factor:
+          type: boolean
+        default_second_factor:
+          type: boolean
+        reserved:
+          type: boolean
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Admin'
+        linked_to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stubs.Identification.Link'
+        backup_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+      required:
+      - id
+      - object
+      - phone_number
+      - verification
+      - linked_to
+      - reserved
       - created_at
       - updated_at
     Client.SignUp.Verifications:
       type: object
       properties:
         email_address:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           oneOf:
           - allOf:
             - $ref: '#/components/schemas/Stubs.Verification.OTP'
@@ -2672,20 +2174,23 @@ components:
             - $ref: '#/components/schemas/Stubs.Verification.SAML'
             - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
         phone_number:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/Stubs.Verification.OTP'
           - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
         web3_wallet:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           allOf:
           - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
           - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
         external_account:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           oneOf:
           - $ref: '#/components/schemas/Stubs.Verification.Oauth'
           - $ref: '#/components/schemas/Stubs.Verification.SAML'
@@ -2696,71 +2201,795 @@ components:
       - phone_number
       - web3_wallet
       - external_account
-    Stubs.Verification.Admin:
+    BillingSubscriptionNextPayment:
+      type: object
+      additionalProperties: false
+      properties:
+        date:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of the next payment date
+        amount:
+          $ref: '#/components/schemas/BillingFee'
+          description: The amount of the next payment
+      required:
+      - date
+      - amount
+    Stubs.Verification.Invitation:
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_admin
+          - verification_invitation
         status:
           type: string
           enum:
           - verified
-          - unverified
-          - failed
-          - expired
         strategy:
           type: string
           enum:
-          - admin
+          - invitation
         attempts:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         expire_at:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       required:
       - status
       - strategy
-    BillingMoneyResponse:
+    Stubs.Identification.Link:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth_apple
+          - oauth_google
+          - oauth_mock
+          - oauth_custom_mock
+          - saml
+        id:
+          type: string
+      required:
+      - type
+      - id
+    BillingSubscriptionItem:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: String representing the object's type
+          enum:
+          - commerce_subscription_item
+        id:
+          type: string
+          description: Unique identifier for the subscription item
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance
+        status:
+          type: string
+          description: Current status of the subscription item
+          enum:
+          - active
+          - canceled
+          - ended
+          - past_due
+          - upcoming
+          - incomplete
+          - abandoned
+        credit:
+          $ref: '#/components/schemas/BillingSubscriptionCreditResponse'
+          description: Credit information for this subscription (available in payment attempt events)
+        credits:
+          allOf:
+          - $ref: '#/components/schemas/BillingCreditsResponse'
+          description: Unified credits breakdown for this subscription item
+        plan_id:
+          type: string
+          description: Unique identifier for the associated plan
+        price_id:
+          type: string
+          description: Unique identifier for the associated price
+        plan:
+          $ref: '#/components/schemas/BillingPlan'
+          description: The associated plan
+        plan_period:
+          type: string
+          description: The billing period for this subscription
+          enum:
+          - month
+          - annual
+        payment_method_id:
+          type: string
+          description: Unique identifier for the payment method
+        payment_method:
+          $ref: '#/components/schemas/BillingPaymentMethod'
+          description: The payment method associated with this subscription
+        lifetime_paid:
+          $ref: '#/components/schemas/BillingFee'
+          description: Total amount paid over the lifetime of this subscription
+        amount:
+          $ref: '#/components/schemas/BillingFee'
+          description: Current amount due every period for this subscription
+        next_payment:
+          $ref: '#/components/schemas/BillingSubscriptionItemNextPayment'
+          description: Information about the next payment
+        payer_id:
+          type: string
+          description: Unique identifier for the payer
+        payer:
+          $ref: '#/components/schemas/BillingPayer'
+          description: The payer associated with this subscription
+        is_free_trial:
+          type: boolean
+          description: Whether this subscription is currently on a free trial
+        period_start:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the current period started
+        period_end:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the current period ends
+        proration_date:
+          type: string
+          description: Date used for proration calculations
+        canceled_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription was canceled
+        past_due_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription became past due
+        ended_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription ended
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription was created
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription was last updated
+        seats:
+          allOf:
+          - $ref: '#/components/schemas/BillingSubscriptionItemSeats'
+          description: Seat quantity for seat-based billing
+        totals:
+          allOf:
+          - $ref: '#/components/schemas/BillingTotalsResponse'
+          description: Totals for this subscription item
+      required:
+      - object
+      - id
+      - instance_id
+      - status
+      - plan_id
+      - plan_period
+      - payer_id
+      - is_free_trial
+      - period_start
+      - period_end
+      - canceled_at
+      - past_due_at
+      - ended_at
+    verification_google_one_tap:
+      x-speakeasy-name-override: GoogleOneTap
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_google_one_tap
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - google_one_tap
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    Stubs.Verification.TOTP:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_totp
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - totp
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    BillingPerUnitTotalTier:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Units billed in this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Price charged per block in this tier
+        total:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Total charge for this tier
+      required:
+      - fee_per_block
+      - total
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    BillingFee:
       type: object
       additionalProperties: false
       properties:
         amount:
           type: integer
           format: int64
-          description: Amount in cents
+          description: Amount in the smallest currency unit (e.g., cents)
+          minimum: 0
         amount_formatted:
           type: string
-          description: Formatted amount as a string (e.g., "$10.00")
+          description: The formatted amount as a string (e.g., "$49.99")
         currency:
           type: string
-          description: Currency code (e.g., "USD")
+          description: The currency code (e.g., "USD")
         currency_symbol:
           type: string
-          description: Currency symbol (e.g., "$")
+          description: The currency symbol (e.g., "$")
       required:
       - amount
       - amount_formatted
       - currency
       - currency_symbol
+    Stubs.Verification.OTP:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_otp
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - phone_code
+          - email_code
+          - reset_password_email_code
+          - reset_password_phone_code
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type: integer
+      required:
+      - status
+      - strategy
+      - expire_at
+    BillingSubscriptionItemSeats:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Seat quantity being billed; null means unlimited
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPerUnitTotalTier'
+          description: Per-unit cost breakdown by pricing tier
+      required:
+      - quantity
+    BillingTotalsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        subtotal:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Subtotal before adjustments
+        base_fee:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Base fee component before per-unit charges and adjustments
+        tax_total:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Total tax amount
+        grand_total:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Grand total amount
+        total_due_after_free_trial:
+          allOf:
+          - $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Total amount due after free trial ends
+        credit:
+          allOf:
+          - $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Credit amount
+        past_due:
+          allOf:
+          - $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Past due amount
+        total_due_now:
+          allOf:
+          - $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Total amount due now
+        per_unit_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPerUnitTotal'
+          description: Per-unit total breakdown (for example, seats)
+        credits:
+          allOf:
+          - $ref: '#/components/schemas/BillingCreditsResponse'
+          description: Unified credits breakdown
+        proration:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            credit:
+              $ref: '#/components/schemas/BillingMoneyResponse'
+              description: Proration credit amount
+      required:
+      - subtotal
+      - base_fee
+      - tax_total
+      - grand_total
+    Stubs.Verification.GoogleOneTap:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_google_one_tap
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - google_one_tap
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    Stubs.SignUpVerification.AdditionalFields:
+      type: object
+      properties:
+        next_action:
+          type: string
+          enum:
+          - needs_prepare
+          - needs_attempt
+          - ''
+        supported_strategies:
+          type: array
+          items:
+            type: string
+      required:
+      - next_action
+      - supported_strategies
+    BillingSubscriptionItemNextPayment:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          $ref: '#/components/schemas/BillingFee'
+          description: Amount for the next payment
+        date:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) for the next payment date
+        per_unit_totals:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPerUnitTotal'
+          description: Per-unit total breakdown for the next payment
+    BillingPaymentMethod:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: String representing the object's type
+          enum:
+          - commerce_payment_method
+        id:
+          type: string
+          description: Unique identifier for the payment method
+        payer_id:
+          type: string
+          description: Unique identifier for the payer
+        payment_type:
+          type: string
+          description: The payment method type
+          enum:
+          - card
+          - link
+        is_default:
+          type: boolean
+          description: Whether this is the default payment method for the payer
+        gateway:
+          type: string
+          description: The payment gateway
+        gateway_external_id:
+          type: string
+          description: External ID in the payment gateway
+        gateway_external_account_id:
+          type:
+          - string
+          - 'null'
+          description: External account ID in the payment gateway
+        last4:
+          type:
+          - string
+          - 'null'
+          description: Last 4 digits of the card (for card payment methods)
+        status:
+          type: string
+          description: Status of the payment method
+          enum:
+          - active
+          - disconnected
+        wallet_type:
+          type:
+          - string
+          - 'null'
+          description: Type of wallet (if applicable)
+        card_type:
+          type:
+          - string
+          - 'null'
+          description: Type of card (if applicable)
+        expiry_year:
+          type:
+          - integer
+          - 'null'
+          description: Card expiration year (for card payment methods)
+        expiry_month:
+          type:
+          - integer
+          - 'null'
+          description: Card expiration month (for card payment methods)
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was created
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was last updated
+        is_removable:
+          type: boolean
+          description: Whether this payment method can be removed
+      required:
+      - object
+      - id
+      - payer_id
+      - payment_type
+      - gateway
+      - gateway_external_id
+      - gateway_external_account_id
+      - last4
+      - status
+      - card_type
+    Stubs.Verification.Password:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_password
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - password
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    Client.SAMLAccount:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - saml_account
+        provider:
+          type: string
+        active:
+          type: boolean
+        email_address:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        provider_user_id:
+          description: The unique ID of the user in the external provider's system
+          type:
+          - string
+          - 'null'
+        enterprise_connection_id:
+          type:
+          - string
+          - 'null'
+        last_authenticated_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp of last authentication.
+
+            '
+        public_metadata:
+          type: object
+          additionalProperties: true
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.SAML'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+        saml_connection:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.SAMLConnection.SAMLAccount'
+      required:
+      - id
+      - object
+      - provider
+      - active
+      - email_address
+      - first_name
+      - last_name
+      - provider_user_id
+      - public_metadata
+      - saml_connection
+      - verification
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.BillingSubscription:
+      description: Returns a commerce subscription.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.BillingSubscription'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
-    bearerAuth:
+    ProductionBrowser:
+      type: apiKey
+      in: cookie
+      name: __client
+      description: 'The Client API token sent in the form of a browser cookie.
+
+
+        Used to authenticate production browser applications.'
+    DevBrowser:
+      type: apiKey
+      in: query
+      name: __dev_session
+      description: 'A Dev Browser API token sent as a query parameter.
+
+
+        Used to authenticate only dev instances.
+
+
+        To generate a dev instance API token you must first make a request to `/v1/dev_browser`
+
+        and copy it from the response.'
+    ProductionNativeApp:
       type: http
       scheme: bearer
-      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
-      bearerFormat: sk_<environment>_<secret value>
-externalDocs:
-  url: https://clerk.com/docs
-x-speakeasy-retries:
-  strategy: backoff
-  backoff:
-    initialInterval: 500
-    maxInterval: 60000
-    maxElapsedTime: 3600000
-    exponent: 1.5
-  statusCodes:
-  - 5XX
-  retryConnectionErrors: true
+      description: 'The Client API token sent in the `Authorization` header.
+
+
+        Used to authenticate native applications.'
+    ProductionNativeFlag:
+      type: apiKey
+      in: query
+      name: _is_native
+      description: 'If sent and the value is true, it instructs the server to parse the API token from the `Authorization` header.
+
+
+        It should always be set to true when using the `Authorization` header authentication strategy.'
+    ClientCredentials:
+      type: http
+      scheme: basic
+      description: HTTP Basic Authentication using Client ID as username and Client Secret as password.
+x-tagGroups:
+- name: Environment
+  tags:
+  - Environment
+- name: Client
+  tags:
+  - Client
+  - Sessions
+  - Sign Ins
+  - Sign Ups
+- name: User
+  tags:
+  - User
+  - Active Sessions
+  - Email Addresses
+  - Phone Numbers
+  - Web3 Wallets
+  - Passkeys
+  - External Accounts
+  - TOTP
+  - Backup Codes
+  - Organizations Memberships
+  - API Keys
+- name: Organizations
+  tags:
+  - Organization
+  - Organization Creation Defaults
+  - Invitations
+  - Membership Requests
+  - Members
+  - Domains
+  - Roles
+- name: Billing
+  tags:
+  - Plans
+  - Subscriptions
+  - Subscription Items
+  - Checkouts
+  - Payment Methods
+  - Statements
+  - Payment Attempts
+- name: Other
+  tags:
+  - Well Known
+  - DevBrowser
+  - DevTools
+  - Health
+  - OAuth2 Identity Provider
+  - OAuth2 Callbacks
+  - SAML
+  - Waitlist
+  - Enterprise Connections

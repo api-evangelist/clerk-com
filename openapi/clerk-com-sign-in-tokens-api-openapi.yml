@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Sign-in Tokens API
+  title: Clerk Backend Sign-in Tokens API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -59,13 +59,14 @@ paths:
                   type: string
                   description: The ID of the user that can use the newly created sign in token
                 expires_in_seconds:
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   description: 'Optional parameter to specify the life duration of the sign in token in seconds.
 
                     By default, the duration is 30 days.'
                   minimum: 1
                   default: 2592000
-                  nullable: true
               required:
               - user_id
       responses:
@@ -99,6 +100,31 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    SignInToken:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignInToken'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     ClerkError:
       type: object
@@ -115,6 +141,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     SignInToken:
       type: object
       additionalProperties: false
@@ -136,8 +175,9 @@ components:
         token:
           type: string
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         created_at:
           type: integer
           format: int64
@@ -157,44 +197,6 @@ components:
       - status
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    SignInToken:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SignInToken'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Applications API
+  title: Clerk Platform Applications API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -9,19 +9,13 @@ info:
     email: support@clerk.com
     name: Clerk Platform Team
     url: https://clerk.com/support
-  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+  description: 'The Clerk REST Platform API, for programmatic management of resources of a workspace.
 
 
-    ### Versions
+    > [!note]
 
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
-
-
-    Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our [request form](https://clerkdev.notion.site/2df2b9ab44fe803f9031e9f3185c5e19).'
+  version: BETA
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -29,7 +23,7 @@ info:
 servers:
 - url: https://api.clerk.com/v1
 security:
-- bearerAuth: []
+- platform_api_access_token: []
 tags:
 - name: Applications
   description: An object representing a Clerk application. Each `application` can have multiple `instances`, typically one for development and one for production, each with distinct user pools.
@@ -533,8 +527,8 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -545,25 +539,116 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    InstanceUsageMeterWithBillable:
+      title: Instance Usage Meter With Billable
+      description: Usage totals for a meter that includes both total and billable quantities.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+        total_billable_usage:
+          type: integer
+          format: int64
+          description: Billable subset of total usage for this meter in the selected period.
+      required:
+      - total_usage
+      - total_billable_usage
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    PlatformApplicationInstance:
+      title: Application Instance
+      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
+      type: object
+      additionalProperties: false
+      properties:
+        instance_id:
+          type: string
+          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
+          example: ins_2abc123def456
+        environment_type:
+          type: string
+          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
+          enum:
+          - development
+          - production
+          example: production
+        secret_key:
+          type: string
+          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
+          example: sk_live_abc123...
+          x-sensitive: true
+        publishable_key:
+          type: string
+          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
+          example: pk_live_abc123...
+      required:
+      - instance_id
+      - environment_type
+    PlatformDeletedObjectResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        deleted:
+          type: boolean
+          description: Whether the object was deleted.
+        object:
+          type: string
+          example: deleted
+        id:
+          type: string
+          description: The ID of the deleted resource.
+      required:
+      - deleted
+      - object
+      - id
     InstanceSMSUsage:
       title: Instance SMS Usage
       description: Total SMS usage with per-geographic-tier breakdowns.
@@ -594,21 +679,25 @@ components:
       - tier_d
       - tier_e
       - tier_f
-    ClerkError:
+    PlatformUpdateApplicationRequest:
       type: object
+      additionalProperties: false
       properties:
-        message:
+        name:
           type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+          description: The name of the application.
+    InstanceUsageMeter:
+      title: Instance Usage Meter
+      description: Usage totals for a single meter.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
       required:
-      - message
-      - long_message
-      - code
+      - total_usage
     PlatformInstanceUsageResponse:
       title: Instance Usage Report
       description: Usage report for an application instance containing per-meter totals.
@@ -665,13 +754,30 @@ components:
       - custom_domains
       - sms_messages
       - enterprise_connections
-    PlatformUpdateApplicationRequest:
+    PlatformApplicationResponse:
       type: object
       additionalProperties: false
       properties:
+        application_id:
+          type: string
+          description: The ID of the application.
         name:
           type: string
           description: The name of the application.
+        instances:
+          type: array
+          description: List of instances associated with this application.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationInstance'
+      required:
+      - application_id
+      - name
+      - instances
+    PlatformListApplicationsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlatformApplicationResponse'
+      minItems: 0
     PlatformCreateApplicationRequest:
       type: object
       additionalProperties: false
@@ -695,133 +801,20 @@ components:
           description: Application template to use for configuring the application (e.g., "b2b-saas", "b2c-saas", "waitlist").
       required:
       - name
-    PlatformListApplicationsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/PlatformApplicationResponse'
-      minItems: 0
-    PlatformApplicationInstance:
-      title: Application Instance
-      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
-      type: object
-      additionalProperties: false
-      properties:
-        instance_id:
-          type: string
-          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
-          example: ins_2abc123def456
-        environment_type:
-          type: string
-          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
-          enum:
-          - development
-          - production
-          example: production
-        secret_key:
-          type: string
-          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
-          example: sk_live_abc123...
-          x-sensitive: true
-        publishable_key:
-          type: string
-          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
-          example: pk_live_abc123...
-      required:
-      - instance_id
-      - environment_type
-    InstanceUsageMeterWithBillable:
-      title: Instance Usage Meter With Billable
-      description: Usage totals for a meter that includes both total and billable quantities.
-      type: object
-      additionalProperties: false
-      properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
-        total_billable_usage:
-          type: integer
-          format: int64
-          description: Billable subset of total usage for this meter in the selected period.
-      required:
-      - total_usage
-      - total_billable_usage
-    PlatformDeletedObjectResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        deleted:
-          type: boolean
-          description: Whether the object was deleted.
-        object:
-          type: string
-          example: deleted
-        id:
-          type: string
-          description: The ID of the deleted resource.
-      required:
-      - deleted
-      - object
-      - id
-    InstanceUsageMeter:
-      title: Instance Usage Meter
-      description: Usage totals for a single meter.
-      type: object
-      additionalProperties: false
-      properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
-      required:
-      - total_usage
-    PlatformApplicationResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        application_id:
-          type: string
-          description: The ID of the application.
-        name:
-          type: string
-          description: The name of the application.
-        instances:
-          type: array
-          description: List of instances associated with this application.
-          items:
-            $ref: '#/components/schemas/PlatformApplicationInstance'
-      required:
-      - application_id
-      - name
-      - instances
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   securitySchemes:
-    bearerAuth:
+    platform_api_access_token:
       type: http
       scheme: bearer
-      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
-      bearerFormat: sk_<environment>_<secret value>
+      description: Platform API access token.
 externalDocs:
   url: https://clerk.com/docs
-x-speakeasy-retries:
-  strategy: backoff
-  backoff:
-    initialInterval: 500
-    maxInterval: 60000
-    maxElapsedTime: 3600000
-    exponent: 1.5
-  statusCodes:
-  - 5XX
-  retryConnectionErrors: true
+x-tagGroups:
+- name: Core Resources
+  tags:
+  - Applications
+  - Domains
+  - Application Transfers
+  - Users
+  - JWT Templates
+  - Redirect URLs
+  - Config

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Clerk Backend Account Portal Role Sets API
+  title: Clerk Backend Role Sets API
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -120,9 +120,10 @@ paths:
 
                     If not provided, a key will be generated from the name.'
                 description:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Optional description for the role set
-                  nullable: true
                 default_role_key:
                   type: string
                   description: 'The key of the role to use as the default role for new organization members.
@@ -221,37 +222,43 @@ paths:
               type: object
               properties:
                 name:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The new name for the role set
-                  nullable: true
                 key:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: A unique key for the role set. Must start with 'role_set:' and contain only lowercase alphanumeric characters and underscores.
-                  nullable: true
                 description:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Optional description for the role set
-                  nullable: true
                 type:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - initial
                   description: 'Set to "initial" to make this the default role set for new organizations.
 
                     Only one role set can be "initial" per instance; setting this will change any existing initial role set to "custom".'
-                  nullable: true
                 default_role_key:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The key of the role to use as the default role for new organization members.
 
                     Must be an existing role in the role set.'
-                  nullable: true
                 creator_role_key:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: 'The key of the role to assign to organization creators.
 
                     Must be an existing role in the role set.'
-                  nullable: true
       responses:
         '200':
           $ref: '#/components/responses/RoleSet'
@@ -418,48 +425,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSets:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSets'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSet:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSet'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
@@ -472,22 +437,79 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-  schemas:
     RoleSets:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSets'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSet:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSet'
+  schemas:
+    DeletedObject:
       type: object
       additionalProperties: false
       properties:
-        data:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/RoleSet'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of role sets
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
       required:
-      - data
-      - total_count
+      - errors
     RoleSetItem:
       type: object
       description: A role within a role set
@@ -506,17 +528,20 @@ components:
           type: string
           description: The key of the role (e.g., "org:admin", "org:member")
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Optional description of the role
         members_count:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: The number of members assigned to this role within the role set
         has_members:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           description: Whether this role has any members assigned within the role set
         created_at:
           type: integer
@@ -553,8 +578,9 @@ components:
           type: string
           description: A unique key for the role set (e.g., "role_set:default")
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Optional description of the role set
         roles:
           type: array
@@ -564,12 +590,10 @@ components:
         default_role:
           allOf:
           - $ref: '#/components/schemas/RoleSetItem'
-          nullable: true
           description: The default role assigned to new organization members
         creator_role:
           allOf:
           - $ref: '#/components/schemas/RoleSetItem'
-          nullable: true
           description: The role assigned to the creator of an organization
         type:
           type: string
@@ -579,7 +603,6 @@ components:
           - custom
         role_set_migration:
           description: Active migration information, only present when status is "enqueued" or "in_progress"
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/RoleSetMigration'
         created_at:
@@ -601,21 +624,11 @@ components:
       - type
       - created_at
       - updated_at
-    ClerkError:
+    ReassignmentMappings:
       type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+      description: Mappings from source role keys to destination role keys for role reassignment
+      additionalProperties:
+        type: string
     RoleSetMigration:
       type: object
       description: Information about an ongoing role set migration
@@ -628,8 +641,9 @@ components:
           type: string
           description: The unique identifier of the migration
         organization_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The organization ID if the migration is scoped to a specific organization
         instance_id:
           type: string
@@ -638,8 +652,9 @@ components:
           type: string
           description: The ID of the source role set being migrated from
         dest_role_set_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The ID of the destination role set being migrated to
         trigger_type:
           type: string
@@ -651,20 +666,23 @@ components:
           type: integer
           description: Number of members that have been migrated so far
         mappings:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Role key mappings from source to destination roles
           additionalProperties:
             type: string
         started_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp when the migration started
         completed_at:
-          type: integer
+          type:
+          - integer
+          - 'null'
           format: int64
-          nullable: true
           description: Unix timestamp when the migration completed
         created_at:
           type: integer
@@ -685,42 +703,49 @@ components:
       - migrated_members
       - created_at
       - updated_at
-    DeletedObject:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    RoleSets:
       type: object
       additionalProperties: false
       properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
+            $ref: '#/components/schemas/RoleSet'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of role sets
       required:
-      - errors
-    ReassignmentMappings:
-      type: object
-      description: Mappings from source role keys to destination role keys for role reassignment
-      additionalProperties:
-        type: string
+      - data
+      - total_count
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -734,18 +759,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http
