@@ -1,0 +1,341 @@
+slug: clerk-com
+provider: Clerk
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 33
+edges:
+- tag: Passkeys
+  spec_file: clerk-com-passkeys-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/me/passkeys/{passkey_id}/attempt_verification  Attempt Passkey Verification
+  reason: Passkey credential registration and verification is authentication credential management, i.e.
+    identity and access management.
+- tag: Organization Roles
+  spec_file: clerk-com-organization-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: AssignPermissionToOrganizationRole  Assign a Permission to an Organization Role
+  reason: Role definition and role-permission assignment is RBAC — identity and access management.
+- tag: OAuth2 Identity Provider
+  spec_file: clerk-com-oauth2-identity-provider-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '''Request OAuth2 Authorization''; ''Register OAuth 2.0 Client''; ''Get OAuth2 Token''; ''Submit
+    OAuth2 Consent Decision''; schema OAuth.UserInfo'
+  reason: Full OAuth2/OIDC authorisation server surface — authorisation, token issuance/revocation, userinfo
+    and consent — which is federation and access management (IAM).
+- tag: Organization Permissions
+  spec_file: clerk-com-organization-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: 'CreateOrganizationPermission  Create a New Organization Permission; schemas: Permission,
+    Permissions'
+  reason: CRUD over permission objects in an auth platform is squarely identity and access management.
+- tag: Payment Methods
+  spec_file: clerk-com-payment-methods-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.85
+  evidence: POST /v1/me/billing/payment_methods  Create User Payment Method; PUT /v1/organizations/{organizationID}/billing/payers/default_payment_method  Set
+    Organization Default Payment Method
+  reason: Payment-method management for billing payers is explicitly part of payment collection in the
+    subscription billing capability.
+- tag: SAML Connections
+  spec_file: clerk-com-saml-connections-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /saml_connections  CreateSAMLConnection  Create a SAML Connection
+  reason: Lifecycle management of SAML SSO connections with attribute mapping (SAMLConnectionAttributeMapping)
+    is identity federation configuration — IAM.
+- tag: Sign Ins
+  spec_file: clerk-com-sign-ins-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/client/sign_ins/{sign_in_id}/attempt_second_factor  attemptSignInFactorTwo  Attempt
+    Second Factor Verification
+  reason: Sign-in flows with first/second factor verification and password reset are authentication —
+    Identity & Access Management.
+- tag: TOTP
+  spec_file: clerk-com-totp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/me/totp/attempt_verification  verifyTOTP  Attempt TOTP Verification
+  reason: Creation, deletion and verification of time-based one-time password factors — a multi-factor
+    authentication credential for an end-user account. This is identity and access management, matching
+    the vendor's stated multi-factor authentication offering.
+- tag: Users
+  spec_file: clerk-com-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /users/{user_id}/ban  BanUser  Ban a User; POST /users/{user_id}/lock  LockUser  Lock
+    a User
+  reason: Administrative lifecycle of user accounts — create, update, delete, ban/unban, lock/unlock —
+    plus credential schemas (Passkey, SAMLAccount, OAuthAccessToken). This is identity and access administration,
+    not CRM customer data.
+- tag: Active Sessions
+  spec_file: clerk-com-active-sessions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: Get Active Sessions; Revoke Given Session; schemas "schemas-Client.Session", "Stubs.SignInFactor"
+  reason: Operations list and revoke authenticated user sessions, i.e. runtime authentication/session
+    control — Identity & Access Management. Clerk is an auth infrastructure vendor so this is the product's
+    core function, not incidental plumbing.
+- tag: Role Sets
+  spec_file: clerk-com-role-sets-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /role_sets/{role_set_key_or_id}/roles  AddRolesToRoleSet  Add Roles to a Role Set
+  reason: CRUD over role sets and roles (RoleSet, RoleSetItem, ReassignmentMappings schemas) is role-based
+    access control administration — Identity & Access Management.
+- tag: Roles
+  spec_file: clerk-com-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /v1/organizations/{organization_id}/roles  ListOrganizationRoles  Get Organization Roles
+  reason: Organization roles and Client.Permission schemas describe authorisation role/permission management,
+    i.e. access management.
+- tag: SAML
+  spec_file: clerk-com-saml-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /v1/saml/metadata/{saml_connection_id}.xml  samlMetadata  SAML Metadata; POST /v1/saml/acs/{saml_connection_id}  acs  SAML
+    ACS
+  reason: SAML metadata and assertion consumer service endpoints implement SSO federation, explicitly
+    part of Identity & Access Management (federation).
+- tag: Sessions
+  spec_file: clerk-com-sessions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /sessions/{session_id}/revoke  RevokeSession  Revoke a Session
+  reason: Creation, refresh, revocation and token issuance for user sessions is authentication/session
+    control, a core Identity & Access Management function.
+- tag: Sign-in Tokens
+  spec_file: clerk-com-sign-in-tokens-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /sign_in_tokens  CreateSignInToken  Create Sign-in Token
+  reason: Issuance and revocation of authentication tokens is credential lifecycle management within Identity
+    & Access Management.
+- tag: Statements
+  spec_file: clerk-com-statements-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.8
+  evidence: GET /v1/organizations/{organizationID}/billing/statements  GetOrganizationStatements  List
+    Organization Statements
+  reason: Read access to user and organization billing statements with BillingPaymentAttempt / BillingProrationCreditDetail
+    schemas is subscription statement/invoice management for Clerk's billing feature.
+- tag: Payment Attempts
+  spec_file: clerk-com-payment-attempts-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.78
+  evidence: 'GET /v1/me/billing/payment_attempts  List User Payment Attempts; schemas: BillingPaymentAttempt,
+    BillingPaymentMethod'
+  reason: Clerk Billing exposes payment attempt records against subscription plans — payment collection
+    within subscription billing.
+- tag: User
+  spec_file: clerk-com-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /v1/me/change_password  changePassword  Update Password; DELETE /v1/me  deleteUser  Delete
+    User
+  reason: 'Self-service management of the authenticated principal''s account: profile, metadata, service
+    tokens, password set/remove. These are identity account and credential operations, the core of IAM,
+    not customer master data.'
+- tag: Web3 Wallets
+  spec_file: clerk-com-web3-wallets-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /v1/me/web3_wallets/{web3_wallet_id}/attempt_verification  attemptWeb3WalletVerification
+  reason: Registration and cryptographic verification of Web3 wallets as an authentication identifier
+    on a user account (schema Stubs.Verification.Web3Signature). This is credential/identifier management
+    within IAM, not any financial or payments capability despite the word 'wallet'.
+- tag: M2M Tokens
+  spec_file: clerk-com-m2m-tokens-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /m2m_tokens createM2MToken 'Create a M2M Token'; 'Revoke a M2M Token'; 'Verify a M2M
+    Token'
+  reason: Issuance, revocation and verification of machine-to-machine authentication tokens is credential/access
+    management on an identity platform, i.e. Identity & Access Management. Not a business-domain capability
+    beyond that.
+- tag: Machines
+  spec_file: clerk-com-machines-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: GetMachineSecretKey 'Retrieve a Machine Secret Key'; RotateMachineSecretKey; 'Create a Machine
+    Scope'; schema MachineScope
+  reason: Machines here are non-human identities with secret keys and scopes — service identity and credential
+    lifecycle, squarely Identity & Access Management. 'Machines' is not equipment/asset management.
+- tag: Phone Numbers
+  spec_file: clerk-com-phone-numbers-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v1/me/phone_numbers/{phone_number_id}/prepare_verification  sendVerificationSMS; verification_otp
+  reason: Phone numbers here are verified identifiers/second factors on a user identity, with OTP verification
+    flows — identity credential management, not customer contact data mastering.
+- tag: Sign Ups
+  spec_file: clerk-com-sign-ups-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v1/client/sign_ups/{sign_up_id}/prepare_verification  prepareSignUpsVerification  Prepare
+    Sign-up Identification Verification
+  reason: User registration with identifier verification creates and verifies identities; this is identity
+    lifecycle/provisioning within IAM rather than customer master data.
+- tag: Backup Codes
+  spec_file: clerk-com-backup-codes-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /v1/me/backup_codes createBackupCodes 'Create Backup Codes'
+  reason: Backup codes are MFA recovery credentials for the signed-in user; the vendor description explicitly
+    covers 'multi-factor authentication'. This realises identity and access management, not a business-domain
+    capability.
+- tag: Billing
+  spec_file: clerk-com-billing-api-openapi.yml
+  capability_id: BC-4250
+  capability_id_l1: BC-4250
+  capability_name: Subscription Billing & Revenue Management
+  confidence: 0.72
+  evidence: GET /billing/plans GetCommercePlanList 'List All Billing Plans'; 'Create a Custom Billing
+    Price'; 'Cancel a Subscription Item'; 'Retrieve a User's Credit Balance'
+  reason: Operations cover subscription plans, prices, subscription items, credit balances, payment sources
+    and statements for users and organizations — the SaaS recurring-billing surface. Spans plan design,
+    subscription changes and billing, so no single L2 is named cleanly.
+- tag: Enterprise Connections
+  spec_file: clerk-com-enterprise-connections-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /enterprise_connections  CreateEnterpriseConnection  Create an Enterprise Connection
+  reason: CRUD over enterprise SSO/SAML identity-provider connections (EnterpriseConnection schema) —
+    identity federation, explicitly within Identity & Access Management. Some ambiguity with tenant identity
+    federation for the B2B tenant model.
+- tag: Organization Invitations
+  spec_file: clerk-com-organization-invitations-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /organizations/{organization_id}/invitations  CreateOrganizationInvitation  Create and
+    Send an Organization Invitation; RevokeOrganizationInvitation
+  reason: Clerk is auth/user-management infrastructure; organization invitations govern who gains membership/access
+    to an organization tenant — identity & access management (joiners/leavers). Could alternatively be
+    read as tenant identity federation, but the operations are plain org membership invitation lifecycle.
+- tag: Organization Memberships
+  spec_file: clerk-com-organization-memberships-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: CreateOrganizationMembership  Create a New Organization Membership; DeleteOrganizationMembership  Remove
+    a Member from an Organization
+  reason: Membership creation/removal for organizations in an authentication platform is access administration
+    (joiners-movers-leavers), not HR employee records.
+- tag: Plans
+  spec_file: clerk-com-plans-api-openapi.yml
+  capability_id: BC-4240.10
+  capability_id_l1: BC-4240
+  capability_name: Plan & Entitlement Design
+  confidence: 0.72
+  evidence: 'GET /v1/billing/plans  GetBillingPlanList  List Billing Plans; schemas: BillingPlan, BillingPlanUnitPrice,
+    BillingFee'
+  reason: Exposes the catalogue of billing plans with prices and fees that customers can subscribe to
+    — plan and entitlement design/exposure in the SaaS subscription lifecycle.
+- tag: Subscription Items
+  spec_file: clerk-com-subscription-items-api-openapi.yml
+  capability_id: BC-4240
+  capability_id_l1: BC-4240
+  capability_name: Subscription Lifecycle Management
+  confidence: 0.72
+  evidence: GET /v1/organizations/{organizationID}/billing/subscription_items List Organization's Subscription
+    Items; DELETE ... Cancel User's Subscription Item
+  reason: Operations list and cancel per-user and per-organization billing subscription items, i.e. in-life
+    management of SaaS subscription line items. That is subscription lifecycle management; the mix of
+    listing and cancelling means no single L2 (Cancellation vs Modification) is clearly the sole fit.
+- tag: Webhooks
+  spec_file: clerk-com-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.72
+  evidence: POST /webhooks/svix  CreateSvixApp; POST /webhooks/svix_url  GenerateSvixAuthURL  Create a
+    Svix Dashboard URL
+  reason: Provisioning of the Svix application and dashboard access used by Clerk customers to configure
+    outbound event webhooks. That is lifecycle management of outbound webhook subscriptions exposed to
+    the platform's developer ecosystem.
+- tag: Members
+  spec_file: clerk-com-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: CreateOrganizationMembership 'Create Organization Membership'; 'Remove Organization Member'
+  reason: Membership of users in organizations with role updates is user-to-group access administration
+    within an auth platform, i.e. IAM. It is not HR employee records despite the 'Members' wording.
+- tag: Organizations Memberships
+  spec_file: clerk-com-organizations-memberships-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /v1/me/organization_memberships  getOrganizationMemberships; POST /v1/me/organization_invitations/{invitation_id}/accept  Accept
+    Organization Invitation
+  reason: End-user-facing view of their own org memberships and acceptance of invitations — access grant
+    lifecycle within an identity platform.
