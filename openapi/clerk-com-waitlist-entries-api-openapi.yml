@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -270,68 +270,6 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    WaitlistEntry.List:
-      description: Array of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/WaitlistEntry'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    WaitlistEntry:
-      description: A Waitlist Entry
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WaitlistEntry'
-    WaitlistEntries:
-      description: List of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/WaitlistEntry'
-              total_count:
-                type: integer
-                description: Total number of waitlist entries
-            required:
-            - data
-            - total_count
   schemas:
     DeletedObject:
       type: object
@@ -378,57 +316,6 @@ components:
           type: string
       required:
       - errors
-    WaitlistEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - waitlist_entry
-        id:
-          type: string
-        email_address:
-          type: string
-          format: email
-        status:
-          type: string
-          enum:
-          - pending
-          - invited
-          - rejected
-          - completed
-          example: pending
-        is_locked:
-          type: boolean
-          description: 'Indicates if the waitlist entry is locked. Locked entries are being processed in a batch action and are unavailable for other actions.
-
-            '
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation.
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
-        invitation:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Invitation'
-      required:
-      - object
-      - id
-      - email_address
-      - status
-      - created_at
-      - updated_at
     Invitation:
       type: object
       additionalProperties: false
@@ -486,19 +373,120 @@ components:
       - status
       - created_at
       - updated_at
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
+    WaitlistEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - waitlist_entry
+        id:
+          type: string
+        email_address:
+          type: string
+          format: email
+        status:
+          type: string
+          enum:
+          - pending
+          - invited
+          - rejected
+          - completed
+          example: pending
+        is_locked:
+          type: boolean
+          description: 'Indicates if the waitlist entry is locked. Locked entries are being processed in a batch action and are unavailable for other actions.
 
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        invitation:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Invitation'
+      required:
+      - object
+      - id
+      - email_address
+      - status
+      - created_at
+      - updated_at
+  responses:
+    WaitlistEntries:
+      description: List of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaitlistEntry'
+              total_count:
+                type: integer
+                description: Total number of waitlist entries
+            required:
+            - data
+            - total_count
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    WaitlistEntry.List:
+      description: Array of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/WaitlistEntry'
+    WaitlistEntry:
+      description: A Waitlist Entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WaitlistEntry'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+  parameters:
     OffsetParameter:
       name: offset
       in: query
@@ -512,6 +500,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

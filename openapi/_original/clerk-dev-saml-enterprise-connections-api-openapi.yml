@@ -1,0 +1,176 @@
+# x-archived-from: clerk-dev-saml-enterprise-connections-api-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.2.0
+info:
+  title: Clerk Backend Allowlist & Blocklist SAML & Enterprise Connections API
+  description: 'The Clerk Backend API manages Clerk''s authentication and user management resources server-side: users, organizations and memberships, sessions, clients, sign-ups, JWT templates, JWKS, email/SMS verification and templates, allowlist/blocklist identifiers, invitations, SAML/enterprise connections, OAuth applications, and Svix-powered webhooks. The base URL is https://api.clerk.com/v1 and every request (except GET /jwks and the public interstitial) is authenticated with your instance Secret Key passed as `Authorization: Bearer sk_...`. This description is grounded in Clerk''s published OpenAPI spec (github.com/clerk/openapi-specs, bapi) but is a curated subset covering the primary resource groups; it does not enumerate every parameter or schema property. Verify the current version-dated spec on GitHub for the authoritative contract.'
+  version: '2026-05-12'
+  contact:
+    name: Clerk
+    url: https://clerk.com
+  license:
+    name: Clerk Documentation
+    url: https://clerk.com/docs
+servers:
+- url: https://api.clerk.com/v1
+  description: Clerk Backend API
+security:
+- bearerAuth: []
+tags:
+- name: SAML & Enterprise Connections
+  description: Enterprise SSO connections.
+paths:
+  /saml_connections:
+    get:
+      operationId: listSAMLConnections
+      tags:
+      - SAML & Enterprise Connections
+      summary: List all SAML connections
+      responses:
+        '200':
+          description: A list of SAML connections.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SAMLConnection'
+    post:
+      operationId: createSAMLConnection
+      tags:
+      - SAML & Enterprise Connections
+      summary: Create a SAML connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The created SAML connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLConnection'
+  /saml_connections/{saml_connection_id}:
+    parameters:
+    - name: saml_connection_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getSAMLConnection
+      tags:
+      - SAML & Enterprise Connections
+      summary: Retrieve a SAML connection
+      responses:
+        '200':
+          description: The requested SAML connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLConnection'
+    patch:
+      operationId: updateSAMLConnection
+      tags:
+      - SAML & Enterprise Connections
+      summary: Update a SAML connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated SAML connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLConnection'
+    delete:
+      operationId: deleteSAMLConnection
+      tags:
+      - SAML & Enterprise Connections
+      summary: Delete a SAML connection
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedObject'
+  /enterprise_connections:
+    get:
+      operationId: listEnterpriseConnections
+      tags:
+      - SAML & Enterprise Connections
+      summary: List all enterprise connections
+      responses:
+        '200':
+          description: A list of enterprise connections.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    post:
+      operationId: createEnterpriseConnection
+      tags:
+      - SAML & Enterprise Connections
+      summary: Create an enterprise connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The created enterprise connection.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+components:
+  schemas:
+    SAMLConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        name:
+          type: string
+        domain:
+          type: string
+        active:
+          type: boolean
+        provider:
+          type: string
+        created_at:
+          type: integer
+    DeletedObject:
+      type: object
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        deleted:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Your Clerk instance Secret Key (starts with sk_test_ or sk_live_) passed as `Authorization: Bearer YOUR_SECRET_KEY`.'

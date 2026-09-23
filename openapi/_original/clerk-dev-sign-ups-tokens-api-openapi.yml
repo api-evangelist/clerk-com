@@ -1,0 +1,178 @@
+# x-archived-from: clerk-dev-sign-ups-tokens-api-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.2.0
+info:
+  title: Clerk Backend Allowlist & Blocklist Sign-ups & Tokens API
+  description: 'The Clerk Backend API manages Clerk''s authentication and user management resources server-side: users, organizations and memberships, sessions, clients, sign-ups, JWT templates, JWKS, email/SMS verification and templates, allowlist/blocklist identifiers, invitations, SAML/enterprise connections, OAuth applications, and Svix-powered webhooks. The base URL is https://api.clerk.com/v1 and every request (except GET /jwks and the public interstitial) is authenticated with your instance Secret Key passed as `Authorization: Bearer sk_...`. This description is grounded in Clerk''s published OpenAPI spec (github.com/clerk/openapi-specs, bapi) but is a curated subset covering the primary resource groups; it does not enumerate every parameter or schema property. Verify the current version-dated spec on GitHub for the authoritative contract.'
+  version: '2026-05-12'
+  contact:
+    name: Clerk
+    url: https://clerk.com
+  license:
+    name: Clerk Documentation
+    url: https://clerk.com/docs
+servers:
+- url: https://api.clerk.com/v1
+  description: Clerk Backend API
+security:
+- bearerAuth: []
+tags:
+- name: Sign-ups & Tokens
+  description: Sign-up attempts, sign-in tokens, and actor tokens.
+paths:
+  /sign_ups/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getSignUp
+      tags:
+      - Sign-ups & Tokens
+      summary: Retrieve a sign-up
+      responses:
+        '200':
+          description: The requested sign-up attempt.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    patch:
+      operationId: updateSignUp
+      tags:
+      - Sign-ups & Tokens
+      summary: Update a sign-up
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated sign-up attempt.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /sign_in_tokens:
+    post:
+      operationId: createSignInToken
+      tags:
+      - Sign-ups & Tokens
+      summary: Create a sign-in token
+      description: Creates a single-use, time-limited token that authenticates a user without a password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_id
+              properties:
+                user_id:
+                  type: string
+                expires_in_seconds:
+                  type: integer
+      responses:
+        '200':
+          description: The created sign-in token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInToken'
+  /sign_in_tokens/{sign_in_token_id}/revoke:
+    parameters:
+    - name: sign_in_token_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: revokeSignInToken
+      tags:
+      - Sign-ups & Tokens
+      summary: Revoke a sign-in token
+      responses:
+        '200':
+          description: The revoked sign-in token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInToken'
+  /actor_tokens:
+    post:
+      operationId: createActorToken
+      tags:
+      - Sign-ups & Tokens
+      summary: Create an actor token
+      description: Creates a token allowing an actor (impersonator) to sign in as another user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_id
+              - actor
+              properties:
+                user_id:
+                  type: string
+                actor:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: The created actor token.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /actor_tokens/{actor_token_id}/revoke:
+    parameters:
+    - name: actor_token_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: revokeActorToken
+      tags:
+      - Sign-ups & Tokens
+      summary: Revoke an actor token
+      responses:
+        '200':
+          description: The revoked actor token.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+components:
+  schemas:
+    SignInToken:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        user_id:
+          type: string
+        token:
+          type: string
+        status:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Your Clerk instance Secret Key (starts with sk_test_ or sk_live_) passed as `Authorization: Bearer YOUR_SECRET_KEY`.'

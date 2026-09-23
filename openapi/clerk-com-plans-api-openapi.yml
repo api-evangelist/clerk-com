@@ -2,29 +2,7 @@ openapi: 3.2.0
 info:
   title: Clerk Frontend Plans API
   version: v1
-  description: 'The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
-
-
-    This is a Form Based API and all the data must be sent and formatted according to the `application/x-www-form-urlencoded` content type.
-
-
-    ### Versions
-
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
-
-
-    ### Using the Try It Console
-
-
-    The `Try It` feature of the docs only works for **Development Instances** when using the `DevBrowser` security scheme.
-
-    To use it, first generate a dev instance token from the `/v1/dev_browser` endpoint.
-
-
-    Please see https://clerk.com/docs for more information.'
+  description: The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -143,39 +121,6 @@ components:
       - message
       - long_message
       - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    BillingPlanUnitPrice:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: Name of the billable unit (for example, seats)
-        block_size:
-          type: integer
-          format: int64
-          description: Number of units included in each pricing block
-        tiers:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingPlanUnitPriceTier'
-          description: Tiered pricing configuration for this unit
-      required:
-      - name
-      - block_size
-      - tiers
     BillingFee:
       type: object
       additionalProperties: false
@@ -199,6 +144,19 @@ components:
       - amount_formatted
       - currency
       - currency_symbol
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     BillingMoneyResponse:
       type: object
       additionalProperties: false
@@ -221,6 +179,26 @@ components:
       - amount_formatted
       - currency
       - currency_symbol
+    BillingPlanUnitPrice:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Name of the billable unit (for example, seats)
+        block_size:
+          type: integer
+          format: int64
+          description: Number of units included in each pricing block
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingPlanUnitPriceTier'
+          description: Tiered pricing configuration for this unit
+      required:
+      - name
+      - block_size
+      - tiers
     BillingPlan:
       type: object
       additionalProperties: false
@@ -349,30 +327,6 @@ components:
       - free_trial_enabled
       - free_trial_days
   responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BillingPlan:
-      description: Returns a commerce plan.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BillingPlan'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     BillingPlanList:
       description: Returns a list of commerce plans.
       content:
@@ -391,6 +345,30 @@ components:
               total_count:
                 type: integer
                 format: int64
+    BillingPlan:
+      description: Returns a commerce plan.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BillingPlan'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     ProductionBrowser:
       type: apiKey

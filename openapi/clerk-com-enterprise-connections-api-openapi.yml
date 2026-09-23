@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -547,44 +547,26 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
     EnterpriseConnections:
       description: A list of enterprise connections
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/EnterpriseConnections'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     EnterpriseConnection:
       description: An enterprise connection
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/EnterpriseConnection'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -595,22 +577,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
   schemas:
-    EnterpriseConnections:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnterpriseConnection'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of enterprise connections
-      required:
-      - data
-      - total_count
     DeletedObject:
       type: object
       additionalProperties: false
@@ -628,34 +613,6 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     EnterpriseConnection:
       type: object
       required:
@@ -842,19 +799,50 @@ components:
           type: integer
           format: int64
           description: Unix timestamp in milliseconds when the connection was last updated
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    EnterpriseConnections:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnection'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of enterprise connections
+      required:
+      - data
+      - total_count
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -868,6 +856,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

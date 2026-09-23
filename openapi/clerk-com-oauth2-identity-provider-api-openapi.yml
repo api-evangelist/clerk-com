@@ -2,29 +2,7 @@ openapi: 3.2.0
 info:
   title: Clerk Frontend OAuth2 Identity Provider API
   version: v1
-  description: 'The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
-
-
-    This is a Form Based API and all the data must be sent and formatted according to the `application/x-www-form-urlencoded` content type.
-
-
-    ### Versions
-
-
-    When the API changes in a way that isn''t compatible with older versions, a new version is released.
-
-    Each version is identified by its release date, e.g. `2021-02-05`. For more information, please see [Clerk API Versions](https://clerk.com/docs/backend-requests/versioning/overview).
-
-
-    ### Using the Try It Console
-
-
-    The `Try It` feature of the docs only works for **Development Instances** when using the `DevBrowser` security scheme.
-
-    To use it, first generate a dev instance token from the `/v1/dev_browser` endpoint.
-
-
-    Please see https://clerk.com/docs for more information.'
+  description: The Clerk REST Frontend API, meant to be accessed from a browser or native environment.
   x-logo:
     url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
     altText: Clerk docs
@@ -251,7 +229,52 @@ paths:
   /oauth/register:
     post:
       summary: Register OAuth 2.0 Client
-      description: "Registers a new OAuth 2.0 client with the authorization server according to RFC 7591\n(OAuth 2.0 Dynamic Client Registration Protocol).\n\nThis endpoint allows clients to dynamically register by submitting client metadata.\nUpon successful registration, the authorization server assigns a unique client identifier\nand optionally a client secret (for confidential clients).\n\n**Authentication:** This endpoint does not require authentication as it is used for\ninitial client registration. However, the endpoint is disabled by default and must\nbe enabled in the Instance settings.\n\n**Client Types:**\n- **Confidential clients** receive both a `client_id` and `client_secret`\n- **Public clients** (using `token_endpoint_auth_method: none`) receive only a `client_id`\n\n**Key Points:**\n- All dynamically registered clients must use the consent screen (cannot be disabled)\n- PKCE is not required for dynamically registered clients\n- The `redirect_uris` field is required and must contain at least one valid redirect URI\n- If `client_name` is not provided, the `client_id` will be used as the display name\n- If `scope` is not provided, default scopes will be assigned\n- The `token_endpoint_auth_method` values `client_secret_basic` and `client_secret_post` are\n  treated equivalently in the current implementation; both methods can be used at the\n  token endpoint\n\nSee [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591) for complete specification details."
+      description: 'Registers a new OAuth 2.0 client with the authorization server according to RFC 7591
+
+        (OAuth 2.0 Dynamic Client Registration Protocol).
+
+
+        This endpoint allows clients to dynamically register by submitting client metadata.
+
+        Upon successful registration, the authorization server assigns a unique client identifier
+
+        and optionally a client secret (for confidential clients).
+
+
+        **Authentication:** This endpoint does not require authentication as it is used for
+
+        initial client registration. However, the endpoint is disabled by default and must
+
+        be enabled in the Instance settings.
+
+
+        **Client Types:**
+
+        - **Confidential clients** receive both a `client_id` and `client_secret`
+
+        - **Public clients** (using `token_endpoint_auth_method: none`) receive only a `client_id`
+
+
+        **Key Points:**
+
+        - All dynamically registered clients must use the consent screen (cannot be disabled)
+
+        - PKCE is not required for dynamically registered clients
+
+        - The `redirect_uris` field is required and must contain at least one valid redirect URI
+
+        - If `client_name` is not provided, the `client_id` will be used as the display name
+
+        - If `scope` is not provided, default scopes will be assigned
+
+        - The `token_endpoint_auth_method` values `client_secret_basic` and `client_secret_post` are
+
+        treated equivalently in the current implementation; both methods can be used at the
+
+        token endpoint
+
+
+        See RFC 7591 for complete specification details.'
       operationId: registerOAuthClient
       security: []
       tags:
@@ -309,7 +332,87 @@ paths:
   /oauth/token:
     post:
       summary: Get OAuth2 Token
-      description: "Exchange an authorization grant for OAuth2 tokens (access token, refresh token, and optionally ID token).\n\nThis endpoint implements the OAuth 2.0 Token Endpoint (RFC 6749) and OpenID Connect token endpoint.\nIt supports two grant types: `authorization_code` and `refresh_token`.\n\n#### Grant Types\n\n- **`authorization_code`**: Exchange an authorization code for tokens\n- **`refresh_token`**: Refresh an access token using a refresh token\n\n#### Authentication\n\n- **Confidential clients**: Must authenticate using one of the following methods:\n  - HTTP Basic Authentication: `Authorization: Basic base64(client_id:client_secret)`\n  - Client credentials in request body: Include `client_id` and `client_secret` in form fields\n  - *Note: Both methods (`client_secret_basic` and `client_secret_post`) are treated equivalently*\n- **Public clients** (PKCE flow): No client secret required. Must provide `client_id` and `code_verifier` in request body.\n\n#### PKCE (Proof Key for Code Exchange)\n\nPublic clients and clients that cannot securely store a client secret must use PKCE (RFC 7636).\nWhen using PKCE:\n- Include `code_challenge` and `code_challenge_method` in the authorization request\n- Include `code_verifier` in the token request (instead of `client_secret`)\n\n#### Scopes\n\nAvailable scopes:\n- `openid` - Enables OpenID Connect features, returns an `id_token` in the response\n- `email` - User's email address\n- `profile` - Basic profile information (name, username, picture, etc.)\n- `public_metadata` - Clerk custom scope for public metadata\n- `private_metadata` - Clerk custom scope for private metadata\n\nDefault scopes (if not specified): `email profile`\n\n#### Token Lifespans\n\n- **Access token**: 1 day (86400 seconds)\n- **Refresh token**: 10 years\n- **ID token**: 1 day (86400 seconds)\n- **Authorization code**: 10 minutes (must be exchanged within this time)\n\n#### OpenID Connect\n\nWhen the `openid` scope is included in the authorization request, the token response will include\nan `id_token` field containing a signed JWT with user identity information per the OpenID Connect specification.\nThe `id_token` will be refreshed along with the access token when using the `refresh_token` grant type."
+      description: 'Exchange an authorization grant for OAuth2 tokens (access token, refresh token, and optionally ID token).
+
+
+        This endpoint implements the OAuth 2.0 Token Endpoint (RFC 6749) and OpenID Connect token endpoint.
+
+        It supports two grant types: `authorization_code` and `refresh_token`.
+
+
+        #### Grant Types
+
+
+        - **`authorization_code`**: Exchange an authorization code for tokens
+
+        - **`refresh_token`**: Refresh an access token using a refresh token
+
+
+        #### Authentication
+
+
+        - **Confidential clients**: Must authenticate using one of the following methods:
+
+        - HTTP Basic Authentication: `Authorization: Basic base64(client_id:client_secret)`
+
+        - Client credentials in request body: Include `client_id` and `client_secret` in form fields
+
+        - *Note: Both methods (`client_secret_basic` and `client_secret_post`) are treated equivalently*
+
+        - **Public clients** (PKCE flow): No client secret required. Must provide `client_id` and `code_verifier` in request body.
+
+
+        #### PKCE (Proof Key for Code Exchange)
+
+
+        Public clients and clients that cannot securely store a client secret must use PKCE (RFC 7636).
+
+        When using PKCE:
+
+        - Include `code_challenge` and `code_challenge_method` in the authorization request
+
+        - Include `code_verifier` in the token request (instead of `client_secret`)
+
+
+        #### Scopes
+
+
+        Available scopes:
+
+        - `openid` - Enables OpenID Connect features, returns an `id_token` in the response
+
+        - `email` - User''s email address
+
+        - `profile` - Basic profile information (name, username, picture, etc.)
+
+        - `public_metadata` - Clerk custom scope for public metadata
+
+        - `private_metadata` - Clerk custom scope for private metadata
+
+
+        Default scopes (if not specified): `email profile`
+
+
+        #### Token Lifespans
+
+
+        - **Access token**: 1 day (86400 seconds)
+
+        - **Refresh token**: 10 years
+
+        - **ID token**: 1 day (86400 seconds)
+
+        - **Authorization code**: 10 minutes (must be exchanged within this time)
+
+
+        #### OpenID Connect
+
+
+        When the `openid` scope is included in the authorization request, the token response will include
+
+        an `id_token` field containing a signed JWT with user identity information per the OpenID Connect specification.
+
+        The `id_token` will be refreshed along with the access token when using the `refresh_token` grant type.'
       operationId: getOAuthToken
       security:
       - ClientCredentials: []
@@ -547,9 +650,7 @@ paths:
 
         An optional `scope` query parameter can restrict the returned scopes to only those requested.
 
-        The OAuth application must have consent screen enabled.
-
-        '
+        The OAuth application must have consent screen enabled.'
       operationId: getOAuthConsent
       security:
       - {}
@@ -606,9 +707,7 @@ paths:
 
         `state`, `nonce`, `code_challenge`, and `code_challenge_method`. These
 
-        are forwarded as-is to the authorize flow.
-
-        '
+        are forwarded as-is to the authorize flow.'
       operationId: submitOAuthConsent
       security:
       - {}
@@ -670,230 +769,7 @@ paths:
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  responses:
-    OAuth.DynamicClientRegistration:
-      description: 'Client information response after successful OAuth 2.0 dynamic client registration.
-
-        Returns the client identifier, client secret (for confidential clients), and client metadata
-
-        according to RFC 7591.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationResponse'
-    OAuth.TokenError401:
-      description: 'Unauthorized error. Common causes:
-
-        - Invalid client credentials (`client_id` or `client_secret`)
-
-        - Invalid or expired authorization code
-
-        - Invalid or expired refresh token
-
-        - Invalid `code_verifier` for PKCE flow'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                enum:
-                - invalid_client
-                - invalid_grant
-                - unsupported_grant_type
-                example: invalid_client
-              error_description:
-                type: string
-                example: Client authentication failed
-    OAuth.ConsentInfo:
-      description: OAuth2 consent information (scopes with descriptions) for a given OAuth Application Client ID
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.ConsentInfo'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OAuth.TokenError400:
-      description: 'Bad request error. Common causes:
-
-        - Missing required parameters
-
-        - Invalid `grant_type` value
-
-        - Malformed request
-
-        - Expired authorization code
-
-        - Invalid `redirect_uri` (doesn''t match authorization request)
-
-        - Unsupported token type for revocation (e.g., JWT access tokens)'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                enum:
-                - invalid_request
-                - invalid_grant
-                - unsupported_token_type
-                example: invalid_request
-              error_description:
-                type: string
-                example: The request is missing a required parameter
-    OAuth.DynamicClientRegistrationError:
-      description: 'OAuth 2.0 dynamic client registration error response according to RFC 7591.
-
-        Indicates that the client registration request was invalid.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationError'
-    OAuth.Token:
-      description: 'Successfully issued OAuth2 tokens.
-
-
-        The response includes an `access_token` and `refresh_token`. If the `openid` scope was
-
-        granted, an `id_token` (JWT) will also be included in the response.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.Token'
-          examples:
-            withoutIdToken:
-              summary: Token Response without ID Token
-              description: Response when `openid` scope is not included
-              value:
-                access_token: oat_abc123xyz...
-                token_type: Bearer
-                expires_in: 86400
-                refresh_token: clk_refresh_abc123xyz...
-                scope: email profile
-            withIdToken:
-              summary: Token Response with ID Token (OpenID Connect)
-              description: Response when `openid` scope is included, includes JWT ID token
-              value:
-                access_token: oat_abc123xyz...
-                token_type: Bearer
-                expires_in: 86400
-                refresh_token: clk_refresh_abc123xyz...
-                scope: openid email profile
-                id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-    OAuth.TokenInfo:
-      description: Get information for an access or refresh token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.TokenInfo'
-    OAuth.UserInfo:
-      description: Get user info after successful OAuth2 flow
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.UserInfo'
   schemas:
-    OAuth.TokenInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        active:
-          type: boolean
-          description: Boolean indicator of whether or not the presented token is currently active.
-        client_id:
-          type:
-          - string
-          - 'null'
-          description: Client identifier for the OAuth 2.0 client that requested this token.
-        iat:
-          type:
-          - integer
-          - 'null'
-          description: Integer timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this token was originally issued, as defined in JWT [RFC7519].
-        scope:
-          type:
-          - string
-          - 'null'
-          description: A JSON string containing a space-separated list of scopes associated with this token, in the format described in Section 3.3 of OAuth 2.0 [RFC6749].
-        sub:
-          type:
-          - string
-          - 'null'
-          description: Subject of the token, as defined in JWT [RFC7519].
-      required:
-      - active
-    OAuth.UserInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        instance_id:
-          type: string
-        user_id:
-          type: string
-        sub:
-          type: string
-        email:
-          type:
-          - string
-          - 'null'
-        email_verified:
-          type:
-          - boolean
-          - 'null'
-        family_name:
-          type:
-          - string
-          - 'null'
-        given_name:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: Deprecated. Use `preferred_username` instead.
-        preferred_username:
-          type:
-          - string
-          - 'null'
-        picture:
-          type:
-          - string
-          - 'null'
-        public_metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        private_metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        unsafe_metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-      required:
-      - object
-      - instance_id
-      - user_id
-      - sub
     OAuth.DynamicClientRegistrationError:
       type: object
       additionalProperties: false
@@ -924,134 +800,6 @@ components:
             This is not meant to be displayed to the end-user.'
       required:
       - error
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    OAuth.ScopeWithDescription:
-      type: object
-      additionalProperties: false
-      properties:
-        scope:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        requires_consent:
-          type: boolean
-          description: Whether the scope requires user consent
-      required:
-      - scope
-      - requires_consent
-    OAuth.DynamicClientRegistrationRequest:
-      type: object
-      additionalProperties: false
-      description: 'Client metadata used to register a new OAuth 2.0 client according to RFC 7591.
-
-        The authorization server assigns this client a unique client identifier.'
-      properties:
-        redirect_uris:
-          type: array
-          items:
-            type: string
-            format: uri
-          description: 'Array of redirection URI strings for use in redirect-based flows such as
-
-            the authorization code flow. As required by Section 2 of RFC 6749, clients
-
-            using flows with redirection must register their redirection URI values.'
-          minItems: 1
-        token_endpoint_auth_method:
-          type: string
-          enum:
-          - client_secret_basic
-          - client_secret_post
-          - none
-          default: client_secret_basic
-          description: 'Indicator of the requested authentication method for the token endpoint.
-
-            - `client_secret_basic`: HTTP Basic authentication scheme
-
-            - `client_secret_post`: Client credentials in the request body
-
-            - `none`: Public client (no authentication)
-
-
-            **Note:** In the current implementation, `client_secret_basic` and `client_secret_post`
-
-            are treated equivalently. Both methods can be used interchangeably at the token endpoint
-
-            regardless of which one was specified during registration.'
-        client_name:
-          type:
-          - string
-          - 'null'
-          maxLength: 256
-          description: 'Human-readable string name of the client to be presented to the end-user
-
-            during authorization.'
-        client_uri:
-          type:
-          - string
-          - 'null'
-          format: uri
-          maxLength: 1024
-          description: URL string of a web page providing information about the client.
-        logo_uri:
-          type:
-          - string
-          - 'null'
-          format: uri
-          maxLength: 1024
-          description: 'URL string that references a logo for the client. If present, the
-
-            Clerk will display this image to the end-user during approval.'
-        scope:
-          type:
-          - string
-          - 'null'
-          maxLength: 1024
-          description: 'Space-separated list of scope values that the client can use when requesting
-
-            access tokens. If omitted, the client will be registered with the default set of scopes.'
-      required:
-      - redirect_uris
-    OAuth.ConsentInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        oauth_application_name:
-          type: string
-        oauth_application_logo_url:
-          type:
-          - string
-          - 'null'
-          description: URL to the OAuth application's logo image
-        oauth_application_url:
-          type:
-          - string
-          - 'null'
-          description: URL to the OAuth application's website or homepage
-        client_id:
-          type: string
-        scopes:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuth.ScopeWithDescription'
-      required:
-      - oauth_application_name
-      - client_id
-      - scopes
     OAuth.DynamicClientRegistrationResponse:
       type: object
       additionalProperties: false
@@ -1146,6 +894,163 @@ components:
       - response_types
       - scope
       - token_endpoint_auth_method
+    OAuth.ConsentInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        oauth_application_name:
+          type: string
+        oauth_application_logo_url:
+          type:
+          - string
+          - 'null'
+          description: URL to the OAuth application's logo image
+        oauth_application_url:
+          type:
+          - string
+          - 'null'
+          description: URL to the OAuth application's website or homepage
+        client_id:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuth.ScopeWithDescription'
+      required:
+      - oauth_application_name
+      - client_id
+      - scopes
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OAuth.DynamicClientRegistrationRequest:
+      type: object
+      additionalProperties: false
+      description: 'Client metadata used to register a new OAuth 2.0 client according to RFC 7591.
+
+        The authorization server assigns this client a unique client identifier.'
+      properties:
+        redirect_uris:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: 'Array of redirection URI strings for use in redirect-based flows such as
+
+            the authorization code flow. As required by Section 2 of RFC 6749, clients
+
+            using flows with redirection must register their redirection URI values.'
+          minItems: 1
+        token_endpoint_auth_method:
+          type: string
+          enum:
+          - client_secret_basic
+          - client_secret_post
+          - none
+          default: client_secret_basic
+          description: 'Indicator of the requested authentication method for the token endpoint.
+
+            - `client_secret_basic`: HTTP Basic authentication scheme
+
+            - `client_secret_post`: Client credentials in the request body
+
+            - `none`: Public client (no authentication)
+
+
+            **Note:** In the current implementation, `client_secret_basic` and `client_secret_post`
+
+            are treated equivalently. Both methods can be used interchangeably at the token endpoint
+
+            regardless of which one was specified during registration.'
+        client_name:
+          type:
+          - string
+          - 'null'
+          maxLength: 256
+          description: 'Human-readable string name of the client to be presented to the end-user
+
+            during authorization.'
+        client_uri:
+          type:
+          - string
+          - 'null'
+          format: uri
+          maxLength: 1024
+          description: URL string of a web page providing information about the client.
+        logo_uri:
+          type:
+          - string
+          - 'null'
+          format: uri
+          maxLength: 1024
+          description: 'URL string that references a logo for the client. If present, the
+
+            Clerk will display this image to the end-user during approval.'
+        scope:
+          type:
+          - string
+          - 'null'
+          maxLength: 1024
+          description: 'Space-separated list of scope values that the client can use when requesting
+
+            access tokens. If omitted, the client will be registered with the default set of scopes.'
+      required:
+      - redirect_uris
+    OAuth.ScopeWithDescription:
+      type: object
+      additionalProperties: false
+      properties:
+        scope:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        requires_consent:
+          type: boolean
+          description: Whether the scope requires user consent
+      required:
+      - scope
+      - requires_consent
+    OAuth.TokenInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        active:
+          type: boolean
+          description: Boolean indicator of whether or not the presented token is currently active.
+        client_id:
+          type:
+          - string
+          - 'null'
+          description: Client identifier for the OAuth 2.0 client that requested this token.
+        iat:
+          type:
+          - integer
+          - 'null'
+          description: Integer timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this token was originally issued, as defined in JWT [RFC7519].
+        scope:
+          type:
+          - string
+          - 'null'
+          description: A JSON string containing a space-separated list of scopes associated with this token, in the format described in Section 3.3 of OAuth 2.0 [RFC6749].
+        sub:
+          type:
+          - string
+          - 'null'
+          description: Subject of the token, as defined in JWT [RFC7519].
+      required:
+      - active
     ClerkError:
       type: object
       properties:
@@ -1204,6 +1109,200 @@ components:
       required:
       - access_token
       - token_type
+    OAuth.UserInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        instance_id:
+          type: string
+        user_id:
+          type: string
+        sub:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+        email_verified:
+          type:
+          - boolean
+          - 'null'
+        family_name:
+          type:
+          - string
+          - 'null'
+        given_name:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated. Use `preferred_username` instead.
+        preferred_username:
+          type:
+          - string
+          - 'null'
+        picture:
+          type:
+          - string
+          - 'null'
+        public_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        private_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        unsafe_metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - object
+      - instance_id
+      - user_id
+      - sub
+  responses:
+    OAuth.DynamicClientRegistration:
+      description: 'Client information response after successful OAuth 2.0 dynamic client registration.
+
+        Returns the client identifier, client secret (for confidential clients), and client metadata
+
+        according to RFC 7591.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationResponse'
+    OAuth.DynamicClientRegistrationError:
+      description: 'OAuth 2.0 dynamic client registration error response according to RFC 7591.
+
+        Indicates that the client registration request was invalid.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationError'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuth.TokenError400:
+      description: 'Bad request error. Common causes:
+
+        - Missing required parameters
+
+        - Invalid `grant_type` value
+
+        - Malformed request
+
+        - Expired authorization code
+
+        - Invalid `redirect_uri` (doesn''t match authorization request)
+
+        - Unsupported token type for revocation (e.g., JWT access tokens)'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                enum:
+                - invalid_request
+                - invalid_grant
+                - unsupported_token_type
+                example: invalid_request
+              error_description:
+                type: string
+                example: The request is missing a required parameter
+    OAuth.TokenInfo:
+      description: Get information for an access or refresh token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.TokenInfo'
+    OAuth.Token:
+      description: 'Successfully issued OAuth2 tokens.
+
+
+        The response includes an `access_token` and `refresh_token`. If the `openid` scope was
+
+        granted, an `id_token` (JWT) will also be included in the response.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.Token'
+          examples:
+            withoutIdToken:
+              summary: Token Response without ID Token
+              description: Response when `openid` scope is not included
+              value:
+                access_token: oat_abc123xyz...
+                token_type: Bearer
+                expires_in: 86400
+                refresh_token: clk_refresh_abc123xyz...
+                scope: email profile
+            withIdToken:
+              summary: Token Response with ID Token (OpenID Connect)
+              description: Response when `openid` scope is included, includes JWT ID token
+              value:
+                access_token: oat_abc123xyz...
+                token_type: Bearer
+                expires_in: 86400
+                refresh_token: clk_refresh_abc123xyz...
+                scope: openid email profile
+                id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+    OAuth.ConsentInfo:
+      description: OAuth2 consent information (scopes with descriptions) for a given OAuth Application Client ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.ConsentInfo'
+    OAuth.TokenError401:
+      description: 'Unauthorized error. Common causes:
+
+        - Invalid client credentials (`client_id` or `client_secret`)
+
+        - Invalid or expired authorization code
+
+        - Invalid or expired refresh token
+
+        - Invalid `code_verifier` for PKCE flow'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                enum:
+                - invalid_client
+                - invalid_grant
+                - unsupported_grant_type
+                example: invalid_client
+              error_description:
+                type: string
+                example: Client authentication failed
+    OAuth.UserInfo:
+      description: Get user info after successful OAuth2 flow
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.UserInfo'
   securitySchemes:
     ProductionBrowser:
       type: apiKey

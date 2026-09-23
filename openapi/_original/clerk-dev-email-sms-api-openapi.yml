@@ -1,0 +1,218 @@
+# x-archived-from: clerk-dev-email-sms-api-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.2.0
+info:
+  title: Clerk Backend Allowlist & Blocklist Email & SMS API
+  description: 'The Clerk Backend API manages Clerk''s authentication and user management resources server-side: users, organizations and memberships, sessions, clients, sign-ups, JWT templates, JWKS, email/SMS verification and templates, allowlist/blocklist identifiers, invitations, SAML/enterprise connections, OAuth applications, and Svix-powered webhooks. The base URL is https://api.clerk.com/v1 and every request (except GET /jwks and the public interstitial) is authenticated with your instance Secret Key passed as `Authorization: Bearer sk_...`. This description is grounded in Clerk''s published OpenAPI spec (github.com/clerk/openapi-specs, bapi) but is a curated subset covering the primary resource groups; it does not enumerate every parameter or schema property. Verify the current version-dated spec on GitHub for the authoritative contract.'
+  version: '2026-05-12'
+  contact:
+    name: Clerk
+    url: https://clerk.com
+  license:
+    name: Clerk Documentation
+    url: https://clerk.com/docs
+servers:
+- url: https://api.clerk.com/v1
+  description: Clerk Backend API
+security:
+- bearerAuth: []
+tags:
+- name: Email & SMS
+  description: Email addresses, phone numbers, and message templates.
+paths:
+  /email_addresses:
+    post:
+      operationId: createEmailAddress
+      tags:
+      - Email & SMS
+      summary: Create an email address
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_id
+              - email_address
+              properties:
+                user_id:
+                  type: string
+                email_address:
+                  type: string
+                verified:
+                  type: boolean
+                primary:
+                  type: boolean
+      responses:
+        '200':
+          description: The created email address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddress'
+  /email_addresses/{email_address_id}:
+    parameters:
+    - name: email_address_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getEmailAddress
+      tags:
+      - Email & SMS
+      summary: Retrieve an email address
+      responses:
+        '200':
+          description: The requested email address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddress'
+    delete:
+      operationId: deleteEmailAddress
+      tags:
+      - Email & SMS
+      summary: Delete an email address
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedObject'
+  /phone_numbers:
+    post:
+      operationId: createPhoneNumber
+      tags:
+      - Email & SMS
+      summary: Create a phone number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_id
+              - phone_number
+              properties:
+                user_id:
+                  type: string
+                phone_number:
+                  type: string
+                verified:
+                  type: boolean
+      responses:
+        '200':
+          description: The created phone number.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /templates/{template_type}:
+    parameters:
+    - name: template_type
+      in: path
+      required: true
+      description: Either "email" or "sms".
+      schema:
+        type: string
+        enum:
+        - email
+        - sms
+    get:
+      operationId: listTemplates
+      tags:
+      - Email & SMS
+      summary: List templates
+      responses:
+        '200':
+          description: A list of message templates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+  /templates/{template_type}/{slug}:
+    parameters:
+    - name: template_type
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+        - email
+        - sms
+    - name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getTemplate
+      tags:
+      - Email & SMS
+      summary: Retrieve a template
+      responses:
+        '200':
+          description: The requested template.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    put:
+      operationId: upsertTemplate
+      tags:
+      - Email & SMS
+      summary: Update a template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated template.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+components:
+  schemas:
+    DeletedObject:
+      type: object
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        deleted:
+          type: boolean
+    EmailAddress:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        email_address:
+          type: string
+        verification:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Your Clerk instance Secret Key (starts with sk_test_ or sk_live_) passed as `Authorization: Bearer YOUR_SECRET_KEY`.'

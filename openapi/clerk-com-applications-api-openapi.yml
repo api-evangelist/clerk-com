@@ -14,7 +14,7 @@ info:
 
     > [!note]
 
-    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our [request form](https://clerkdev.notion.site/2df2b9ab44fe803f9031e9f3185c5e19).'
+    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our request form.'
   version: BETA
   termsOfService: https://clerk.com/terms
   license:
@@ -36,9 +36,7 @@ paths:
       tags:
       - Applications
       summary: List Applications
-      description: 'List applications.
-
-        '
+      description: List applications.
       security:
       - platform_api_access_token: []
       parameters:
@@ -69,9 +67,7 @@ paths:
       tags:
       - Applications
       summary: Create an Application
-      description: 'Create a new application.
-
-        '
+      description: Create a new application.
       security:
       - platform_api_access_token: []
       requestBody:
@@ -104,9 +100,7 @@ paths:
       tags:
       - Applications
       summary: Get an Application
-      description: 'Get application details.
-
-        '
+      description: Get application details.
       security:
       - platform_api_access_token: []
       parameters:
@@ -145,9 +139,7 @@ paths:
       tags:
       - Applications
       summary: Update an Application
-      description: 'Update an application.
-
-        '
+      description: Update an application.
       security:
       - platform_api_access_token: []
       parameters:
@@ -188,9 +180,7 @@ paths:
       tags:
       - Applications
       summary: Delete an Application
-      description: 'Delete an application.
-
-        '
+      description: Delete an application.
       security:
       - platform_api_access_token: []
       parameters:
@@ -223,9 +213,7 @@ paths:
       tags:
       - Applications
       summary: Upload Application Logo
-      description: 'Set or replace an application''s logo by uploading an image file.
-
-        '
+      description: Set or replace an application's logo by uploading an image file.
       security:
       - platform_api_access_token: []
       parameters:
@@ -277,9 +265,7 @@ paths:
       tags:
       - Applications
       summary: Delete Application Logo
-      description: 'Delete an application''s logo.
-
-        '
+      description: Delete an application's logo.
       security:
       - platform_api_access_token: []
       parameters:
@@ -312,9 +298,7 @@ paths:
       tags:
       - Applications
       summary: Upload Application Favicon
-      description: 'Set or replace an application''s favicon by uploading an image file.
-
-        '
+      description: Set or replace an application's favicon by uploading an image file.
       security:
       - platform_api_access_token: []
       parameters:
@@ -366,9 +350,7 @@ paths:
       tags:
       - Applications
       summary: Delete Application Favicon
-      description: 'Delete an application''s favicon.
-
-        '
+      description: Delete an application's favicon.
       security:
       - platform_api_access_token: []
       parameters:
@@ -411,9 +393,7 @@ paths:
         or an instance ID.
 
 
-        Requires the `application_usage:read` scope.
-
-        '
+        Requires the `application_usage:read` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -484,9 +464,7 @@ paths:
 
         The application is identified by a single-use claim token that was generated when the
 
-        accountless application was created. Once claimed, the token is invalidated and cannot be reused.
-
-        '
+        accountless application was created. Once claimed, the token is invalidated and cannot be reused.'
       security:
       - platform_api_access_token: []
       requestBody:
@@ -527,8 +505,8 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    ResourceNotFound:
-      description: Resource not found
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -539,20 +517,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     AuthorizationInvalid:
       description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -573,23 +551,6 @@ components:
       - message
       - long_message
       - code
-    InstanceUsageMeterWithBillable:
-      title: Instance Usage Meter With Billable
-      description: Usage totals for a meter that includes both total and billable quantities.
-      type: object
-      additionalProperties: false
-      properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
-        total_billable_usage:
-          type: integer
-          format: int64
-          description: Billable subset of total usage for this meter in the selected period.
-      required:
-      - total_usage
-      - total_billable_usage
     ClerkErrors:
       type: object
       properties:
@@ -603,52 +564,18 @@ components:
           type: string
       required:
       - errors
-    PlatformApplicationInstance:
-      title: Application Instance
-      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
+    InstanceUsageMeter:
+      title: Instance Usage Meter
+      description: Usage totals for a single meter.
       type: object
       additionalProperties: false
       properties:
-        instance_id:
-          type: string
-          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
-          example: ins_2abc123def456
-        environment_type:
-          type: string
-          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
-          enum:
-          - development
-          - production
-          example: production
-        secret_key:
-          type: string
-          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
-          example: sk_live_abc123...
-          x-sensitive: true
-        publishable_key:
-          type: string
-          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
-          example: pk_live_abc123...
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
       required:
-      - instance_id
-      - environment_type
-    PlatformDeletedObjectResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        deleted:
-          type: boolean
-          description: Whether the object was deleted.
-        object:
-          type: string
-          example: deleted
-        id:
-          type: string
-          description: The ID of the deleted resource.
-      required:
-      - deleted
-      - object
-      - id
+      - total_usage
     InstanceSMSUsage:
       title: Instance SMS Usage
       description: Total SMS usage with per-geographic-tier breakdowns.
@@ -686,18 +613,6 @@ components:
         name:
           type: string
           description: The name of the application.
-    InstanceUsageMeter:
-      title: Instance Usage Meter
-      description: Usage totals for a single meter.
-      type: object
-      additionalProperties: false
-      properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
-      required:
-      - total_usage
     PlatformInstanceUsageResponse:
       title: Instance Usage Report
       description: Usage report for an application instance containing per-meter totals.
@@ -754,30 +669,23 @@ components:
       - custom_domains
       - sms_messages
       - enterprise_connections
-    PlatformApplicationResponse:
+    InstanceUsageMeterWithBillable:
+      title: Instance Usage Meter With Billable
+      description: Usage totals for a meter that includes both total and billable quantities.
       type: object
       additionalProperties: false
       properties:
-        application_id:
-          type: string
-          description: The ID of the application.
-        name:
-          type: string
-          description: The name of the application.
-        instances:
-          type: array
-          description: List of instances associated with this application.
-          items:
-            $ref: '#/components/schemas/PlatformApplicationInstance'
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+        total_billable_usage:
+          type: integer
+          format: int64
+          description: Billable subset of total usage for this meter in the selected period.
       required:
-      - application_id
-      - name
-      - instances
-    PlatformListApplicationsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/PlatformApplicationResponse'
-      minItems: 0
+      - total_usage
+      - total_billable_usage
     PlatformCreateApplicationRequest:
       type: object
       additionalProperties: false
@@ -801,6 +709,76 @@ components:
           description: Application template to use for configuring the application (e.g., "b2b-saas", "b2c-saas", "waitlist").
       required:
       - name
+    PlatformApplicationInstance:
+      title: Application Instance
+      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
+      type: object
+      additionalProperties: false
+      properties:
+        instance_id:
+          type: string
+          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
+          example: ins_2abc123def456
+        environment_type:
+          type: string
+          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
+          enum:
+          - development
+          - production
+          example: production
+        secret_key:
+          type: string
+          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
+          example: sk_live_abc123...
+          x-sensitive: true
+        publishable_key:
+          type: string
+          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
+          example: pk_live_abc123...
+      required:
+      - instance_id
+      - environment_type
+    PlatformDeletedObjectResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        deleted:
+          type: boolean
+          description: Whether the object was deleted.
+        object:
+          type: string
+          example: deleted
+        id:
+          type: string
+          description: The ID of the deleted resource.
+      required:
+      - deleted
+      - object
+      - id
+    PlatformListApplicationsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlatformApplicationResponse'
+      minItems: 0
+    PlatformApplicationResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        application_id:
+          type: string
+          description: The ID of the application.
+        name:
+          type: string
+          description: The name of the application.
+        instances:
+          type: array
+          description: List of instances associated with this application.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationInstance'
+      required:
+      - application_id
+      - name
+      - instances
   securitySchemes:
     platform_api_access_token:
       type: http

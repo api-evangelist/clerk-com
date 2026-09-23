@@ -134,9 +134,7 @@ paths:
         or an instance ID.
 
 
-        Requires the `applications:read` scope.
-
-        '
+        Requires the `applications:read` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -203,9 +201,7 @@ paths:
         or an instance ID.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -272,9 +268,7 @@ paths:
         or an instance ID.
 
 
-        Requires the `applications:read` scope.
-
-        '
+        Requires the `applications:read` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -328,9 +322,7 @@ paths:
         or an instance ID.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -368,57 +360,6 @@ paths:
     servers:
     - url: https://api.clerk.com/v1
 components:
-  responses:
-    RedirectURL:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RedirectURL'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    RedirectURL.List:
-      description: List of Redirect URLs
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/RedirectURL'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     RedirectURL:
       type: object
@@ -514,30 +455,58 @@ components:
       required:
       - data
       - total_count
+  responses:
+    RedirectURL.List:
+      description: List of Redirect URLs
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RedirectURL'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RedirectURL:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectURL'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
     OffsetParameter:
       name: offset
       in: query
@@ -551,6 +520,29 @@ components:
         type: integer
         default: 0
         minimum: 0
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

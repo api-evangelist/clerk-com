@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -424,92 +424,12 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    RoleSets:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSets'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSet:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSet'
   schemas:
-    DeletedObject:
+    ReassignmentMappings:
       type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
+      description: Mappings from source role keys to destination role keys for role reassignment
+      additionalProperties:
+        type: string
     RoleSetItem:
       type: object
       description: A role within a role set
@@ -560,75 +480,34 @@ components:
       - description
       - created_at
       - updated_at
-    RoleSet:
+    RoleSets:
       type: object
-      description: A role set defines a collection of roles that can be assigned to organization members
+      additionalProperties: false
       properties:
-        object:
-          type: string
-          enum:
-          - role_set
-        id:
-          type: string
-          description: The unique identifier of the role set
-        name:
-          type: string
-          description: The name of the role set
-        key:
-          type: string
-          description: A unique key for the role set (e.g., "role_set:default")
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description of the role set
-        roles:
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/RoleSetItem'
-          description: The list of roles in this role set
-        default_role:
-          allOf:
-          - $ref: '#/components/schemas/RoleSetItem'
-          description: The default role assigned to new organization members
-        creator_role:
-          allOf:
-          - $ref: '#/components/schemas/RoleSetItem'
-          description: The role assigned to the creator of an organization
-        type:
-          type: string
-          description: The type of the role set ("initial" or "custom")
-          enum:
-          - initial
-          - custom
-        role_set_migration:
-          description: Active migration information, only present when status is "enqueued" or "in_progress"
-          allOf:
-          - $ref: '#/components/schemas/RoleSetMigration'
-        created_at:
+            $ref: '#/components/schemas/RoleSet'
+        total_count:
           type: integer
           format: int64
-          description: Unix timestamp of role set creation
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last role set update
-      additionalProperties: false
+          description: Total number of role sets
       required:
-      - object
-      - id
-      - name
-      - key
-      - description
-      - roles
-      - type
-      - created_at
-      - updated_at
-    ReassignmentMappings:
+      - data
+      - total_count
+    ClerkErrors:
       type: object
-      description: Mappings from source role keys to destination role keys for role reassignment
-      additionalProperties:
-        type: string
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     RoleSetMigration:
       type: object
       description: Information about an ongoing role set migration
@@ -703,6 +582,87 @@ components:
       - migrated_members
       - created_at
       - updated_at
+    RoleSet:
+      type: object
+      description: A role set defines a collection of roles that can be assigned to organization members
+      properties:
+        object:
+          type: string
+          enum:
+          - role_set
+        id:
+          type: string
+          description: The unique identifier of the role set
+        name:
+          type: string
+          description: The name of the role set
+        key:
+          type: string
+          description: A unique key for the role set (e.g., "role_set:default")
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description of the role set
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleSetItem'
+          description: The list of roles in this role set
+        default_role:
+          allOf:
+          - $ref: '#/components/schemas/RoleSetItem'
+          description: The default role assigned to new organization members
+        creator_role:
+          allOf:
+          - $ref: '#/components/schemas/RoleSetItem'
+          description: The role assigned to the creator of an organization
+        type:
+          type: string
+          description: The type of the role set ("initial" or "custom")
+          enum:
+          - initial
+          - custom
+        role_set_migration:
+          description: Active migration information, only present when status is "enqueued" or "in_progress"
+          allOf:
+          - $ref: '#/components/schemas/RoleSetMigration'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of role set creation
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last role set update
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - key
+      - description
+      - roles
+      - type
+      - created_at
+      - updated_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
     ClerkError:
       type: object
       properties:
@@ -718,21 +678,6 @@ components:
       - message
       - long_message
       - code
-    RoleSets:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleSet'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of role sets
-      required:
-      - data
-      - total_count
   parameters:
     LimitParameter:
       name: limit
@@ -759,6 +704,61 @@ components:
         type: integer
         default: 0
         minimum: 0
+  responses:
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSets:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSets'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSet:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSet'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
   securitySchemes:
     bearerAuth:
       type: http

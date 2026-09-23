@@ -235,9 +235,7 @@ paths:
       description: 'List all JWT templates for an application instance.
 
 
-        Requires the `jwt_templates:read` scope.
-
-        '
+        Requires the `jwt_templates:read` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -282,9 +280,7 @@ paths:
       description: 'Create a new JWT template for an application instance.
 
 
-        Requires the `jwt_templates:manage` scope.
-
-        '
+        Requires the `jwt_templates:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -378,9 +374,7 @@ paths:
       description: 'Retrieve a specific JWT template for an application instance.
 
 
-        Requires the `jwt_templates:read` scope.
-
-        '
+        Requires the `jwt_templates:read` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -429,9 +423,7 @@ paths:
       description: 'Update an existing JWT template for an application instance.
 
 
-        Requires the `jwt_templates:manage` scope.
-
-        '
+        Requires the `jwt_templates:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -528,9 +520,7 @@ paths:
       description: 'Delete a JWT template from an application instance.
 
 
-        Requires the `jwt_templates:manage` scope.
-
-        '
+        Requires the `jwt_templates:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -568,109 +558,7 @@ paths:
     servers:
     - url: https://api.clerk.com/v1
 components:
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    JWTTemplate.List:
-      description: List of JWT templates
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/JWTTemplate'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    JWTTemplate:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/JWTTemplate'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    JWTTemplate:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - jwt_template
-        id:
-          type: string
-        name:
-          type: string
-        claims:
-          type: object
-        lifetime:
-          type: integer
-        allowed_clock_skew:
-          type: integer
-        custom_signing_key:
-          type: boolean
-        signing_algorithm:
-          type: string
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation.
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
-      required:
-      - object
-      - id
-      - name
-      - claims
-      - lifetime
-      - allowed_clock_skew
-      - custom_signing_key
-      - signing_algorithm
-      - created_at
-      - updated_at
     DeletedObject:
       type: object
       additionalProperties: false
@@ -716,30 +604,109 @@ components:
           type: string
       required:
       - errors
+    JWTTemplate:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - jwt_template
+        id:
+          type: string
+        name:
+          type: string
+        claims:
+          type: object
+        lifetime:
+          type: integer
+        allowed_clock_skew:
+          type: integer
+        custom_signing_key:
+          type: boolean
+        signing_algorithm:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+      required:
+      - object
+      - id
+      - name
+      - claims
+      - lifetime
+      - allowed_clock_skew
+      - custom_signing_key
+      - signing_algorithm
+      - created_at
+      - updated_at
+  responses:
+    JWTTemplate:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWTTemplate'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    JWTTemplate.List:
+      description: List of JWT templates
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/JWTTemplate'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
     OffsetParameter:
       name: offset
       in: query
@@ -753,6 +720,29 @@ components:
         type: integer
         default: 0
         minimum: 0
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

@@ -14,7 +14,7 @@ info:
 
     > [!note]
 
-    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our [request form](https://clerkdev.notion.site/2df2b9ab44fe803f9031e9f3185c5e19).'
+    > This API is currently in private beta. If you''d like access for your workspace, please fill out and submit our request form.'
   version: BETA
   termsOfService: https://clerk.com/terms
   license:
@@ -47,9 +47,7 @@ paths:
         Optionally filter to specific config keys using the `keys` query parameter.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -114,9 +112,7 @@ paths:
         Use the `If-Match` header to provide optimistic concurrency control via config version.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -219,9 +215,7 @@ paths:
         Use the `If-Match` header to provide optimistic concurrency control via config version.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -306,9 +300,7 @@ paths:
         Optionally filter to specific config keys using the `keys` query parameter.
 
 
-        Requires the `applications:manage` scope.
-
-        '
+        Requires the `applications:manage` scope.'
       security:
       - platform_api_access_token: []
       parameters:
@@ -353,20 +345,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -377,20 +357,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     AuthorizationInvalid:
       description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -411,23 +403,6 @@ components:
       - message
       - long_message
       - code
-    PlatformConfigSchemaResponse:
-      type: object
-      description: JSON Schema describing the available configuration options.
-      properties:
-        $schema:
-          type: string
-          description: JSON Schema version.
-        $id:
-          type: string
-          description: Schema identifier.
-        type:
-          type: string
-        properties:
-          type: object
-          description: Schema definitions for each configuration key.
-          additionalProperties: true
-      additionalProperties: true
     ClerkErrors:
       type: object
       properties:
@@ -441,18 +416,6 @@ components:
           type: string
       required:
       - errors
-    PlatformConfigResponse:
-      type: object
-      description: Instance configuration response containing key-value pairs and metadata.
-      properties:
-        config_version:
-          type: string
-          description: Configuration version for optimistic concurrency control.
-      additionalProperties: true
-    PlatformConfigPatchRequest:
-      type: object
-      description: Configuration updates to apply. Keys should match config key names.
-      additionalProperties: true
     PlatformConfigPatchResponse:
       type: object
       description: Configuration patch response containing the result of the operation.
@@ -471,6 +434,35 @@ components:
           type: object
           description: Configuration state after the patch was applied.
           additionalProperties: true
+      additionalProperties: true
+    PlatformConfigSchemaResponse:
+      type: object
+      description: JSON Schema describing the available configuration options.
+      properties:
+        $schema:
+          type: string
+          description: JSON Schema version.
+        $id:
+          type: string
+          description: Schema identifier.
+        type:
+          type: string
+        properties:
+          type: object
+          description: Schema definitions for each configuration key.
+          additionalProperties: true
+      additionalProperties: true
+    PlatformConfigResponse:
+      type: object
+      description: Instance configuration response containing key-value pairs and metadata.
+      properties:
+        config_version:
+          type: string
+          description: Configuration version for optimistic concurrency control.
+      additionalProperties: true
+    PlatformConfigPatchRequest:
+      type: object
+      description: Configuration updates to apply. Keys should match config key names.
       additionalProperties: true
   securitySchemes:
     platform_api_access_token:

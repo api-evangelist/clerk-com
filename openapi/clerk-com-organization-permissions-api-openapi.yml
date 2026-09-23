@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -313,8 +313,32 @@ components:
       - created_at
       - updated_at
   responses:
-    ResourceNotFound:
-      description: Resource not found
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Permissions:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permissions'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
@@ -325,24 +349,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    Permissions:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Permissions'
     Permission:
       description: Success
       content:
@@ -355,31 +367,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -393,6 +381,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -394,7 +394,7 @@ paths:
       operationId: InstanceGetOrganizationMemberships
       x-speakeasy-group: users
       x-speakeasy-name-override: getInstanceOrganizationMemberships
-      summary: Get a List of All Organization Memberships Within an Instance.
+      summary: Get a List of All Organization Memberships Within an Instance
       description: Retrieves all organization user memberships for the given instance.
       tags:
       - Organization Memberships
@@ -424,6 +424,51 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   schemas:
+    OrganizationMemberships:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization memberships
+
+            '
+      required:
+      - data
+      - total_count
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     OrganizationMembership:
       description: A user's membership in an organization
       type: object
@@ -476,34 +521,6 @@ components:
       - created_at
       - updated_at
       - organization
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     Organization:
       type: object
       properties:
@@ -575,23 +592,6 @@ components:
       - public_metadata
       - created_at
       - updated_at
-    OrganizationMemberships:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationMembership'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization memberships
-
-            '
-      required:
-      - data
-      - total_count
     OrganizationMembershipPublicUserData:
       description: An organization membership with public user data populated
       type: object
@@ -634,8 +634,8 @@ components:
       - image_url
       - has_image
   responses:
-    ResourceNotFound:
-      description: Resource not found
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -646,8 +646,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OrganizationMemberships'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
@@ -658,37 +664,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationMembership:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMembership'
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -702,6 +690,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

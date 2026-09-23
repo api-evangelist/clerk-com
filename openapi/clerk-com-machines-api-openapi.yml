@@ -17,7 +17,7 @@ info:
 
     When the API changes in a way that isn''t compatible with older versions, a new version is released.
 
-    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see [Clerk API Versions](https://clerk.com/docs/versioning/available-versions).
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
 
 
     Please see https://clerk.com/docs for more information.'
@@ -391,12 +391,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     Machine.Created:
       description: Success
       content:
@@ -412,8 +406,75 @@ components:
                   type: string
                   readOnly: true
                   description: The secret key for the machine, only returned upon creation.
+    Machine.Deleted:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - id
+            - deleted
+            properties:
+              object:
+                type: string
+                enum:
+                - machine
+                description: String representing the object's type.
+              id:
+                type: string
+                description: The ID of the deleted machine
+              deleted:
+                type: boolean
+                enum:
+                - true
+                description: Whether the machine was successfully deleted
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    MachineScope:
+      description: Machine scope created successfully for a machine
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MachineScope'
+    Machine:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Machine'
+    Machine.SecretKey:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - secret
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_secret_key
+                description: String representing the object's type.
+              secret:
+                type: string
+                readOnly: true
+                description: The secret key for the machine.
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
@@ -452,12 +513,6 @@ components:
                 enum:
                 - true
                 description: Whether the machine scope was successfully deleted
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     Machine.List:
       description: Success
       content:
@@ -475,73 +530,18 @@ components:
               total_count:
                 type: integer
                 description: Total number of machines
-    MachineScope:
-      description: Machine scope created successfully for a machine
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MachineScope'
-    AuthorizationInvalid:
-      description: Authorization invalid
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Machine.SecretKey:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - secret
-            properties:
-              object:
-                type: string
-                enum:
-                - machine_secret_key
-                description: String representing the object's type.
-              secret:
-                type: string
-                readOnly: true
-                description: The secret key for the machine.
-    Machine:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Machine'
     Conflict:
       description: Conflict
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Machine.Deleted:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - id
-            - deleted
-            properties:
-              object:
-                type: string
-                enum:
-                - machine
-                description: String representing the object's type.
-              id:
-                type: string
-                description: The ID of the deleted machine
-              deleted:
-                type: boolean
-                enum:
-                - true
-                description: Whether the machine was successfully deleted
   parameters:
     LimitParameter:
       name: limit
@@ -581,6 +581,19 @@ components:
             items:
               $ref: '#/components/schemas/MachineWithoutScopedMachines'
             description: Array of machines this machine has access to.
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     MachineWithoutScopedMachines:
       type: object
       required:
@@ -619,19 +632,21 @@ components:
           description: The default time-to-live (TTL) in seconds for tokens created by this machine.
           minimum: 1
           default: 3600
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
       required:
-      - errors
+      - message
+      - long_message
+      - code
     MachineScope:
       type: object
       required:
@@ -654,21 +669,6 @@ components:
           type: integer
           format: int64
           description: Unix timestamp of creation.
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
   securitySchemes:
     bearerAuth:
       type: http
