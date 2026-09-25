@@ -1,0 +1,236 @@
+# Vendor facets — Clerk. Drop-in auth whose production instances REQUIRE a domain the customer owns, so
+# its Frontend API (and the root discovery documents it serves — fetched live from clerk.clerk.com) sit on
+# the provider's own namespace by construction. Clerk is also an OAuth provider for MCP (DCR, CIMD,
+# consent screen) and ships @clerk/mcp-tools, which serves the MCP server's protected-resource metadata.
+# Where it stops: DCR is opt-in, the helper's PRM route is path-inserted, and the OpenAPI is the provider's.
+vendor: clerk-com
+name: Clerk
+website: https://clerk.com
+areas:
+- identity
+registry_keys:
+- clerk
+rubric_schema_version: 0.22.0
+generated: '2026-09-25'
+features_refreshed: '2026-09-25'
+basis: capability
+summary: >-
+  Clerk is the identity vendor most likely to land served discovery on the provider's own domain, because
+  a production instance runs on the customer's domain on every plan: that reads as served auth (0.9) and
+  served delegated identity once the Frontend API host is on the provider's record. Dynamic client registration
+  scores only after the provider switches it on (it is open registration and forces the consent screen).
+  The MCP toolkit serves RFC 9728 metadata from the provider's MCP server, but at a path-inserted route
+  the root well-known probe does not read.
+features:
+- id: production-domain
+  name: Production instance on the customer's domain
+  description: >-
+    Production deployment requires a domain the customer owns with DNS records Clerk verifies; custom
+    domain and production instance are included on every plan.
+  source: https://clerk.com/pricing
+  tier: all
+- id: root-discovery-document
+  name: Frontend API discovery documents at the host root
+  description: >-
+    The Frontend API host serves /.well-known/openid-configuration and /.well-known/oauth-authorization-server
+    at the root with issuer and authorization_code; registration_endpoint appears only when DCR is enabled.
+  source: https://clerk.clerk.com/.well-known/oauth-authorization-server
+  tier: all
+- id: oauth-provider
+  name: Clerk as OAuth/OIDC provider
+  description: >-
+    OAuth applications with PKCE (S256), built-in and custom scopes, a consent screen on by default, opt-in
+    RFC 7591 DCR and CIMD client onboarding.
+  source: https://clerk.com/docs/guides/configure/auth-strategies/oauth/how-clerk-implements-oauth
+  tier: all
+- id: mcp-tools
+  name: '@clerk/mcp-tools MCP server helpers'
+  description: >-
+    protectedResourceHandlerClerk serves the MCP server's RFC 9728 metadata (route app/.well-known/oauth-protected-resource/mcp)
+    and mcpAuthClerk verifies Clerk-issued tokens.
+  source: https://clerk.com/docs/nextjs/guides/ai/mcp/build-mcp-server
+  tier: all
+- id: account-portal
+  name: Account Portal
+  description: Hosted sign-in, sign-up and profile pages served by Clerk for each application environment.
+  source: https://clerk.com/docs/guides/customizing-clerk/account-portal
+  tier: all
+maps:
+- feature: root-discovery-document
+  check: auth_clarity
+  layer: agent_readiness
+  grade: served
+  provider_must: >-
+    Get the Frontend API host (on its own domain) onto its record — apis.yml pointer or host graph. The
+    harvest probes only hosts the provider owns and only their root well-known paths.
+  points: 10
+  baseline_pass_rate: 0.474
+- feature: root-discovery-document
+  check: delegated_identity
+  layer: agent_readiness
+  grade: served
+  provider_must: Same host on record; authorization_code is in grant_types_supported.
+  points: 6
+  baseline_pass_rate: 0.209
+- feature: oauth-provider
+  check: dynamic_client_registration
+  layer: agent_readiness
+  provider_must: >-
+    Enable Dynamic Client Registration under OAuth applications > Client onboarding; clerk.clerk.com itself
+    serves no registration_endpoint, so it is not on by default. Enabling it opens anonymous registration
+    and makes the consent screen mandatory.
+  points: 6
+  baseline_pass_rate: 0.134
+- feature: mcp-tools
+  check: protected_resource_metadata
+  layer: agent_readiness
+  grade: verified
+  conditional: true
+  condition: >-
+    Only if the provider runs an MCP server with the helper AND the path-inserted document is recorded
+    in its mcp/ manifest (rfc9728 block) or also served at the bare /.well-known/oauth-protected-resource
+    on a host on record; the well-known snapshot probes only the bare path.
+  points: 5
+  baseline_pass_rate: 0.133
+- feature: mcp-tools
+  check: well_known_published
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the protected-resource document is also served at the bare /.well-known/oauth-protected-resource
+    path; the guide's /mcp route is path-inserted.
+  catalog_pass_rate: 0.005
+  facet: discoverability
+  points: 6
+  baseline_pass_rate: 0.018
+- feature: account-portal
+  check: sign_up_present
+  layer: composite
+  provider_must: Declare the Account Portal sign-up/sign-in URL as a SignUp or Login pointer in apis.yml.
+  catalog_pass_rate: 0.19
+  facet: access_clarity
+  points: 5
+  baseline_pass_rate: 0.463
+- feature: oauth-provider
+  check: oauth_scopes_enumerated
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the provider's own OpenAPI declares oauth2 and enumerates the custom scopes it created in
+    Clerk.
+  catalog_pass_rate: 0.866
+  facet: contract_quality
+  points: 4
+  baseline_pass_rate: 0.902
+  saturated: true
+  saturated_note: >-
+    90% of providers with a contract, docs and a reference already earn this; the vendor cannot move it
+    for most of its buyers.
+- feature: oauth-provider
+  check: reg_consent_model
+  layer: composite
+  conditional: true
+  condition: >-
+    Regulated regime only, and only when the provider documents the consent model its OAuth apps use;
+    a default consent screen is not a published model.
+  catalog_pass_rate: 0.126
+  facet: regulatory
+  points: 7
+  baseline_pass_rate: 0.431
+earns_nothing:
+- feature: oauth-provider
+  check: consent_identity
+  why: >-
+    An OAuth consent screen is user consent to a client; consent_identity reads AIPREF/Content-Signal
+    usage preferences and Web Bot Auth / HTTP Message Signatures agent identity.
+- feature: root-discovery-document
+  check: well_known_published
+  why: openid-configuration and oauth-authorization-server are not among the documents that check reads.
+out_of_reach:
+  checks:
+  - security_schemes_defined
+  - oauth_flows_current
+  - reg_fapi_profile
+  - reg_certification_signal
+  note: >-
+    The OpenAPI checks are the provider's contract; no FAPI profile or certification appears on the fetched
+    pages.
+unscored_practice:
+- feature: oauth-provider
+  why: CIMD client onboarding (MCP's preferred registration path) is not read by any dimension.
+surface:
+  discoverability:
+    reachable: 6.0
+    total: 54
+  contract_quality:
+    reachable: 4.0
+    total: 211
+  access_clarity:
+    reachable: 5.0
+    total: 38
+  regulatory:
+    reachable: 7.0
+    total: 108
+  agent_readiness:
+    reachable: 26.0
+    total: 139
+hard_rule: >-
+  A model, not a score. Adopting this vendor changes a provider's Kin Score only when the provider publishes
+  the resulting artifacts on its own surface; nothing here writes a score, and no sponsorship or partnership
+  can.
+method: searched
+source:
+- https://clerk.clerk.com/.well-known/oauth-authorization-server
+- https://clerk.com/docs/guides/configure/auth-strategies/oauth/how-clerk-implements-oauth
+- https://clerk.com/docs/guides/customizing-clerk/account-portal
+- https://clerk.com/docs/nextjs/guides/ai/mcp/build-mcp-server
+- https://clerk.com/pricing
+measured:
+  cohort:
+    method: vendors-catalog.json detections (CNAME / header / URL shape / markup), never a name match
+    detected: 0
+    in_baseline: 0
+  control:
+    basis: providers earning contract_present + documentation_present + api_reference_present, minus the
+      cohort
+    n: 5216
+  metric: >-
+    cohort_pct / control_pct = mean share of the check's points earned (derived and platform credit weighted),
+    x100
+  measured_on: '2026-09-25'
+  status: 'not measurable: 0 detected customers clear the baseline (need 20)'
+simulation:
+  simulated_on: '2026-09-25'
+  rubric: 0.23.0
+  population: providers publishing a contract (contract_present earned), replayable exactly
+  providers: 8977
+  providers_unreplayable: 987
+  providers_moved: 8574
+  conditional_rows: excluded (they depend on what the API already does)
+  composite_lift:
+    median: 2.4
+    p75: 2.6
+    p90: 2.7
+    max: 2.7
+    mean_among_movers: 2.3
+  agent_readiness_lift:
+    median: 12.6
+    p75: 12.6
+    p90: 14.6
+    max: 17.6
+    mean_among_movers: 12.3
+  facet_lift_median_among_movers:
+    access_clarity: 13.1
+  composite_band_moves:
+    thin -> developing: 679
+    developing -> strong: 189
+    emerging -> thin: 167
+    strong -> exemplar: 48
+    minimal -> emerging: 1
+  agent_readiness_band_moves:
+    agent-aware -> agent-ready: 4886
+    agent-ready -> agent-native: 314
+    agent-aware -> agent-native: 43
+  method: >-
+    each provider's own kin/checks file, the vendor's maps at their stated credit, the scorer's composite
+    formula; from -> to, nothing written
