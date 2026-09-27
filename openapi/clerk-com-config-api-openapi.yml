@@ -345,26 +345,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     AuthorizationInvalid:
       description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
       content:
         application/json:
           schema:
@@ -375,8 +357,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     Conflict:
       description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -388,21 +388,6 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     ClerkErrors:
       type: object
       properties:
@@ -416,6 +401,14 @@ components:
           type: string
       required:
       - errors
+    PlatformConfigResponse:
+      type: object
+      description: Instance configuration response containing key-value pairs and metadata.
+      properties:
+        config_version:
+          type: string
+          description: Configuration version for optimistic concurrency control.
+      additionalProperties: true
     PlatformConfigPatchResponse:
       type: object
       description: Configuration patch response containing the result of the operation.
@@ -452,18 +445,25 @@ components:
           description: Schema definitions for each configuration key.
           additionalProperties: true
       additionalProperties: true
-    PlatformConfigResponse:
-      type: object
-      description: Instance configuration response containing key-value pairs and metadata.
-      properties:
-        config_version:
-          type: string
-          description: Configuration version for optimistic concurrency control.
-      additionalProperties: true
     PlatformConfigPatchRequest:
       type: object
       description: Configuration updates to apply. Keys should match config key names.
       additionalProperties: true
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     platform_api_access_token:
       type: http

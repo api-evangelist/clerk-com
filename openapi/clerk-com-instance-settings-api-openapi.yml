@@ -357,129 +357,7 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    InstanceProtect:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InstanceProtect'
-    Instance:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Instance'
-    OrganizationSettings:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationSettings'
-    InstanceOAuthApplicationSettings:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplicationSettings'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    InstanceRestrictions:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InstanceRestrictions'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    InstanceCommunication:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InstanceCommunication'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    InstanceProtect:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - instance_protect
-        rules_enabled:
-          type: boolean
-        specter_enabled:
-          type: boolean
-      required:
-      - object
-      - rules_enabled
-      - specter_enabled
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    OAuthApplicationSettings:
-      type: object
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - oauth_application_settings
-        dynamic_oauth_client_registration:
-          type: boolean
-          description: Whether dynamic OAuth client registration is enabled for the instance (RFC 7591).
-        oauth_jwt_access_tokens:
-          type: boolean
-          description: Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens).
-      required:
-      - object
-      - dynamic_oauth_client_registration
-      - oauth_jwt_access_tokens
     InstanceRestrictions:
       type: object
       properties:
@@ -505,6 +383,53 @@ components:
       - allowlist_blocklist_disabled_on_sign_in
       - block_email_subaddresses
       - block_disposable_email_domains
+    OAuthApplicationSettings:
+      type: object
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - oauth_application_settings
+        dynamic_oauth_client_registration:
+          type: boolean
+          description: Whether dynamic OAuth client registration is enabled for the instance (RFC 7591).
+        oauth_jwt_access_tokens:
+          type: boolean
+          description: Whether OAuth JWT access tokens are enabled for the instance (disabled indicates opaque access tokens).
+      required:
+      - object
+      - dynamic_oauth_client_registration
+      - oauth_jwt_access_tokens
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    InstanceCommunication:
+      type: object
+      description: Per-instance SMS communication settings, including the SMS country blocklist.
+      properties:
+        object:
+          type: string
+          enum:
+          - instance_communication
+        blocked_country_codes:
+          type: array
+          description: ISO 3166-1 alpha-2 country codes that are blocked for SMS delivery on this instance. Codes that aren't recognized are silently dropped.
+          items:
+            type: string
+      required:
+      - object
+      - blocked_country_codes
     OrganizationSettings:
       type: object
       additionalProperties: false
@@ -592,22 +517,97 @@ components:
       - id
       - environment_type
       - allowed_origins
-    InstanceCommunication:
+    ClerkError:
       type: object
-      description: Per-instance SMS communication settings, including the SMS country blocklist.
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    InstanceProtect:
+      type: object
       properties:
         object:
           type: string
           enum:
-          - instance_communication
-        blocked_country_codes:
-          type: array
-          description: ISO 3166-1 alpha-2 country codes that are blocked for SMS delivery on this instance. Codes that aren't recognized are silently dropped.
-          items:
-            type: string
+          - instance_protect
+        rules_enabled:
+          type: boolean
+        specter_enabled:
+          type: boolean
       required:
       - object
-      - blocked_country_codes
+      - rules_enabled
+      - specter_enabled
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    InstanceOAuthApplicationSettings:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationSettings'
+    InstanceProtect:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InstanceProtect'
+    InstanceCommunication:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InstanceCommunication'
+    Instance:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Instance'
+    OrganizationSettings:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationSettings'
+    InstanceRestrictions:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InstanceRestrictions'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

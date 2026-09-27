@@ -424,62 +424,101 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSets:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSets'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSet:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSet'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   schemas:
-    ReassignmentMappings:
+    ClerkErrors:
       type: object
-      description: Mappings from source role keys to destination role keys for role reassignment
-      additionalProperties:
-        type: string
-    RoleSetItem:
-      type: object
-      description: A role within a role set
       properties:
-        object:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
           type: string
-          enum:
-          - role_set_item
-        id:
-          type: string
-          description: The unique identifier of the role
-        name:
-          type: string
-          description: The name of the role
-        key:
-          type: string
-          description: The key of the role (e.g., "org:admin", "org:member")
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description of the role
-        members_count:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: The number of members assigned to this role within the role set
-        has_members:
-          type:
-          - boolean
-          - 'null'
-          description: Whether this role has any members assigned within the role set
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of role creation
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last role update
-      additionalProperties: false
       required:
-      - object
-      - id
-      - name
-      - key
-      - description
-      - created_at
-      - updated_at
+      - errors
     RoleSets:
       type: object
       additionalProperties: false
@@ -495,19 +534,6 @@ components:
       required:
       - data
       - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     RoleSetMigration:
       type: object
       description: Information about an ongoing role set migration
@@ -646,6 +672,21 @@ components:
       - type
       - created_at
       - updated_at
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     DeletedObject:
       type: object
       additionalProperties: false
@@ -663,102 +704,61 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
+    ReassignmentMappings:
       type: object
+      description: Mappings from source role keys to destination role keys for role reassignment
+      additionalProperties:
+        type: string
+    RoleSetItem:
+      type: object
+      description: A role within a role set
       properties:
-        message:
+        object:
           type: string
-        long_message:
+          enum:
+          - role_set_item
+        id:
           type: string
-        code:
+          description: The unique identifier of the role
+        name:
           type: string
-        meta:
-          type: object
+          description: The name of the role
+        key:
+          type: string
+          description: The key of the role (e.g., "org:admin", "org:member")
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description of the role
+        members_count:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The number of members assigned to this role within the role set
+        has_members:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this role has any members assigned within the role set
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of role creation
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last role update
+      additionalProperties: false
       required:
-      - message
-      - long_message
-      - code
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-  responses:
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSets:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSets'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSet:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSet'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
+      - object
+      - id
+      - name
+      - key
+      - description
+      - created_at
+      - updated_at
   securitySchemes:
     bearerAuth:
       type: http

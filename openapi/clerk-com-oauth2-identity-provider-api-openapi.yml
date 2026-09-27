@@ -769,7 +769,161 @@ paths:
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
+  responses:
+    OAuth.TokenError401:
+      description: 'Unauthorized error. Common causes:
+
+        - Invalid client credentials (`client_id` or `client_secret`)
+
+        - Invalid or expired authorization code
+
+        - Invalid or expired refresh token
+
+        - Invalid `code_verifier` for PKCE flow'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                enum:
+                - invalid_client
+                - invalid_grant
+                - unsupported_grant_type
+                example: invalid_client
+              error_description:
+                type: string
+                example: Client authentication failed
+    OAuth.Token:
+      description: 'Successfully issued OAuth2 tokens.
+
+
+        The response includes an `access_token` and `refresh_token`. If the `openid` scope was
+
+        granted, an `id_token` (JWT) will also be included in the response.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.Token'
+          examples:
+            withoutIdToken:
+              summary: Token Response without ID Token
+              description: Response when `openid` scope is not included
+              value:
+                access_token: oat_abc123xyz...
+                token_type: Bearer
+                expires_in: 86400
+                refresh_token: clk_refresh_abc123xyz...
+                scope: email profile
+            withIdToken:
+              summary: Token Response with ID Token (OpenID Connect)
+              description: Response when `openid` scope is included, includes JWT ID token
+              value:
+                access_token: oat_abc123xyz...
+                token_type: Bearer
+                expires_in: 86400
+                refresh_token: clk_refresh_abc123xyz...
+                scope: openid email profile
+                id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+    OAuth.TokenError400:
+      description: 'Bad request error. Common causes:
+
+        - Missing required parameters
+
+        - Invalid `grant_type` value
+
+        - Malformed request
+
+        - Expired authorization code
+
+        - Invalid `redirect_uri` (doesn''t match authorization request)
+
+        - Unsupported token type for revocation (e.g., JWT access tokens)'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                enum:
+                - invalid_request
+                - invalid_grant
+                - unsupported_token_type
+                example: invalid_request
+              error_description:
+                type: string
+                example: The request is missing a required parameter
+    OAuth.DynamicClientRegistrationError:
+      description: 'OAuth 2.0 dynamic client registration error response according to RFC 7591.
+
+        Indicates that the client registration request was invalid.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationError'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuth.DynamicClientRegistration:
+      description: 'Client information response after successful OAuth 2.0 dynamic client registration.
+
+        Returns the client identifier, client secret (for confidential clients), and client metadata
+
+        according to RFC 7591.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationResponse'
+    OAuth.ConsentInfo:
+      description: OAuth2 consent information (scopes with descriptions) for a given OAuth Application Client ID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.ConsentInfo'
+    OAuth.TokenInfo:
+      description: Get information for an access or refresh token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.TokenInfo'
+    OAuth.UserInfo:
+      description: Get user info after successful OAuth2 flow
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuth.UserInfo'
   schemas:
+    OAuth.ConsentInfo:
+      type: object
+      additionalProperties: false
+      properties:
+        oauth_application_name:
+          type: string
+        oauth_application_logo_url:
+          type:
+          - string
+          - 'null'
+          description: URL to the OAuth application's logo image
+        oauth_application_url:
+          type:
+          - string
+          - 'null'
+          description: URL to the OAuth application's website or homepage
+        client_id:
+          type: string
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuth.ScopeWithDescription'
+      required:
+      - oauth_application_name
+      - client_id
+      - scopes
     OAuth.DynamicClientRegistrationError:
       type: object
       additionalProperties: false
@@ -894,45 +1048,6 @@ components:
       - response_types
       - scope
       - token_endpoint_auth_method
-    OAuth.ConsentInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        oauth_application_name:
-          type: string
-        oauth_application_logo_url:
-          type:
-          - string
-          - 'null'
-          description: URL to the OAuth application's logo image
-        oauth_application_url:
-          type:
-          - string
-          - 'null'
-          description: URL to the OAuth application's website or homepage
-        client_id:
-          type: string
-        scopes:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuth.ScopeWithDescription'
-      required:
-      - oauth_application_name
-      - client_id
-      - scopes
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OAuth.DynamicClientRegistrationRequest:
       type: object
       additionalProperties: false
@@ -1006,66 +1121,19 @@ components:
             access tokens. If omitted, the client will be registered with the default set of scopes.'
       required:
       - redirect_uris
-    OAuth.ScopeWithDescription:
-      type: object
-      additionalProperties: false
-      properties:
-        scope:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        requires_consent:
-          type: boolean
-          description: Whether the scope requires user consent
-      required:
-      - scope
-      - requires_consent
-    OAuth.TokenInfo:
-      type: object
-      additionalProperties: false
-      properties:
-        active:
-          type: boolean
-          description: Boolean indicator of whether or not the presented token is currently active.
-        client_id:
-          type:
-          - string
-          - 'null'
-          description: Client identifier for the OAuth 2.0 client that requested this token.
-        iat:
-          type:
-          - integer
-          - 'null'
-          description: Integer timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this token was originally issued, as defined in JWT [RFC7519].
-        scope:
-          type:
-          - string
-          - 'null'
-          description: A JSON string containing a space-separated list of scopes associated with this token, in the format described in Section 3.3 of OAuth 2.0 [RFC6749].
-        sub:
-          type:
-          - string
-          - 'null'
-          description: Subject of the token, as defined in JWT [RFC7519].
-      required:
-      - active
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - errors
     OAuth.Token:
       type: object
       additionalProperties: false
@@ -1109,6 +1177,21 @@ components:
       required:
       - access_token
       - token_type
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     OAuth.UserInfo:
       type: object
       additionalProperties: false
@@ -1175,134 +1258,51 @@ components:
       - instance_id
       - user_id
       - sub
-  responses:
-    OAuth.DynamicClientRegistration:
-      description: 'Client information response after successful OAuth 2.0 dynamic client registration.
-
-        Returns the client identifier, client secret (for confidential clients), and client metadata
-
-        according to RFC 7591.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationResponse'
-    OAuth.DynamicClientRegistrationError:
-      description: 'OAuth 2.0 dynamic client registration error response according to RFC 7591.
-
-        Indicates that the client registration request was invalid.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.DynamicClientRegistrationError'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OAuth.TokenError400:
-      description: 'Bad request error. Common causes:
-
-        - Missing required parameters
-
-        - Invalid `grant_type` value
-
-        - Malformed request
-
-        - Expired authorization code
-
-        - Invalid `redirect_uri` (doesn''t match authorization request)
-
-        - Unsupported token type for revocation (e.g., JWT access tokens)'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                enum:
-                - invalid_request
-                - invalid_grant
-                - unsupported_token_type
-                example: invalid_request
-              error_description:
-                type: string
-                example: The request is missing a required parameter
     OAuth.TokenInfo:
-      description: Get information for an access or refresh token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.TokenInfo'
-    OAuth.Token:
-      description: 'Successfully issued OAuth2 tokens.
-
-
-        The response includes an `access_token` and `refresh_token`. If the `openid` scope was
-
-        granted, an `id_token` (JWT) will also be included in the response.'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.Token'
-          examples:
-            withoutIdToken:
-              summary: Token Response without ID Token
-              description: Response when `openid` scope is not included
-              value:
-                access_token: oat_abc123xyz...
-                token_type: Bearer
-                expires_in: 86400
-                refresh_token: clk_refresh_abc123xyz...
-                scope: email profile
-            withIdToken:
-              summary: Token Response with ID Token (OpenID Connect)
-              description: Response when `openid` scope is included, includes JWT ID token
-              value:
-                access_token: oat_abc123xyz...
-                token_type: Bearer
-                expires_in: 86400
-                refresh_token: clk_refresh_abc123xyz...
-                scope: openid email profile
-                id_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
-    OAuth.ConsentInfo:
-      description: OAuth2 consent information (scopes with descriptions) for a given OAuth Application Client ID
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.ConsentInfo'
-    OAuth.TokenError401:
-      description: 'Unauthorized error. Common causes:
-
-        - Invalid client credentials (`client_id` or `client_secret`)
-
-        - Invalid or expired authorization code
-
-        - Invalid or expired refresh token
-
-        - Invalid `code_verifier` for PKCE flow'
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                enum:
-                - invalid_client
-                - invalid_grant
-                - unsupported_grant_type
-                example: invalid_client
-              error_description:
-                type: string
-                example: Client authentication failed
-    OAuth.UserInfo:
-      description: Get user info after successful OAuth2 flow
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuth.UserInfo'
+      type: object
+      additionalProperties: false
+      properties:
+        active:
+          type: boolean
+          description: Boolean indicator of whether or not the presented token is currently active.
+        client_id:
+          type:
+          - string
+          - 'null'
+          description: Client identifier for the OAuth 2.0 client that requested this token.
+        iat:
+          type:
+          - integer
+          - 'null'
+          description: Integer timestamp, measured in the number of seconds since January 1 1970 UTC, indicating when this token was originally issued, as defined in JWT [RFC7519].
+        scope:
+          type:
+          - string
+          - 'null'
+          description: A JSON string containing a space-separated list of scopes associated with this token, in the format described in Section 3.3 of OAuth 2.0 [RFC6749].
+        sub:
+          type:
+          - string
+          - 'null'
+          description: Subject of the token, as defined in JWT [RFC7519].
+      required:
+      - active
+    OAuth.ScopeWithDescription:
+      type: object
+      additionalProperties: false
+      properties:
+        scope:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        requires_consent:
+          type: boolean
+          description: Whether the scope requires user consent
+      required:
+      - scope
+      - requires_consent
   securitySchemes:
     ProductionBrowser:
       type: apiKey

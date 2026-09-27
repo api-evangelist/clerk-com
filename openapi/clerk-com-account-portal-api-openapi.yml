@@ -47,20 +47,20 @@ paths:
       tags:
       - Account Portal
 components:
-  responses:
-    Client.AccountPortal:
-      description: Returns the account portal.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.AccountPortal'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     Client.AccountPortal:
       type: object
       additionalProperties: false
@@ -132,19 +132,6 @@ components:
       - after_leave_organization_url
       - logo_link_url
       - customization
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -160,6 +147,19 @@ components:
       - message
       - long_message
       - code
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.AccountPortal:
+      description: Returns the account portal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.AccountPortal'
   securitySchemes:
     ProductionBrowser:
       type: apiKey

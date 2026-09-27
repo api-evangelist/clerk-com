@@ -505,18 +505,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     AuthorizationInvalid:
       description: Authorization invalid
       content:
@@ -529,6 +517,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -536,21 +536,6 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     ClerkErrors:
       type: object
       properties:
@@ -564,18 +549,30 @@ components:
           type: string
       required:
       - errors
-    InstanceUsageMeter:
-      title: Instance Usage Meter
-      description: Usage totals for a single meter.
+    PlatformApplicationResponse:
       type: object
       additionalProperties: false
       properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
+        application_id:
+          type: string
+          description: The ID of the application.
+        name:
+          type: string
+          description: The name of the application.
+        instances:
+          type: array
+          description: List of instances associated with this application.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationInstance'
       required:
-      - total_usage
+      - application_id
+      - name
+      - instances
+    PlatformListApplicationsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/PlatformApplicationResponse'
+      minItems: 0
     InstanceSMSUsage:
       title: Instance SMS Usage
       description: Total SMS usage with per-geographic-tier breakdowns.
@@ -606,6 +603,18 @@ components:
       - tier_d
       - tier_e
       - tier_f
+    InstanceUsageMeter:
+      title: Instance Usage Meter
+      description: Usage totals for a single meter.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+      required:
+      - total_usage
     PlatformUpdateApplicationRequest:
       type: object
       additionalProperties: false
@@ -613,6 +622,75 @@ components:
         name:
           type: string
           description: The name of the application.
+    PlatformApplicationInstance:
+      title: Application Instance
+      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
+      type: object
+      additionalProperties: false
+      properties:
+        instance_id:
+          type: string
+          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
+          example: ins_2abc123def456
+        environment_type:
+          type: string
+          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
+          enum:
+          - development
+          - production
+          example: production
+        secret_key:
+          type: string
+          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
+          example: sk_live_abc123...
+          x-sensitive: true
+        publishable_key:
+          type: string
+          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
+          example: pk_live_abc123...
+      required:
+      - instance_id
+      - environment_type
+    InstanceUsageMeterWithBillable:
+      title: Instance Usage Meter With Billable
+      description: Usage totals for a meter that includes both total and billable quantities.
+      type: object
+      additionalProperties: false
+      properties:
+        total_usage:
+          type: integer
+          format: int64
+          description: Total quantity for this meter in the selected period.
+        total_billable_usage:
+          type: integer
+          format: int64
+          description: Billable subset of total usage for this meter in the selected period.
+      required:
+      - total_usage
+      - total_billable_usage
+    PlatformCreateApplicationRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The name of the application.
+        domain:
+          type: string
+          description: The domain for the application (optional).
+        proxy_path:
+          type: string
+          description: Custom proxy path for provider domains (e.g., "/__clerk"). Must start with a leading slash and be a single path segment. Defaults to "/__clerk" if not provided.
+        environment_types:
+          type: array
+          items:
+            type: string
+          description: List of environment types to create instances for. Accepted values are "development" and "production". Defaults to "development" if not provided.
+        template:
+          type: string
+          description: Application template to use for configuring the application (e.g., "b2b-saas", "b2c-saas", "waitlist").
+      required:
+      - name
     PlatformInstanceUsageResponse:
       title: Instance Usage Report
       description: Usage report for an application instance containing per-meter totals.
@@ -669,75 +747,6 @@ components:
       - custom_domains
       - sms_messages
       - enterprise_connections
-    InstanceUsageMeterWithBillable:
-      title: Instance Usage Meter With Billable
-      description: Usage totals for a meter that includes both total and billable quantities.
-      type: object
-      additionalProperties: false
-      properties:
-        total_usage:
-          type: integer
-          format: int64
-          description: Total quantity for this meter in the selected period.
-        total_billable_usage:
-          type: integer
-          format: int64
-          description: Billable subset of total usage for this meter in the selected period.
-      required:
-      - total_usage
-      - total_billable_usage
-    PlatformCreateApplicationRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: The name of the application.
-        domain:
-          type: string
-          description: The domain for the application (optional).
-        proxy_path:
-          type: string
-          description: Custom proxy path for provider domains (e.g., "/__clerk"). Must start with a leading slash and be a single path segment. Defaults to "/__clerk" if not provided.
-        environment_types:
-          type: array
-          items:
-            type: string
-          description: List of environment types to create instances for. Accepted values are "development" and "production". Defaults to "development" if not provided.
-        template:
-          type: string
-          description: Application template to use for configuring the application (e.g., "b2b-saas", "b2c-saas", "waitlist").
-      required:
-      - name
-    PlatformApplicationInstance:
-      title: Application Instance
-      description: Represents an instance (environment) within a Clerk application. Each application can have multiple instances, typically one for development and one for production.
-      type: object
-      additionalProperties: false
-      properties:
-        instance_id:
-          type: string
-          description: The unique identifier for this instance. Use this ID when making API calls that target a specific instance.
-          example: ins_2abc123def456
-        environment_type:
-          type: string
-          description: The environment type of the instance. Determines whether this instance is used for development/testing or production workloads.
-          enum:
-          - development
-          - production
-          example: production
-        secret_key:
-          type: string
-          description: The secret key for authenticating server-side API requests to this instance. Keep this value secure and never expose it in client-side code.
-          example: sk_live_abc123...
-          x-sensitive: true
-        publishable_key:
-          type: string
-          description: The publishable key for this instance. Safe to include in client-side code and used to initialize Clerk SDKs in the browser.
-          example: pk_live_abc123...
-      required:
-      - instance_id
-      - environment_type
     PlatformDeletedObjectResponse:
       type: object
       additionalProperties: false
@@ -755,30 +764,21 @@ components:
       - deleted
       - object
       - id
-    PlatformListApplicationsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/PlatformApplicationResponse'
-      minItems: 0
-    PlatformApplicationResponse:
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        application_id:
+        message:
           type: string
-          description: The ID of the application.
-        name:
+        long_message:
           type: string
-          description: The name of the application.
-        instances:
-          type: array
-          description: List of instances associated with this application.
-          items:
-            $ref: '#/components/schemas/PlatformApplicationInstance'
+        code:
+          type: string
+        meta:
+          type: object
       required:
-      - application_id
-      - name
-      - instances
+      - message
+      - long_message
+      - code
   securitySchemes:
     platform_api_access_token:
       type: http
