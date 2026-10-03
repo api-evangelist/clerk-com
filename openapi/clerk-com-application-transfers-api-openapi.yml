@@ -232,20 +232,14 @@ paths:
           $ref: '#/components/responses/Conflict'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
@@ -262,26 +256,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    PlatformListApplicationTransfersResponse:
-      title: List Application Transfers Response
-      description: A paginated list of application transfers.
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        data:
-          type: array
-          description: The list of application transfers.
-          items:
-            $ref: '#/components/schemas/PlatformApplicationTransferResponse'
-        total_count:
-          type: integer
-          format: int64
-          description: The total number of application transfers matching the query.
-          example: 5
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
       required:
-      - data
-      - total_count
+      - message
+      - long_message
+      - code
     PlatformApplicationTransferResponse:
       title: Application Transfer
       description: Represents an application transfer request. Application transfers allow transferring ownership of an application from one organization to another.
@@ -361,21 +357,25 @@ components:
           type: string
       required:
       - errors
-    ClerkError:
+    PlatformListApplicationTransfersResponse:
+      title: List Application Transfers Response
+      description: A paginated list of application transfers.
       type: object
+      additionalProperties: false
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+        data:
+          type: array
+          description: The list of application transfers.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationTransferResponse'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of application transfers matching the query.
+          example: 5
       required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
   securitySchemes:
     platform_api_access_token:
       type: http

@@ -336,32 +336,20 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
@@ -372,20 +360,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Roles'
-    Role:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Role'
-    Conflict:
-      description: Conflict
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -396,46 +378,74 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    Role:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Role'
   schemas:
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
+      required:
+      - message
+      - long_message
+      - code
+    Roles:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of roles
+
+            '
+      required:
+      - data
+      - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
           type: string
       required:
-      - errors
+      - object
+      - deleted
     Role:
       type: object
       properties:
@@ -483,23 +493,19 @@ components:
       - permissions
       - created_at
       - updated_at
-    DeletedObject:
+    ClerkErrors:
       type: object
-      additionalProperties: false
       properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
           type: string
       required:
-      - object
-      - deleted
+      - errors
     Permission:
       type: object
       properties:
@@ -538,38 +544,32 @@ components:
       - type
       - created_at
       - updated_at
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    Roles:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of roles
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
 
-            '
-      required:
-      - data
-      - total_count
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

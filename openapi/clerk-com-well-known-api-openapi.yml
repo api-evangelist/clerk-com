@@ -92,6 +92,70 @@ paths:
           $ref: '#/components/responses/WellKnown.OAuth2AuthorizationServerMetadata'
 components:
   schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    WellKnown.AppleAppSiteAssociation:
+      type: object
+      additionalProperties: false
+      properties:
+        webcredentials:
+          type: object
+          additionalProperties: false
+          properties:
+            apps:
+              type: array
+              items:
+                type: string
+    JWKS.ecdsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - EC
+        crv:
+          type: string
+        x:
+          type: string
+        y:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - y
     WellKnown.OpenIDConfiguration:
       type: object
       additionalProperties: false
@@ -171,7 +235,214 @@ components:
       - code_challenge_methods_supported
       - backchannel_logout_supported
       - frontchannel_logout_supported
-    JWKS.ecdsa.PublicKey:
+    WellKnown.OAuth2AuthorizationServerMetadata:
+      type: object
+      additionalProperties: false
+      properties:
+        issuer:
+          type: string
+        authorization_endpoint:
+          type: string
+        token_endpoint:
+          type: string
+        revocation_endpoint:
+          type: string
+        jwks_uri:
+          type: string
+        registration_endpoint:
+          type: string
+        response_types_supported:
+          type: array
+          items:
+            type: string
+        grant_types_supported:
+          type: array
+          items:
+            type: string
+        token_endpoint_auth_methods_supported:
+          type: array
+          items:
+            type: string
+        scopes_supported:
+          type: array
+          items:
+            type: string
+        subject_types_supported:
+          type: array
+          items:
+            type: string
+        id_token_signing_alg_values_supported:
+          type: array
+          items:
+            type: string
+        claims_supported:
+          type: array
+          items:
+            type: string
+        service_documentation:
+          type: string
+        ui_locales_supported:
+          type: array
+          items:
+            type: string
+        op_tos_uri:
+          type: string
+        code_challenge_methods_supported:
+          type: array
+          items:
+            type: string
+      required:
+      - issuer
+      - authorization_endpoint
+      - token_endpoint
+      - revocation_endpoint
+      - jwks_uri
+      - response_types_supported
+      - grant_types_supported
+      - token_endpoint_auth_methods_supported
+      - scopes_supported
+      - subject_types_supported
+      - id_token_signing_alg_values_supported
+      - claims_supported
+      - code_challenge_methods_supported
+    JWKS.ed25519.PrivateKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - OKP
+        crv:
+          type: string
+          enum:
+          - Ed25519
+        x:
+          type: string
+        d:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+      - d
+    JWKS.rsa.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - RSA
+        n:
+          type: string
+        e:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - n
+      - e
+    JWKS:
+      type: object
+      additionalProperties: false
+      properties:
+        keys:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/JWKS.ed25519.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PublicKey'
+            - $ref: '#/components/schemas/JWKS.ed25519.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.ecdsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.rsa.PrivateKey'
+            - $ref: '#/components/schemas/JWKS.symmetric.Key'
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    JWKS.ed25519.PublicKey:
+      type: object
+      properties:
+        kid:
+          type: string
+        alg:
+          type: string
+        use:
+          type: string
+        kty:
+          type: string
+          enum:
+          - OKP
+        crv:
+          type: string
+          enum:
+          - Ed25519
+        x:
+          type: string
+        x5c:
+          type: array
+          items:
+            type: string
+        x5t:
+          type: string
+        x5t#S256:
+          type: string
+        x5u:
+          type: string
+      required:
+      - kid
+      - alg
+      - use
+      - kty
+      - crv
+      - x
+    JWKS.ecdsa.PrivateKey:
       type: object
       properties:
         kid:
@@ -189,6 +460,8 @@ components:
         x:
           type: string
         y:
+          type: string
+        d:
           type: string
         x5c:
           type: array
@@ -208,21 +481,31 @@ components:
       - crv
       - x
       - y
-    JWKS:
-      type: object
+      - d
+    WellKnown.Assetlinks:
+      type: array
       additionalProperties: false
-      properties:
-        keys:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/JWKS.ed25519.PublicKey'
-            - $ref: '#/components/schemas/JWKS.ecdsa.PublicKey'
-            - $ref: '#/components/schemas/JWKS.rsa.PublicKey'
-            - $ref: '#/components/schemas/JWKS.ed25519.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.ecdsa.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.rsa.PrivateKey'
-            - $ref: '#/components/schemas/JWKS.symmetric.Key'
+      items:
+        type: object
+        properties:
+          relation:
+            type: array
+            items:
+              type: string
+              enum:
+              - delegate_permission/common.handle_all_urls
+              - delegate_permission/common.get_login_creds
+          target:
+            type: object
+            properties:
+              namespace:
+                type: string
+              package_name:
+                type: string
+              sha256_cert_fingerprints:
+                type: array
+                items:
+                  type: string
     JWKS.rsa.PrivateKey:
       type: object
       properties:
@@ -304,289 +587,6 @@ components:
       - use
       - kty
       - k
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    WellKnown.AppleAppSiteAssociation:
-      type: object
-      additionalProperties: false
-      properties:
-        webcredentials:
-          type: object
-          additionalProperties: false
-          properties:
-            apps:
-              type: array
-              items:
-                type: string
-    WellKnown.OAuth2AuthorizationServerMetadata:
-      type: object
-      additionalProperties: false
-      properties:
-        issuer:
-          type: string
-        authorization_endpoint:
-          type: string
-        token_endpoint:
-          type: string
-        revocation_endpoint:
-          type: string
-        jwks_uri:
-          type: string
-        registration_endpoint:
-          type: string
-        response_types_supported:
-          type: array
-          items:
-            type: string
-        grant_types_supported:
-          type: array
-          items:
-            type: string
-        token_endpoint_auth_methods_supported:
-          type: array
-          items:
-            type: string
-        scopes_supported:
-          type: array
-          items:
-            type: string
-        subject_types_supported:
-          type: array
-          items:
-            type: string
-        id_token_signing_alg_values_supported:
-          type: array
-          items:
-            type: string
-        claims_supported:
-          type: array
-          items:
-            type: string
-        service_documentation:
-          type: string
-        ui_locales_supported:
-          type: array
-          items:
-            type: string
-        op_tos_uri:
-          type: string
-        code_challenge_methods_supported:
-          type: array
-          items:
-            type: string
-      required:
-      - issuer
-      - authorization_endpoint
-      - token_endpoint
-      - revocation_endpoint
-      - jwks_uri
-      - response_types_supported
-      - grant_types_supported
-      - token_endpoint_auth_methods_supported
-      - scopes_supported
-      - subject_types_supported
-      - id_token_signing_alg_values_supported
-      - claims_supported
-      - code_challenge_methods_supported
-    JWKS.ed25519.PublicKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - OKP
-        crv:
-          type: string
-          enum:
-          - Ed25519
-        x:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - crv
-      - x
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    JWKS.ecdsa.PrivateKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - EC
-        crv:
-          type: string
-        x:
-          type: string
-        y:
-          type: string
-        d:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - crv
-      - x
-      - y
-      - d
-    JWKS.rsa.PublicKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - RSA
-        n:
-          type: string
-        e:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - n
-      - e
-    WellKnown.Assetlinks:
-      type: array
-      additionalProperties: false
-      items:
-        type: object
-        properties:
-          relation:
-            type: array
-            items:
-              type: string
-              enum:
-              - delegate_permission/common.handle_all_urls
-              - delegate_permission/common.get_login_creds
-          target:
-            type: object
-            properties:
-              namespace:
-                type: string
-              package_name:
-                type: string
-              sha256_cert_fingerprints:
-                type: array
-                items:
-                  type: string
-    JWKS.ed25519.PrivateKey:
-      type: object
-      properties:
-        kid:
-          type: string
-        alg:
-          type: string
-        use:
-          type: string
-        kty:
-          type: string
-          enum:
-          - OKP
-        crv:
-          type: string
-          enum:
-          - Ed25519
-        x:
-          type: string
-        d:
-          type: string
-        x5c:
-          type: array
-          items:
-            type: string
-        x5t:
-          type: string
-        x5t#S256:
-          type: string
-        x5u:
-          type: string
-      required:
-      - kid
-      - alg
-      - use
-      - kty
-      - crv
-      - x
-      - d
   responses:
     ClerkErrors:
       description: Request was not successful
@@ -594,30 +594,30 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    WellKnown.OpenIDConfiguration:
-      description: Get a basic OpenID configuration payload
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WellKnown.OpenIDConfiguration'
-    WellKnown.OAuth2AuthorizationServerMetadata:
-      description: Get the OAuth 2.0 Authorization Server Metadata
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WellKnown.OAuth2AuthorizationServerMetadata'
     WellKnown.AppleAppSiteAssociation:
       description: Get the Apple App Site Association file
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/WellKnown.AppleAppSiteAssociation'
+    WellKnown.OAuth2AuthorizationServerMetadata:
+      description: Get the OAuth 2.0 Authorization Server Metadata
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WellKnown.OAuth2AuthorizationServerMetadata'
     WellKnown.Assetlinks:
       description: Get Android asset links for universal/deep linking
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/WellKnown.Assetlinks'
+    WellKnown.OpenIDConfiguration:
+      description: Get a basic OpenID configuration payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WellKnown.OpenIDConfiguration'
     WellKnown.JWKS:
       description: Get the JSON Web Key Set
       content:

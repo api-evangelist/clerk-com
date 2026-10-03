@@ -191,107 +191,22 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  parameters:
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-  responses:
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifiers'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AllowlistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AllowlistIdentifier'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    AllowlistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AllowlistIdentifier'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifier'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     BlocklistIdentifiers:
       type: object
       additionalProperties: false
@@ -309,6 +224,23 @@ components:
       required:
       - data
       - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
     ClerkErrors:
       type: object
       properties:
@@ -322,6 +254,44 @@ components:
           type: string
       required:
       - errors
+    BlocklistIdentifier:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - blocklist_identifier
+        id:
+          type: string
+        identifier:
+          type: string
+          description: 'An email address, email domain, phone number or web3 wallet.
+
+            '
+        identifier_type:
+          type: string
+          enum:
+          - email_address
+          - phone_number
+          - web3_wallet
+        instance_id:
+          type: string
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
     AllowlistIdentifier:
       type: object
       additionalProperties: false
@@ -362,76 +332,106 @@ components:
           description: 'Unix timestamp of last update.
 
             '
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    BlocklistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifiers'
+    AllowlistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllowlistIdentifier'
     DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AllowlistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AllowlistIdentifier'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     BlocklistIdentifier:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifier'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
 
-            '
-          enum:
-          - blocklist_identifier
-        id:
-          type: string
-        identifier:
-          type: string
-          description: 'An email address, email domain, phone number or web3 wallet.
+        If true, the results will be paginated.
 
-            '
-        identifier_type:
-          type: string
-          enum:
-          - email_address
-          - phone_number
-          - web3_wallet
-        instance_id:
-          type: string
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
 
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
+        Needs to be an integer greater or equal to zero.
 
-            '
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

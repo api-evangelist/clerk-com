@@ -2250,513 +2250,51 @@ paths:
     servers:
     - url: https://api.clerk.com/v1
 components:
-  responses:
-    CommerceSubscription:
-      description: A commerce subscription.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CommerceSubscription'
-    OrganizationInvitationsWithPublicOrganizationData:
-      description: A list of organization invitations with public organization data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
-    OAuthAccessToken:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthAccessToken'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    User.Count:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TotalCount'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    CommerceCreditLedger:
-      description: A credit ledger entry.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CommerceCreditLedgerResponse'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    CommerceCreditBalance:
-      description: A payer's credit balance.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CommerceCreditBalanceResponse'
-    OrganizationMemberships:
-      description: A list of organization memberships
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMemberships'
-    User.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    User:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/User'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    CommerceSubscriptionItem:
+    CommerceCreditLedgerResponse:
       type: object
       additionalProperties: false
       required:
       - object
       - id
-      - instance_id
-      - status
-      - plan_id
-      - plan_period
       - payer_id
-      - is_free_trial
-      - period_start
-      - period_end
-      - canceled_at
-      - past_due_at
-      - ended_at
+      - amount
+      - currency
+      - source_type
+      - source_id
+      - created_at
       properties:
         object:
           type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - commerce_subscription_item
+          description: String representing the object's type. Always "commerce_credit_ledger".
         id:
           type: string
-          description: Unique identifier for the subscription item.
-        instance_id:
-          type: string
-          description: Unique identifier for the Clerk instance.
-        status:
-          type: string
-          description: Current status of the subscription item.
-          enum:
-          - active
-          - canceled
-          - expired
-          - ended
-          - past_due
-          - upcoming
-          - incomplete
-          - abandoned
-        credit:
-          $ref: '#/components/schemas/CommerceSubscriptionCreditResponse'
-          description: Credit information (only available in PaymentAttempt events).
-        credits:
-          allOf:
-          - $ref: '#/components/schemas/CommerceCreditsResponse'
-          description: Unified credits breakdown for this subscription item.
-        plan_id:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier for the associated plan.
-        price_id:
-          type: string
-          description: Unique identifier for the associated price
-        plan:
-          allOf:
-          - $ref: '#/components/schemas/CommercePlan'
-          description: The associated plan.
-        plan_period:
-          type: string
-          description: The billing period for this subscription item.
-          enum:
-          - month
-          - annual
-        payment_method:
-          $ref: '#/components/schemas/CommercePaymentMethodResponse'
-          description: The payment method used for this subscription item.
-        lifetime_paid:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Total amount paid over the lifetime of this subscription item.
-        next_payment:
-          allOf:
-          - $ref: '#/components/schemas/CommerceSubscriptionItemNextPaymentResponse'
-          description: Information about the next payment.
+          description: Unique identifier for the ledger entry.
         payer_id:
           type: string
-          description: Unique identifier for the payer.
-        payer:
-          $ref: '#/components/schemas/CommercePayerResponse'
-          description: The payer associated with this subscription item.
-        is_free_trial:
-          type: boolean
-          description: Whether this subscription item includes a free trial.
-        period_start:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the current period started.
-        period_end:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp (in milliseconds) when the current period ends.
-        proration_date:
-          type: string
-          format: date
-          description: The day the subscription item was prorated from. Only available in some responses.
-        canceled_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp (in milliseconds) when the subscription item was canceled.
-        past_due_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp (in milliseconds) when the subscription item became past due.
-        ended_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp (in milliseconds) when the subscription item ended.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the subscription item was created.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the subscription item was last updated.
-        seats:
-          allOf:
-          - $ref: '#/components/schemas/CommerceSubscriptionItemSeatsResponse'
-          description: Seat quantity for seat-based billing.
-        totals:
-          allOf:
-          - $ref: '#/components/schemas/CommerceTotalsResponse'
-          description: Totals for this subscription item.
-    TotalCount:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - total_count
-        total_count:
-          type: integer
-          format: int64
-      required:
-      - object
-      - total_count
-    SCIMUserMetadata:
-      type: object
-      additionalProperties: false
-      description: 'Metadata describing a user''s linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed.
-
-        '
-      properties:
-        directory_id:
-          type: string
-          description: 'The ID of the SCIM directory the user is provisioned from.
-
-            '
-        directory_enabled:
-          type: boolean
-          description: 'Whether the SCIM directory is currently enabled. Omitted when false.
-
-            '
-        external_id:
-          type:
-          - string
-          - 'null'
-          description: 'The user''s external ID as reported by the SCIM directory, if any.
-
-            '
-      required:
-      - directory_id
-      - external_id
-    CommercePlanUnitPriceTier:
-      type: object
-      additionalProperties: false
-      properties:
-        starts_at_block:
-          type: integer
-          format: int64
-          description: Start block (inclusive) for this tier
-        ends_after_block:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End block (inclusive) for this tier; null means unlimited
-        fee_per_block:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Price charged per block in this tier
-      required:
-      - starts_at_block
-      - fee_per_block
-    PasswordHasher:
-      type: string
-      description: 'The hashing algorithm that was used to generate the password digest.
-
-
-        The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
-
-        `pbkdf2_sha512`, [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
-
-        [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
-
-        [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher,
-
-        and `pbkdf2_sha512_hex`, a variant of `pbkdf2_sha512` that accepts hex-encoded salt and hash.
-
-
-        Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.'
-    CommerceSubscriptionCreditResponse:
-      type: object
-      additionalProperties: false
-      properties:
+          description: The ID of the payer whose balance was adjusted.
         amount:
-          allOf:
-          - $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Credit amount.
-        cycle_remaining_percent:
-          type: number
-          format: float
-          description: Percentage of the billing cycle remaining.
-    PhoneNumber:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
+          type: integer
+          format: int64
+          description: The signed credit amount. Positive for increases, negative for decreases.
+        currency:
           type: string
-        object:
+          description: The currency code of the credit adjustment.
+        source_type:
           type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - phone_number
-        phone_number:
+          description: The type of source that originated the adjustment (e.g. "grant").
+        source_id:
           type: string
-        reserved_for_second_factor:
-          type: boolean
-        default_second_factor:
-          type: boolean
-        reserved:
-          type: boolean
-        verification:
+          description: The ID of the source that originated the adjustment.
+        note:
           type:
-          - object
+          - string
           - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/verification_otp'
-          - $ref: '#/components/schemas/verification_admin'
-          discriminator:
-            propertyName: object
-            mapping:
-              verification_otp: '#/components/schemas/verification_otp'
-              verification_admin: '#/components/schemas/verification_admin'
-        linked_to:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentificationLink'
-        backup_codes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
+          description: An optional note attached to the ledger entry.
         created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-      required:
-      - object
-      - phone_number
-      - verification
-      - linked_to
-      - reserved
-      - created_at
-      - updated_at
-    EnterpriseAccount:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
           type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - enterprise_account
-        protocol:
-          type: string
-          description: 'The authentication protocol used to sign in.
-
-            '
-          enum:
-          - oauth
-          - saml
-        provider:
-          type: string
-        active:
-          type: boolean
-        email_address:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        provider_user_id:
-          description: The unique ID of the user in the external provider's system
-          type:
-          - string
-          - 'null'
-        enterprise_connection_id:
-          type:
-          - string
-          - 'null'
-        public_metadata:
-          type: object
-          additionalProperties: true
-        verification:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/verification_ticket'
-          - $ref: '#/components/schemas/verification_saml'
-          - $ref: '#/components/schemas/verification_oauth'
-          discriminator:
-            propertyName: object
-        enterprise_connection:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/EnterpriseAccountConnection'
-        last_authenticated_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: 'Unix timestamp of last authentication.
-
-            '
-      required:
-      - id
-      - object
-      - provider
-      - active
-      - email_address
-      - verification
-    Passkey:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - passkey
-        name:
-          type: string
-        last_used_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of when the passkey was last used.
-
-            '
-        verification:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/verification_passkey'
-          discriminator:
-            propertyName: object
-      required:
-      - object
-      - name
-      - last_used_at
-      - verification
+          format: date-time
+          description: Timestamp when the ledger entry was created.
     User:
       type: object
       additionalProperties: false
@@ -3013,17 +2551,6 @@ components:
       - mfa_enabled_at
       - mfa_disabled_at
       - legal_accepted_at
-    CommercePayerCreditResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        remaining_balance:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-        applied_amount:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-      required:
-      - remaining_balance
-      - applied_amount
     CommerceSubscription:
       type: object
       additionalProperties: false
@@ -3094,51 +2621,383 @@ components:
         eligible_for_free_trial:
           type: boolean
           description: Whether the payer is eligible for a free trial.
-    verification_from_oauth:
-      x-speakeasy-name-override: FromOAuth
+    CommercePayerResponse:
       type: object
       additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
       properties:
         object:
           type: string
+          description: String representing the object's type. Objects of the same type share the same value.
           enum:
-          - verification_from_oauth
-        status:
+          - commerce_payer
+        id:
           type: string
+          description: Unique identifier for the payer.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: User ID for user-type payers.
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: First name of the payer.
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: Last name of the payer.
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email address of the payer.
+        organization_id:
+          type:
+          - string
+          - 'null'
+          description: Organization ID for org-type payers.
+        organization_name:
+          type:
+          - string
+          - 'null'
+          description: Organization name for org-type payers.
+        image_url:
+          type: string
+          description: URL of the payer's image/avatar.
+        credits_balance:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Current credits balance for the payer.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payer was last updated.
+    CommerceCreditBalanceResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - balance
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Always "commerce_credit_balance".
+        balance:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: The current credit balance. Null when the payer has never had credits.
+    CommerceCreditsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        proration:
+          allOf:
+          - $ref: '#/components/schemas/CommerceProrationCreditDetailResponse'
+        payer:
+          allOf:
+          - $ref: '#/components/schemas/CommercePayerCreditResponse'
+        total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+      required:
+      - proration
+      - payer
+      - total
+    CommerceSubscriptionNextPayment:
+      type: object
+      additionalProperties: false
+      required:
+      - date
+      - amount
+      properties:
+        date:
+          type: integer
+          format: int64
+          description: Unix timestamp (milliseconds) of the next payment date.
+        amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: The amount of the next payment.
+    Passkey:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
           enum:
-          - unverified
-          - verified
-        strategy:
+          - passkey
+        name:
           type: string
-          pattern: ^from_oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
-        error:
+        last_used_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of when the passkey was last used.
+
+            '
+        verification:
           type:
           - object
           - 'null'
           oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        attempts:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
+          - $ref: '#/components/schemas/verification_passkey'
+          discriminator:
+            propertyName: object
+      required:
+      - object
+      - name
+      - last_used_at
+      - verification
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+    CommercePayerCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        remaining_balance:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        applied_amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+      required:
+      - remaining_balance
+      - applied_amount
+    OrganizationInvitationWithPublicOrganizationData:
+      description: An organization invitation with public organization data populated
+      type: object
+      allOf:
+      - properties:
+          object:
+            type: string
+            description: 'String representing the object''s type. Objects of the same type share the same value.
+
+              '
+            enum:
+            - organization_invitation
+          id:
+            type: string
+          email_address:
+            type: string
+          role:
+            type: string
+          role_name:
+            type: string
+          organization_id:
+            type: string
+          inviter_id:
+            type:
+            - string
+            - 'null'
+          public_inviter_data:
+            $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
+          status:
+            type: string
+          public_metadata:
+            type: object
+            additionalProperties: true
+          private_metadata:
+            type: object
+            additionalProperties: true
+          url:
+            type:
+            - string
+            - 'null'
+          expires_at:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: Unix timestamp of expiration.
+          created_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of creation.
+          updated_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of last update.
+      - properties:
+          public_organization_data:
+            $ref: '#/components/schemas/OrganizationInvitationPublicOrganizationData'
+      required:
+      - object
+      - id
+      - email_address
+      - role
+      - role_name
+      - public_metadata
+      - url
+      - expires_at
+      - created_at
+      - updated_at
+      - inviter_id
+      - public_inviter_data
+    CommerceSubscriptionItem:
+      type: object
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - instance_id
+      - status
+      - plan_id
+      - plan_period
+      - payer_id
+      - is_free_trial
+      - period_start
+      - period_end
+      - canceled_at
+      - past_due_at
+      - ended_at
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_subscription_item
+        id:
+          type: string
+          description: Unique identifier for the subscription item.
+        instance_id:
+          type: string
+          description: Unique identifier for the Clerk instance.
+        status:
+          type: string
+          description: Current status of the subscription item.
+          enum:
+          - active
+          - canceled
+          - expired
+          - ended
+          - past_due
+          - upcoming
+          - incomplete
+          - abandoned
+        credit:
+          $ref: '#/components/schemas/CommerceSubscriptionCreditResponse'
+          description: Credit information (only available in PaymentAttempt events).
+        credits:
+          allOf:
+          - $ref: '#/components/schemas/CommerceCreditsResponse'
+          description: Unified credits breakdown for this subscription item.
+        plan_id:
           type:
           - string
           - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    OrganizationInvitationPublicUserData:
-      description: An organization inviter's public user data
-      type:
-      - object
-      - 'null'
+          description: Unique identifier for the associated plan.
+        price_id:
+          type: string
+          description: Unique identifier for the associated price
+        plan:
+          allOf:
+          - $ref: '#/components/schemas/CommercePlan'
+          description: The associated plan.
+        plan_period:
+          type: string
+          description: The billing period for this subscription item.
+          enum:
+          - month
+          - annual
+        payment_method:
+          $ref: '#/components/schemas/CommercePaymentMethodResponse'
+          description: The payment method used for this subscription item.
+        lifetime_paid:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Total amount paid over the lifetime of this subscription item.
+        next_payment:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemNextPaymentResponse'
+          description: Information about the next payment.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payer:
+          $ref: '#/components/schemas/CommercePayerResponse'
+          description: The payer associated with this subscription item.
+        is_free_trial:
+          type: boolean
+          description: Whether this subscription item includes a free trial.
+        period_start:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the current period started.
+        period_end:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the current period ends.
+        proration_date:
+          type: string
+          format: date
+          description: The day the subscription item was prorated from. Only available in some responses.
+        canceled_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item was canceled.
+        past_due_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item became past due.
+        ended_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item ended.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the subscription item was last updated.
+        seats:
+          allOf:
+          - $ref: '#/components/schemas/CommerceSubscriptionItemSeatsResponse'
+          description: Seat quantity for seat-based billing.
+        totals:
+          allOf:
+          - $ref: '#/components/schemas/CommerceTotalsResponse'
+          description: Totals for this subscription item.
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
       additionalProperties: false
       properties:
         user_id:
@@ -3151,19 +3010,32 @@ components:
           type:
           - string
           - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
         image_url:
           type: string
         has_image:
           type: boolean
         identifier:
-          type: string
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
       required:
       - user_id
       - first_name
       - last_name
+      - profile_image_url
       - image_url
       - has_image
-      - identifier
     ExternalAccountWithVerification:
       type: object
       additionalProperties: true
@@ -3257,6 +3129,38 @@ components:
       - created_at
       - updated_at
       - verification
+    OrganizationInvitationsWithPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
+
+            '
+      required:
+      - data
+      - total_count
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     CommercePerUnitTotal:
       type: object
       additionalProperties: false
@@ -3277,61 +3181,218 @@ components:
       - name
       - block_size
       - tiers
-    CommerceProrationCreditDetailResponse:
+    PhoneNumber:
       type: object
       additionalProperties: false
       properties:
-        amount:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-        cycle_days_remaining:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - phone_number
+        phone_number:
+          type: string
+        reserved_for_second_factor:
+          type: boolean
+        default_second_factor:
+          type: boolean
+        reserved:
+          type: boolean
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_otp'
+          - $ref: '#/components/schemas/verification_admin'
+          discriminator:
+            propertyName: object
+            mapping:
+              verification_otp: '#/components/schemas/verification_otp'
+              verification_admin: '#/components/schemas/verification_admin'
+        linked_to:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentificationLink'
+        backup_codes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        created_at:
           type: integer
           format: int64
-        cycle_days_total:
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
           type: integer
           format: int64
-        cycle_remaining_percent:
-          type: number
-          format: double
+          description: 'Unix timestamp of creation
+
+            '
       required:
-      - amount
-      - cycle_days_remaining
-      - cycle_days_total
-      - cycle_remaining_percent
-    FeatureResponse:
+      - object
+      - phone_number
+      - verification
+      - linked_to
+      - reserved
+      - created_at
+      - updated_at
+    CommercePerUnitTotalTier:
       type: object
       additionalProperties: false
+      properties:
+        quantity:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Units billed in this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Price charged per block in this tier
+        total:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Total charge for this tier
+      required:
+      - fee_per_block
+      - total
+    OrganizationMembership:
+      description: A user's membership in an organization
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_membership
+        role:
+          type: string
+        role_name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+        public_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible from both Frontend and Backend APIs
+          additionalProperties: true
+        private_metadata:
+          type: object
+          description: Metadata saved on the organization membership, accessible only from the Backend API
+          additionalProperties: true
+        organization:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Organization'
+        public_user_data:
+          $ref: '#/components/schemas/OrganizationMembershipPublicUserData'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
       required:
       - object
       - id
-      - name
-      - description
-      - slug
-      - avatar_url
+      - role
+      - permissions
+      - public_metadata
+      - created_at
+      - updated_at
+      - organization
+    EnterpriseAccount:
+      type: object
+      additionalProperties: false
       properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - feature
         id:
           type: string
-          description: Unique identifier for the feature.
-        name:
+        object:
           type: string
-          description: The name of the feature.
-        description:
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - enterprise_account
+        protocol:
+          type: string
+          description: 'The authentication protocol used to sign in.
+
+            '
+          enum:
+          - oauth
+          - saml
+        provider:
+          type: string
+        active:
+          type: boolean
+        email_address:
+          type: string
+        first_name:
           type:
           - string
           - 'null'
-          description: The description of the feature.
-        slug:
-          type: string
-          description: The URL-friendly slug for the feature.
-        avatar_url:
+        last_name:
           type:
           - string
           - 'null'
-          description: The URL of the feature's avatar image.
+        provider_user_id:
+          description: The unique ID of the user in the external provider's system
+          type:
+          - string
+          - 'null'
+        enterprise_connection_id:
+          type:
+          - string
+          - 'null'
+        public_metadata:
+          type: object
+          additionalProperties: true
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_ticket'
+          - $ref: '#/components/schemas/verification_saml'
+          - $ref: '#/components/schemas/verification_oauth'
+          discriminator:
+            propertyName: object
+        enterprise_connection:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/EnterpriseAccountConnection'
+        last_authenticated_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp of last authentication.
+
+            '
+      required:
+      - id
+      - object
+      - provider
+      - active
+      - email_address
+      - verification
     verification_oauth:
       x-speakeasy-name-override: Oauth
       type: object
@@ -3377,61 +3438,6 @@ components:
       - strategy
       - attempts
       - expire_at
-    OAuthAccessToken:
-      type: array
-      items:
-        type: object
-        additionalProperties: false
-        properties:
-          object:
-            type: string
-            enum:
-            - oauth_access_token
-          external_account_id:
-            type: string
-            description: External account ID
-          provider_user_id:
-            type: string
-            description: The unique ID of the user in the external provider's system
-          token:
-            type: string
-            description: The access token
-          expires_at:
-            type:
-            - integer
-            - 'null'
-            format: int64
-            description: Unix timestamp of the access token expiration.
-          provider:
-            type: string
-            description: The ID of the provider
-          public_metadata:
-            type: object
-            additionalProperties: true
-          label:
-            type:
-            - string
-            - 'null'
-          scopes:
-            type: array
-            items:
-              type: string
-            description: The list of scopes that the token is valid for. Only present for OAuth 2.0 tokens.
-          id_token:
-            type: string
-            description: The ID token retrieved from the OIDC provider. Only present for OIDC-compliant OAuth 2.0 providers when available.
-          token_secret:
-            type: string
-            description: The token secret. Only present for OAuth 1.0 tokens.
-        required:
-        - object
-        - external_account_id
-        - provider_user_id
-        - token
-        - expires_at
-        - provider
-        - public_metadata
-        - label
     CommerceSubscriptionItemSeatsResponse:
       type: object
       additionalProperties: false
@@ -3449,136 +3455,47 @@ components:
           description: Per-unit cost breakdown by pricing tier
       required:
       - quantity
-    Web3Wallet:
+    verification_google_one_tap:
+      x-speakeasy-name-override: GoogleOneTap
       type: object
       additionalProperties: false
       properties:
-        id:
-          type: string
         object:
           type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
           enum:
-          - web3_wallet
-        web3_wallet:
+          - verification_google_one_tap
+        status:
           type: string
-        verification:
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - google_one_tap
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+        error:
           type:
           - object
           - 'null'
           oneOf:
-          - $ref: '#/components/schemas/verification_web3'
-          - $ref: '#/components/schemas/verification_admin'
-          discriminator:
-            propertyName: object
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
+          - $ref: '#/components/schemas/ClerkError'
       required:
-      - object
-      - web3_wallet
-      - verification
-      - created_at
-      - updated_at
-    CommercePaymentMethodResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - object
-      - id
-      - payer_id
-      - payment_type
-      - gateway
-      - gateway_external_id
-      - gateway_external_account_id
-      - last4
       - status
-      - card_type
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - commerce_payment_method
-        id:
-          type: string
-          description: Unique identifier for the payment method.
-        payer_id:
-          type: string
-          description: Unique identifier for the payer.
-        payment_type:
-          type: string
-          description: The payment method type.
-          enum:
-          - card
-          - link
-        is_default:
-          type: boolean
-          description: Whether this is the default payment method for the payer.
-        gateway:
-          type: string
-          description: The payment gateway.
-        gateway_external_id:
-          type: string
-          description: External ID in the payment gateway.
-        gateway_external_account_id:
-          type:
-          - string
-          - 'null'
-          description: External account ID in the payment gateway.
-        last4:
-          type:
-          - string
-          - 'null'
-          description: Last 4 digits of the card (for card payment methods).
-        status:
-          type: string
-          description: Status of the payment method.
-          enum:
-          - active
-          - disconnected
-        wallet_type:
-          type:
-          - string
-          - 'null'
-          description: Type of wallet (if applicable).
-        card_type:
-          type:
-          - string
-          - 'null'
-          description: Type of card (if applicable).
-        expiry_year:
-          type:
-          - integer
-          - 'null'
-          description: Card expiration year (for card payment methods).
-        expiry_month:
-          type:
-          - integer
-          - 'null'
-          description: Card expiration month (for card payment methods).
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payment method was created.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp (in milliseconds) when the payment method was last updated.
-        is_removable:
-          type: boolean
-          description: Whether this payment method can be removed.
+      - strategy
+      - attempts
+      - expire_at
     EnterpriseAccountConnection:
       type: object
       additionalProperties: false
@@ -3642,15 +3559,32 @@ components:
         - domain
       - required:
         - domains
-    verification_saml:
-      x-speakeasy-name-override: SAML
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    verification_otp:
+      x-speakeasy-name-override: OTP
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_saml
+          - verification_otp
         status:
           type: string
           enum:
@@ -3658,26 +3592,18 @@ components:
           - verified
           - failed
           - expired
-          - transferable
         strategy:
+          x-speakeasy-unknown-values: allow
           type: string
           enum:
-          - saml
-        external_verification_redirect_url:
-          type:
-          - string
-          - 'null'
-        error:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
+          - phone_code
+          - email_code
+          - reset_password_email_code
+        attempts:
           type:
           - integer
           - 'null'
-        attempts:
+        expire_at:
           type:
           - integer
           - 'null'
@@ -3689,20 +3615,20 @@ components:
       - status
       - strategy
       - attempts
-    CommerceCreditBalanceResponse:
+      - expire_at
+    ClerkErrors:
       type: object
-      additionalProperties: false
-      required:
-      - object
-      - balance
       properties:
-        object:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
           type: string
-          description: String representing the object's type. Always "commerce_credit_balance".
-        balance:
-          allOf:
-          - $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: The current credit balance. Null when the payer has never had credits.
+      required:
+      - errors
     CommercePlanUnitPrice:
       type: object
       additionalProperties: false
@@ -3723,121 +3649,50 @@ components:
       - name
       - block_size
       - tiers
-    OrganizationInvitationsWithPublicOrganizationData:
+    TotalCount:
       type: object
       additionalProperties: false
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - total_count
         total_count:
           type: integer
           format: int64
-          description: 'Total number of organization invitations
-
-            '
       required:
-      - data
+      - object
       - total_count
-    OrganizationInvitationPublicOrganizationData:
+    AdjustCreditBalanceRequest:
       type: object
       additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
       required:
-      - id
-      - name
-      - slug
-      - has_image
-    verification_email_link:
-      x-speakeasy-name-override: EmailLink
-      type: object
-      additionalProperties: false
+      - amount
+      - action
+      - idempotency_key
       properties:
-        object:
+        amount:
+          type: integer
+          format: int64
+          description: The credit amount in cents. Must be greater than zero.
+        action:
           type: string
           enum:
-          - verification_email_link
-        status:
+          - increase
+          - decrease
+          description: Whether to increase or decrease the credit balance.
+        currency:
           type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
+          description: The currency code (e.g. "USD"). Defaults to USD if not provided.
+        idempotency_key:
           type: string
-          enum:
-          - email_link
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    verification_passkey:
-      x-speakeasy-name-override: Passkey
-      type: object
-      additionalProperties: false
-      properties:
-        object:
+          description: A unique key to ensure the adjustment is applied only once. Repeated requests with the same key return the original ledger entry.
+        note:
           type: string
-          enum:
-          - verification_passkey
-        status:
-          type: string
-          enum:
-          - verified
-        strategy:
-          type: string
-          enum:
-          - passkey
-        nonce:
-          type: string
-          enum:
-          - nonce
-        message:
-          type:
-          - string
-          - 'null'
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
+          description: An optional note to attach to the ledger entry.
     EmailAddress:
       type: object
       additionalProperties: false
@@ -3905,135 +3760,6 @@ components:
       - reserved
       - created_at
       - updated_at
-    CommerceSubscriptionItemNextPaymentResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          allOf:
-          - $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Amount for the next payment.
-        date:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp (in milliseconds) for the next payment date.
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    verification_admin:
-      x-speakeasy-name-override: Admin
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_admin
-        status:
-          type: string
-          enum:
-          - verified
-        strategy:
-          x-speakeasy-unknown-values: allow
-          type: string
-          enum:
-          - admin
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    AdjustCreditBalanceRequest:
-      type: object
-      additionalProperties: false
-      required:
-      - amount
-      - action
-      - idempotency_key
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: The credit amount in cents. Must be greater than zero.
-        action:
-          type: string
-          enum:
-          - increase
-          - decrease
-          description: Whether to increase or decrease the credit balance.
-        currency:
-          type: string
-          description: The currency code (e.g. "USD"). Defaults to USD if not provided.
-        idempotency_key:
-          type: string
-          description: A unique key to ensure the adjustment is applied only once. Repeated requests with the same key return the original ledger entry.
-        note:
-          type: string
-          description: An optional note to attach to the ledger entry.
-    verification_otp:
-      x-speakeasy-name-override: OTP
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_otp
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
-          x-speakeasy-unknown-values: allow
-          type: string
-          enum:
-          - phone_code
-          - email_code
-          - reset_password_email_code
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
     CommercePlan:
       type: object
       additionalProperties: false
@@ -4127,95 +3853,6 @@ components:
           items:
             $ref: '#/components/schemas/CommercePlanUnitPrice'
           description: Per-unit pricing tiers for this plan (for example, seats)
-    OrganizationMembership:
-      description: A user's membership in an organization
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization_membership
-        role:
-          type: string
-        role_name:
-          type: string
-        permissions:
-          type: array
-          items:
-            type: string
-        public_metadata:
-          type: object
-          description: Metadata saved on the organization membership, accessible from both Frontend and Backend APIs
-          additionalProperties: true
-        private_metadata:
-          type: object
-          description: Metadata saved on the organization membership, accessible only from the Backend API
-          additionalProperties: true
-        organization:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Organization'
-        public_user_data:
-          $ref: '#/components/schemas/OrganizationMembershipPublicUserData'
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-      required:
-      - object
-      - id
-      - role
-      - permissions
-      - public_metadata
-      - created_at
-      - updated_at
-      - organization
-    verification_ticket:
-      x-speakeasy-name-override: Ticket
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_ticket
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - expired
-        strategy:
-          x-speakeasy-unknown-values: allow
-          type: string
-          enum:
-          - ticket
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
     OrganizationMemberships:
       type: object
       additionalProperties: false
@@ -4233,82 +3870,357 @@ components:
       required:
       - data
       - total_count
-    OrganizationInvitationWithPublicOrganizationData:
-      description: An organization invitation with public organization data populated
+    verification_passkey:
+      x-speakeasy-name-override: Passkey
       type: object
-      allOf:
-      - properties:
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_passkey
+        status:
+          type: string
+          enum:
+          - verified
+        strategy:
+          type: string
+          enum:
+          - passkey
+        nonce:
+          type: string
+          enum:
+          - nonce
+        message:
+          type:
+          - string
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    verification_email_link:
+      x-speakeasy-name-override: EmailLink
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_email_link
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - email_link
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    CommerceMoneyResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: The amount in cents.
+        amount_formatted:
+          type: string
+          description: The formatted amount as a string (e.g., "$49.99").
+        currency:
+          type: string
+          description: The currency code (e.g., "USD").
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$").
+      required:
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
+    verification_from_oauth:
+      x-speakeasy-name-override: FromOAuth
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_from_oauth
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          pattern: ^from_oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    OAuthAccessToken:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
           object:
             type: string
-            description: 'String representing the object''s type. Objects of the same type share the same value.
-
-              '
             enum:
-            - organization_invitation
-          id:
+            - oauth_access_token
+          external_account_id:
             type: string
-          email_address:
+            description: External account ID
+          provider_user_id:
             type: string
-          role:
+            description: The unique ID of the user in the external provider's system
+          token:
             type: string
-          role_name:
-            type: string
-          organization_id:
-            type: string
-          inviter_id:
-            type:
-            - string
-            - 'null'
-          public_inviter_data:
-            $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
-          status:
-            type: string
-          public_metadata:
-            type: object
-            additionalProperties: true
-          private_metadata:
-            type: object
-            additionalProperties: true
-          url:
-            type:
-            - string
-            - 'null'
+            description: The access token
           expires_at:
             type:
             - integer
             - 'null'
             format: int64
-            description: Unix timestamp of expiration.
-          created_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of creation.
-          updated_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of last update.
-      - properties:
-          public_organization_data:
-            $ref: '#/components/schemas/OrganizationInvitationPublicOrganizationData'
+            description: Unix timestamp of the access token expiration.
+          provider:
+            type: string
+            description: The ID of the provider
+          public_metadata:
+            type: object
+            additionalProperties: true
+          label:
+            type:
+            - string
+            - 'null'
+          scopes:
+            type: array
+            items:
+              type: string
+            description: The list of scopes that the token is valid for. Only present for OAuth 2.0 tokens.
+          id_token:
+            type: string
+            description: The ID token retrieved from the OIDC provider. Only present for OIDC-compliant OAuth 2.0 providers when available.
+          token_secret:
+            type: string
+            description: The token secret. Only present for OAuth 1.0 tokens.
+        required:
+        - object
+        - external_account_id
+        - provider_user_id
+        - token
+        - expires_at
+        - provider
+        - public_metadata
+        - label
+    CommercePaymentMethodResponse:
+      type: object
+      additionalProperties: false
       required:
       - object
       - id
-      - email_address
-      - role
-      - role_name
-      - public_metadata
-      - url
-      - expires_at
-      - created_at
-      - updated_at
-      - inviter_id
-      - public_inviter_data
-    OrganizationMembershipPublicUserData:
-      description: An organization membership with public user data populated
+      - payer_id
+      - payment_type
+      - gateway
+      - gateway_external_id
+      - gateway_external_account_id
+      - last4
+      - status
+      - card_type
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - commerce_payment_method
+        id:
+          type: string
+          description: Unique identifier for the payment method.
+        payer_id:
+          type: string
+          description: Unique identifier for the payer.
+        payment_type:
+          type: string
+          description: The payment method type.
+          enum:
+          - card
+          - link
+        is_default:
+          type: boolean
+          description: Whether this is the default payment method for the payer.
+        gateway:
+          type: string
+          description: The payment gateway.
+        gateway_external_id:
+          type: string
+          description: External ID in the payment gateway.
+        gateway_external_account_id:
+          type:
+          - string
+          - 'null'
+          description: External account ID in the payment gateway.
+        last4:
+          type:
+          - string
+          - 'null'
+          description: Last 4 digits of the card (for card payment methods).
+        status:
+          type: string
+          description: Status of the payment method.
+          enum:
+          - active
+          - disconnected
+        wallet_type:
+          type:
+          - string
+          - 'null'
+          description: Type of wallet (if applicable).
+        card_type:
+          type:
+          - string
+          - 'null'
+          description: Type of card (if applicable).
+        expiry_year:
+          type:
+          - integer
+          - 'null'
+          description: Card expiration year (for card payment methods).
+        expiry_month:
+          type:
+          - integer
+          - 'null'
+          description: Card expiration month (for card payment methods).
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was created.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp (in milliseconds) when the payment method was last updated.
+        is_removable:
+          type: boolean
+          description: Whether this payment method can be removed.
+    verification_web3:
+      x-speakeasy-name-override: Web3Signature
       type: object
       additionalProperties: false
       properties:
-        user_id:
+        object:
+          type: string
+          enum:
+          - verification_web3
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - web3_metamask_signature
+          - web3_base_signature
+          - web3_coinbase_wallet_signature
+          - web3_okx_wallet_signature
+          - web3_solana_signature
+        nonce:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    SAMLAccount:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - saml_account
+        provider:
+          type: string
+        active:
+          type: boolean
+        email_address:
           type: string
         first_name:
           type:
@@ -4318,65 +4230,43 @@ components:
           type:
           - string
           - 'null'
-        profile_image_url:
+        provider_user_id:
           type:
           - string
           - 'null'
-          deprecated: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        banned:
-          type: boolean
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - profile_image_url
-      - image_url
-      - has_image
-    CommercePerUnitTotalTier:
-      type: object
-      additionalProperties: false
-      properties:
-        quantity:
+        last_authenticated_at:
           type:
           - integer
           - 'null'
           format: int64
-          description: Units billed in this tier; null means unlimited
-        fee_per_block:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Price charged per block in this tier
-        total:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Total charge for this tier
+          description: 'Unix timestamp of last authentication.
+
+            '
+        public_metadata:
+          type: object
+          additionalProperties: true
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_saml'
+          - $ref: '#/components/schemas/verification_ticket'
+          discriminator:
+            propertyName: object
+        saml_connection:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/SAMLAccountConnection'
       required:
-      - fee_per_block
-      - total
-    CommerceSubscriptionNextPayment:
-      type: object
-      additionalProperties: false
-      required:
-      - date
-      - amount
-      properties:
-        date:
-          type: integer
-          format: int64
-          description: Unix timestamp (milliseconds) of the next payment date.
-        amount:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: The amount of the next payment.
+      - id
+      - object
+      - provider
+      - active
+      - email_address
+      - verification
     SAMLAccountConnection:
       type: object
       additionalProperties: false
@@ -4429,85 +4319,134 @@ components:
         - domain
       - required:
         - domains
-    CommerceCreditsResponse:
+    verification_ticket:
+      x-speakeasy-name-override: Ticket
       type: object
       additionalProperties: false
       properties:
-        proration:
-          allOf:
-          - $ref: '#/components/schemas/CommerceProrationCreditDetailResponse'
-        payer:
-          allOf:
-          - $ref: '#/components/schemas/CommercePayerCreditResponse'
-        total:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
+        object:
+          type: string
+          enum:
+          - verification_ticket
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - expired
+        strategy:
+          x-speakeasy-unknown-values: allow
+          type: string
+          enum:
+          - ticket
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
       required:
-      - proration
-      - payer
-      - total
-    CommercePayerResponse:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    CommerceSubscriptionItemNextPaymentResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Amount for the next payment.
+        date:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp (in milliseconds) for the next payment date.
+    FeatureResponse:
       type: object
       additionalProperties: false
       required:
       - object
       - id
-      - instance_id
+      - name
+      - description
+      - slug
+      - avatar_url
       properties:
         object:
           type: string
           description: String representing the object's type. Objects of the same type share the same value.
           enum:
-          - commerce_payer
+          - feature
         id:
           type: string
-          description: Unique identifier for the payer.
-        instance_id:
+          description: Unique identifier for the feature.
+        name:
           type: string
-          description: Unique identifier for the Clerk instance.
-        user_id:
+          description: The name of the feature.
+        description:
           type:
           - string
           - 'null'
-          description: User ID for user-type payers.
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: First name of the payer.
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: Last name of the payer.
-        email:
-          type:
-          - string
-          - 'null'
-          description: Email address of the payer.
-        organization_id:
-          type:
-          - string
-          - 'null'
-          description: Organization ID for org-type payers.
-        organization_name:
-          type:
-          - string
-          - 'null'
-          description: Organization name for org-type payers.
-        image_url:
+          description: The description of the feature.
+        slug:
           type: string
-          description: URL of the payer's image/avatar.
-        credits_balance:
-          $ref: '#/components/schemas/CommerceMoneyResponse'
-          description: Current credits balance for the payer.
+          description: The URL-friendly slug for the feature.
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          description: The URL of the feature's avatar image.
+    Web3Wallet:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - web3_wallet
+        web3_wallet:
+          type: string
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_web3'
+          - $ref: '#/components/schemas/verification_admin'
+          discriminator:
+            propertyName: object
         created_at:
           type: integer
           format: int64
-          description: Unix timestamp (in milliseconds) when the payer was created.
+          description: 'Unix timestamp of creation
+
+            '
         updated_at:
           type: integer
           format: int64
-          description: Unix timestamp (in milliseconds) when the payer was last updated.
+          description: 'Unix timestamp of creation
+
+            '
+      required:
+      - object
+      - web3_wallet
+      - verification
+      - created_at
+      - updated_at
     IdentificationLink:
       type: object
       additionalProperties: false
@@ -4520,50 +4459,6 @@ components:
       required:
       - type
       - id
-    CommerceCreditLedgerResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - object
-      - id
-      - payer_id
-      - amount
-      - currency
-      - source_type
-      - source_id
-      - created_at
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Always "commerce_credit_ledger".
-        id:
-          type: string
-          description: Unique identifier for the ledger entry.
-        payer_id:
-          type: string
-          description: The ID of the payer whose balance was adjusted.
-        amount:
-          type: integer
-          format: int64
-          description: The signed credit amount. Positive for increases, negative for decreases.
-        currency:
-          type: string
-          description: The currency code of the credit adjustment.
-        source_type:
-          type: string
-          description: The type of source that originated the adjustment (e.g. "grant").
-        source_id:
-          type: string
-          description: The ID of the source that originated the adjustment.
-        note:
-          type:
-          - string
-          - 'null'
-          description: An optional note attached to the ledger entry.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the ledger entry was created.
     CommerceTotalsResponse:
       type: object
       additionalProperties: false
@@ -4588,109 +4483,6 @@ components:
       - base_fee
       - tax_total
       - grand_total
-    CommerceMoneyResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: The amount in cents.
-        amount_formatted:
-          type: string
-          description: The formatted amount as a string (e.g., "$49.99").
-        currency:
-          type: string
-          description: The currency code (e.g., "USD").
-        currency_symbol:
-          type: string
-          description: The currency symbol (e.g., "$").
-      required:
-      - amount
-      - amount_formatted
-      - currency
-      - currency_symbol
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    verification_web3:
-      x-speakeasy-name-override: Web3Signature
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_web3
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
-          type: string
-          enum:
-          - web3_metamask_signature
-          - web3_base_signature
-          - web3_coinbase_wallet_signature
-          - web3_okx_wallet_signature
-          - web3_solana_signature
-        nonce:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
     Organization:
       type: object
       properties:
@@ -4762,24 +4554,198 @@ components:
       - public_metadata
       - created_at
       - updated_at
-    verification_google_one_tap:
-      x-speakeasy-name-override: GoogleOneTap
+    CommerceSubscriptionCreditResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          allOf:
+          - $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Credit amount.
+        cycle_remaining_percent:
+          type: number
+          format: float
+          description: Percentage of the billing cycle remaining.
+    PasswordHasher:
+      type: string
+      description: 'The hashing algorithm that was used to generate the password digest.
+
+
+        The algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),
+
+        `pbkdf2_sha512`, [`phpass`](https://www.openwall.com/phpass/), `md5_phpass`, [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),
+
+        [`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),
+
+        [`ldap_ssha`](https://www.openldap.org/faq/data/cache/347.html), the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`, `sha512_symfony`, the SHA-512 variant of the [Symfony](https://symfony.com/doc/current/security/passwords.html) legacy hasher,
+
+        and `pbkdf2_sha512_hex`, a variant of `pbkdf2_sha512` that accepts hex-encoded salt and hash.
+
+
+        Each of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information.'
+    verification_admin:
+      x-speakeasy-name-override: Admin
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_google_one_tap
+          - verification_admin
+        status:
+          type: string
+          enum:
+          - verified
+        strategy:
+          x-speakeasy-unknown-values: allow
+          type: string
+          enum:
+          - admin
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    CommerceProrationCreditDetailResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        amount:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+        cycle_days_remaining:
+          type: integer
+          format: int64
+        cycle_days_total:
+          type: integer
+          format: int64
+        cycle_remaining_percent:
+          type: number
+          format: double
+      required:
+      - amount
+      - cycle_days_remaining
+      - cycle_days_total
+      - cycle_remaining_percent
+    OrganizationInvitationPublicUserData:
+      description: An organization inviter's public user data
+      type:
+      - object
+      - 'null'
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - image_url
+      - has_image
+      - identifier
+    SCIMUserMetadata:
+      type: object
+      additionalProperties: false
+      description: 'Metadata describing a user''s linkage to a SCIM directory. This object is only delivered on `user.created` and `user.updated` webhook events, and only when the user is provisioned through a SCIM directory. Its absence does not necessarily mean the user is not SCIM-managed.
+
+        '
+      properties:
+        directory_id:
+          type: string
+          description: 'The ID of the SCIM directory the user is provisioned from.
+
+            '
+        directory_enabled:
+          type: boolean
+          description: 'Whether the SCIM directory is currently enabled. Omitted when false.
+
+            '
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: 'The user''s external ID as reported by the SCIM directory, if any.
+
+            '
+      required:
+      - directory_id
+      - external_id
+    CommercePlanUnitPriceTier:
+      type: object
+      additionalProperties: false
+      properties:
+        starts_at_block:
+          type: integer
+          format: int64
+          description: Start block (inclusive) for this tier
+        ends_after_block:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End block (inclusive) for this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/CommerceMoneyResponse'
+          description: Price charged per block in this tier
+      required:
+      - starts_at_block
+      - fee_per_block
+    verification_saml:
+      x-speakeasy-name-override: SAML
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_saml
         status:
           type: string
           enum:
           - unverified
           - verified
+          - failed
+          - expired
+          - transferable
         strategy:
           type: string
           enum:
-          - google_one_tap
+          - saml
+        external_verification_redirect_url:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError'
         expire_at:
           type:
           - integer
@@ -4792,81 +4758,10 @@ components:
           type:
           - string
           - 'null'
-        error:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/ClerkError'
       required:
       - status
       - strategy
       - attempts
-      - expire_at
-    SAMLAccount:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - saml_account
-        provider:
-          type: string
-        active:
-          type: boolean
-        email_address:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        provider_user_id:
-          type:
-          - string
-          - 'null'
-        last_authenticated_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: 'Unix timestamp of last authentication.
-
-            '
-        public_metadata:
-          type: object
-          additionalProperties: true
-        verification:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/verification_saml'
-          - $ref: '#/components/schemas/verification_ticket'
-          discriminator:
-            propertyName: object
-        saml_connection:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/SAMLAccountConnection'
-      required:
-      - id
-      - object
-      - provider
-      - active
-      - email_address
-      - verification
     PlatformListInstanceUsersResponse:
       title: List Instance Users Response
       description: A paginated list of users for an application instance.
@@ -4886,6 +4781,111 @@ components:
       required:
       - data
       - total_count
+  responses:
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    User:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMemberships:
+      description: A list of organization memberships
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMemberships'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    CommerceSubscription:
+      description: A commerce subscription.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceSubscription'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthAccessToken:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthAccessToken'
+    CommerceCreditLedger:
+      description: A credit ledger entry.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceCreditLedgerResponse'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    User.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    User.Count:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TotalCount'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitationsWithPublicOrganizationData:
+      description: A list of organization invitations with public organization data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
+    CommerceCreditBalance:
+      description: A payer's credit balance.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommerceCreditBalanceResponse'
   parameters:
     Paginated:
       name: paginated
@@ -4898,6 +4898,18 @@ components:
       required: false
       schema:
         type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -4911,18 +4923,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

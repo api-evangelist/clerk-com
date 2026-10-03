@@ -390,185 +390,56 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Machine.Deleted:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - id
-            - deleted
-            properties:
-              object:
-                type: string
-                enum:
-                - machine
-                description: String representing the object's type.
-              id:
-                type: string
-                description: The ID of the deleted machine
-              deleted:
-                type: boolean
-                enum:
-                - true
-                description: Whether the machine was successfully deleted
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Machine:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Machine'
-    Machine.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - data
-            - total_count
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Machine'
-              total_count:
-                type: integer
-                description: Total number of machines
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Machine.SecretKey:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - secret
-            properties:
-              object:
-                type: string
-                enum:
-                - machine_secret_key
-                description: String representing the object's type.
-              secret:
-                type: string
-                readOnly: true
-                description: The secret key for the machine.
-    Machine.Created:
-      description: Success
-      content:
-        application/json:
-          schema:
-            allOf:
-            - $ref: '#/components/schemas/Machine'
-            - type: object
-              required:
-              - secret_key
-              properties:
-                secret_key:
-                  type: string
-                  readOnly: true
-                  description: The secret key for the machine, only returned upon creation.
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    MachineScope.Deleted:
-      description: Machine scope deleted successfully for a machine
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - object
-            - from_machine_id
-            - to_machine_id
-            - deleted
-            properties:
-              object:
-                type: string
-                enum:
-                - machine_scope
-                description: String representing the object's type.
-              from_machine_id:
-                type: string
-                description: The ID of the machine that had access to the target machine
-              to_machine_id:
-                type: string
-                description: The ID of the machine that was being accessed
-              deleted:
-                type: boolean
-                enum:
-                - true
-                description: Whether the machine scope was successfully deleted
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    MachineScope:
-      description: Machine scope created successfully for a machine
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MachineScope'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    MachineScope:
+      type: object
+      required:
+      - object
+      - from_machine_id
+      - to_machine_id
+      - created_at
+      properties:
+        object:
+          type: string
+          enum:
+          - machine_scope
+        from_machine_id:
+          type: string
+          description: The ID of the machine that has access to the target machine.
+        to_machine_id:
+          type: string
+          description: The ID of the machine that is being accessed.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+    Machine:
+      allOf:
+      - $ref: '#/components/schemas/MachineWithoutScopedMachines'
+      - type: object
+        required:
+        - scoped_machines
+        properties:
+          scoped_machines:
+            type: array
+            items:
+              $ref: '#/components/schemas/MachineWithoutScopedMachines'
+            description: Array of machines this machine has access to.
     ClerkErrors:
       type: object
       properties:
@@ -620,55 +491,184 @@ components:
           description: The default time-to-live (TTL) in seconds for tokens created by this machine.
           minimum: 1
           default: 3600
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  responses:
     MachineScope:
-      type: object
-      required:
-      - object
-      - from_machine_id
-      - to_machine_id
-      - created_at
-      properties:
-        object:
-          type: string
-          enum:
-          - machine_scope
-        from_machine_id:
-          type: string
-          description: The ID of the machine that has access to the target machine.
-        to_machine_id:
-          type: string
-          description: The ID of the machine that is being accessed.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
+      description: Machine scope created successfully for a machine
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MachineScope'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.Deleted:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - id
+            - deleted
+            properties:
+              object:
+                type: string
+                enum:
+                - machine
+                description: String representing the object's type.
+              id:
+                type: string
+                description: The ID of the deleted machine
+              deleted:
+                type: boolean
+                enum:
+                - true
+                description: Whether the machine was successfully deleted
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Machine.SecretKey:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - secret
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_secret_key
+                description: String representing the object's type.
+              secret:
+                type: string
+                readOnly: true
+                description: The secret key for the machine.
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     Machine:
-      allOf:
-      - $ref: '#/components/schemas/MachineWithoutScopedMachines'
-      - type: object
-        required:
-        - scoped_machines
-        properties:
-          scoped_machines:
-            type: array
-            items:
-              $ref: '#/components/schemas/MachineWithoutScopedMachines'
-            description: Array of machines this machine has access to.
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Machine'
+    MachineScope.Deleted:
+      description: Machine scope deleted successfully for a machine
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - object
+            - from_machine_id
+            - to_machine_id
+            - deleted
+            properties:
+              object:
+                type: string
+                enum:
+                - machine_scope
+                description: String representing the object's type.
+              from_machine_id:
+                type: string
+                description: The ID of the machine that had access to the target machine
+              to_machine_id:
+                type: string
+                description: The ID of the machine that was being accessed
+              deleted:
+                type: boolean
+                enum:
+                - true
+                description: Whether the machine scope was successfully deleted
+    Machine.Created:
+      description: Success
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/Machine'
+            - type: object
+              required:
+              - secret_key
+              properties:
+                secret_key:
+                  type: string
+                  readOnly: true
+                  description: The secret key for the machine, only returned upon creation.
+    Machine.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - data
+            - total_count
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Machine'
+              total_count:
+                type: integer
+                description: Total number of machines
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

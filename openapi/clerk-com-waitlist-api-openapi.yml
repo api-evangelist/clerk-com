@@ -65,20 +65,22 @@ paths:
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  responses:
-    Client.WaitlistEntry:
-      description: Returns the waitlist object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.WaitlistEntry'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     ClerkErrors:
       type: object
       properties:
@@ -105,21 +107,19 @@ components:
       required:
       - object
       - id
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.WaitlistEntry:
+      description: Returns the waitlist object.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.WaitlistEntry'
   securitySchemes:
     ProductionBrowser:
       type: apiKey

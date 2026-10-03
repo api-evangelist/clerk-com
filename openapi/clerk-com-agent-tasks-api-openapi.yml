@@ -145,18 +145,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AgentTask:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AgentTask'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AgentTask:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentTask'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -164,19 +164,21 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
       required:
-      - errors
+      - message
+      - long_message
+      - code
     AgentTask:
       type: object
       additionalProperties: false
@@ -211,21 +213,19 @@ components:
       - agent_id
       - agent_task_id
       - task_id
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - errors
   securitySchemes:
     bearerAuth:
       type: http

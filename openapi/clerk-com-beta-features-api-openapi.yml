@@ -161,19 +161,6 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   schemas:
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -189,13 +176,20 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   responses:
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     InstanceSettings:
       description: InstanceSettings Server API
       content:
@@ -220,6 +214,12 @@ components:
                 type: boolean
     ClerkErrors:
       description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:

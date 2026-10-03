@@ -532,20 +532,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     OrganizationInvitations:
       description: A list of organization invitations
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OrganizationInvitations'
-    PaymentRequired:
-      description: Payment required
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -556,18 +550,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OrganizationInvitation'
-    OrganizationInvitationsWithPublicOrganizationData:
-      description: A list of organization invitations with public organization data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitationsWithPublicOrganizationData:
+      description: A list of organization invitations with public organization data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -575,169 +575,6 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    OrganizationInvitations:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitation'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    OrganizationInvitationPublicUserData:
-      description: An organization inviter's public user data
-      type:
-      - object
-      - 'null'
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - image_url
-      - has_image
-      - identifier
-    OrganizationInvitation:
-      description: An organization invitation
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization_invitation
-        id:
-          type: string
-        email_address:
-          type: string
-        role:
-          type: string
-        role_name:
-          type: string
-        organization_id:
-          type: string
-        inviter_id:
-          type:
-          - string
-          - 'null'
-        public_inviter_data:
-          $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
-        status:
-          type: string
-        public_metadata:
-          type: object
-          additionalProperties: true
-        private_metadata:
-          type: object
-          additionalProperties: true
-        url:
-          type:
-          - string
-          - 'null'
-        expires_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp of expiration.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-      required:
-      - object
-      - id
-      - email_address
-      - role
-      - role_name
-      - public_metadata
-      - url
-      - expires_at
-      - created_at
-      - updated_at
-      - inviter_id
-      - public_inviter_data
-    OrganizationInvitationsWithPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
-
-            '
-      required:
-      - data
-      - total_count
-    OrganizationInvitationPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-      required:
-      - id
-      - name
-      - slug
-      - has_image
     ClerkError:
       type: object
       properties:
@@ -823,19 +660,170 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
+    OrganizationInvitations:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitation'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
 
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+            '
+      required:
+      - data
+      - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OrganizationInvitation:
+      description: An organization invitation
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_invitation
+        id:
+          type: string
+        email_address:
+          type: string
+        role:
+          type: string
+        role_name:
+          type: string
+        organization_id:
+          type: string
+        inviter_id:
+          type:
+          - string
+          - 'null'
+        public_inviter_data:
+          $ref: '#/components/schemas/OrganizationInvitationPublicUserData'
+        status:
+          type: string
+        public_metadata:
+          type: object
+          additionalProperties: true
+        private_metadata:
+          type: object
+          additionalProperties: true
+        url:
+          type:
+          - string
+          - 'null'
+        expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of expiration.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+      required:
+      - object
+      - id
+      - email_address
+      - role
+      - role_name
+      - public_metadata
+      - url
+      - expires_at
+      - created_at
+      - updated_at
+      - inviter_id
+      - public_inviter_data
+    OrganizationInvitationsWithPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
+
+            '
+      required:
+      - data
+      - total_count
+    OrganizationInvitationPublicUserData:
+      description: An organization inviter's public user data
+      type:
+      - object
+      - 'null'
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - image_url
+      - has_image
+      - identifier
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+  parameters:
     OffsetParameter:
       name: offset
       in: query
@@ -849,6 +837,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

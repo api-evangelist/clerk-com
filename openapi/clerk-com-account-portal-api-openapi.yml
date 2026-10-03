@@ -48,19 +48,21 @@ paths:
       - Account Portal
 components:
   schemas:
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
       required:
-      - errors
+      - message
+      - long_message
+      - code
     Client.AccountPortal:
       type: object
       additionalProperties: false
@@ -132,21 +134,19 @@ components:
       - after_leave_organization_url
       - logo_link_url
       - customization
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - errors
   responses:
     ClerkErrors:
       description: Request was not successful

@@ -86,14 +86,20 @@ paths:
         '404':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -109,19 +115,13 @@ components:
       - message
       - long_message
       - code
+  responses:
     ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     ProductionBrowser:
       type: apiKey

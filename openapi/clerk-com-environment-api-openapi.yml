@@ -73,6 +73,88 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   schemas:
+    OrganizationSettings.DomainsSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        enrollment_modes:
+          type: array
+          items:
+            type: string
+            enum:
+            - manual_invitation
+            - automatic_invitation
+            - automatic_suggestion
+        default_role:
+          type: string
+          description: The role key that it will be used in order to create an organization invitation or suggestion.
+      required:
+      - enabled
+      - enrollment_modes
+      - default_role
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Client.ProtectConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        loaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Client.ProtectConfig.Loader'
+    UserSettings.Attributes:
+      type: object
+      additionalProperties: false
+      properties:
+        email_address:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        phone_number:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        username:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        web3_wallet:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        first_name:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        last_name:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        password:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        authenticator_app:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        ticket:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        backup_code:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+        passkey:
+          $ref: '#/components/schemas/UserSettings.Attribute'
+      required:
+      - email_address
+      - phone_number
+      - username
+      - web3_wallet
+      - first_name
+      - last_name
+      - password
+      - authenticator_app
+      - ticket
+      - backup_code
+      - passkey
     Client.AuthConfig:
       type: object
       additionalProperties: false
@@ -180,81 +262,71 @@ components:
       - url_based_session_syncing
       - claimed_at
       - reverification
-    FraudSettings.NativeSettings:
+    OrganizationSettings.ActionsSettings:
       type: object
       additionalProperties: false
       properties:
-        device_attestation_mode:
-          type: string
-          enum:
-          - disabled
-          - onboarding
-          - enforced
+        admin_delete:
+          type: boolean
       required:
-      - device_attestation_mode
-    Client.ProtectConfig:
+      - admin_delete
+    UserSettings.ActionsSettings:
       type: object
       additionalProperties: false
       properties:
-        loaders:
-          type: array
-          items:
-            $ref: '#/components/schemas/Client.ProtectConfig.Loader'
-    Client.ApiKeysSettings:
+        delete_self:
+          type: boolean
+        create_organization:
+          type: boolean
+        create_organizations_limit:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - delete_self
+      - create_organization
+      - create_organizations_limit
+    OrganizationSettings.SlugSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        disabled:
+          type: boolean
+      required:
+      - disabled
+    UserSettings.AttackProtectionSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        user_lockout:
+          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.UserLockout'
+        pii:
+          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.PII'
+        email_link:
+          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.EmailLink'
+        enumeration_protection:
+          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.EnumerationProtection'
+      required:
+      - user_lockout
+      - pii
+      - email_link
+      - enumeration_protection
+    UserSettings.AttackProtectionSettings.PII:
       type: object
       additionalProperties: false
       properties:
         enabled:
           type: boolean
-          description: Indicates whether the API Keys feature is enabled.
-        user_api_keys_enabled:
-          type: boolean
-          description: Indicates whether User API Keys are enabled.
-        orgs_api_keys_enabled:
-          type: boolean
-          description: Indicates whether Organization API Keys are enabled.
       required:
       - enabled
-      - user_api_keys_enabled
-      - orgs_api_keys_enabled
-    UserSettings.Attributes:
+    UserSettings.Restrictions.Enabled:
       type: object
       additionalProperties: false
       properties:
-        email_address:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        phone_number:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        username:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        web3_wallet:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        first_name:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        last_name:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        password:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        authenticator_app:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        ticket:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        backup_code:
-          $ref: '#/components/schemas/UserSettings.Attribute'
-        passkey:
-          $ref: '#/components/schemas/UserSettings.Attribute'
+        enabled:
+          type: boolean
       required:
-      - email_address
-      - phone_number
-      - username
-      - web3_wallet
-      - first_name
-      - last_name
-      - password
-      - authenticator_app
-      - ticket
-      - backup_code
-      - passkey
+      - enabled
     Client.Environment:
       type: object
       additionalProperties: false
@@ -281,37 +353,67 @@ components:
           type: boolean
         maintenance_mode:
           type: boolean
-    UserSettings.AttackProtectionSettings.EmailLink:
-      type: object
-      additionalProperties: false
-      properties:
-        require_same_client:
-          type: boolean
-      required:
-      - require_same_client
-    Client.OrganizationSettings:
+    UserSettings.AttackProtectionSettings.UserLockout:
       type: object
       additionalProperties: false
       properties:
         enabled:
           type: boolean
-        max_allowed_memberships:
+        max_attempts:
           type: integer
-        actions:
-          $ref: '#/components/schemas/OrganizationSettings.ActionsSettings'
-        domains:
-          $ref: '#/components/schemas/OrganizationSettings.DomainsSettings'
-        slug:
-          $ref: '#/components/schemas/OrganizationSettings.SlugSettings'
-        creator_role:
-          type: string
-          description: The role key that a user will be assigned after creating an organization.
+        duration_in_minutes:
+          type: integer
       required:
       - enabled
-      - max_allowed_memberships
-      - actions
-      - domains
-      - creator_role
+      - max_attempts
+      - duration_in_minutes
+    Image:
+      type: object
+      properties:
+        object:
+          type: string
+          description: The object type. Always "image".
+        id:
+          type: string
+          description: Unique identifier for the image.
+        name:
+          type: string
+          description: The file name of the uploaded image.
+        public_url:
+          type: string
+          description: The publicly accessible URL for the image.
+    Client.CommerceSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        billing:
+          type: object
+          additionalProperties: false
+          properties:
+            stripe_publishable_key:
+              type:
+              - string
+              - 'null'
+            free_trial_requires_payment_method:
+              type: boolean
+            user:
+              type: object
+              additionalProperties: false
+              properties:
+                enabled:
+                  type: boolean
+                has_paid_plans:
+                  type: boolean
+            organization:
+              type: object
+              additionalProperties: false
+              properties:
+                enabled:
+                  type: boolean
+                has_paid_plans:
+                  type: boolean
+      required:
+      - billing
     UserSettings.PasswordSettings:
       type: object
       additionalProperties: false
@@ -355,14 +457,21 @@ components:
       - min_zxcvbn_strength
       - enforce_hibp_on_sign_in
       - allowed_special_characters
-    OrganizationSettings.SlugSettings:
+    UserSettings.PasskeySettings:
       type: object
       additionalProperties: false
       properties:
-        disabled:
+        allow_autofill:
           type: boolean
+          description: Passkey UI will be shown when user interacts with the text input.
+          default: true
+        show_sign_in_button:
+          type: boolean
+          description: Passkey UI will be shown when user clicks on a button.
+          default: true
       required:
-      - disabled
+      - allow_autofill
+      - show_sign_in_button
     UserSettings.EnterpriseSSO:
       type: object
       additionalProperties: false
@@ -374,14 +483,6 @@ components:
           description: When true, end-users may manage enterprise connections for this environment.
       required:
       - enabled
-    OrganizationSettings.ActionsSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        admin_delete:
-          type: boolean
-      required:
-      - admin_delete
     UserSettings.Socials:
       type: object
       additionalProperties: false
@@ -448,42 +549,35 @@ components:
           $ref: '#/components/schemas/UserSettings.Social'
         oauth_xero:
           $ref: '#/components/schemas/UserSettings.Social'
-    UserSettings.Social:
+    UserSettings.AttackProtectionSettings.EnumerationProtection:
       type: object
       additionalProperties: false
       properties:
         enabled:
           type: boolean
-        required:
-          type: boolean
-        authenticatable:
-          type: boolean
-        block_email_subaddresses:
-          type: boolean
-        strategy:
-          type: string
-        not_selectable:
-          type: boolean
-        deprecated:
-          type: boolean
-        name:
-          type: string
-          description: A human readable name for the social provider.
-          example: Google
-        logo_url:
-          type:
-          - string
-          - 'null'
-          description: A URL pointing to the logo of the social provider.
-          example: https://img.clerk.com/static/google.png
       required:
       - enabled
-      - required
-      - authenticatable
-      - block_email_subaddresses
-      - strategy
-      - not_selectable
-      - deprecated
+    Client.ProtectConfig.Loader:
+      type: object
+      additionalProperties: false
+      description: Configuration for the Clerk Protect loader.
+      properties:
+        rollout:
+          type: number
+          format: float
+          description: rollout percentage (between 0.0 and 1.0)
+          minimum: 0
+          maximum: 1
+        type:
+          type: string
+        target:
+          type: string
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        textContent:
+          type: string
     UserSettings.UsernameSettings:
       type: object
       additionalProperties: false
@@ -506,365 +600,6 @@ components:
       - max_length
       - allow_extended_special_characters
       - allow_numeric_usernames
-    UserSettings.AttackProtectionSettings.UserLockout:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        max_attempts:
-          type: integer
-        duration_in_minutes:
-          type: integer
-      required:
-      - enabled
-      - max_attempts
-      - duration_in_minutes
-    UserSettings.Restrictions.Enabled:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-      required:
-      - enabled
-    UserSettings.AttackProtectionSettings.PII:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-      required:
-      - enabled
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    UserSettings.ActionsSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        delete_self:
-          type: boolean
-        create_organization:
-          type: boolean
-        create_organizations_limit:
-          type:
-          - boolean
-          - 'null'
-      required:
-      - delete_self
-      - create_organization
-      - create_organizations_limit
-    UserSettings.SignUp:
-      type: object
-      additionalProperties: false
-      properties:
-        captcha_enabled:
-          type: boolean
-        captcha_widget_type:
-          type: string
-          enum:
-          - smart
-          - invisible
-        custom_action_required:
-          type: boolean
-        progressive:
-          type: boolean
-        mode:
-          type: string
-          enum:
-          - public
-          - restricted
-          - waitlist
-        legal_consent_enabled:
-          type: boolean
-      required:
-      - captcha_enabled
-      - captcha_widget_type
-      - custom_action_required
-      - progressive
-      - mode
-      - legal_consent_enabled
-    OrganizationSettings.DomainsSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        enrollment_modes:
-          type: array
-          items:
-            type: string
-            enum:
-            - manual_invitation
-            - automatic_invitation
-            - automatic_suggestion
-        default_role:
-          type: string
-          description: The role key that it will be used in order to create an organization invitation or suggestion.
-      required:
-      - enabled
-      - enrollment_modes
-      - default_role
-    UserSettings.PasskeySettings:
-      type: object
-      additionalProperties: false
-      properties:
-        allow_autofill:
-          type: boolean
-          description: Passkey UI will be shown when user interacts with the text input.
-          default: true
-        show_sign_in_button:
-          type: boolean
-          description: Passkey UI will be shown when user clicks on a button.
-          default: true
-      required:
-      - allow_autofill
-      - show_sign_in_button
-    Image:
-      type: object
-      properties:
-        object:
-          type: string
-          description: The object type. Always "image".
-        id:
-          type: string
-          description: Unique identifier for the image.
-        name:
-          type: string
-          description: The file name of the uploaded image.
-        public_url:
-          type: string
-          description: The publicly accessible URL for the image.
-    Client.UserSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        attributes:
-          $ref: '#/components/schemas/UserSettings.Attributes'
-        social:
-          $ref: '#/components/schemas/UserSettings.Socials'
-        saml:
-          $ref: '#/components/schemas/UserSettings.EnterpriseSSO'
-        enterprise_sso:
-          $ref: '#/components/schemas/UserSettings.EnterpriseSSO'
-        sign_in:
-          $ref: '#/components/schemas/UserSettings.SignIn'
-        sign_up:
-          $ref: '#/components/schemas/UserSettings.SignUp'
-        restrictions:
-          $ref: '#/components/schemas/UserSettings.Restrictions'
-        password_settings:
-          $ref: '#/components/schemas/UserSettings.PasswordSettings'
-        username_settings:
-          $ref: '#/components/schemas/UserSettings.UsernameSettings'
-        actions:
-          $ref: '#/components/schemas/UserSettings.ActionsSettings'
-        attack_protection:
-          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings'
-        passkey_settings:
-          $ref: '#/components/schemas/UserSettings.PasskeySettings'
-      required:
-      - attributes
-      - social
-      - saml
-      - enterprise_sso
-      - sign_in
-      - sign_up
-      - restrictions
-      - password_settings
-      - username_settings
-      - actions
-      - attack_protection
-      - passkey_settings
-    UserSettings.AttackProtectionSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        user_lockout:
-          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.UserLockout'
-        pii:
-          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.PII'
-        email_link:
-          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.EmailLink'
-        enumeration_protection:
-          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings.EnumerationProtection'
-      required:
-      - user_lockout
-      - pii
-      - email_link
-      - enumeration_protection
-    UserSettings.SignIn:
-      type: object
-      additionalProperties: false
-      properties:
-        second_factor:
-          type: object
-          additionalProperties: false
-          properties:
-            required:
-              type: boolean
-          required:
-          - required
-      required:
-      - second_factor
-    UserSettings.AttackProtectionSettings.EnumerationProtection:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-      required:
-      - enabled
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    Client.CommerceSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        billing:
-          type: object
-          additionalProperties: false
-          properties:
-            stripe_publishable_key:
-              type:
-              - string
-              - 'null'
-            free_trial_requires_payment_method:
-              type: boolean
-            user:
-              type: object
-              additionalProperties: false
-              properties:
-                enabled:
-                  type: boolean
-                has_paid_plans:
-                  type: boolean
-            organization:
-              type: object
-              additionalProperties: false
-              properties:
-                enabled:
-                  type: boolean
-                has_paid_plans:
-                  type: boolean
-      required:
-      - billing
-    UserSettings.Attribute:
-      type: object
-      additionalProperties: false
-      properties:
-        enabled:
-          type: boolean
-        required:
-          type: boolean
-        used_for_first_factor:
-          type: boolean
-        first_factors:
-          type: array
-          items:
-            type: string
-        used_for_second_factor:
-          type: boolean
-        second_factors:
-          type: array
-          items:
-            type: string
-        verifications:
-          type: array
-          items:
-            type: string
-        verify_at_sign_up:
-          type: boolean
-        immutable:
-          type: boolean
-      required:
-      - enabled
-      - required
-      - used_for_first_factor
-      - first_factors
-      - used_for_second_factor
-      - second_factors
-      - verifications
-      - verify_at_sign_up
-      - immutable
-    Client.FraudSettings:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - fraud_settings
-        native:
-          $ref: '#/components/schemas/FraudSettings.NativeSettings'
-      required:
-      - native
-    UserSettings.Restrictions:
-      type: object
-      additionalProperties: false
-      properties:
-        allowlist:
-          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
-        blocklist:
-          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
-        allowlist_blocklist_disabled_on_sign_in:
-          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
-        block_email_subaddresses:
-          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
-        block_disposable_email_domains:
-          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
-      required:
-      - allowlist
-      - blocklist
-      - allowlist_blocklist_disabled_on_sign_in
-      - block_email_subaddresses
-      - block_disposable_email_domains
-    Client.ProtectConfig.Loader:
-      type: object
-      additionalProperties: false
-      description: Configuration for the Clerk Protect loader.
-      properties:
-        rollout:
-          type: number
-          format: float
-          description: rollout percentage (between 0.0 and 1.0)
-          minimum: 0
-          maximum: 1
-        type:
-          type: string
-        target:
-          type: string
-        attributes:
-          type: object
-          additionalProperties:
-            type: string
-        textContent:
-          type: string
     Client.DisplayConfig:
       type: object
       additionalProperties: false
@@ -1058,19 +793,284 @@ components:
       - captcha_public_key_invisible
       - captcha_provider
       - captcha_oauth_bypass
+    Client.UserSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        attributes:
+          $ref: '#/components/schemas/UserSettings.Attributes'
+        social:
+          $ref: '#/components/schemas/UserSettings.Socials'
+        saml:
+          $ref: '#/components/schemas/UserSettings.EnterpriseSSO'
+        enterprise_sso:
+          $ref: '#/components/schemas/UserSettings.EnterpriseSSO'
+        sign_in:
+          $ref: '#/components/schemas/UserSettings.SignIn'
+        sign_up:
+          $ref: '#/components/schemas/UserSettings.SignUp'
+        restrictions:
+          $ref: '#/components/schemas/UserSettings.Restrictions'
+        password_settings:
+          $ref: '#/components/schemas/UserSettings.PasswordSettings'
+        username_settings:
+          $ref: '#/components/schemas/UserSettings.UsernameSettings'
+        actions:
+          $ref: '#/components/schemas/UserSettings.ActionsSettings'
+        attack_protection:
+          $ref: '#/components/schemas/UserSettings.AttackProtectionSettings'
+        passkey_settings:
+          $ref: '#/components/schemas/UserSettings.PasskeySettings'
+      required:
+      - attributes
+      - social
+      - saml
+      - enterprise_sso
+      - sign_in
+      - sign_up
+      - restrictions
+      - password_settings
+      - username_settings
+      - actions
+      - attack_protection
+      - passkey_settings
+    UserSettings.AttackProtectionSettings.EmailLink:
+      type: object
+      additionalProperties: false
+      properties:
+        require_same_client:
+          type: boolean
+      required:
+      - require_same_client
+    UserSettings.SignIn:
+      type: object
+      additionalProperties: false
+      properties:
+        second_factor:
+          type: object
+          additionalProperties: false
+          properties:
+            required:
+              type: boolean
+          required:
+          - required
+      required:
+      - second_factor
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    Client.FraudSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - fraud_settings
+        native:
+          $ref: '#/components/schemas/FraudSettings.NativeSettings'
+      required:
+      - native
+    FraudSettings.NativeSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        device_attestation_mode:
+          type: string
+          enum:
+          - disabled
+          - onboarding
+          - enforced
+      required:
+      - device_attestation_mode
+    Client.ApiKeysSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates whether the API Keys feature is enabled.
+        user_api_keys_enabled:
+          type: boolean
+          description: Indicates whether User API Keys are enabled.
+        orgs_api_keys_enabled:
+          type: boolean
+          description: Indicates whether Organization API Keys are enabled.
+      required:
+      - enabled
+      - user_api_keys_enabled
+      - orgs_api_keys_enabled
+    Client.OrganizationSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        max_allowed_memberships:
+          type: integer
+        actions:
+          $ref: '#/components/schemas/OrganizationSettings.ActionsSettings'
+        domains:
+          $ref: '#/components/schemas/OrganizationSettings.DomainsSettings'
+        slug:
+          $ref: '#/components/schemas/OrganizationSettings.SlugSettings'
+        creator_role:
+          type: string
+          description: The role key that a user will be assigned after creating an organization.
+      required:
+      - enabled
+      - max_allowed_memberships
+      - actions
+      - domains
+      - creator_role
+    UserSettings.Restrictions:
+      type: object
+      additionalProperties: false
+      properties:
+        allowlist:
+          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
+        blocklist:
+          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
+        allowlist_blocklist_disabled_on_sign_in:
+          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
+        block_email_subaddresses:
+          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
+        block_disposable_email_domains:
+          $ref: '#/components/schemas/UserSettings.Restrictions.Enabled'
+      required:
+      - allowlist
+      - blocklist
+      - allowlist_blocklist_disabled_on_sign_in
+      - block_email_subaddresses
+      - block_disposable_email_domains
+    UserSettings.Social:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        required:
+          type: boolean
+        authenticatable:
+          type: boolean
+        block_email_subaddresses:
+          type: boolean
+        strategy:
+          type: string
+        not_selectable:
+          type: boolean
+        deprecated:
+          type: boolean
+        name:
+          type: string
+          description: A human readable name for the social provider.
+          example: Google
+        logo_url:
+          type:
+          - string
+          - 'null'
+          description: A URL pointing to the logo of the social provider.
+          example: https://img.clerk.com/static/google.png
+      required:
+      - enabled
+      - required
+      - authenticatable
+      - block_email_subaddresses
+      - strategy
+      - not_selectable
+      - deprecated
+    UserSettings.Attribute:
+      type: object
+      additionalProperties: false
+      properties:
+        enabled:
+          type: boolean
+        required:
+          type: boolean
+        used_for_first_factor:
+          type: boolean
+        first_factors:
+          type: array
+          items:
+            type: string
+        used_for_second_factor:
+          type: boolean
+        second_factors:
+          type: array
+          items:
+            type: string
+        verifications:
+          type: array
+          items:
+            type: string
+        verify_at_sign_up:
+          type: boolean
+        immutable:
+          type: boolean
+      required:
+      - enabled
+      - required
+      - used_for_first_factor
+      - first_factors
+      - used_for_second_factor
+      - second_factors
+      - verifications
+      - verify_at_sign_up
+      - immutable
+    UserSettings.SignUp:
+      type: object
+      additionalProperties: false
+      properties:
+        captcha_enabled:
+          type: boolean
+        captcha_widget_type:
+          type: string
+          enum:
+          - smart
+          - invisible
+        custom_action_required:
+          type: boolean
+        progressive:
+          type: boolean
+        mode:
+          type: string
+          enum:
+          - public
+          - restricted
+          - waitlist
+        legal_consent_enabled:
+          type: boolean
+      required:
+      - captcha_enabled
+      - captcha_widget_type
+      - custom_action_required
+      - progressive
+      - mode
+      - legal_consent_enabled
   responses:
-    Client.Environment:
-      description: Returns the environment.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.Environment'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    Client.Environment:
+      description: Returns the environment.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.Environment'
   securitySchemes:
     ProductionBrowser:
       type: apiKey
