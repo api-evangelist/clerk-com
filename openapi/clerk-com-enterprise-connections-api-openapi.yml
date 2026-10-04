@@ -546,71 +546,22 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    EnterpriseConnection:
-      description: An enterprise connection
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnection'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    EnterpriseConnections:
-      description: A list of enterprise connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnections'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
   schemas:
-    ClerkError:
+    EnterpriseConnections:
       type: object
+      additionalProperties: false
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnection'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of enterprise connections
       required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
     DeletedObject:
       type: object
       additionalProperties: false
@@ -628,21 +579,6 @@ components:
       required:
       - object
       - deleted
-    EnterpriseConnections:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnterpriseConnection'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of enterprise connections
-      required:
-      - data
-      - total_count
     ClerkErrors:
       type: object
       properties:
@@ -656,6 +592,21 @@ components:
           type: string
       required:
       - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     EnterpriseConnection:
       type: object
       required:
@@ -868,6 +819,55 @@ components:
         default: 10
         minimum: 1
         maximum: 500
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    EnterpriseConnection:
+      description: An enterprise connection
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnection'
+    EnterpriseConnections:
+      description: A list of enterprise connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnections'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

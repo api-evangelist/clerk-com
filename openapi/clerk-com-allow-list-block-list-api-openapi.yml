@@ -192,21 +192,6 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     BlocklistIdentifiers:
       type: object
       additionalProperties: false
@@ -241,19 +226,6 @@ components:
       required:
       - object
       - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     BlocklistIdentifier:
       type: object
       additionalProperties: false
@@ -292,6 +264,19 @@ components:
           description: 'Unix timestamp of last update.
 
             '
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     AllowlistIdentifier:
       type: object
       additionalProperties: false
@@ -332,19 +317,28 @@ components:
           description: 'Unix timestamp of last update.
 
             '
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier.List:
+    BlocklistIdentifier:
       description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlocklistIdentifiers'
+            $ref: '#/components/schemas/BlocklistIdentifier'
     AllowlistIdentifier:
       description: Success
       content:
@@ -357,12 +351,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    BlocklistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifiers'
     AllowlistIdentifier.List:
       description: Success
       content:
@@ -371,26 +371,26 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/AllowlistIdentifier'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     PaymentRequired:
       description: Payment required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifier'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -407,6 +407,18 @@ components:
       required: false
       schema:
         type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -420,18 +432,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

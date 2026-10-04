@@ -344,72 +344,10 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
+    PlatformConfigPatchRequest:
       type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    PlatformConfigResponse:
-      type: object
-      description: Instance configuration response containing key-value pairs and metadata.
-      properties:
-        config_version:
-          type: string
-          description: Configuration version for optimistic concurrency control.
+      description: Configuration updates to apply. Keys should match config key names.
       additionalProperties: true
     PlatformConfigSchemaResponse:
       type: object
@@ -428,6 +366,14 @@ components:
           description: Schema definitions for each configuration key.
           additionalProperties: true
       additionalProperties: true
+    PlatformConfigResponse:
+      type: object
+      description: Instance configuration response containing key-value pairs and metadata.
+      properties:
+        config_version:
+          type: string
+          description: Configuration version for optimistic concurrency control.
+      additionalProperties: true
     ClerkErrors:
       type: object
       properties:
@@ -441,10 +387,21 @@ components:
           type: string
       required:
       - errors
-    PlatformConfigPatchRequest:
+    ClerkError:
       type: object
-      description: Configuration updates to apply. Keys should match config key names.
-      additionalProperties: true
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     PlatformConfigPatchResponse:
       type: object
       description: Configuration patch response containing the result of the operation.
@@ -464,6 +421,49 @@ components:
           description: Configuration state after the patch was applied.
           additionalProperties: true
       additionalProperties: true
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     platform_api_access_token:
       type: http

@@ -231,38 +231,39 @@ paths:
         '409':
           $ref: '#/components/responses/Conflict'
 components:
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    PlatformListApplicationTransfersResponse:
+      title: List Application Transfers Response
+      description: A paginated list of application transfers.
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          description: The list of application transfers.
+          items:
+            $ref: '#/components/schemas/PlatformApplicationTransferResponse'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of application transfers matching the query.
+          example: 5
+      required:
+      - data
+      - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -344,38 +345,37 @@ components:
       - created_at
       - canceled_at
       - completed_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    PlatformListApplicationTransfersResponse:
-      title: List Application Transfers Response
-      description: A paginated list of application transfers.
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          description: The list of application transfers.
-          items:
-            $ref: '#/components/schemas/PlatformApplicationTransferResponse'
-        total_count:
-          type: integer
-          format: int64
-          description: The total number of application transfers matching the query.
-          example: 5
-      required:
-      - data
-      - total_count
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     platform_api_access_token:
       type: http

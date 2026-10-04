@@ -66,6 +66,32 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   schemas:
+    Client.WaitlistEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - waitlist_entry
+        id:
+          type: string
+      required:
+      - object
+      - id
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -81,32 +107,6 @@ components:
       - message
       - long_message
       - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    Client.WaitlistEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - waitlist_entry
-        id:
-          type: string
-      required:
-      - object
-      - id
   responses:
     ClerkErrors:
       description: Request was not successful

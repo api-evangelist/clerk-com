@@ -47,22 +47,20 @@ paths:
       tags:
       - Account Portal
 components:
+  responses:
+    Client.AccountPortal:
+      description: Returns the account portal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.AccountPortal'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     Client.AccountPortal:
       type: object
       additionalProperties: false
@@ -147,19 +145,21 @@ components:
           type: string
       required:
       - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Client.AccountPortal:
-      description: Returns the account portal.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.AccountPortal'
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     ProductionBrowser:
       type: apiKey

@@ -75,7 +75,39 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    ProxyCheck:
+      description: Health check information about a domain's proxy configuration validation attempt.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProxyCheck'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -136,38 +168,6 @@ components:
       - successful
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ProxyCheck:
-      description: Health check information about a domain's proxy configuration validation attempt.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProxyCheck'
   securitySchemes:
     bearerAuth:
       type: http

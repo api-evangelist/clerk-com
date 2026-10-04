@@ -211,33 +211,35 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   responses:
     AuthorizationInvalid:
       description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Permission:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Permission'
-    PaymentRequired:
-      description: Payment required
       content:
         application/json:
           schema:
@@ -248,8 +250,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    Permission:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permission'
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -266,22 +274,42 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
+    Permissions:
       type: object
+      additionalProperties: false
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of permissions
+
+            '
       required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
     DeletedObject:
       type: object
       additionalProperties: false
@@ -312,23 +340,21 @@ components:
           type: string
       required:
       - errors
-    Permissions:
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of permissions
-
-            '
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
       required:
-      - data
-      - total_count
+      - message
+      - long_message
+      - code
     Permission:
       type: object
       properties:
@@ -367,32 +393,6 @@ components:
       - type
       - created_at
       - updated_at
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

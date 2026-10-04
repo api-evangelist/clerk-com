@@ -525,71 +525,43 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitations:
-      description: A list of organization invitations
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitations'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitation:
-      description: An organization invitation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitation'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitationsWithPublicOrganizationData:
-      description: A list of organization invitations with public organization data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
+    OrganizationInvitationsWithPublicOrganizationData:
       type: object
+      additionalProperties: false
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
+
+            '
       required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
     OrganizationInvitationWithPublicOrganizationData:
       description: An organization invitation with public organization data populated
       type: object
@@ -660,36 +632,6 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
-    OrganizationInvitations:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitation'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OrganizationInvitation:
       description: An organization invitation
       type: object
@@ -757,14 +699,14 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
-    OrganizationInvitationsWithPublicOrganizationData:
+    OrganizationInvitations:
       type: object
       additionalProperties: false
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+            $ref: '#/components/schemas/OrganizationInvitation'
         total_count:
           type: integer
           format: int64
@@ -774,6 +716,34 @@ components:
       required:
       - data
       - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     OrganizationInvitationPublicUserData:
       description: An organization inviter's public user data
       type:
@@ -804,25 +774,55 @@ components:
       - image_url
       - has_image
       - identifier
-    OrganizationInvitationPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-      required:
-      - id
-      - name
-      - slug
-      - has_image
+  responses:
+    OrganizationInvitationsWithPublicOrganizationData:
+      description: A list of organization invitations with public organization data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
+    OrganizationInvitation:
+      description: An organization invitation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitation'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitations:
+      description: A list of organization invitations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitations'
   parameters:
     OffsetParameter:
       name: offset

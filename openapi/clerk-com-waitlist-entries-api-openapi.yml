@@ -271,38 +271,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    WaitlistEntry.List:
-      description: Array of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/WaitlistEntry'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
     WaitlistEntries:
       description: List of waitlist entries
       content:
@@ -320,115 +288,51 @@ components:
             required:
             - data
             - total_count
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     WaitlistEntry:
       description: A Waitlist Entry
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/WaitlistEntry'
-  schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+    WaitlistEntry.List:
+      description: Array of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/WaitlistEntry'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    WaitlistEntry:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - waitlist_entry
-        id:
-          type: string
-        email_address:
-          type: string
-          format: email
-        status:
-          type: string
-          enum:
-          - pending
-          - invited
-          - rejected
-          - completed
-          example: pending
-        is_locked:
-          type: boolean
-          description: 'Indicates if the waitlist entry is locked. Locked entries are being processed in a batch action and are unavailable for other actions.
-
-            '
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation.
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
-        invitation:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Invitation'
-      required:
-      - object
-      - id
-      - email_address
-      - status
-      - created_at
-      - updated_at
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
     Invitation:
       type: object
       additionalProperties: false
@@ -486,6 +390,102 @@ components:
       - status
       - created_at
       - updated_at
+    WaitlistEntry:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - waitlist_entry
+        id:
+          type: string
+        email_address:
+          type: string
+          format: email
+        status:
+          type: string
+          enum:
+          - pending
+          - invited
+          - rejected
+          - completed
+          example: pending
+        is_locked:
+          type: boolean
+          description: 'Indicates if the waitlist entry is locked. Locked entries are being processed in a batch action and are unavailable for other actions.
+
+            '
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        invitation:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Invitation'
+      required:
+      - object
+      - id
+      - email_address
+      - status
+      - created_at
+      - updated_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   parameters:
     OffsetParameter:
       name: offset

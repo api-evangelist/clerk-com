@@ -423,106 +423,7 @@ paths:
         '500':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationMembership:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMembership'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationMemberships:
-      description: A list of organization memberships
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMemberships'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    OrganizationMembershipPublicUserData:
-      description: An organization membership with public user data populated
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        profile_image_url:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        banned:
-          type: boolean
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - profile_image_url
-      - image_url
-      - has_image
     Organization:
       type: object
       properties:
@@ -607,6 +508,79 @@ components:
           type: string
       required:
       - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    OrganizationMemberships:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization memberships
+
+            '
+      required:
+      - data
+      - total_count
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - profile_image_url
+      - image_url
+      - has_image
     OrganizationMembership:
       description: A user's membership in an organization
       type: object
@@ -659,23 +633,6 @@ components:
       - created_at
       - updated_at
       - organization
-    OrganizationMemberships:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationMembership'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization memberships
-
-            '
-      required:
-      - data
-      - total_count
   parameters:
     OffsetParameter:
       name: offset
@@ -702,6 +659,49 @@ components:
         default: 10
         minimum: 1
         maximum: 500
+  responses:
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMemberships:
+      description: A list of organization memberships
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMemberships'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

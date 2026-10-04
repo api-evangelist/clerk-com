@@ -355,7 +355,99 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplications:
+      description: A list of OAuth applications
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplications'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplicationWithSecret:
+      description: An OAuth application with client secret
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationWithSecret'
+    OAuthApplication:
+      description: An OAuth application
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplication'
   schemas:
+    OAuthApplications:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of OAuth applications
+
+            '
+      required:
+      - data
+      - total_count
     OAuthApplication:
       type: object
       properties:
@@ -443,21 +535,16 @@ components:
       - token_introspection_url
       - created_at
       - updated_at
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+    OAuthApplicationWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/OAuthApplication'
+      - type: object
+        properties:
+          client_secret:
+            type: string
+            description: 'Empty if public client.
+
+              '
     DeletedObject:
       type: object
       additionalProperties: false
@@ -475,23 +562,6 @@ components:
       required:
       - object
       - deleted
-    OAuthApplications:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OAuthApplication'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of OAuth applications
-
-            '
-      required:
-      - data
-      - total_count
     ClerkErrors:
       type: object
       properties:
@@ -505,91 +575,21 @@ components:
           type: string
       required:
       - errors
-    OAuthApplicationWithSecret:
-      allOf:
-      - $ref: '#/components/schemas/OAuthApplication'
-      - type: object
-        properties:
-          client_secret:
-            type: string
-            description: 'Empty if public client.
-
-              '
-  responses:
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OAuthApplications:
-      description: A list of OAuth applications
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplications'
-    OAuthApplicationWithSecret:
-      description: An OAuth application with client secret
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplicationWithSecret'
-    OAuthApplication:
-      description: An OAuth application
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplication'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

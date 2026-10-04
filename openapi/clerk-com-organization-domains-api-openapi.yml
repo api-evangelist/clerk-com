@@ -298,134 +298,7 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    OrganizationDomains:
-      description: A list of organization domains
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationDomains'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationDomain:
-      description: An organization domain
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationDomain'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    OrganizationDomains:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationDomain'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization domains
-
-            '
-      required:
-      - data
-      - total_count
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    OrganizationDomainVerification:
-      description: The verification object from an organization domain
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the verification. It can be `unverified` or `verified`
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          description: Name of the strategy used to verify the domain
-        attempts:
-          type:
-          - integer
-          - 'null'
-          description: How many attempts have been made to verify the domain
-        expire_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp of when the verification will expire
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
     OrganizationDomain:
       description: An organization domain
       type: object
@@ -500,19 +373,6 @@ components:
       - total_pending_suggestions
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OrganizationInvitationPublicOrganizationData:
       type: object
       additionalProperties: false
@@ -532,6 +392,97 @@ components:
       - name
       - slug
       - has_image
+    OrganizationDomainVerification:
+      description: The verification object from an organization domain
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the verification. It can be `unverified` or `verified`
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          description: Name of the strategy used to verify the domain
+        attempts:
+          type:
+          - integer
+          - 'null'
+          description: How many attempts have been made to verify the domain
+        expire_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of when the verification will expire
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    OrganizationDomains:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationDomain'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization domains
+
+            '
+      required:
+      - data
+      - total_count
   parameters:
     OffsetParameter:
       name: offset
@@ -558,6 +509,55 @@ components:
         default: 10
         minimum: 1
         maximum: 500
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationDomains:
+      description: A list of organization domains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomains'
+    OrganizationDomain:
+      description: An organization domain
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomain'
   securitySchemes:
     bearerAuth:
       type: http

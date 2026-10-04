@@ -139,8 +139,8 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    ResourceNotFound:
-      description: Resource not found
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -151,19 +151,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     AgentTask:
       description: Success
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AgentTask'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -213,19 +226,6 @@ components:
       - agent_id
       - agent_task_id
       - task_id
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   securitySchemes:
     bearerAuth:
       type: http

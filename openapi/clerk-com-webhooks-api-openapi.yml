@@ -78,6 +78,19 @@ paths:
         '400':
           $ref: '#/components/responses/ClerkErrors'
 components:
+  responses:
+    SvixURL:
+      description: Response that contains a temporary Svix URL to access management dashboard
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SvixURL'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     SvixURL:
       type: object
@@ -87,6 +100,19 @@ components:
           type: string
       required:
       - svix_url
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -102,32 +128,6 @@ components:
       - message
       - long_message
       - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    SvixURL:
-      description: Response that contains a temporary Svix URL to access management dashboard
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SvixURL'
   securitySchemes:
     bearerAuth:
       type: http
