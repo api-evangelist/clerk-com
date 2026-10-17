@@ -122,89 +122,34 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
-  responses:
-    Client:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client'
-    Client.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Client'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeprecatedEndpoint:
-      description: The endpoint is considered deprecated and is pending removal.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    SessionActivityResponse:
+      type:
+      - object
+      - 'null'
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        device_type:
+          type: string
+        is_mobile:
+          type: boolean
+        browser_name:
+          type: string
+        browser_version:
+          type: string
+        ip_address:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+      - id
+      - object
+      - is_mobile
     Client:
       type: object
       additionalProperties: false
@@ -274,6 +219,21 @@ components:
       - last_authentication_strategy
       - updated_at
       - created_at
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     SessionTask:
       type: object
       properties:
@@ -375,48 +335,88 @@ components:
           type: string
       required:
       - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    SessionActivityResponse:
-      type:
-      - object
-      - 'null'
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        device_type:
-          type: string
-        is_mobile:
-          type: boolean
-        browser_name:
-          type: string
-        browser_version:
-          type: string
-        ip_address:
-          type: string
-        city:
-          type: string
-        country:
-          type: string
-      required:
-      - id
-      - object
-      - is_mobile
+  responses:
+    Client:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Client.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Client'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeprecatedEndpoint:
+      description: The endpoint is considered deprecated and is pending removal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

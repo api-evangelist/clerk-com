@@ -424,7 +424,241 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    RoleSet:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSet'
+    RoleSets:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RoleSets'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    RoleSetItem:
+      type: object
+      description: A role within a role set
+      properties:
+        object:
+          type: string
+          enum:
+          - role_set_item
+        id:
+          type: string
+          description: The unique identifier of the role
+        name:
+          type: string
+          description: The name of the role
+        key:
+          type: string
+          description: The key of the role (e.g., "org:admin", "org:member")
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description of the role
+        members_count:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: The number of members assigned to this role within the role set
+        has_members:
+          type:
+          - boolean
+          - 'null'
+          description: Whether this role has any members assigned within the role set
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of role creation
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last role update
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - key
+      - description
+      - created_at
+      - updated_at
+    RoleSets:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleSet'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of role sets
+      required:
+      - data
+      - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ReassignmentMappings:
+      type: object
+      description: Mappings from source role keys to destination role keys for role reassignment
+      additionalProperties:
+        type: string
+    RoleSet:
+      type: object
+      description: A role set defines a collection of roles that can be assigned to organization members
+      properties:
+        object:
+          type: string
+          enum:
+          - role_set
+        id:
+          type: string
+          description: The unique identifier of the role set
+        name:
+          type: string
+          description: The name of the role set
+        key:
+          type: string
+          description: A unique key for the role set (e.g., "role_set:default")
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description of the role set
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleSetItem'
+          description: The list of roles in this role set
+        default_role:
+          allOf:
+          - $ref: '#/components/schemas/RoleSetItem'
+          description: The default role assigned to new organization members
+        creator_role:
+          allOf:
+          - $ref: '#/components/schemas/RoleSetItem'
+          description: The role assigned to the creator of an organization
+        type:
+          type: string
+          description: The type of the role set ("initial" or "custom")
+          enum:
+          - initial
+          - custom
+        role_set_migration:
+          description: Active migration information, only present when status is "enqueued" or "in_progress"
+          allOf:
+          - $ref: '#/components/schemas/RoleSetMigration'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of role set creation
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last role set update
+      additionalProperties: false
+      required:
+      - object
+      - id
+      - name
+      - key
+      - description
+      - roles
+      - type
+      - created_at
+      - updated_at
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     RoleSetMigration:
       type: object
       description: Information about an ongoing role set migration
@@ -499,240 +733,6 @@ components:
       - migrated_members
       - created_at
       - updated_at
-    RoleSets:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleSet'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of role sets
-      required:
-      - data
-      - total_count
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ReassignmentMappings:
-      type: object
-      description: Mappings from source role keys to destination role keys for role reassignment
-      additionalProperties:
-        type: string
-    RoleSetItem:
-      type: object
-      description: A role within a role set
-      properties:
-        object:
-          type: string
-          enum:
-          - role_set_item
-        id:
-          type: string
-          description: The unique identifier of the role
-        name:
-          type: string
-          description: The name of the role
-        key:
-          type: string
-          description: The key of the role (e.g., "org:admin", "org:member")
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description of the role
-        members_count:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: The number of members assigned to this role within the role set
-        has_members:
-          type:
-          - boolean
-          - 'null'
-          description: Whether this role has any members assigned within the role set
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of role creation
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last role update
-      additionalProperties: false
-      required:
-      - object
-      - id
-      - name
-      - key
-      - description
-      - created_at
-      - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    RoleSet:
-      type: object
-      description: A role set defines a collection of roles that can be assigned to organization members
-      properties:
-        object:
-          type: string
-          enum:
-          - role_set
-        id:
-          type: string
-          description: The unique identifier of the role set
-        name:
-          type: string
-          description: The name of the role set
-        key:
-          type: string
-          description: A unique key for the role set (e.g., "role_set:default")
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description of the role set
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleSetItem'
-          description: The list of roles in this role set
-        default_role:
-          allOf:
-          - $ref: '#/components/schemas/RoleSetItem'
-          description: The default role assigned to new organization members
-        creator_role:
-          allOf:
-          - $ref: '#/components/schemas/RoleSetItem'
-          description: The role assigned to the creator of an organization
-        type:
-          type: string
-          description: The type of the role set ("initial" or "custom")
-          enum:
-          - initial
-          - custom
-        role_set_migration:
-          description: Active migration information, only present when status is "enqueued" or "in_progress"
-          allOf:
-          - $ref: '#/components/schemas/RoleSetMigration'
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of role set creation
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last role set update
-      additionalProperties: false
-      required:
-      - object
-      - id
-      - name
-      - key
-      - description
-      - roles
-      - type
-      - created_at
-      - updated_at
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-  responses:
-    RoleSet:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSet'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    RoleSets:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RoleSets'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   parameters:
     LimitParameter:
       name: limit

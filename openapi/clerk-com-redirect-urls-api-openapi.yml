@@ -369,26 +369,26 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/RedirectURL'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -411,59 +411,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     DeletedObject:
       type: object
       additionalProperties: false
@@ -481,6 +429,34 @@ components:
       required:
       - object
       - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     RedirectURL:
       type: object
       additionalProperties: false
@@ -511,19 +487,6 @@ components:
       - url
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     PlatformListRedirectURLsResponse:
       title: List Redirect URLs Response
       description: A paginated list of redirect URLs for an application instance.
@@ -543,6 +506,43 @@ components:
       required:
       - data
       - total_count
+  parameters:
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

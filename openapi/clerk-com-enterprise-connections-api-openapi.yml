@@ -546,22 +546,56 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  schemas:
-    EnterpriseConnections:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
+  responses:
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    EnterpriseConnection:
+      description: An enterprise connection
+      content:
+        application/json:
+          schema:
             $ref: '#/components/schemas/EnterpriseConnection'
-        total_count:
-          type: integer
-          format: int64
-          description: Total number of enterprise connections
-      required:
-      - data
-      - total_count
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    EnterpriseConnections:
+      description: A list of enterprise connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnections'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+  schemas:
     DeletedObject:
       type: object
       additionalProperties: false
@@ -579,19 +613,6 @@ components:
       required:
       - object
       - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -607,6 +628,21 @@ components:
       - message
       - long_message
       - code
+    EnterpriseConnections:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnection'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of enterprise connections
+      required:
+      - data
+      - total_count
     EnterpriseConnection:
       type: object
       required:
@@ -793,7 +829,32 @@ components:
           type: integer
           format: int64
           description: Unix timestamp in milliseconds when the connection was last updated
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -807,67 +868,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    EnterpriseConnection:
-      description: An enterprise connection
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnection'
-    EnterpriseConnections:
-      description: A list of enterprise connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnections'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

@@ -335,111 +335,7 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-  responses:
-    Roles:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Roles'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Role:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Role'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    Roles:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Role'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of roles
-
-            '
-      required:
-      - data
-      - total_count
     Role:
       type: object
       properties:
@@ -487,51 +383,23 @@ components:
       - permissions
       - created_at
       - updated_at
-    DeletedObject:
+    Roles:
       type: object
       additionalProperties: false
       properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
+            $ref: '#/components/schemas/Role'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of roles
+
+            '
       required:
-      - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
     Permission:
       type: object
       properties:
@@ -570,6 +438,138 @@ components:
       - type
       - created_at
       - updated_at
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+  responses:
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Roles:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Roles'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Role:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Role'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

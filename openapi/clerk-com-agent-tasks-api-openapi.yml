@@ -139,14 +139,14 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
+    AgentTask:
+      description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
+            $ref: '#/components/schemas/AgentTask'
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -157,26 +157,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AgentTask:
-      description: Success
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AgentTask'
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -192,6 +179,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     AgentTask:
       type: object
       additionalProperties: false

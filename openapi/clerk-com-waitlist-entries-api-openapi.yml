@@ -271,6 +271,20 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   responses:
+    WaitlistEntry.List:
+      description: Array of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/WaitlistEntry'
+    WaitlistEntry:
+      description: A Waitlist Entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WaitlistEntry'
     WaitlistEntries:
       description: List of waitlist entries
       content:
@@ -288,20 +302,12 @@ components:
             required:
             - data
             - total_count
-    WaitlistEntry:
-      description: A Waitlist Entry
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WaitlistEntry'
-    WaitlistEntry.List:
-      description: Array of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/WaitlistEntry'
+            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -314,8 +320,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    Conflict:
-      description: Conflict
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -326,13 +332,39 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     Invitation:
       type: object
       additionalProperties: false
@@ -441,23 +473,6 @@ components:
       - status
       - created_at
       - updated_at
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
     ClerkErrors:
       type: object
       properties:
@@ -471,22 +486,19 @@ components:
           type: string
       required:
       - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -500,18 +512,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

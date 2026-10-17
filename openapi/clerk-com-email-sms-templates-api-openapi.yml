@@ -347,12 +347,6 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    Template:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Template'
     Template.List:
       description: Success
       content:
@@ -363,6 +357,18 @@ components:
               $ref: '#/components/schemas/Template'
     UnprocessableEntity:
       description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Template:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Template'
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -379,12 +385,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     PaymentRequired:
       description: Payment required
       content:
@@ -392,6 +392,29 @@ components:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
   parameters:
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -405,43 +428,7 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
   schemas:
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -457,6 +444,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     Template:
       type: object
       additionalProperties: false

@@ -251,19 +251,6 @@ components:
       required:
       - data
       - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -279,6 +266,19 @@ components:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     PlatformApplicationTransferResponse:
       title: Application Transfer
       description: Represents an application transfer request. Application transfers allow transferring ownership of an application from one organization to another.
@@ -346,8 +346,8 @@ components:
       - canceled_at
       - completed_at
   responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
+    Conflict:
+      description: Conflict
       content:
         application/json:
           schema:
@@ -358,20 +358,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
     AuthenticationInvalid:
       description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
       content:
         application/json:
           schema:

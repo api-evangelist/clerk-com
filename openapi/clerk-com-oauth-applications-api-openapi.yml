@@ -355,41 +355,9 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   responses:
     AuthorizationInvalid:
       description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -400,37 +368,70 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    ClerkErrors:
-      description: Request was not successful
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    OAuthApplications:
-      description: A list of OAuth applications
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplications'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    OAuthApplicationWithSecret:
-      description: An OAuth application with client secret
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OAuthApplicationWithSecret'
+            $ref: '#/components/schemas/ClerkErrors'
     OAuthApplication:
       description: An OAuth application
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OAuthApplication'
+    OAuthApplicationWithSecret:
+      description: An OAuth application with client secret
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationWithSecret'
+    OAuthApplications:
+      description: A list of OAuth applications
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplications'
   schemas:
+    OAuthApplicationWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/OAuthApplication'
+      - type: object
+        properties:
+          client_secret:
+            type: string
+            description: 'Empty if public client.
+
+              '
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
     OAuthApplications:
       type: object
       additionalProperties: false
@@ -448,6 +449,21 @@ components:
       required:
       - data
       - total_count
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     OAuthApplication:
       type: object
       properties:
@@ -535,33 +551,6 @@ components:
       - token_introspection_url
       - created_at
       - updated_at
-    OAuthApplicationWithSecret:
-      allOf:
-      - $ref: '#/components/schemas/OAuthApplication'
-      - type: object
-        properties:
-          client_secret:
-            type: string
-            description: 'Empty if public client.
-
-              '
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
     ClerkErrors:
       type: object
       properties:
@@ -575,21 +564,32 @@ components:
           type: string
       required:
       - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  parameters:
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

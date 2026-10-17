@@ -191,41 +191,70 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  schemas:
-    BlocklistIdentifiers:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlocklistIdentifier'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of blocklist identifiers
-
-            '
-      required:
-      - data
-      - total_count
+  responses:
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AllowlistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AllowlistIdentifier'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AllowlistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllowlistIdentifier'
+    BlocklistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifiers'
     DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    BlocklistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifier'
+  schemas:
     BlocklistIdentifier:
       type: object
       additionalProperties: false
@@ -264,19 +293,38 @@ components:
           description: 'Unix timestamp of last update.
 
             '
-    ClerkErrors:
+    DeletedObject:
       type: object
+      additionalProperties: false
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
           type: string
       required:
-      - errors
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     AllowlistIdentifier:
       type: object
       additionalProperties: false
@@ -317,96 +365,37 @@ components:
           description: 'Unix timestamp of last update.
 
             '
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
-  responses:
-    BlocklistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
+      - errors
+    BlocklistIdentifiers:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
             $ref: '#/components/schemas/BlocklistIdentifier'
-    AllowlistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AllowlistIdentifier'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    BlocklistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifiers'
-    AllowlistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AllowlistIdentifier'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of blocklist identifiers
+
+            '
+      required:
+      - data
+      - total_count
   parameters:
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
     LimitParameter:
       name: limit
       in: query
@@ -432,6 +421,17 @@ components:
         type: integer
         default: 0
         minimum: 0
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
   securitySchemes:
     bearerAuth:
       type: http

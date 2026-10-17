@@ -559,6 +559,24 @@ paths:
     - url: https://api.clerk.com/v1
 components:
   responses:
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    JWTTemplate:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWTTemplate'
     JWTTemplate.List:
       description: List of JWT templates
       content:
@@ -567,18 +585,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/JWTTemplate'
-    JWTTemplate:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/JWTTemplate'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
@@ -591,20 +597,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -615,43 +615,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
   schemas:
     DeletedObject:
       type: object
@@ -670,6 +633,21 @@ components:
       required:
       - object
       - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     JWTTemplate:
       type: object
       additionalProperties: false
@@ -728,21 +706,43 @@ components:
           type: string
       required:
       - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  parameters:
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   securitySchemes:
     bearerAuth:
       type: http

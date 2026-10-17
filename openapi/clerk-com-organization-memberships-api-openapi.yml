@@ -424,6 +424,47 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
 components:
   schemas:
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - profile_image_url
+      - image_url
+      - has_image
     Organization:
       type: object
       properties:
@@ -495,19 +536,6 @@ components:
       - public_metadata
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     ClerkError:
       type: object
       properties:
@@ -523,64 +551,6 @@ components:
       - message
       - long_message
       - code
-    OrganizationMemberships:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationMembership'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization memberships
-
-            '
-      required:
-      - data
-      - total_count
-    OrganizationMembershipPublicUserData:
-      description: An organization membership with public user data populated
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        profile_image_url:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        banned:
-          type: boolean
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - profile_image_url
-      - image_url
-      - has_image
     OrganizationMembership:
       description: A user's membership in an organization
       type: object
@@ -633,7 +603,49 @@ components:
       - created_at
       - updated_at
       - organization
+    OrganizationMemberships:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization memberships
+
+            '
+      required:
+      - data
+      - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -647,33 +659,15 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   responses:
-    OrganizationMembership:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMembership'
-    AuthorizationInvalid:
-      description: Authorization invalid
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -690,14 +684,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OrganizationMemberships'
-    AuthenticationInvalid:
-      description: Authentication invalid
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
+    AuthorizationInvalid:
+      description: Authorization invalid
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
+    AuthenticationInvalid:
+      description: Authentication invalid
       content:
         application/json:
           schema:

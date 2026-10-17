@@ -160,6 +160,35 @@ paths:
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
+  schemas:
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   responses:
     UnprocessableEntity:
       description: Invalid request parameters
@@ -201,35 +230,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-  schemas:
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
   securitySchemes:
     bearerAuth:
       type: http

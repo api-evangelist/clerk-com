@@ -373,6 +373,55 @@ components:
       - total_pending_suggestions
       - created_at
       - updated_at
+    OrganizationDomains:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationDomain'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization domains
+
+            '
+      required:
+      - data
+      - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
     OrganizationInvitationPublicOrganizationData:
       type: object
       additionalProperties: false
@@ -392,6 +441,19 @@ components:
       - name
       - slug
       - has_image
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     OrganizationDomainVerification:
       description: The verification object from an organization domain
       type: object
@@ -421,69 +483,68 @@ components:
       - strategy
       - attempts
       - expire_at
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+  responses:
     OrganizationDomains:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
+      description: A list of organization domains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationDomains'
+    OrganizationDomain:
+      description: An organization domain
+      content:
+        application/json:
+          schema:
             $ref: '#/components/schemas/OrganizationDomain'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization domains
-
-            '
-      required:
-      - data
-      - total_count
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -497,67 +558,6 @@ components:
         type: integer
         default: 0
         minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationDomains:
-      description: A list of organization domains
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationDomains'
-    OrganizationDomain:
-      description: An organization domain
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationDomain'
   securitySchemes:
     bearerAuth:
       type: http

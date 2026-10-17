@@ -86,29 +86,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    BillingFee:
-      type: object
-      additionalProperties: false
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: Amount in the smallest currency unit (e.g., cents)
-          minimum: 0
-        amount_formatted:
-          type: string
-          description: The formatted amount as a string (e.g., "$49.99")
-        currency:
-          type: string
-          description: The currency code (e.g., "USD")
-        currency_symbol:
-          type: string
-          description: The currency symbol (e.g., "$")
-      required:
-      - amount
-      - amount_formatted
-      - currency
-      - currency_symbol
     BillingPlan:
       type: object
       additionalProperties: false
@@ -236,26 +213,6 @@ components:
       - avatar_url
       - free_trial_enabled
       - free_trial_days
-    BillingPlanUnitPriceTier:
-      type: object
-      additionalProperties: false
-      properties:
-        starts_at_block:
-          type: integer
-          format: int64
-          description: Start block (inclusive) for this tier
-        ends_after_block:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: End block (inclusive) for this tier; null means unlimited
-        fee_per_block:
-          $ref: '#/components/schemas/BillingMoneyResponse'
-          description: Price charged per block in this tier
-      required:
-      - starts_at_block
-      - fee_per_block
     BillingMoneyResponse:
       type: object
       additionalProperties: false
@@ -278,19 +235,29 @@ components:
       - amount_formatted
       - currency
       - currency_symbol
-    ClerkErrors:
+    BillingFee:
       type: object
+      additionalProperties: false
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
+        amount:
+          type: integer
+          format: int64
+          description: Amount in the smallest currency unit (e.g., cents)
+          minimum: 0
+        amount_formatted:
           type: string
+          description: The formatted amount as a string (e.g., "$49.99")
+        currency:
+          type: string
+          description: The currency code (e.g., "USD")
+        currency_symbol:
+          type: string
+          description: The currency symbol (e.g., "$")
       required:
-      - errors
+      - amount
+      - amount_formatted
+      - currency
+      - currency_symbol
     ClerkError:
       type: object
       properties:
@@ -306,6 +273,26 @@ components:
       - message
       - long_message
       - code
+    BillingPlanUnitPriceTier:
+      type: object
+      additionalProperties: false
+      properties:
+        starts_at_block:
+          type: integer
+          format: int64
+          description: Start block (inclusive) for this tier
+        ends_after_block:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: End block (inclusive) for this tier; null means unlimited
+        fee_per_block:
+          $ref: '#/components/schemas/BillingMoneyResponse'
+          description: Price charged per block in this tier
+      required:
+      - starts_at_block
+      - fee_per_block
     BillingPlanUnitPrice:
       type: object
       additionalProperties: false
@@ -326,7 +313,32 @@ components:
       - name
       - block_size
       - tiers
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   responses:
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     BillingPlanList:
       description: Returns a list of commerce plans.
       content:
@@ -345,30 +357,18 @@ components:
               total_count:
                 type: integer
                 format: int64
-    BillingPlan:
-      description: Returns a commerce plan.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BillingPlan'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    BillingPlan:
+      description: Returns a commerce plan.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/BillingPlan'
   securitySchemes:
     ProductionBrowser:
       type: apiKey
