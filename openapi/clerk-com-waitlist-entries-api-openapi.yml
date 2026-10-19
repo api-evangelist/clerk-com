@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -39,7 +39,7 @@ paths:
       operationId: ListWaitlistEntries
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: list
-      summary: List All Waitlist Entries
+      summary: List all waitlist entries
       description: 'Retrieve a list of waitlist entries for the instance.
 
         Entries are ordered by creation date in descending order by default.
@@ -90,7 +90,7 @@ paths:
       operationId: CreateWaitlistEntry
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: create
-      summary: Create a Waitlist Entry
+      summary: Create a waitlist entry
       description: 'Creates a new waitlist entry for the given email address.
 
         If the email address is already on the waitlist, no new entry will be created and the existing waitlist entry will be returned.'
@@ -127,7 +127,7 @@ paths:
       operationId: CreateBulkWaitlistEntries
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: bulkCreate
-      summary: Create Multiple Waitlist Entries
+      summary: Create multiple waitlist entries
       description: 'Creates multiple waitlist entries for the provided email addresses.
 
         You can choose whether to send confirmation emails by setting the `notify` parameter to `true` or `false` for each entry.
@@ -181,7 +181,7 @@ paths:
       operationId: DeleteWaitlistEntry
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: delete
-      summary: Delete a Pending Waitlist Entry
+      summary: Delete a pending waitlist entry
       description: Delete a pending waitlist entry.
       tags:
       - Waitlist Entries
@@ -208,7 +208,7 @@ paths:
       operationId: InviteWaitlistEntry
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: invite
-      summary: Invite a Waitlist Entry
+      summary: Invite a waitlist entry
       description: Send an invite to the email address in a waitlist entry.
       tags:
       - Waitlist Entries
@@ -247,7 +247,7 @@ paths:
       operationId: RejectWaitlistEntry
       x-speakeasy-group: waitlistEntries
       x-speakeasy-name-override: reject
-      summary: Reject a Waitlist Entry
+      summary: Reject a waitlist entry
       description: Reject a waitlist entry.
       tags:
       - Waitlist Entries
@@ -270,101 +270,33 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    WaitlistEntry.List:
-      description: Array of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/WaitlistEntry'
-    WaitlistEntry:
-      description: A Waitlist Entry
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WaitlistEntry'
-    WaitlistEntries:
-      description: List of waitlist entries
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/WaitlistEntry'
-              total_count:
-                type: integer
-                description: Total number of waitlist entries
-            required:
-            - data
-            - total_count
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   schemas:
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     Invitation:
       type: object
       additionalProperties: false
@@ -422,6 +354,36 @@ components:
       - status
       - created_at
       - updated_at
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
     WaitlistEntry:
       type: object
       additionalProperties: false
@@ -473,45 +435,85 @@ components:
       - status
       - created_at
       - updated_at
-    ClerkErrors:
+    DeletedObject:
       type: object
+      additionalProperties: false
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
           type: string
       required:
-      - errors
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+      - object
+      - deleted
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    WaitlistEntry:
+      description: A Waitlist Entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WaitlistEntry'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    WaitlistEntry.List:
+      description: Array of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/WaitlistEntry'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    WaitlistEntries:
+      description: List of waitlist entries
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaitlistEntry'
+              total_count:
+                type: integer
+                description: Total number of waitlist entries
+            required:
+            - data
+            - total_count
   securitySchemes:
     bearerAuth:
       type: http

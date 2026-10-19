@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: ListInstanceOrganizationInvitations
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: getAll
-      summary: Get a List of Organization Invitations for the Current Instance
+      summary: Get a list of organization invitations for the current instance
       description: 'This request returns the list of organization invitations for the instance.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -108,7 +108,7 @@ paths:
       operationId: CreateOrganizationInvitation
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: create
-      summary: Create and Send an Organization Invitation
+      summary: Create and send an organization invitation
       description: 'Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.
 
         You can specify the `role` for the invited organization member.
@@ -220,7 +220,7 @@ paths:
       operationId: ListOrganizationInvitations
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: list
-      summary: Get a List of Organization Invitations
+      summary: Get a list of organization invitations
       description: 'This request returns the list of organization invitations.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -291,7 +291,7 @@ paths:
       operationId: CreateOrganizationInvitationBulk
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: bulkCreate
-      summary: Bulk Create and Send Organization Invitations
+      summary: Bulk create and send organization invitations
       description: 'Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.
 
 
@@ -410,7 +410,7 @@ paths:
       operationId: ListPendingOrganizationInvitations
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: listPending
-      summary: Get a List of Pending Organization Invitations
+      summary: Get a list of pending organization invitations
       description: 'This request returns the list of organization invitations with "pending" status.
 
         These are the organization invitations that can still be used to join the organization, but have not been accepted by the invited user yet.
@@ -445,7 +445,7 @@ paths:
       operationId: GetOrganizationInvitation
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: get
-      summary: Retrieve an Organization Invitation by ID
+      summary: Retrieve an organization invitation by ID
       description: Use this request to get an existing organization invitation by ID.
       tags:
       - Organization Invitations
@@ -476,7 +476,7 @@ paths:
       operationId: RevokeOrganizationInvitation
       x-speakeasy-group: organizationInvitations
       x-speakeasy-name-override: revoke
-      summary: Revoke a Pending Organization Invitation
+      summary: Revoke a pending organization invitation
       description: 'Use this request to revoke a previously issued organization invitation.
 
         Revoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.
@@ -525,101 +525,33 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitationsWithPublicOrganizationData:
-      description: A list of organization invitations with public organization data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationInvitations:
-      description: A list of organization invitations
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitations'
-    OrganizationInvitation:
-      description: An organization invitation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationInvitation'
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   schemas:
-    OrganizationInvitationPublicUserData:
-      description: An organization inviter's public user data
-      type:
-      - object
-      - 'null'
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - image_url
-      - has_image
-      - identifier
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     OrganizationInvitations:
       type: object
       additionalProperties: false
@@ -637,6 +569,36 @@ components:
       required:
       - data
       - total_count
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
     OrganizationInvitation:
       description: An organization invitation
       type: object
@@ -704,55 +666,6 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
-    OrganizationInvitationsWithPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization invitations
-
-            '
-      required:
-      - data
-      - total_count
-    OrganizationInvitationPublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-      required:
-      - id
-      - name
-      - slug
-      - has_image
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     OrganizationInvitationWithPublicOrganizationData:
       description: An organization invitation with public organization data populated
       type: object
@@ -823,32 +736,121 @@ components:
       - updated_at
       - inviter_id
       - public_inviter_data
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
+    OrganizationInvitationPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+    OrganizationInvitationPublicUserData:
+      description: An organization inviter's public user data
+      type:
+      - object
+      - 'null'
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - image_url
+      - has_image
+      - identifier
+    OrganizationInvitationsWithPublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationInvitationWithPublicOrganizationData'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization invitations
 
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+            '
+      required:
+      - data
+      - total_count
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitationsWithPublicOrganizationData:
+      description: A list of organization invitations with public organization data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitationsWithPublicOrganizationData'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationInvitation:
+      description: An organization invitation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitation'
+    OrganizationInvitations:
+      description: A list of organization invitations
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationInvitations'
   securitySchemes:
     bearerAuth:
       type: http

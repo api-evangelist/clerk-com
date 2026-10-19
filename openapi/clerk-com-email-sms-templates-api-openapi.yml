@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -42,7 +42,7 @@ paths:
       operationId: GetTemplateList
       x-speakeasy-group: emailSMSTemplates
       x-speakeasy-name-override: list
-      summary: List All Templates
+      summary: List all templates
       description: 'Returns a list of all templates.
 
         The templates are returned sorted by position.'
@@ -76,7 +76,7 @@ paths:
       operationId: GetTemplate
       x-speakeasy-group: emailSMSTemplates
       x-speakeasy-name-override: get
-      summary: Retrieve a Template
+      summary: Retrieve a template
       description: Returns the details of a template
       tags:
       - Email & SMS Templates
@@ -110,7 +110,7 @@ paths:
       operationId: UpsertTemplate
       x-speakeasy-group: emailAndSmsTemplates
       x-speakeasy-name-override: upsert
-      summary: Update a Template for a Given Type and Slug
+      summary: Update a template for a given type and slug
       description: Updates the existing template of the given type and slug
       tags:
       - Email & SMS Templates
@@ -189,13 +189,17 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /templates/{template_type}/{slug}/revert:
     post:
       deprecated: true
       operationId: RevertTemplate
       x-speakeasy-group: emailSMSTemplates
       x-speakeasy-name-override: revert
-      summary: Revert a Template
+      summary: Revert a template
       description: Reverts an updated template to its default state
       tags:
       - Email & SMS Templates
@@ -232,7 +236,7 @@ paths:
       operationId: PreviewTemplate
       x-speakeasy-group: templates
       x-speakeasy-name-override: preview
-      summary: Preview Changes to a Template
+      summary: Preview changes to a template
       description: Returns a preview of a template for a given template_type, slug and body
       tags:
       - Email & SMS Templates
@@ -302,7 +306,7 @@ paths:
       operationId: ToggleTemplateDelivery
       x-speakeasy-group: emailSMSTemplates
       x-speakeasy-name-override: toggleTemplateDelivery
-      summary: Toggle the Delivery by Clerk for a Template of a Given Type and Slug
+      summary: Toggle the delivery by Clerk for a template of a given type and slug
       description: 'Toggles the delivery by Clerk for a template of a given type and slug.
 
         If disabled, Clerk will not deliver the resulting email or SMS.
@@ -345,42 +349,20 @@ paths:
           $ref: '#/components/responses/AuthenticationInvalid'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    Template.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Template'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    TooManyRequests:
+      description: Too many requests
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    Template:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Template'
     ResourceNotFound:
       description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
       content:
         application/json:
           schema:
@@ -391,18 +373,45 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Locked:
+      description: Locked
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Template.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Template'
+    Template:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Template'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
     LimitParameter:
       name: limit
       in: query
@@ -415,6 +424,17 @@ components:
         default: 10
         minimum: 1
         maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
     OffsetParameter:
       name: offset
       in: query
@@ -429,34 +449,6 @@ components:
         default: 0
         minimum: 0
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     Template:
       type: object
       additionalProperties: false
@@ -545,6 +537,36 @@ components:
           description: 'Unix timestamp of creation.
 
             '
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
   securitySchemes:
     bearerAuth:
       type: http

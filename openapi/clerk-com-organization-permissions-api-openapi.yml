@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: ListOrganizationPermissions
       x-speakeasy-group: organizationPermissions
       x-speakeasy-name-override: list
-      summary: Get a List of All Organization Permissions
+      summary: Get a list of all organization permissions
       description: Retrieves all organization permissions for the given instance.
       tags:
       - Organization Permissions
@@ -79,7 +79,7 @@ paths:
       operationId: CreateOrganizationPermission
       x-speakeasy-group: organizationPermissions
       x-speakeasy-name-override: create
-      summary: Create a New Organization Permission
+      summary: Create a new organization permission
       description: Creates a new organization permission for the given instance.
       tags:
       - Organization Permissions
@@ -120,7 +120,7 @@ paths:
       operationId: GetOrganizationPermission
       x-speakeasy-group: organizationPermissions
       x-speakeasy-name-override: get
-      summary: Get an Organization Permission
+      summary: Get an organization permission
       description: Retrieves the details of an organization permission.
       tags:
       - Organization Permissions
@@ -142,7 +142,7 @@ paths:
       operationId: UpdateOrganizationPermission
       x-speakeasy-group: organizationPermissions
       x-speakeasy-name-override: update
-      summary: Update an Organization Permission
+      summary: Update an organization permission
       description: 'Updates the properties of an existing organization permission.
 
         System permissions cannot be updated.'
@@ -188,7 +188,7 @@ paths:
       operationId: DeleteOrganizationPermission
       x-speakeasy-group: organizationPermissions
       x-speakeasy-name-override: delete
-      summary: Delete an Organization Permission
+      summary: Delete an organization permission
       description: 'Deletes an organization permission.
 
         System permissions cannot be deleted.'
@@ -211,62 +211,54 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Permissions:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Permissions'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Permission:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Permission'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    Permissions:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of permissions
+
+            '
+      required:
+      - data
+      - total_count
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     Permission:
       type: object
       properties:
@@ -322,51 +314,6 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    Permissions:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of permissions
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   parameters:
     LimitParameter:
       name: limit
@@ -393,6 +340,61 @@ components:
         type: integer
         default: 0
         minimum: 0
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Permissions:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permissions'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Permission:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Permission'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

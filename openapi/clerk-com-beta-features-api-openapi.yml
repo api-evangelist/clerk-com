@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -39,7 +39,7 @@ paths:
       operationId: UpdateInstanceAuthConfig
       x-speakeasy-group: betaFeatures
       x-speakeasy-name-override: updateInstanceSettings
-      summary: Update Instance Settings
+      summary: Update instance settings
       description: Updates the settings of an instance
       tags:
       - Beta Features
@@ -90,14 +90,17 @@ paths:
       operationId: UpdateProductionInstanceDomain
       x-speakeasy-group: betaFeatures
       x-speakeasy-name-override: updateProductionInstanceDomain
-      summary: Update Production Instance Domain
+      summary: Update production instance domain
       description: 'Change the domain of a production instance.
 
 
         Changing the domain requires updating the DNS records accordingly, deploying new SSL certificates, updating your Social Connection''s redirect URLs and setting the new keys in your code.
 
 
-        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.'
+        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.
+
+
+        Returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.'
       tags:
       - Beta Features
       requestBody:
@@ -118,6 +121,8 @@ paths:
           description: Accepted
         '400':
           $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
         '422':
           $ref: '#/components/responses/ClerkErrors'
   /instance/change_domain:
@@ -125,14 +130,17 @@ paths:
       operationId: ChangeProductionInstanceDomain
       x-speakeasy-group: instanceSettings
       x-speakeasy-name-override: changeDomain
-      summary: Update Production Instance Domain
+      summary: Update production instance domain
       description: 'Change the domain of a production instance.
 
 
         Changing the domain requires updating the DNS records accordingly, deploying new SSL certificates, updating your Social Connection''s redirect URLs and setting the new keys in your code.
 
 
-        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.'
+        WARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.
+
+
+        Returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.'
       tags:
       - Beta Features
       requestBody:
@@ -157,51 +165,12 @@ paths:
           description: Accepted
         '400':
           $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
         '422':
           $ref: '#/components/responses/ClerkErrors'
 components:
-  schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     InstanceSettings:
       description: InstanceSettings Server API
       content:
@@ -223,6 +192,10 @@ components:
               progressive_sign_up:
                 type: boolean
               enhanced_email_deliverability:
+                deprecated: true
+                description: 'Deprecated. This setting is retired and no longer affects email delivery; all email is sent through the instance''s configured email sending domain. The field is preserved for API compatibility only and will be removed in a future version.
+
+                  '
                 type: boolean
     PaymentRequired:
       description: Payment required
@@ -230,6 +203,49 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

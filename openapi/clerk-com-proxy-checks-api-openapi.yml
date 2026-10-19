@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -36,7 +36,7 @@ tags:
 paths:
   /proxy_checks:
     post:
-      summary: Verify the Proxy Configuration for Your Domain
+      summary: Verify the proxy configuration for your domain
       x-speakeasy-group: proxyChecks
       x-speakeasy-name-override: verify
       description: 'This endpoint can be used to validate that a proxy-enabled domain is operational.
@@ -75,7 +75,40 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ProxyCheck:
+      description: Health check information about a domain's proxy configuration validation attempt.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProxyCheck'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -87,6 +120,7 @@ components:
           type: string
         meta:
           type: object
+          additionalProperties: true
       required:
       - message
       - long_message
@@ -136,38 +170,6 @@ components:
       - successful
       - created_at
       - updated_at
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ProxyCheck:
-      description: Health check information about a domain's proxy configuration validation attempt.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProxyCheck'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

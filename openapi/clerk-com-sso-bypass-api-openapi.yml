@@ -1,0 +1,301 @@
+openapi: 3.2.0
+info:
+  title: Clerk Backend SSO Bypass API
+  x-logo:
+    url: https://clerk.com/_next/image?url=%2Fimages%2Fclerk-logo.svg&w=96&q=75
+    altText: Clerk docs
+    href: https://clerk.com/docs
+  contact:
+    email: support@clerk.com
+    name: Clerk Platform Team
+    url: https://clerk.com/support
+  description: 'The Clerk REST Backend API, meant to be accessed by backend servers.
+
+
+    ### Versions
+
+
+    When the API changes in a way that isn''t compatible with older versions, a new version is released.
+
+    Each version is identified by its release date, e.g. `2025-04-10`. For more information, please see Clerk API Versions.
+
+
+    Please see https://clerk.com/docs for more information.'
+  version: '2026-08-20'
+  termsOfService: https://clerk.com/terms
+  license:
+    name: MIT
+    url: https://github.com/clerk/openapi-specs/blob/main/LICENSE
+servers:
+- url: https://api.clerk.com/v1
+security:
+- bearerAuth: []
+tags:
+- name: SSO Bypass
+  description: 'The SSO bypass allowlist names users who may sign in with an email code when their enterprise identity
+
+    provider is unreachable.'
+paths:
+  /sso_bypass_allowlist_users:
+    get:
+      operationId: ListSSOBypassAllowlistUsers
+      x-speakeasy-group: ssoBypassAllowlistUsers
+      x-speakeasy-name-override: list
+      summary: List the SSO bypass allowlist
+      description: 'Returns the users who may verify an email code instead of reaching their identity provider when
+
+        enterprise SSO is unreachable.'
+      tags:
+      - SSO Bypass
+      parameters:
+      - name: enterprise_connection_id
+        in: query
+        required: false
+        description: Restrict the list to the users this enterprise connection serves.
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/SSOBypassAllowlistUsers'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+    post:
+      operationId: CreateSSOBypassAllowlistUser
+      x-speakeasy-group: ssoBypassAllowlistUsers
+      x-speakeasy-name-override: create
+      summary: Add a user to the SSO bypass allowlist
+      description: 'Puts a user on the allowlist. The request is rejected unless the user holds a verified email
+
+        address on a domain one of the instance''s enterprise connections serves.'
+      tags:
+      - SSO Bypass
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - user_id
+              properties:
+                user_id:
+                  type: string
+                  description: The ID of the user to allowlist.
+      responses:
+        '201':
+          $ref: '#/components/responses/SSOBypassAllowlistUser'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /sso_bypass_allowlist_users/{userID}:
+    delete:
+      operationId: DeleteSSOBypassAllowlistUser
+      x-speakeasy-group: ssoBypassAllowlistUsers
+      x-speakeasy-name-override: delete
+      summary: Remove a user from the SSO bypass allowlist
+      description: Removes the user from the allowlist, across every enterprise connection that serves them.
+      tags:
+      - SSO Bypass
+      parameters:
+      - name: userID
+        in: path
+        required: true
+        description: The ID of the allowlisted user
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedObject'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+components:
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    SSOBypassAllowlistUser:
+      description: An SSO bypass allowlist entry
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SSOBypassAllowlistUser'
+    SSOBypassAllowlistUsers:
+      description: The instance's SSO bypass allowlist, deduplicated by user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SSOBypassAllowlistUsers'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+  schemas:
+    SSOBypassAllowlistUsers:
+      description: The instance's SSO bypass allowlist, deduplicated by user.
+      type: array
+      items:
+        $ref: '#/components/schemas/SSOBypassAllowlistUser'
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    SSOBypassAllowlistPublicUserData:
+      description: The allowlisted user's public data.
+      type: object
+      additionalProperties: false
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type: string
+        username:
+          type:
+          - string
+          - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Use `image_url` instead.
+      required:
+      - first_name
+      - last_name
+      - identifier
+      - has_image
+      - username
+      - profile_image_url
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    SSOBypassAllowlistUser:
+      description: 'A user who may verify an email code instead of reaching their identity provider when enterprise SSO is unreachable.
+
+        '
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - sso_bypass_allowlist_user
+        user_id:
+          type: string
+          description: The allowlisted user, and the identifier the delete endpoint takes.
+        public_user_data:
+          $ref: '#/components/schemas/SSOBypassAllowlistPublicUserData'
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+      required:
+      - object
+      - user_id
+      - public_user_data
+      - created_at
+      - updated_at
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
+      bearerFormat: sk_<environment>_<secret value>
+externalDocs:
+  url: https://clerk.com/docs
+x-speakeasy-retries:
+  strategy: backoff
+  backoff:
+    initialInterval: 500
+    maxInterval: 60000
+    maxElapsedTime: 3600000
+    exponent: 1.5
+  statusCodes:
+  - 5XX
+  retryConnectionErrors: true

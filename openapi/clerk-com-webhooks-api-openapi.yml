@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: CreateSvixApp
       x-speakeasy-group: webhooks
       x-speakeasy-name-override: createSvixApp
-      summary: Create a Svix App
+      summary: Create a Svix app
       description: Create a Svix app and associate it with the current instance
       tags:
       - Webhooks
@@ -54,7 +54,7 @@ paths:
       operationId: DeleteSvixApp
       x-speakeasy-group: webhooks
       x-speakeasy-name-override: deleteSvixApp
-      summary: Delete a Svix App
+      summary: Delete a Svix app
       description: Delete a Svix app and disassociate it from the current instance
       tags:
       - Webhooks
@@ -87,6 +87,20 @@ components:
           type: string
       required:
       - svix_url
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     ClerkError:
       type: object
       properties:
@@ -98,23 +112,11 @@ components:
           type: string
         meta:
           type: object
+          additionalProperties: true
       required:
       - message
       - long_message
       - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
   responses:
     ClerkErrors:
       description: Request was not successful

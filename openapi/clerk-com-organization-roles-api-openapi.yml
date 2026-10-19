@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: ListOrganizationRoles
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: list
-      summary: Get a List of Organization Roles
+      summary: Get a list of organization roles
       description: 'This request returns the list of organization roles for the instance.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -94,7 +94,7 @@ paths:
       operationId: CreateOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: create
-      summary: Create an Organization Role
+      summary: Create an organization role
       description: 'Creates a new organization role with the given name and permissions for an instance.
 
         The key must be unique for the instance and start with the ''org:'' prefix, followed by lowercase alphanumeric characters and underscores only.
@@ -158,7 +158,7 @@ paths:
       operationId: GetOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: get
-      summary: Retrieve an Organization Role
+      summary: Retrieve an organization role
       description: Use this request to retrieve an existing organization role by its ID.
       tags:
       - Organization Roles
@@ -182,7 +182,7 @@ paths:
       operationId: UpdateOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: update
-      summary: Update an Organization Role
+      summary: Update an organization role
       description: 'Updates an existing organization role.
 
         You can update the name, key, description, and permissions of the role.
@@ -245,7 +245,7 @@ paths:
       operationId: DeleteOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: delete
-      summary: Delete an Organization Role
+      summary: Delete an organization role
       description: 'Deletes the organization role.
 
         The role cannot be deleted if it is currently used as the default creator role, domain default role, assigned to any members, or exists in any invitations.'
@@ -274,7 +274,7 @@ paths:
       operationId: AssignPermissionToOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: assignPermission
-      summary: Assign a Permission to an Organization Role
+      summary: Assign a permission to an organization role
       description: Assigns a permission to an organization role
       tags:
       - Organization Roles
@@ -306,7 +306,7 @@ paths:
       operationId: RemovePermissionFromOrganizationRole
       x-speakeasy-group: organizationRoles
       x-speakeasy-name-override: removePermission
-      summary: Remove a Permission from an Organization Role
+      summary: Remove a permission from an organization role
       description: Removes a permission from an organization role
       tags:
       - Organization Roles
@@ -335,7 +335,111 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Role:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Role'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Roles:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Roles'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
+    Roles:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of roles
+
+            '
+      required:
+      - data
+      - total_count
     Role:
       type: object
       properties:
@@ -383,23 +487,36 @@ components:
       - permissions
       - created_at
       - updated_at
-    Roles:
+    ClerkError:
       type: object
-      additionalProperties: false
       properties:
-        data:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Role'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of roles
-
-            '
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
       required:
-      - data
-      - total_count
+      - errors
     Permission:
       type: object
       properties:
@@ -455,121 +572,6 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  responses:
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Roles:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Roles'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Role:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Role'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

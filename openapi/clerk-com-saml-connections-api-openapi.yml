@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -42,7 +42,7 @@ paths:
       operationId: ListSAMLConnections
       x-speakeasy-group: samlConnections
       x-speakeasy-name-override: list
-      summary: Get a List of SAML Connections for an Instance
+      summary: Get a list of SAML Connections for an instance
       description: 'Returns the list of SAML Connections for an instance.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -151,7 +151,15 @@ paths:
                   type:
                   - string
                   - 'null'
-                  description: The X.509 certificate as provided by the IdP
+                  description: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+                  deprecated: true
+                idp_certificates:
+                  type: array
+                  description: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
+                  minItems: 1
+                  maxItems: 5
+                  items:
+                    type: string
                 idp_metadata_url:
                   type:
                   - string
@@ -185,6 +193,25 @@ paths:
                 force_authn:
                   type: boolean
                   description: Enable or deactivate ForceAuthn
+                login_hint:
+                  type:
+                  - object
+                  - 'null'
+                  description: Configuration for the login_hint sent to the IdP on SSO sign-in
+                  additionalProperties: false
+                  properties:
+                    mode:
+                      type: string
+                      enum:
+                      - email_address
+                      - custom_attribute
+                      - 'off'
+                      description: Controls the login_hint sent to the IdP on SSO sign-in
+                    source:
+                      type: string
+                      description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+                  required:
+                  - mode
               required:
               - name
               - provider
@@ -292,7 +319,15 @@ paths:
                   type:
                   - string
                   - 'null'
-                  description: The x509 certificated as provided by the IdP
+                  description: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+                  deprecated: true
+                idp_certificates:
+                  type: array
+                  description: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
+                  minItems: 1
+                  maxItems: 5
+                  items:
+                    type: string
                 idp_metadata_url:
                   type:
                   - string
@@ -356,6 +391,25 @@ paths:
                 force_authn:
                   type: boolean
                   description: Enable or deactivate ForceAuthn
+                login_hint:
+                  type:
+                  - object
+                  - 'null'
+                  description: Configuration for the login_hint sent to the IdP on SSO sign-in
+                  additionalProperties: false
+                  properties:
+                    mode:
+                      type: string
+                      enum:
+                      - email_address
+                      - custom_attribute
+                      - 'off'
+                      description: Controls the login_hint sent to the IdP on SSO sign-in
+                    source:
+                      type: string
+                      description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+                  required:
+                  - mode
                 consent_verified_domains_deletion:
                   type:
                   - boolean
@@ -402,9 +456,65 @@ paths:
         '404':
           $ref: '#/components/responses/ResourceNotFound'
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    SAMLConnections:
+      description: A list of SAML Connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SAMLConnections'
+    SAMLConnection:
+      description: A SAML Connection
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SAMLConnection'
     PaymentRequired:
       description: Payment required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
@@ -421,86 +531,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    SAMLConnections:
-      description: A list of SAML Connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SAMLConnections'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    SAMLConnection:
-      description: A SAML Connection
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SAMLConnection'
   schemas:
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    SAMLConnections:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SAMLConnection'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of SAML Connections
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     SAMLConnectionAttributeMapping:
       type: object
       additionalProperties: false
@@ -518,6 +549,20 @@ components:
       - email_address
       - first_name
       - last_name
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     SAMLConnection:
       type: object
       properties:
@@ -548,6 +593,49 @@ components:
           type:
           - string
           - 'null'
+        idp_certificate_issued_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp (milliseconds) of the start of the IdP certificate validity window (X.509 NotBefore). Null when no certificate is configured.
+
+            '
+        idp_certificate_expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp (milliseconds) of the end of the IdP certificate validity window (X.509 NotAfter). Null when no certificate is configured.
+
+            '
+        idp_certificates:
+          type: array
+          description: 'Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
+
+            '
+          items:
+            type: object
+            properties:
+              certificate:
+                type: string
+                description: The X.509 certificate, base64 DER without PEM armor
+              issued_at:
+                type:
+                - integer
+                - 'null'
+                format: int64
+                description: Unix timestamp (milliseconds) of the X.509 NotBefore
+              expires_at:
+                type:
+                - integer
+                - 'null'
+                format: int64
+                description: Unix timestamp (milliseconds) of the X.509 NotAfter
+            required:
+            - certificate
+            - issued_at
+            - expires_at
         idp_metadata_url:
           type:
           - string
@@ -587,6 +675,8 @@ components:
         force_authn:
           type: boolean
           description: Enable or deactivate ForceAuthn
+        login_hint:
+          $ref: '#/components/schemas/SAMLConnectionLoginHint'
         enterprise_connection_id:
           type:
           - string
@@ -610,6 +700,9 @@ components:
       - idp_entity_id
       - idp_sso_url
       - idp_certificate
+      - idp_certificate_issued_at
+      - idp_certificate_expires_at
+      - idp_certificates
       - acs_url
       - sp_entity_id
       - sp_metadata_url
@@ -621,8 +714,8 @@ components:
       - allow_idp_initiated
       - disable_additional_identifications
       - allow_organization_account_linking
-      - authenticatable
       - force_authn
+      - login_hint
       - created_at
       - updated_at
       anyOf:
@@ -630,45 +723,73 @@ components:
         - domain
       - required:
         - domains
-    ClerkErrors:
+    SAMLConnections:
       type: object
+      additionalProperties: false
       properties:
-        errors:
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
+            $ref: '#/components/schemas/SAMLConnection'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of SAML Connections
+
+            '
+      required:
+      - data
+      - total_count
+    SAMLConnectionLoginHint:
+      type: object
+      additionalProperties: false
+      description: Configuration for the login_hint sent to the IdP on SSO sign-in
+      properties:
+        mode:
+          type: string
+          enum:
+          - email_address
+          - custom_attribute
+          - 'off'
+          description: Controls the login_hint sent to the IdP on SSO sign-in
+        source:
+          type: string
+          description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+      required:
+      - mode
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
           type: string
       required:
-      - errors
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

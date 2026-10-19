@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -43,7 +43,7 @@ paths:
       operationId: ListEnterpriseConnections
       x-speakeasy-group: enterpriseConnections
       x-speakeasy-name-override: list
-      summary: List Enterprise Connections
+      summary: List enterprise connections
       description: 'Returns the list of enterprise connections for the instance.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.'
@@ -77,7 +77,7 @@ paths:
       operationId: CreateEnterpriseConnection
       x-speakeasy-group: enterpriseConnections
       x-speakeasy-name-override: create
-      summary: Create an Enterprise Connection
+      summary: Create an enterprise connection
       description: Create a new enterprise connection.
       tags:
       - Enterprise Connections
@@ -150,7 +150,15 @@ paths:
                       type:
                       - string
                       - 'null'
-                      description: IdP certificate (PEM)
+                      description: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+                      deprecated: true
+                    idp_certificates:
+                      type: array
+                      description: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
+                      minItems: 1
+                      maxItems: 5
+                      items:
+                        type: string
                     idp_metadata_url:
                       type:
                       - string
@@ -196,6 +204,25 @@ paths:
                       type:
                       - boolean
                       - 'null'
+                    login_hint:
+                      type:
+                      - object
+                      - 'null'
+                      description: Configuration for the login_hint sent to the IdP on SSO sign-in
+                      additionalProperties: false
+                      properties:
+                        mode:
+                          type: string
+                          enum:
+                          - email_address
+                          - custom_attribute
+                          - 'off'
+                          description: Controls the login_hint sent to the IdP on SSO sign-in
+                        source:
+                          type: string
+                          description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+                      required:
+                      - mode
                 oidc:
                   type:
                   - object
@@ -263,6 +290,12 @@ paths:
                       scim_path:
                         type: string
                         description: GJSON path to extract the attribute value from SCIM user resources
+                      directory_path:
+                        type: string
+                        description: The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected.
+                      multi_valued:
+                        type: boolean
+                        description: When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false.
       responses:
         '201':
           $ref: '#/components/responses/EnterpriseConnection'
@@ -281,7 +314,7 @@ paths:
       operationId: GetEnterpriseConnection
       x-speakeasy-group: enterpriseConnections
       x-speakeasy-name-override: get
-      summary: Retrieve an Enterprise Connection
+      summary: Retrieve an enterprise connection
       description: Fetches the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
       tags:
       - Enterprise Connections
@@ -305,7 +338,7 @@ paths:
       operationId: UpdateEnterpriseConnection
       x-speakeasy-group: enterpriseConnections
       x-speakeasy-name-override: update
-      summary: Update an Enterprise Connection
+      summary: Update an enterprise connection
       description: 'Updates the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
 
         When enabling the connection (setting `active` to true), any existing verified organization domains that match the connection''s domains (e.g. used for enrollment modes like automatic invitation) may be deleted so the connection can be enabled.'
@@ -393,7 +426,15 @@ paths:
                       type:
                       - string
                       - 'null'
-                      description: IdP certificate (PEM)
+                      description: Deprecated, use idp_certificates. One X.509 certificate, PEM or bare base64, or several concatenated PEM certificates; replaces the connection's whole certificate set
+                      deprecated: true
+                    idp_certificates:
+                      type: array
+                      description: The IdP X.509 signing certificates the connection trusts, one per entry, in PEM or bare base64. Replaces the connection's whole certificate set and takes precedence over idp_certificate
+                      minItems: 1
+                      maxItems: 5
+                      items:
+                        type: string
                     idp_metadata_url:
                       type:
                       - string
@@ -439,6 +480,25 @@ paths:
                       type:
                       - boolean
                       - 'null'
+                    login_hint:
+                      type:
+                      - object
+                      - 'null'
+                      description: Configuration for the login_hint sent to the IdP on SSO sign-in
+                      additionalProperties: false
+                      properties:
+                        mode:
+                          type: string
+                          enum:
+                          - email_address
+                          - custom_attribute
+                          - 'off'
+                          description: Controls the login_hint sent to the IdP on SSO sign-in
+                        source:
+                          type: string
+                          description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+                      required:
+                      - mode
                 oidc:
                   type:
                   - object
@@ -508,6 +568,12 @@ paths:
                       scim_path:
                         type: string
                         description: GJSON path to extract the attribute value from SCIM user resources
+                      directory_path:
+                        type: string
+                        description: The new name for `scim_path`. Send either one, or both with the same value; sending both with different values is rejected.
+                      multi_valued:
+                        type: boolean
+                        description: When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false.
       responses:
         '200':
           $ref: '#/components/responses/EnterpriseConnection'
@@ -525,7 +591,7 @@ paths:
       operationId: DeleteEnterpriseConnection
       x-speakeasy-group: enterpriseConnections
       x-speakeasy-name-override: delete
-      summary: Delete an Enterprise Connection
+      summary: Delete an enterprise connection
       description: Deletes the enterprise connection whose ID matches the provided `enterprise_connection_id` in the path.
       tags:
       - Enterprise Connections
@@ -545,16 +611,83 @@ paths:
           $ref: '#/components/responses/AuthorizationInvalid'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+  /enterprise_connections/{enterprise_connection_id}/test_runs:
+    get:
+      operationId: ListEnterpriseConnectionTestRuns
+      x-speakeasy-group: enterpriseConnections
+      x-speakeasy-name-override: listTestRuns
+      summary: List enterprise connection test runs
+      description: Returns a paginated list of SAML or OIDC debug test runs for an enterprise connection.
+      tags:
+      - Enterprise Connections
+      parameters:
+      - in: path
+        name: enterprise_connection_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the enterprise connection
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - pending
+            - success
+            - failed
+        style: form
+        explode: true
+        description: Filter test runs by status (may be repeated)
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/EnterpriseConnectionTestRuns'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    post:
+      operationId: CreateEnterpriseConnectionTestRun
+      x-speakeasy-group: enterpriseConnections
+      x-speakeasy-name-override: createTestRun
+      summary: Create an enterprise connection test run
+      description: Returns a short-lived URL that starts the IdP test flow for this connection.
+      tags:
+      - Enterprise Connections
+      parameters:
+      - in: path
+        name: enterprise_connection_id
+        required: true
+        schema:
+          type: string
+        description: The ID of the enterprise connection
+      responses:
+        '200':
+          $ref: '#/components/responses/EnterpriseConnectionTestRun'
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    PaymentRequired:
-      description: Payment required
+    EnterpriseConnectionTestRuns:
+      description: A list of enterprise connection test runs
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
+            $ref: '#/components/schemas/EnterpriseConnectionTestRuns'
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -565,20 +698,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EnterpriseConnection'
+    EnterpriseConnectionTestRun:
+      description: A URL to initiate an enterprise connection test run
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnectionTestRunResponse'
     UnprocessableEntity:
       description: Invalid request parameters
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    EnterpriseConnections:
-      description: A list of enterprise connections
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EnterpriseConnections'
-    ResourceNotFound:
-      description: Resource not found
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -589,6 +722,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    EnterpriseConnections:
+      description: A list of enterprise connections
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EnterpriseConnections'
     DeletedObject:
       description: Deleted Object
       content:
@@ -596,38 +741,6 @@ components:
           schema:
             $ref: '#/components/schemas/DeletedObject'
   schemas:
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     EnterpriseConnections:
       type: object
       additionalProperties: false
@@ -643,18 +756,110 @@ components:
       required:
       - data
       - total_count
+    EnterpriseConnectionTestRun:
+      type: object
+      additionalProperties: false
+      required:
+      - id
+      - status
+      - connection_type
+      - created_at
+      properties:
+        id:
+          type: string
+          description: The test run ID
+        status:
+          type: string
+          description: The status of the test run
+          enum:
+          - pending
+          - success
+          - failed
+        connection_type:
+          type: string
+          description: The type of enterprise connection the test run was performed against
+          enum:
+          - saml
+          - oauth
+        parsed_user_info:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          description: The user information parsed from the IdP response
+          properties:
+            email_address:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            user_id:
+              type: string
+        logs:
+          type: array
+          description: Log entries captured during the test run
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - level
+            - message
+            properties:
+              level:
+                type: string
+              code:
+                type: string
+              short_message:
+                type: string
+              message:
+                type: string
+        saml:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          description: SAML-specific metadata, present for SAML connections
+          properties:
+            saml_request:
+              type: string
+            saml_response:
+              type: string
+            relay_state:
+              type: string
+        oauth:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          description: OAuth-specific metadata, present for OIDC connections
+          properties:
+            id_token:
+              type: string
+            access_token:
+              type: string
+            user_info:
+              type: string
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp in milliseconds when the test run was created
     EnterpriseConnection:
       type: object
       required:
+      - object
       - id
       - name
       - provider
       - active
       - domains
-      - authenticatable
       - created_at
       - updated_at
       properties:
+        object:
+          type: string
+          enum:
+          - enterprise_connection
         id:
           type: string
           description: The enterprise connection ID
@@ -711,6 +916,12 @@ components:
               scim_path:
                 type: string
                 description: GJSON path to extract the attribute value from SCIM user resources
+              directory_path:
+                type: string
+                description: GJSON path to extract the attribute value from directory sync user resources. Same value as `scim_path`.
+              multi_valued:
+                type: boolean
+                description: When true, the attribute supports multiple values; values from the IdP are written to public_metadata as an array. Defaults to false.
         saml_connection:
           type:
           - object
@@ -733,6 +944,50 @@ components:
               - string
               - 'null'
               description: IdP SSO URL (optional, when connection details are loaded)
+            idp_certificate:
+              type:
+              - string
+              - 'null'
+              description: Primary IdP X.509 signing certificate (optional, when connection details are loaded)
+            idp_certificate_issued_at:
+              type:
+              - integer
+              - 'null'
+              format: int64
+              description: Unix timestamp (milliseconds) of the primary certificate's X.509 NotBefore
+            idp_certificate_expires_at:
+              type:
+              - integer
+              - 'null'
+              format: int64
+              description: Unix timestamp (milliseconds) of the primary certificate's X.509 NotAfter
+            idp_certificates:
+              type: array
+              description: 'Every IdP signing certificate the connection trusts, primary first. A SAML response verifies against any of them.
+
+                '
+              items:
+                type: object
+                properties:
+                  certificate:
+                    type: string
+                    description: The X.509 certificate, base64 DER without PEM armor
+                  issued_at:
+                    type:
+                    - integer
+                    - 'null'
+                    format: int64
+                    description: Unix timestamp (milliseconds) of the X.509 NotBefore
+                  expires_at:
+                    type:
+                    - integer
+                    - 'null'
+                    format: int64
+                    description: Unix timestamp (milliseconds) of the X.509 NotAfter
+                required:
+                - certificate
+                - issued_at
+                - expires_at
             idp_metadata_url:
               type:
               - string
@@ -765,6 +1020,22 @@ components:
             force_authn:
               type: boolean
               description: Whether to force re-authentication
+            login_hint:
+              type: object
+              description: Configuration for the login_hint sent to the IdP on SSO sign-in
+              properties:
+                mode:
+                  type: string
+                  enum:
+                  - email_address
+                  - custom_attribute
+                  - 'off'
+                  description: Controls the login_hint sent to the IdP on SSO sign-in
+                source:
+                  type: string
+                  description: The user public_metadata key whose value is sent as the login_hint when mode is custom_attribute
+              required:
+              - mode
         oauth_config:
           type:
           - object
@@ -829,6 +1100,31 @@ components:
           type: integer
           format: int64
           description: Unix timestamp in milliseconds when the connection was last updated
+    EnterpriseConnectionTestRunResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          description: A short-lived URL that can be used to initiate the test run flow
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
     ClerkErrors:
       type: object
       properties:
@@ -838,23 +1134,44 @@ components:
             $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+          additionalProperties: true
         clerk_trace_id:
           type: string
       required:
       - errors
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    EnterpriseConnectionTestRuns:
+      type: object
+      additionalProperties: false
+      required:
+      - data
+      - total_count
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseConnectionTestRun'
+        total_count:
+          type: integer
+          format: int64
+          description: Total number of test runs
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -868,6 +1185,18 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -45,7 +45,7 @@ paths:
       operationId: ListAllowlistIdentifiers
       x-speakeasy-group: allowlistIdentifiers
       x-speakeasy-name-override: list
-      summary: List All Identifiers on the Allow-list
+      summary: List all identifiers on the allow-list
       description: Get a list of all identifiers allowed to sign up to an instance
       parameters:
       - $ref: '#/components/parameters/Paginated'
@@ -64,7 +64,7 @@ paths:
       operationId: CreateAllowlistIdentifier
       x-speakeasy-group: allowlistIdentifiers
       x-speakeasy-name-override: create
-      summary: Add Identifier to the Allow-list
+      summary: Add identifier to the allow-list
       description: Create an identifier allowed to sign up to an instance
       tags:
       - Allow-list / Block-list
@@ -102,7 +102,7 @@ paths:
       operationId: DeleteAllowlistIdentifier
       x-speakeasy-group: allowlistIdentifiers
       x-speakeasy-name-override: delete
-      summary: Delete Identifier from Allow-list
+      summary: Delete identifier from allow-list
       description: Delete an identifier from the instance allow-list
       tags:
       - Allow-list / Block-list
@@ -125,7 +125,7 @@ paths:
       operationId: ListBlocklistIdentifiers
       x-speakeasy-group: blocklistIdentifiers
       x-speakeasy-name-override: list
-      summary: List All Identifiers on the Block-list
+      summary: List all identifiers on the block-list
       description: Get a list of all identifiers which are not allowed to access an instance
       tags:
       - Allow-list / Block-list
@@ -140,7 +140,7 @@ paths:
       operationId: CreateBlocklistIdentifier
       x-speakeasy-group: blocklistIdentifiers
       x-speakeasy-name-override: create
-      summary: Add Identifier to the Block-list
+      summary: Add identifier to the block-list
       description: Create an identifier that is blocked from accessing an instance
       tags:
       - Allow-list / Block-list
@@ -172,7 +172,7 @@ paths:
       operationId: DeleteBlocklistIdentifier
       x-speakeasy-group: blocklistIdentifiers
       x-speakeasy-name-override: delete
-      summary: Delete Identifier from Block-list
+      summary: Delete identifier from block-list
       description: Delete an identifier from the instance block-list
       tags:
       - Allow-list / Block-list
@@ -192,56 +192,24 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AllowlistIdentifier.List:
-      description: Success
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/AllowlistIdentifier'
+            $ref: '#/components/schemas/ClerkErrors'
     PaymentRequired:
       description: Payment required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AllowlistIdentifier:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AllowlistIdentifier'
-    BlocklistIdentifier.List:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlocklistIdentifiers'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
     ClerkErrors:
       description: Request was not successful
       content:
@@ -254,6 +222,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlocklistIdentifier'
+    BlocklistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlocklistIdentifiers'
+    AllowlistIdentifier:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllowlistIdentifier'
+    AllowlistIdentifier.List:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AllowlistIdentifier'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
     BlocklistIdentifier:
       type: object
@@ -293,6 +293,36 @@ components:
           description: 'Unix timestamp of last update.
 
             '
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     DeletedObject:
       type: object
       additionalProperties: false
@@ -310,21 +340,23 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
+    BlocklistIdentifiers:
       type: object
+      additionalProperties: false
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlocklistIdentifier'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of blocklist identifiers
+
+            '
       required:
-      - message
-      - long_message
-      - code
+      - data
+      - total_count
     AllowlistIdentifier:
       type: object
       additionalProperties: false
@@ -365,49 +397,18 @@ components:
           description: 'Unix timestamp of last update.
 
             '
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-    BlocklistIdentifiers:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlocklistIdentifier'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of blocklist identifiers
-
-            '
-      required:
-      - data
-      - total_count
   parameters:
-    LimitParameter:
-      name: limit
+    Paginated:
+      name: paginated
       in: query
-      description: 'Applies a limit to the number of results returned.
+      description: 'Whether to paginate the results.
 
-        Can be used for paginating the results together with `offset`.'
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
       required: false
       schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+        type: boolean
     OffsetParameter:
       name: offset
       in: query
@@ -421,17 +422,18 @@ components:
         type: integer
         default: 0
         minimum: 0
-    Paginated:
-      name: paginated
+    LimitParameter:
+      name: limit
       in: query
-      description: 'Whether to paginate the results.
+      description: 'Applies a limit to the number of results returned.
 
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
+        Can be used for paginating the results together with `offset`.'
       required: false
       schema:
-        type: boolean
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http

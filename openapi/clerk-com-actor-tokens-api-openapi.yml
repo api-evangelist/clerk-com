@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: CreateActorToken
       x-speakeasy-group: actorTokens
       x-speakeasy-name-override: create
-      summary: Create Actor Token
+      summary: Create actor token
       description: 'Create an actor token that can be used to impersonate the given user.
 
         The `actor` parameter needs to include at least a "sub" key whose value is the ID of the actor (impersonating) user.'
@@ -93,13 +93,15 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
         '402':
           $ref: '#/components/responses/PaymentRequired'
+        '403':
+          $ref: '#/components/responses/FeatureNotEnabled'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
   /actor_tokens/{actor_token_id}/revoke:
     post:
       x-speakeasy-group: actorTokens
       x-speakeasy-name-override: revoke
-      summary: Revoke Actor Token
+      summary: Revoke actor token
       description: Revokes a pending actor token.
       operationId: RevokeActorToken
       tags:
@@ -120,26 +122,14 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    PaymentRequired:
-      description: Payment required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ActorToken:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ActorToken'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    PaymentRequired:
+      description: Payment required
       content:
         application/json:
           schema:
@@ -150,22 +140,39 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    FeatureNotEnabled:
+      description: Feature not enabled
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ActorToken:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActorToken'
   schemas:
-    ClerkError:
+    ClerkErrors:
       type: object
       properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
       required:
-      - message
-      - long_message
-      - code
+      - errors
     ActorToken:
       type: object
       additionalProperties: false
@@ -210,19 +217,22 @@ components:
       - status
       - created_at
       - updated_at
-    ClerkErrors:
+    ClerkError:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
         meta:
           type: object
-        clerk_trace_id:
-          type: string
+          additionalProperties: true
       required:
-      - errors
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

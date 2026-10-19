@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -39,7 +39,7 @@ paths:
       operationId: ListOAuthApplications
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: list
-      summary: Get a List of OAuth Applications for an Instance
+      summary: Get a list of OAuth applications for an instance
       description: 'This request returns the list of OAuth applications for an instance.
 
         Results can be paginated using the optional `limit` and `offset` query parameters.
@@ -71,7 +71,11 @@ paths:
           default: +created_at
       - name: name_query
         in: query
-        description: Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+        description: 'Returns OAuth applications with names that match the given query, via case-insensitive partial match.
+
+          Also returns the OAuth application whose `client_id` is exactly the given query, which is useful for
+
+          resolving a `client_id` to the OAuth application `id` required by the read, update and delete endpoints.'
         required: false
         schema:
           type: string
@@ -88,7 +92,7 @@ paths:
       operationId: CreateOAuthApplication
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: create
-      summary: Create an OAuth Application
+      summary: Create an OAuth application
       description: 'Creates a new OAuth application with the given name and callback URL for an instance.
 
         The callback URL must be a valid URL.
@@ -126,7 +130,7 @@ paths:
                   - string
                   - 'null'
                   maxLength: 1024
-                  description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
+                  description: Define the application's built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog.
                   default: profile email
                   example: profile email public_metadata
                 consent_screen_enabled:
@@ -141,6 +145,23 @@ paths:
                   - 'null'
                   default: false
                   description: True to require the Proof Key of Code Exchange (PKCE) flow.
+                audience_uri:
+                  type:
+                  - string
+                  - 'null'
+                  description: An absolute resource URI for a confidential application (RFC 8707 section 2). Registers a resource with no accepted scopes, or adopts an unowned resource with confirmation. Every claimed URI remains permanently reserved to this app, including retirement and deletion, and counts toward the instance resource quota. Changing it stops new exchanges from the old audience immediately. Already-issued tokens retain their lifetime. Clearing requires exchange disabled in an earlier update.
+                token_exchange_enabled:
+                  type: boolean
+                  description: Enable exchanges from the active audience. Requires an audience URI. Disabling preserves target configuration.
+                adopt_audience_resource:
+                  type: boolean
+                  description: Confirm adoption of an existing unowned resource, preserving its accepted scopes and target references. Does not override another application's reservation.
+                device_authorization_grant_enabled:
+                  type:
+                  - boolean
+                  - 'null'
+                  default: false
+                  description: True to enable the OAuth Device Authorization Grant for this application. Enabling requires the new OAuth IdP and a reachable device verification page.
                 public:
                   type:
                   - boolean
@@ -162,7 +183,7 @@ paths:
       operationId: GetOAuthApplication
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: get
-      summary: Retrieve an OAuth Application by ID
+      summary: Retrieve an OAuth application by ID
       description: Fetches the OAuth application whose ID matches the provided `id` in the path.
       tags:
       - OAuth Applications
@@ -184,7 +205,7 @@ paths:
       operationId: UpdateOAuthApplication
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: update
-      summary: Update an OAuth Application
+      summary: Update an OAuth application
       description: Updates an existing OAuth application
       tags:
       - OAuth Applications
@@ -229,9 +250,8 @@ paths:
                   - string
                   - 'null'
                   maxLength: 1024
-                  description: Define the allowed scopes for the new OAuth applications that dictate the user payload of the OAuth user info endpoint. Available scopes are `profile`, `email`, `public_metadata`, `private_metadata`. Provide the requested scopes as a string, separated by spaces.
-                  default: profile email
-                  example: profile email public_metadata private_metadata
+                  description: Replace the application's complete built-in and custom scope ceiling. Provide scope keys as a space-delimited string. Custom keys must exist in the instance OAuth scope catalog. Required built-in scopes, such as `offline_access`, must be included in the replacement set, otherwise the request is rejected. Omit this field to leave all scope assignments unchanged.
+                  example: profile email offline_access public_metadata private_metadata
                 consent_screen_enabled:
                   type:
                   - boolean
@@ -242,6 +262,22 @@ paths:
                   - boolean
                   - 'null'
                   description: True to require the Proof Key of Code Exchange (PKCE) flow.
+                audience_uri:
+                  type:
+                  - string
+                  - 'null'
+                  description: An absolute resource URI for a confidential application (RFC 8707 section 2). Registers a resource with no accepted scopes, or adopts an unowned resource with confirmation. Every claimed URI remains permanently reserved to this app, including retirement and deletion, and counts toward the instance resource quota. Changing it stops new exchanges from the old audience immediately. Already-issued tokens retain their lifetime. Clearing requires exchange disabled in an earlier update.
+                token_exchange_enabled:
+                  type: boolean
+                  description: Enable exchanges from the active audience. Requires an audience URI. Disabling preserves target configuration.
+                adopt_audience_resource:
+                  type: boolean
+                  description: Confirm adoption of an existing unowned resource, preserving its accepted scopes and target references. Does not override another application's reservation.
+                device_authorization_grant_enabled:
+                  type:
+                  - boolean
+                  - 'null'
+                  description: True to enable the OAuth Device Authorization Grant for this application. Enabling requires the new OAuth IdP and a reachable device verification page. Omit this field to leave the setting unchanged.
                 public:
                   type:
                   - boolean
@@ -262,7 +298,7 @@ paths:
       operationId: DeleteOAuthApplication
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: delete
-      summary: Delete an OAuth Application
+      summary: Delete an OAuth application
       description: 'Deletes the given OAuth application.
 
         This is not reversible.'
@@ -287,7 +323,7 @@ paths:
       operationId: UploadOAuthApplicationLogo
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: uploadLogo
-      summary: Upload a Logo for the OAuth Application
+      summary: Upload a logo for the OAuth application
       description: 'Set or replace an OAuth application''s logo by uploading an image file.
 
         This endpoint uses the `multipart/form-data` request content type and accepts a file of image type.
@@ -334,7 +370,7 @@ paths:
       operationId: RotateOAuthApplicationSecret
       x-speakeasy-group: oauthApplications
       x-speakeasy-name-override: rotateSecret
-      summary: Rotate the Client Secret of the Given OAuth Application
+      summary: Rotate the client secret of the given OAuth application
       description: 'Rotates the OAuth application''s client secret.
 
         When the client secret is rotated, make sure to update it in authorized OAuth clients.'
@@ -354,8 +390,84 @@ paths:
           $ref: '#/components/responses/AuthorizationInvalid'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
+  /oauth_applications/{oauth_application_id}/revoke_token:
+    post:
+      operationId: RevokeOAuthApplicationToken
+      x-speakeasy-group: oauthApplications
+      x-speakeasy-name-override: revokeToken
+      summary: Revoke an OAuth application token
+      description: 'Revoke both OAuth access token and refresh token for the associated grant for the given OAuth application.
+
+        The request may specify either token.
+
+        JWT access tokens cannot be revoked.'
+      tags:
+      - OAuth Applications
+      parameters:
+      - name: oauth_application_id
+        in: path
+        description: The ID of the OAuth application for which to revoke the token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                token:
+                  type: string
+                  description: The opaque OAuth access token or refresh token to revoke. All tokens associated with the same OAuth grant are also revoked.
+              required:
+              - token
+      responses:
+        '204':
+          description: Token revoked
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/AuthorizationInvalid'
+        '404':
+          $ref: '#/components/responses/ResourceNotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     AuthorizationInvalid:
       description: Authorization invalid
       content:
@@ -368,102 +480,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    OAuthApplication:
-      description: An OAuth application
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplication'
-    OAuthApplicationWithSecret:
-      description: An OAuth application with client secret
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OAuthApplicationWithSecret'
     OAuthApplications:
       description: A list of OAuth applications
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OAuthApplications'
-  schemas:
-    OAuthApplicationWithSecret:
-      allOf:
-      - $ref: '#/components/schemas/OAuthApplication'
-      - type: object
-        properties:
-          client_secret:
-            type: string
-            description: 'Empty if public client.
-
-              '
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    OAuthApplications:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
+    OAuthApplication:
+      description: An OAuth application
+      content:
+        application/json:
+          schema:
             $ref: '#/components/schemas/OAuthApplication'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of OAuth applications
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OAuthApplicationWithSecret:
+      description: An OAuth application with client secret
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthApplicationWithSecret'
+  schemas:
     OAuthApplication:
       type: object
       properties:
@@ -493,10 +540,23 @@ components:
           type: boolean
         pkce_required:
           type: boolean
+        audience_uri:
+          type:
+          - string
+          - 'null'
+          description: The active application audience URI, whose registry identity is permanently reserved to this application.
+        token_exchange_enabled:
+          type: boolean
+          description: Whether this confidential application accepts token exchanges from its active audience.
+        device_authorization_grant_enabled:
+          type: boolean
         public:
           type: boolean
         scopes:
           type: string
+          description: 'The complete scope ceiling for the OAuth application, as a space-delimited list of built-in and assigned custom scope keys.
+
+            '
         redirect_uris:
           type: array
           items:
@@ -537,6 +597,9 @@ components:
       - dynamically_registered
       - consent_screen_enabled
       - pkce_required
+      - audience_uri
+      - token_exchange_enabled
+      - device_authorization_grant_enabled
       - public
       - client_id
       - client_uri
@@ -560,36 +623,71 @@ components:
             $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+          additionalProperties: true
         clerk_trace_id:
           type: string
       required:
       - errors
-  parameters:
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    OAuthApplications:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OAuthApplication'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of OAuth applications
 
-        Needs to be an integer greater or equal to zero.
+            '
+      required:
+      - data
+      - total_count
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    OAuthApplicationWithSecret:
+      allOf:
+      - $ref: '#/components/schemas/OAuthApplication'
+      - type: object
+        properties:
+          client_secret:
+            type: string
+            description: 'Empty if public client.
 
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
+              '
   securitySchemes:
     bearerAuth:
       type: http

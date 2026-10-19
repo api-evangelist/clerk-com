@@ -14,7 +14,7 @@ info:
     altText: Clerk docs
     href: https://clerk.com/docs
   version: '1.0'
-  description: 'Operations tagged JWT Templates across 2 of this provider''s published API definitions: clerk-backend-api-openapi.yml, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged JWT Templates across 2 of this provider''s published API definitions: clerk-com-openapi.json, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.clerk.com/v1
 tags:
@@ -32,7 +32,7 @@ paths:
       operationId: ListJWTTemplates
       x-speakeasy-group: jwtTemplates
       x-speakeasy-name-override: list
-      summary: List All Templates
+      summary: List all templates
       parameters:
       - $ref: '#/components/parameters/Paginated'
       - $ref: '#/components/parameters/LimitParameter'
@@ -48,7 +48,7 @@ paths:
       operationId: CreateJWTTemplate
       x-speakeasy-group: jwtTemplates
       x-speakeasy-name-override: create
-      summary: Create a JWT Template
+      summary: Create a JWT template
       description: Create a new JWT template
       tags:
       - JWT Templates
@@ -112,7 +112,7 @@ paths:
       operationId: GetJWTTemplate
       x-speakeasy-group: jwtTemplates
       x-speakeasy-name-override: get
-      summary: Retrieve a Template
+      summary: Retrieve a template
       description: Retrieve the details of a given JWT template
       tags:
       - JWT Templates
@@ -134,7 +134,7 @@ paths:
       operationId: UpdateJWTTemplate
       x-speakeasy-group: jwtTemplates
       x-speakeasy-name-override: update
-      summary: Update a JWT Template
+      summary: Update a JWT template
       description: Updates an existing JWT template
       tags:
       - JWT Templates
@@ -558,7 +558,50 @@ paths:
     servers:
     - url: https://api.clerk.com/v1
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     PaymentRequired:
       description: Payment required
       content:
@@ -571,12 +614,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    JWTTemplate:
-      description: Success
+    DeletedObject:
+      description: Deleted Object
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/JWTTemplate'
+            $ref: '#/components/schemas/DeletedObject'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
     JWTTemplate.List:
       description: List of JWT templates
       content:
@@ -591,48 +640,33 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
+    JWTTemplate:
+      description: Success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/JWTTemplate'
     AuthenticationInvalid:
       description: Authentication invalid
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/ClerkErrors_2'
   schemas:
-    DeletedObject:
+    ClerkErrors:
       type: object
-      additionalProperties: false
       properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
           type: string
       required:
-      - object
-      - deleted
+      - errors
     ClerkError:
       type: object
       properties:
@@ -644,6 +678,7 @@ components:
           type: string
         meta:
           type: object
+          additionalProperties: true
       required:
       - message
       - long_message
@@ -693,56 +728,51 @@ components:
       - signing_algorithm
       - created_at
       - updated_at
-    ClerkErrors:
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkErrors_2:
       type: object
       properties:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/ClerkError'
+            $ref: '#/components/schemas/ClerkError_2'
         meta:
           type: object
         clerk_trace_id:
           type: string
       required:
       - errors
-  parameters:
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+    ClerkError_2:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http
@@ -756,7 +786,7 @@ components:
 externalDocs:
   url: https://clerk.com/docs
 x-refined-from:
-- clerk-backend-api-openapi.yml
+- clerk-com-openapi.json
 - clerk-platform-api-openapi.yml
 x-speakeasy-retries:
   strategy: backoff

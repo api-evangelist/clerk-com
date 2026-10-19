@@ -14,7 +14,7 @@ info:
     altText: Clerk docs
     href: https://clerk.com/docs
   version: '1.0'
-  description: 'Operations tagged Redirect URLs across 2 of this provider''s published API definitions: clerk-backend-api-openapi.yml, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Redirect URLs across 2 of this provider''s published API definitions: clerk-com-openapi.json, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.clerk.com/v1
 tags:
@@ -25,7 +25,7 @@ tags:
 paths:
   /redirect_urls:
     get:
-      summary: List All Redirect URLs
+      summary: List all redirect URLs
       x-speakeasy-group: redirectUrls
       x-speakeasy-name-override: list
       description: Lists all whitelisted redirect_urls for the instance
@@ -42,10 +42,9 @@ paths:
       security:
       - bearerAuth: []
     post:
-      summary: Create a Redirect URL
+      summary: Create a redirect URL
       x-speakeasy-group: redirectUrls
       x-speakeasy-name-override: create
-      description: Create a redirect URL
       operationId: CreateRedirectURL
       tags:
       - Redirect URLs
@@ -73,7 +72,7 @@ paths:
     - url: https://api.clerk.com/v1
   /redirect_urls/{id}:
     get:
-      summary: Retrieve a Redirect URL
+      summary: Retrieve a redirect URL
       x-speakeasy-group: redirectUrls
       x-speakeasy-name-override: get
       description: Retrieve the details of the redirect URL with the given ID
@@ -95,7 +94,7 @@ paths:
       security:
       - bearerAuth: []
     delete:
-      summary: Delete a Redirect URL
+      summary: Delete a redirect URL
       x-speakeasy-group: redirectUrls
       x-speakeasy-name-override: delete
       description: Remove the selected redirect URL from the whitelist of the instance
@@ -360,17 +359,46 @@ paths:
     servers:
     - url: https://api.clerk.com/v1
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    Paginated:
+      name: paginated
+      in: query
+      description: 'Whether to paginate the results.
+
+        If true, the results will be paginated.
+
+        If false, the results will not be paginated.'
+      required: false
+      schema:
+        type: boolean
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
   responses:
-    RedirectURL.List:
-      description: List of Redirect URLs
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/RedirectURL'
-    UnprocessableEntity:
-      description: Invalid request parameters
+    ResourceNotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -381,14 +409,22 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
+    RedirectURL.List:
+      description: List of Redirect URLs
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/RedirectURL'
+    ClerkErrors:
+      description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
+    UnprocessableEntity:
+      description: Invalid request parameters
       content:
         application/json:
           schema:
@@ -404,14 +440,44 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/ClerkErrors_2'
     AuthenticationInvalid:
       description: Authentication invalid
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClerkErrors'
+            $ref: '#/components/schemas/ClerkErrors_2'
   schemas:
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
     DeletedObject:
       type: object
       additionalProperties: false
@@ -429,34 +495,6 @@ components:
       required:
       - object
       - deleted
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
     RedirectURL:
       type: object
       additionalProperties: false
@@ -506,43 +544,34 @@ components:
       required:
       - data
       - total_count
-  parameters:
-    Paginated:
-      name: paginated
-      in: query
-      description: 'Whether to paginate the results.
-
-        If true, the results will be paginated.
-
-        If false, the results will not be paginated.'
-      required: false
-      schema:
-        type: boolean
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
+    ClerkErrors_2:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError_2'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    ClerkError_2:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http
@@ -556,7 +585,7 @@ components:
 externalDocs:
   url: https://clerk.com/docs
 x-refined-from:
-- clerk-backend-api-openapi.yml
+- clerk-com-openapi.json
 - clerk-platform-api-openapi.yml
 x-speakeasy-retries:
   strategy: backoff

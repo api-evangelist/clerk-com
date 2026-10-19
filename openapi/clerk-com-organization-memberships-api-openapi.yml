@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -41,7 +41,7 @@ paths:
       operationId: CreateOrganizationMembership
       x-speakeasy-group: organizationMemberships
       x-speakeasy-name-override: create
-      summary: Create a New Organization Membership
+      summary: Create a new organization membership
       description: 'Adds a user as a member to the given organization.
 
         Only users in the same instance as the organization can be added as members.
@@ -106,7 +106,7 @@ paths:
       operationId: ListOrganizationMemberships
       x-speakeasy-group: organizationMemberships
       x-speakeasy-name-override: list
-      summary: Get a List of All Members of an Organization
+      summary: Get a list of all members of an organization
       description: Retrieves all user memberships for the given organization
       tags:
       - Organization Memberships
@@ -269,7 +269,7 @@ paths:
       operationId: UpdateOrganizationMembership
       x-speakeasy-group: organizationMemberships
       x-speakeasy-name-override: update
-      summary: Update an Organization Membership
+      summary: Update an organization membership
       description: Updates the properties of an existing organization membership
       tags:
       - Organization Memberships
@@ -309,7 +309,7 @@ paths:
       operationId: DeleteOrganizationMembership
       x-speakeasy-group: organizationMemberships
       x-speakeasy-name-override: delete
-      summary: Remove a Member from an Organization
+      summary: Remove a member from an organization
       description: Removes the given membership from the organization
       tags:
       - Organization Memberships
@@ -340,7 +340,7 @@ paths:
       operationId: UpdateOrganizationMembershipMetadata
       x-speakeasy-group: organizationMemberships
       x-speakeasy-name-override: updateMetadata
-      summary: Merge and Update Organization Membership Metadata
+      summary: Merge and update organization membership metadata
       description: 'Update an organization membership''s metadata attributes by merging existing values with the provided parameters.
 
         Metadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.
@@ -394,7 +394,7 @@ paths:
       operationId: InstanceGetOrganizationMemberships
       x-speakeasy-group: users
       x-speakeasy-name-override: getInstanceOrganizationMemberships
-      summary: Get a List of All Organization Memberships Within an Instance
+      summary: Get a list of all organization memberships within an instance
       description: Retrieves all organization user memberships for the given instance.
       tags:
       - Organization Memberships
@@ -423,48 +423,76 @@ paths:
         '500':
           $ref: '#/components/responses/ClerkErrors'
 components:
+  parameters:
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
+    OffsetParameter:
+      name: offset
+      in: query
+      description: 'Skip the first `offset` results when paginating.
+
+        Needs to be an integer greater or equal to zero.
+
+        To be used in conjunction with `limit`.'
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMembership:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMembership'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    OrganizationMemberships:
+      description: A list of organization memberships
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OrganizationMemberships'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    OrganizationMembershipPublicUserData:
-      description: An organization membership with public user data populated
-      type: object
-      additionalProperties: false
-      properties:
-        user_id:
-          type: string
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        profile_image_url:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        identifier:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        banned:
-          type: boolean
-      required:
-      - user_id
-      - first_name
-      - last_name
-      - profile_image_url
-      - image_url
-      - has_image
     Organization:
       type: object
       properties:
@@ -492,6 +520,16 @@ components:
           type: integer
         admin_delete_enabled:
           type: boolean
+        self_serve_sso_enabled:
+          type: boolean
+          description: 'Whether this organization can configure self-serve enterprise SSO.
+
+            '
+        self_serve_directory_sync_enabled:
+          type: boolean
+          description: 'Whether this organization can configure self-serve Directory Sync (SCIM).
+
+            '
         public_metadata:
           type: object
           additionalProperties: true
@@ -547,10 +585,85 @@ components:
           type: string
         meta:
           type: object
+          additionalProperties: true
       required:
       - message
       - long_message
       - code
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    OrganizationMembershipPublicUserData:
+      description: An organization membership with public user data populated
+      type: object
+      additionalProperties: false
+      properties:
+        user_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+        identifier:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+        deprovisioned:
+          type: boolean
+      required:
+      - user_id
+      - first_name
+      - last_name
+      - profile_image_url
+      - image_url
+      - has_image
+    OrganizationMemberships:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of organization memberships
+
+            '
+      required:
+      - data
+      - total_count
     OrganizationMembership:
       description: A user's membership in an organization
       type: object
@@ -603,105 +716,6 @@ components:
       - created_at
       - updated_at
       - organization
-    OrganizationMemberships:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationMembership'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of organization memberships
-
-            '
-      required:
-      - data
-      - total_count
-    ClerkErrors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClerkError'
-        meta:
-          type: object
-        clerk_trace_id:
-          type: string
-      required:
-      - errors
-  parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
-    OffsetParameter:
-      name: offset
-      in: query
-      description: 'Skip the first `offset` results when paginating.
-
-        Needs to be an integer greater or equal to zero.
-
-        To be used in conjunction with `limit`.'
-      required: false
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-  responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    OrganizationMemberships:
-      description: A list of organization memberships
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMemberships'
-    OrganizationMembership:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/OrganizationMembership'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   securitySchemes:
     bearerAuth:
       type: http

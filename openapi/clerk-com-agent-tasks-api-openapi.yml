@@ -21,7 +21,7 @@ info:
 
 
     Please see https://clerk.com/docs for more information.'
-  version: '2025-11-10'
+  version: '2026-08-20'
   termsOfService: https://clerk.com/terms
   license:
     name: MIT
@@ -39,7 +39,7 @@ paths:
       operationId: CreateAgentTask
       x-speakeasy-group: agentTasks
       x-speakeasy-name-override: create
-      summary: Create Agent Task
+      summary: Create agent task
       description: 'Create an agent task on behalf of a user.
 
         The response contains a URL that, when visited, creates a session for the user.
@@ -119,7 +119,7 @@ paths:
       operationId: RevokeAgentTask
       x-speakeasy-group: agentTasks
       x-speakeasy-name-override: revoke
-      summary: Revoke Agent Task
+      summary: Revoke agent task
       description: Revokes a pending agent task.
       tags:
       - Agent Tasks
@@ -139,46 +139,31 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
 components:
   responses:
-    AgentTask:
-      description: Success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AgentTask'
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
     ResourceNotFound:
       description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    AgentTask:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentTask'
     ClerkErrors:
       description: Request was not successful
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
   schemas:
-    ClerkError:
-      type: object
-      properties:
-        message:
-          type: string
-        long_message:
-          type: string
-        code:
-          type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
     ClerkErrors:
       type: object
       properties:
@@ -188,6 +173,7 @@ components:
             $ref: '#/components/schemas/ClerkError'
         meta:
           type: object
+          additionalProperties: true
         clerk_trace_id:
           type: string
       required:
@@ -226,6 +212,22 @@ components:
       - agent_id
       - agent_task_id
       - task_id
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
   securitySchemes:
     bearerAuth:
       type: http

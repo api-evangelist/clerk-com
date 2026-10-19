@@ -7,7 +7,7 @@ info:
     altText: Clerk docs
     href: https://clerk.com/docs
   version: '1.0'
-  description: 'Operations tagged Domains across 3 of this provider''s published API definitions: clerk-backend-api-openapi.yml, clerk-frontend-api-openapi.yml, clerk-platform-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Domains across 3 of this provider''s published API definitions: clerk-com-openapi.json, clerk-platform-api-openapi.yml, clerk-com-domains-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.clerk.com/v1
 - url: https://{domain}.clerk.accounts.dev
@@ -24,7 +24,7 @@ paths:
       operationId: ListDomains
       x-speakeasy-group: domains
       x-speakeasy-name-override: list
-      summary: List All Instance Domains
+      summary: List all instance domains
       description: 'Use this endpoint to get a list of all domains for an instance.
 
         The response will contain the primary domain for the instance and any satellite domains. Each domain in the response contains information about the URLs where Clerk operates and the required CNAME targets.'
@@ -36,7 +36,7 @@ paths:
       security:
       - bearerAuth: []
     post:
-      summary: Add a Domain
+      summary: Add a domain
       operationId: AddDomain
       x-speakeasy-group: domains
       x-speakeasy-name-override: add
@@ -46,9 +46,17 @@ paths:
 
         The new domain must have a `name`. The domain name can contain the port for development instances, like `localhost:3000`.
 
-        At the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.
+        Set `is_satellite` to `true` to add a satellite domain.
 
-        If you''re planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.'
+        To migrate a production instance from an active provider domain to its first custom primary domain,
+
+        set `is_satellite` to `false`. The custom domain becomes active and the provider domain stays attached.
+
+        Additional custom primary domains are not supported.
+
+        If you''re planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.
+
+        Adding a custom primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.'
       tags:
       - Domains
       requestBody:
@@ -62,9 +70,7 @@ paths:
                   description: The new domain name. Can contain the port for development instances.
                 is_satellite:
                   type: boolean
-                  description: Marks the new domain as satellite. Only `true` is accepted at the moment.
-                  enum:
-                  - true
+                  description: Marks the new domain as satellite. Set to `false` only when migrating a production instance from an active provider domain to a custom domain.
                 proxy_url:
                   type:
                   - string
@@ -80,6 +86,8 @@ paths:
           $ref: '#/components/responses/ClerkErrors'
         '402':
           $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
       security:
@@ -91,10 +99,12 @@ paths:
       operationId: DeleteDomain
       x-speakeasy-group: domains
       x-speakeasy-name-override: delete
-      summary: Delete a Satellite Domain
-      description: 'Deletes a satellite domain for the instance.
+      summary: Delete a domain
+      description: 'Deletes a domain for the instance.
 
-        It is currently not possible to delete the instance''s primary domain.'
+        The instance''s active domain cannot be deleted.
+
+        Deleting a non-satellite domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.'
       tags:
       - Domains
       parameters:
@@ -103,7 +113,7 @@ paths:
         required: true
         schema:
           type: string
-        description: The ID of the domain that will be deleted. Must be a satellite domain.
+        description: The ID of the domain that will be deleted.
       responses:
         '200':
           $ref: '#/components/responses/DeletedObject'
@@ -117,7 +127,7 @@ paths:
       operationId: UpdateDomain
       x-speakeasy-group: domains
       x-speakeasy-name-override: update
-      summary: Update a Domain
+      summary: Update a domain
       description: 'The `proxy_url` can be updated only for production instances.
 
         Update one of the instance''s domains. Both primary and satellite domains can be updated.
@@ -132,7 +142,9 @@ paths:
 
         emails to work. Expect downtime otherwise. Updating a primary domain''s name will also
 
-        update the instance''s home origin, affecting the default application paths.'
+        update the instance''s home origin, affecting the default application paths.
+
+        Updating the `name` or `is_secondary` of a primary domain returns 403 `domain_managed_by_integration` for applications in a Vercel-managed workspace; change the domain from the Vercel integration instead.'
       tags:
       - Domains
       parameters:
@@ -180,6 +192,8 @@ paths:
           $ref: '#/components/responses/Domain'
         '400':
           $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
         '404':
           $ref: '#/components/responses/ResourceNotFound'
         '422':
@@ -188,370 +202,6 @@ paths:
       - bearerAuth: []
     servers:
     - url: https://api.clerk.com/v1
-  /v1/organizations/{organization_id}/domains:
-    post:
-      summary: Create Organization Domain
-      description: 'Create a new organization domain.
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: CreateOrganizationDomain
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              additionalProperties: false
-              properties:
-                name:
-                  type: string
-                  description: The name of the new domain
-              required:
-              - name
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    get:
-      summary: Get All Organization Domains
-      description: 'Retrieves a list of all the domains in an organization
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: ListOrganizationDomains
-      parameters:
-      - $ref: '#/components/parameters/LimitParameter'
-      - $ref: '#/components/parameters/OffsetParameter'
-      - in: path
-        name: organization_id
-        description: The organization ID.
-        required: true
-        schema:
-          type: string
-      - in: query
-        name: verified
-        description: Filter by whether a domain is verified
-        required: false
-        schema:
-          type: boolean
-      - in: query
-        name: enrollment_mode
-        description: Filter by enrollment mode
-        required: false
-        schema:
-          type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomains'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    servers:
-    - url: https://{domain}.clerk.accounts.dev
-      variables:
-        domain:
-          default: example-destined-camel-13
-          description: Your Development Instance Frontend API Domain.
-  /v1/organizations/{organization_id}/domains/{domain_id}:
-    get:
-      summary: Get Organization Domain
-      description: 'Retrieve all properties for a domain of an organization.
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: GetOrganizationDomain
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      - in: path
-        required: true
-        name: domain_id
-        schema:
-          type: string
-        description: The domain ID.
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    delete:
-      summary: Delete Organization Domain
-      description: 'Remove a domain from an organization.
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: deleteOrganizationDomain
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      - in: path
-        required: true
-        name: domain_id
-        schema:
-          type: string
-        description: The domain ID.
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.DeletedOrganizationDomain'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    servers:
-    - url: https://{domain}.clerk.accounts.dev
-      variables:
-        domain:
-          default: example-destined-camel-13
-          description: Your Development Instance Frontend API Domain.
-  /v1/organizations/{organization_id}/domains/{domain_id}/update_enrollment_mode:
-    post:
-      summary: Update Organization Enrollment Mode
-      description: 'Update the enrollment mode for an organization domain.
-
-
-        This can be either `automatic_invitation` or `automatic_suggestion`.
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: UpdateOrganizationDomainEnrollmentMode
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      - in: path
-        required: true
-        name: domain_id
-        schema:
-          type: string
-        description: The domain ID.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              additionalProperties: false
-              properties:
-                enrollment_mode:
-                  type: string
-                delete_pending:
-                  type:
-                  - boolean
-                  - 'null'
-              required:
-              - enrollment_mode
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    servers:
-    - url: https://{domain}.clerk.accounts.dev
-      variables:
-        domain:
-          default: example-destined-camel-13
-          description: Your Development Instance Frontend API Domain.
-  /v1/organizations/{organization_id}/domains/{domain_id}/prepare_affiliation_verification:
-    post:
-      summary: Prepare Organization Domain Affiliation Verification
-      description: 'Prepares affiliation verification for an organization domain.
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: prepareOrganizationDomainVerification
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      - in: path
-        required: true
-        name: domain_id
-        schema:
-          type: string
-        description: The domain ID.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              additionalProperties: false
-              properties:
-                affiliation_email_address:
-                  type: string
-              required:
-              - affiliation_email_address
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    servers:
-    - url: https://{domain}.clerk.accounts.dev
-      variables:
-        domain:
-          default: example-destined-camel-13
-          description: Your Development Instance Frontend API Domain.
-  /v1/organizations/{organization_id}/domains/{domain_id}/attempt_affiliation_verification:
-    post:
-      summary: Attempt Organization Domain Affiliation Verification
-      description: 'Attempts affiliation verification for organization domain
-
-
-        The current user must have permissions to manage the domains of the organization.'
-      tags:
-      - Domains
-      operationId: attemptOrganizationDomainVerification
-      parameters:
-      - in: path
-        required: true
-        name: organization_id
-        schema:
-          type: string
-        description: The organization ID.
-      - in: path
-        required: true
-        name: domain_id
-        schema:
-          type: string
-        description: The domain ID.
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              additionalProperties: false
-              properties:
-                code:
-                  type: string
-                  description: The code that was sent to the email address.
-              required:
-              - code
-      responses:
-        '200':
-          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
-        '400':
-          $ref: '#/components/responses/ClerkErrors'
-        '401':
-          $ref: '#/components/responses/ClerkErrors'
-        '403':
-          $ref: '#/components/responses/ClerkErrors'
-        '404':
-          $ref: '#/components/responses/ClerkErrors'
-        '422':
-          $ref: '#/components/responses/ClerkErrors'
-      security:
-      - {}
-      - DevBrowser: []
-      - ProductionBrowser: []
-      - ProductionNativeApp: []
-        ProductionNativeFlag: []
-    servers:
-    - url: https://{domain}.clerk.accounts.dev
-      variables:
-        domain:
-          default: example-destined-camel-13
-          description: Your Development Instance Frontend API Domain.
   /platform/applications/{applicationID}/domain:
     patch:
       operationId: PlatformUpdateApplicationDomain
@@ -961,57 +611,445 @@ paths:
           $ref: '#/components/responses/ResourceNotFound'
     servers:
     - url: https://api.clerk.com/v1
-components:
-  schemas:
-    DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-        id:
-          type: string
-        slug:
-          type: string
-        deleted:
-          type: boolean
-        external_id:
-          type: string
-      required:
-      - object
-      - deleted
-    Domains:
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Domain'
-        total_count:
-          type: integer
-          format: int64
-          description: 'Total number of domains
+  /v1/organizations/{organization_id}/domains:
+    servers:
+    - url: https://{domain}.clerk.accounts.dev
+      variables:
+        domain:
+          default: example-destined-camel-13
+          description: Your Development Instance Frontend API Domain.
+    post:
+      summary: Create Organization Domain
+      description: 'Create a new organization domain.
 
-            '
-      required:
-      - data
-      - total_count
-    ClerkError:
-      type: object
-      properties:
-        message:
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: CreateOrganizationDomain
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
           type: string
-        long_message:
+        description: The organization ID.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name:
+                  type: string
+                  description: The name of the new domain
+              required:
+              - name
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+    get:
+      summary: Get All Organization Domains
+      description: 'Retrieves a list of all the domains in an organization
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: ListOrganizationDomains
+      parameters:
+      - $ref: '#/components/parameters/LimitParameter'
+      - $ref: '#/components/parameters/OffsetParameter'
+      - in: path
+        name: organization_id
+        description: The organization ID.
+        required: true
+        schema:
           type: string
-        code:
+      - in: query
+        name: verified
+        description: Filter by whether a domain is verified
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: enrollment_mode
+        description: Filter by enrollment mode
+        required: false
+        schema:
           type: string
-        meta:
-          type: object
-      required:
-      - message
-      - long_message
-      - code
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomains'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+  /v1/organizations/{organization_id}/domains/{domain_id}:
+    servers:
+    - url: https://{domain}.clerk.accounts.dev
+      variables:
+        domain:
+          default: example-destined-camel-13
+          description: Your Development Instance Frontend API Domain.
+    get:
+      summary: Get Organization Domain
+      description: 'Retrieve all properties for a domain of an organization.
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: GetOrganizationDomain
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The domain ID.
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+    delete:
+      summary: Delete Organization Domain
+      description: 'Remove a domain from an organization.
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: deleteOrganizationDomain
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The domain ID.
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.DeletedOrganizationDomain'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+  /v1/organizations/{organization_id}/domains/{domain_id}/update_enrollment_mode:
+    servers:
+    - url: https://{domain}.clerk.accounts.dev
+      variables:
+        domain:
+          default: example-destined-camel-13
+          description: Your Development Instance Frontend API Domain.
+    post:
+      summary: Update Organization Enrollment Mode
+      description: 'Update the enrollment mode for an organization domain.
+
+
+        This can be either `automatic_invitation` or `automatic_suggestion`.
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: UpdateOrganizationDomainEnrollmentMode
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The domain ID.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                enrollment_mode:
+                  type: string
+                delete_pending:
+                  type:
+                  - boolean
+                  - 'null'
+              required:
+              - enrollment_mode
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+  /v1/organizations/{organization_id}/domains/{domain_id}/prepare_affiliation_verification:
+    servers:
+    - url: https://{domain}.clerk.accounts.dev
+      variables:
+        domain:
+          default: example-destined-camel-13
+          description: Your Development Instance Frontend API Domain.
+    post:
+      summary: Prepare Organization Domain Affiliation Verification
+      description: 'Prepares affiliation verification for an organization domain.
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: prepareOrganizationDomainVerification
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The domain ID.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                affiliation_email_address:
+                  type: string
+              required:
+              - affiliation_email_address
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+  /v1/organizations/{organization_id}/domains/{domain_id}/attempt_affiliation_verification:
+    servers:
+    - url: https://{domain}.clerk.accounts.dev
+      variables:
+        domain:
+          default: example-destined-camel-13
+          description: Your Development Instance Frontend API Domain.
+    post:
+      summary: Attempt Organization Domain Affiliation Verification
+      description: 'Attempts affiliation verification for organization domain
+
+
+        The current user must have permissions to manage the domains of the organization.'
+      tags:
+      - Domains
+      operationId: attemptOrganizationDomainVerification
+      parameters:
+      - in: path
+        required: true
+        name: organization_id
+        schema:
+          type: string
+        description: The organization ID.
+      - in: path
+        required: true
+        name: domain_id
+        schema:
+          type: string
+        description: The domain ID.
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                code:
+                  type: string
+                  description: The code that was sent to the email address.
+              required:
+              - code
+      responses:
+        '200':
+          $ref: '#/components/responses/Client.ClientWrappedOrganizationDomain'
+        '400':
+          $ref: '#/components/responses/ClerkErrors'
+        '401':
+          $ref: '#/components/responses/ClerkErrors'
+        '403':
+          $ref: '#/components/responses/ClerkErrors'
+        '404':
+          $ref: '#/components/responses/ClerkErrors'
+        '422':
+          $ref: '#/components/responses/ClerkErrors'
+      security:
+      - {}
+      - DevBrowser: []
+      - ProductionBrowser: []
+      - ProductionNativeApp: []
+        ProductionNativeFlag: []
+components:
+  responses:
+    ResourceNotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    DeletedObject:
+      description: Deleted Object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeletedObject'
+    Domain:
+      description: A domain
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Domain'
+    ClerkErrors:
+      description: Request was not successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    UnprocessableEntity:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors'
+    Domains:
+      description: A list of domains
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Domains'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors_2'
+    AuthorizationInvalid:
+      description: Authorization invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors_2'
+    AuthenticationInvalid:
+      description: Authentication invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClerkErrors_2'
+    Client.ClientWrappedOrganizationDomain:
+      description: Returns the response for Client wrapped OrganizationDomain object.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.ClientWrappedOrganizationDomain'
+    Client.DeletedOrganizationDomain:
+      description: Returns a deleted organization domain.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.ClientWrappedDeletedObject'
+    Client.ClientWrappedOrganizationDomains:
+      description: Returns the response for Client wrapped array of OrganizationDomain objects.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Client.ClientWrappedOrganizationDomains'
+  schemas:
     Domain:
       type: object
       properties:
@@ -1046,6 +1084,16 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/CNameTarget'
+          description: Legacy CNAME-only DNS targets. Prefer `dns_targets` when present.
+        dns_targets:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/DNSTarget'
+          description: 'The complete typed DNS contract. Consumers should use this field instead of merging it with `cname_targets`.
+
+            '
       required:
       - object
       - id
@@ -1053,6 +1101,66 @@ components:
       - is_satellite
       - frontend_api_url
       - development_origin
+    Domains:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        total_count:
+          type: integer
+          format: int64
+          description: 'Total number of domains
+
+            '
+      required:
+      - data
+      - total_count
+    DNSTarget:
+      type: object
+      additionalProperties: false
+      properties:
+        host:
+          type: string
+        value:
+          type: string
+        record_type:
+          type: string
+          enum:
+          - CNAME
+          - TXT
+        automation_disposition:
+          type: string
+          enum:
+          - already_satisfied
+          - safe_to_create
+          - manual_resolution_required
+        required:
+          description: 'Denotes whether this DNS target is required to be set in order for the domain to be considered deployed.
+
+            '
+          type: boolean
+      required:
+      - host
+      - value
+      - record_type
+      - required
+    ClerkErrors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError'
+        meta:
+          type: object
+          additionalProperties: true
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
     CNameTarget:
       type: object
       additionalProperties: false
@@ -1070,37 +1178,475 @@ components:
       - host
       - value
       - required
-    ClerkErrors:
+    DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+        id:
+          type: string
+        slug:
+          type: string
+        deleted:
+          type: boolean
+        external_id:
+          type: string
+      required:
+      - object
+      - deleted
+    ClerkError:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+          additionalProperties: true
+      required:
+      - message
+      - long_message
+      - code
+    PlatformDomainInstanceSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - instance
+        id:
+          type: string
+        environment_type:
+          type: string
+          description: Instance environment type.
+          enum:
+          - production
+          - development
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - object
+      - id
+      - environment_type
+      - created_at
+      - updated_at
+    PlatformCreateApplicationDomainRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The provider domain name.
+        proxy_path:
+          type: string
+          description: Optional proxy path for provider domains.
+      required:
+      - name
+    PlatformUpdateApplicationDomainRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: The domain name.
+        proxy_path:
+          type: string
+          description: Optional proxy path for provider domains.
+      required:
+      - name
+    PlatformDNSCheckResponse:
+      description: 'Response from triggering a DNS check. Includes the current domain status
+
+        along with metadata about the check.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/PlatformDomainStatusResponse'
+      - type: object
+        properties:
+          domain_id:
+            type: string
+            description: The ID of the domain.
+            example: dmn_abcdefghijklmnopqrstuvwxyz0
+          last_run_at:
+            type:
+            - integer
+            - 'null'
+            format: int64
+            description: 'The timestamp in epoch milliseconds of the last DNS check, if any.
+
+              Will be `null` if no check has been performed yet.
+
+              '
+        required:
+        - domain_id
+        - last_run_at
+    PlatformWorkspaceDomainResponse:
+      allOf:
+      - $ref: '#/components/schemas/PlatformDomainResponse'
+      - type: object
+        required:
+        - application
+        - instance
+    CNAMEStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        actual:
+          type: array
+          items:
+            type: string
+        clerk_subdomain:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        verified:
+          type: boolean
+        required:
+          type: boolean
+        failure_hints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FailureHint'
+      required:
+      - clerk_subdomain
+      - from
+      - to
+      - verified
+      - required
+      - failure_hints
+    PlatformListDomainsResponse:
+      title: List Domains Response
+      description: A paginated list of domains across the workspace.
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          description: The list of domains.
+          items:
+            $ref: '#/components/schemas/PlatformWorkspaceDomainResponse'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of domains matching the query.
+          example: 5
+      required:
+      - data
+      - total_count
+    PlatformListApplicationDomainsResponse:
+      title: List Application Domains Response
+      description: A paginated list of application domains.
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          description: The list of application domains.
+          items:
+            $ref: '#/components/schemas/PlatformDomainResponse'
+        total_count:
+          type: integer
+          format: int64
+          description: The total number of application domains for the application.
+          example: 2
+      required:
+      - data
+      - total_count
+    DNSStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+          enum:
+          - not_started
+          - in_progress
+          - complete
+        cnames:
+          type: object
+          properties:
+            accounts:
+              $ref: '#/components/schemas/CNAMEStatus'
+            clerk:
+              $ref: '#/components/schemas/CNAMEStatus'
+            clk._domainkey:
+              $ref: '#/components/schemas/CNAMEStatus'
+            clk2._domainkey:
+              $ref: '#/components/schemas/CNAMEStatus'
+            clkmail:
+              $ref: '#/components/schemas/CNAMEStatus'
+      required:
+      - status
+      - cnames
+    PlatformDomainApplicationSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - application
+        id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - object
+      - id
+      - created_at
+      - updated_at
+    ClerkError_2:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    ClerkErrors_2:
       type: object
       properties:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/ClerkError'
+            $ref: '#/components/schemas/ClerkError_2'
         meta:
           type: object
         clerk_trace_id:
           type: string
       required:
       - errors
-    Stubs.Identification.Link:
+    SSLStatus:
       type: object
       additionalProperties: false
       properties:
-        type:
+        status:
           type: string
-          enum:
-          - oauth_apple
-          - oauth_google
-          - oauth_mock
-          - oauth_custom_mock
-          - saml
-        id:
+        required:
+          type: boolean
+        failure_hints:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/FailureHint'
+      required:
+      - status
+      - required
+      - failure_hints
+    FailureHint:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
       required:
-      - type
+      - code
+      - message
+    PlatformDomainResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - domain
+        id:
+          type: string
+          description: The ID of the domain.
+        name:
+          type: string
+          description: The domain name.
+        is_satellite:
+          type: boolean
+          description: Whether this is a satellite domain.
+        is_provider_domain:
+          type: boolean
+          description: Whether this is a provider domain.
+        frontend_api_url:
+          type: string
+          description: The frontend API URL.
+        development_origin:
+          type: string
+          description: The development origin.
+        accounts_portal_url:
+          type: string
+          description: The accounts portal URL.
+        proxy_url:
+          type: string
+          description: The proxy URL.
+        cname_targets:
+          type: array
+          items:
+            type: object
+            properties:
+              host:
+                type: string
+              value:
+                type: string
+              required:
+                type: boolean
+          description: 'CNAME targets for the domain. Omitted for development domains, which do not use custom-domain DNS setup.
+
+            '
+        created_at:
+          type: string
+          format: date-time
+          description: When the domain was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the domain was last updated.
+        application:
+          $ref: '#/components/schemas/PlatformDomainApplicationSummary'
+          description: Included on workspace-wide domain endpoints (`GET /platform/domains`, `GET /platform/domains/{domainIDOrName}`).
+        instance:
+          $ref: '#/components/schemas/PlatformDomainInstanceSummary'
+          description: Included on workspace-wide domain endpoints (`GET /platform/domains`, `GET /platform/domains/{domainIDOrName}`).
+      required:
+      - object
       - id
-    Client.Passkey:
+      - name
+      - frontend_api_url
+      - development_origin
+      - created_at
+      - updated_at
+    PlatformDeletedObjectResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        deleted:
+          type: boolean
+          description: Whether the object was deleted.
+        object:
+          type: string
+          example: deleted
+        id:
+          type: string
+          description: The ID of the deleted resource.
+      required:
+      - deleted
+      - object
+      - id
+    PlatformDomainStatusResponse:
+      type: object
+      properties:
+        dns:
+          type: object
+          $ref: '#/components/schemas/DNSStatus'
+        ssl:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - complete
+              - in_process
+              - not_started
+              - failed
+              - incomplete
+            required:
+              type: boolean
+            failure_hints:
+              type:
+              - array
+              - 'null'
+              items:
+                $ref: '#/components/schemas/FailureHint'
+        ssl_hosts:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SSLStatus'
+        mail:
+          type: object
+          properties:
+            status:
+              type: string
+            required:
+              type: boolean
+          required:
+          - status
+          - required
+        proxy:
+          type: object
+          properties:
+            status:
+              type: string
+            required:
+              type: boolean
+          required:
+          - status
+          - required
+        status:
+          type: string
+          enum:
+          - complete
+          - incomplete
+      required:
+      - dns
+      - ssl
+      - status
+    Client.PublicOrganizationData:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        image_url:
+          type: string
+        has_image:
+          type: boolean
+      required:
+      - id
+      - name
+      - slug
+      - has_image
+    Client.ClientWrappedOrganizationDomain:
+      type: object
+      additionalProperties: false
+      properties:
+        response:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Client.OrganizationDomain'
+        client:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/schemas-Client.Client'
+      required:
+      - response
+      - client
+    Client.EmailAddress:
       type: object
       additionalProperties: false
       properties:
@@ -1112,23 +1658,32 @@ components:
 
             '
           enum:
-          - passkey
-        name:
+          - email_address
+        email_address:
           type: string
-        last_used_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: 'Unix timestamp of when the passkey was last used.
-
-            '
+        reserved:
+          type: boolean
         verification:
           type:
           - object
           - 'null'
           oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.Verification.Invitation'
+          - $ref: '#/components/schemas/Stubs.Verification.Link'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+          - $ref: '#/components/schemas/Stubs.Verification.Admin'
+          - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
+          - $ref: '#/components/schemas/Stubs.Verification.SAML'
+        linked_to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stubs.Identification.Link'
+        matches_sso_connection:
+          description: 'Indicates whether this email address domain matches an active enterprise connection.
+
+            '
+          type: boolean
         created_at:
           type: integer
           format: int64
@@ -1138,14 +1693,18 @@ components:
         updated_at:
           type: integer
           format: int64
-          description: 'Unix timestamp of update
+          description: 'Unix timestamp of creation
 
             '
       required:
       - id
       - object
-      - name
+      - email_address
       - verification
+      - linked_to
+      - reserved
+      - created_at
+      - updated_at
     schemas-Client.SignIn:
       type: object
       additionalProperties: false
@@ -1280,191 +1839,6 @@ components:
       - user_data
       - created_session_id
       - abandon_at
-    verification_oauth:
-      x-speakeasy-name-override: Oauth
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_oauth
-        status:
-          type: string
-          x-speakeasy-unknown-values: allow
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-          - transferable
-        strategy:
-          type: string
-          x-speakeasy-unknown-values: allow
-          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
-        external_verification_redirect_url:
-          type: string
-        error:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
-          type: integer
-        attempts:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    Stubs.SignInFactor:
-      type: object
-      additionalProperties: false
-      properties:
-        strategy:
-          type: string
-          enum:
-          - ticket
-          - password
-          - email_code
-          - email_link
-          - phone_code
-          - web3_metamask_signature
-          - web3_base_signature
-          - web3_coinbase_wallet_signature
-          - web3_okx_wallet_signature
-          - web3_solana_signature
-          - totp
-          - backup_code
-          - oauth_apple
-          - oauth_google
-          - oauth_facebook
-          - oauth_hubspot
-          - oauth_github
-          - oauth_mock
-          - oauth_custom_mock
-          - oauth_token_mock
-          - saml
-          - enterprise_sso
-          - reset_password_email_code
-          - reset_password_phone_code
-          - passkey
-          - google_one_tap
-        safe_identifier:
-          type: string
-        enterprise_connection_id:
-          type: string
-        enterprise_connection_name:
-          type: string
-        email_address_id:
-          type: string
-        phone_number_id:
-          type: string
-        web3_wallet_id:
-          type: string
-        passkey_id:
-          type: string
-        primary:
-          type:
-          - boolean
-          - 'null'
-        external_verification_redirect_url:
-          type:
-          - string
-          - 'null'
-        default:
-          type: boolean
-      required:
-      - strategy
-    Stubs.Verification.Web3Signature:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_web3
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
-          type: string
-          enum:
-          - web3_metamask_signature
-          - web3_base_signature
-          - web3_coinbase_wallet_signature
-          - web3_okx_wallet_signature
-          - web3_solana_signature
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        nonce:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-      required:
-      - status
-      - strategy
-    Stubs.Verification.SAML:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_saml
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-          - transferable
-        strategy:
-          type: string
-          enum:
-          - saml
-        external_verification_redirect_url:
-          type:
-          - string
-          - 'null'
-        error:
-          allOf:
-          - $ref: '#/components/schemas/ClerkError'
-          - type:
-            - object
-            - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-        attempts:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
     Client.SignUp:
       type: object
       properties:
@@ -1604,6 +1978,77 @@ components:
       - created_user_id
       - abandon_at
       - legal_accepted_at
+    Stubs.Verification.Passkey:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_passkey
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - passkey
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type: integer
+        nonce:
+          type: string
+      required:
+      - status
+      - strategy
+      - expire_at
+    Stubs.Verification.SAML:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_saml
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+          - transferable
+        strategy:
+          type: string
+          enum:
+          - saml
+        external_verification_redirect_url:
+          type:
+          - string
+          - 'null'
+        error:
+          allOf:
+          - $ref: '#/components/schemas/ClerkError_3'
+          - type:
+            - object
+            - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
     Token:
       type: object
       additionalProperties: false
@@ -1623,7 +2068,89 @@ components:
       required:
       - object
       - jwt
-    Stubs.Verification.GoogleOneTap:
+    Client.OrganizationMembership:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - organization_membership
+        public_metadata:
+          type: object
+          additionalProperties: true
+        role:
+          type: string
+        role_name:
+          type: string
+        permissions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+        organization:
+          $ref: '#/components/schemas/Client.Organization'
+        public_user_data:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Client.PublicUserData'
+      required:
+      - object
+      - id
+      - public_metadata
+      - role
+      - role_name
+      - permissions
+      - created_at
+      - updated_at
+      - organization
+    Stubs.Verification.Admin:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_admin
+        status:
+          type: string
+          enum:
+          - verified
+          - unverified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - admin
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    verification_google_one_tap:
+      x-speakeasy-name-override: GoogleOneTap
       type: object
       additionalProperties: false
       properties:
@@ -1648,9 +2175,186 @@ components:
           type:
           - integer
           - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError_3'
       required:
       - status
       - strategy
+      - attempts
+      - expire_at
+    Stubs.Verification.Password:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_password
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - password
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    Client.OrganizationDomainVerification:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: string
+        strategy:
+          type: string
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    verification_oauth:
+      x-speakeasy-name-override: Oauth
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_oauth
+        status:
+          type: string
+          x-speakeasy-unknown-values: allow
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+          - transferable
+        strategy:
+          type: string
+          x-speakeasy-unknown-values: allow
+          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z]+$
+        external_verification_redirect_url:
+          type: string
+        error:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/ClerkError_3'
+        expire_at:
+          type: integer
+        attempts:
+          type:
+          - integer
+          - 'null'
+        verified_at_client:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+      - attempts
+      - expire_at
+    schemas-Client.Client:
+      type:
+      - object
+      - 'null'
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - client
+        id:
+          type: string
+          description: String representing the identifier of the session.
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/schemas-Client.Session'
+        sign_in:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/schemas-Client.SignIn'
+        sign_up:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Client.SignUp'
+        last_active_session_id:
+          type:
+          - string
+          - 'null'
+          description: Last active session_id.
+        last_authentication_strategy:
+          type:
+          - string
+          - 'null'
+          description: 'The authentication strategy that was last used to authenticate the user on this client.
+
+            '
+        cookie_expires_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: Unix timestamp of the cookie expiration.
+        captcha_bypass:
+          type: boolean
+          description: Whether the client can bypass CAPTCHA.
+        created_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of creation.
+        updated_at:
+          type: integer
+          format: int64
+          description: Unix timestamp of last update.
+      required:
+      - object
+      - id
+      - sessions
+      - sign_in
+      - sign_up
+      - last_active_session_id
+      - last_authentication_strategy
+      - cookie_expires_at
+      - captcha_bypass
+      - created_at
+      - updated_at
     Stubs.SignUpVerification.AdditionalFields:
       type: object
       properties:
@@ -1667,25 +2371,23 @@ components:
       required:
       - next_action
       - supported_strategies
-    Stubs.Verification.Admin:
+    Stubs.Verification.TOTP:
       type: object
       additionalProperties: false
       properties:
         object:
           type: string
           enum:
-          - verification_admin
+          - verification_totp
         status:
           type: string
           enum:
-          - verified
           - unverified
-          - failed
-          - expired
+          - verified
         strategy:
           type: string
           enum:
-          - admin
+          - totp
         attempts:
           type:
           - integer
@@ -1753,44 +2455,174 @@ components:
       - total_pending_suggestions
       - created_at
       - updated_at
-    Client.EmailAddress:
+    Client.PublicUserData:
       type: object
       additionalProperties: false
       properties:
-        id:
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        has_image:
+          type: boolean
+        identifier:
           type: string
+        profile_image_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Use `image_url` instead.
+        user_id:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        banned:
+          type: boolean
+      required:
+      - first_name
+      - last_name
+      - identifier
+      - has_image
+    Stubs.Verification.Web3Signature:
+      type: object
+      properties:
         object:
           type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
           enum:
-          - email_address
+          - verification_web3
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - web3_metamask_signature
+          - web3_base_signature
+          - web3_coinbase_wallet_signature
+          - web3_okx_wallet_signature
+          - web3_solana_signature
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        nonce:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+      required:
+      - status
+      - strategy
+    Stubs.Verification.GoogleOneTap:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_google_one_tap
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - google_one_tap
+        expire_at:
+          type:
+          - integer
+          - 'null'
+        attempts:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    ExternalAccountWithVerification:
+      type: object
+      additionalProperties: true
+      properties:
+        object:
+          type: string
+          description: String representing the object's type. Objects of the same type share the same value.
+          enum:
+          - external_account
+          - facebook_account
+          - google_account
+        id:
+          type: string
+        provider:
+          type: string
+        identification_id:
+          type: string
+        provider_user_id:
+          description: The unique ID of the user in the external provider's system
+          type: string
+        approved_scopes:
+          type: string
         email_address:
           type: string
-        reserved:
-          type: boolean
-        verification:
+        email_address_verified:
           type:
-          - object
+          - boolean
           - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.Verification.Invitation'
-          - $ref: '#/components/schemas/Stubs.Verification.Link'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-          - $ref: '#/components/schemas/Stubs.Verification.Admin'
-          - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
-          - $ref: '#/components/schemas/Stubs.Verification.SAML'
-        linked_to:
-          type: array
-          items:
-            $ref: '#/components/schemas/Stubs.Identification.Link'
-        matches_sso_connection:
-          description: 'Indicates whether this email address domain matches an active enterprise connection.
+          description: 'Whether the email was verified by the OAuth provider at creation time. null = unknown (pre-migration data or custom OAuth providers), true = provider confirmed email was verified, false = provider confirmed email was NOT verified
 
             '
-          type: boolean
+        first_name:
+          type: string
+        last_name:
+          type: string
+        avatar_url:
+          type: string
+          deprecated: true
+          description: Please use `image_url` instead
+        image_url:
+          type:
+          - string
+          - 'null'
+        username:
+          type:
+          - string
+          - 'null'
+        phone_number:
+          type:
+          - string
+          - 'null'
+        public_metadata:
+          type: object
+          additionalProperties: true
+        label:
+          type:
+          - string
+          - 'null'
         created_at:
           type: integer
           format: int64
@@ -1803,15 +2635,291 @@ components:
           description: 'Unix timestamp of creation
 
             '
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/verification_oauth'
+          - $ref: '#/components/schemas/verification_google_one_tap'
+          discriminator:
+            propertyName: object
+      required:
+      - object
+      - id
+      - provider
+      - identification_id
+      - provider_user_id
+      - approved_scopes
+      - email_address
+      - first_name
+      - last_name
+      - public_metadata
+      - created_at
+      - updated_at
+      - verification
+    Stubs.Verification.BackupCode:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_backup_code
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+        strategy:
+          type: string
+          enum:
+          - backup_code
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+    Stubs.Verification.Oauth:
+      type: object
+      additionalProperties: false
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_oauth
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+          - transferable
+        strategy:
+          type: string
+          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z0-9_]+$
+        external_verification_redirect_url:
+          type:
+          - string
+          - 'null'
+        error:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/ClerkError_3'
+        expire_at:
+          type: integer
+        attempts:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
+      - expire_at
+    ClerkError_3:
+      type: object
+      properties:
+        message:
+          type: string
+        long_message:
+          type: string
+        code:
+          type: string
+        meta:
+          type: object
+      required:
+      - message
+      - long_message
+      - code
+    Client.DeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
+      required:
+      - object
+      - deleted
+    ClerkErrors_3:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClerkError_3'
+        meta:
+          type: object
+        clerk_trace_id:
+          type: string
+      required:
+      - errors
+    Client.ClientWrappedDeletedObject:
+      type: object
+      additionalProperties: false
+      properties:
+        response:
+          $ref: '#/components/schemas/Client.DeletedObject'
+        client:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/schemas-Client.Client'
+      required:
+      - response
+      - client
+    schemas-Client.SessionBase:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - session
+        status:
+          type: string
+          enum:
+          - active
+          - revoked
+          - ended
+          - expired
+          - removed
+          - abandoned
+          - pending
+        expire_at:
+          type: integer
+          format: int64
+        abandon_at:
+          type: integer
+          format: int64
+        last_active_at:
+          type: integer
+          format: int64
+        last_active_token:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Token'
+        actor:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        tasks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Client.SessionTask'
       required:
       - id
       - object
+      - status
+      - expire_at
+      - abandon_at
+      - last_active_at
+    Client.SignUp.Verifications:
+      type: object
+      properties:
+        email_address:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - allOf:
+            - $ref: '#/components/schemas/Stubs.Verification.OTP'
+            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+          - allOf:
+            - $ref: '#/components/schemas/Stubs.Verification.Link'
+            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+          - allOf:
+            - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+          - allOf:
+            - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
+            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+          - allOf:
+            - $ref: '#/components/schemas/Stubs.Verification.SAML'
+            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+        phone_number:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Stubs.Verification.OTP'
+          - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+        web3_wallet:
+          type:
+          - object
+          - 'null'
+          allOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
+          - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
+        external_account:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Oauth'
+          - $ref: '#/components/schemas/Stubs.Verification.SAML'
+          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
+          - $ref: '#/components/schemas/Stubs.Verification.GoogleOneTap'
+      required:
       - email_address
-      - verification
-      - linked_to
-      - reserved
-      - created_at
-      - updated_at
+      - phone_number
+      - web3_wallet
+      - external_account
+    Stubs.Verification.OTP:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_otp
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - failed
+          - expired
+        strategy:
+          type: string
+          enum:
+          - phone_code
+          - email_code
+          - reset_password_email_code
+          - reset_password_phone_code
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type: integer
+      required:
+      - status
+      - strategy
+      - expire_at
     Client.SAMLAccount:
       type: object
       additionalProperties: false
@@ -1884,6 +2992,99 @@ components:
       - public_metadata
       - saml_connection
       - verification
+    Client.Web3Wallet:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - web3_wallet
+        web3_wallet:
+          type: string
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
+          - $ref: '#/components/schemas/Stubs.Verification.Admin'
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+      required:
+      - id
+      - object
+      - web3_wallet
+      - verification
+      - created_at
+      - updated_at
+    Stubs.Identification.Link:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          type: string
+          enum:
+          - oauth_apple
+          - oauth_google
+          - oauth_mock
+          - oauth_custom_mock
+          - saml
+        id:
+          type: string
+      required:
+      - type
+      - id
+    Client.SessionTask:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key
+    Stubs.Verification.Ticket:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - verification_ticket
+        status:
+          type: string
+          enum:
+          - unverified
+          - verified
+          - expired
+        strategy:
+          type: string
+          enum:
+          - ticket
+        attempts:
+          type:
+          - integer
+          - 'null'
+        expire_at:
+          type:
+          - integer
+          - 'null'
+      required:
+      - status
+      - strategy
     Stubs.SAMLConnection.SAMLAccount:
       type: object
       additionalProperties: false
@@ -1938,226 +3139,6 @@ components:
         - domain
       - required:
         - domains
-    Stubs.Verification.Oauth:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_oauth
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-          - transferable
-        strategy:
-          type: string
-          pattern: ^oauth_(?:(?:token_)|(?:custom_))?[a-z0-9_]+$
-        external_verification_redirect_url:
-          type:
-          - string
-          - 'null'
-        error:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/ClerkError'
-        expire_at:
-          type: integer
-        attempts:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
-      - expire_at
-    Client.OrganizationMembership:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization_membership
-        public_metadata:
-          type: object
-          additionalProperties: true
-        role:
-          type: string
-        role_name:
-          type: string
-        permissions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-        organization:
-          $ref: '#/components/schemas/Client.Organization'
-        public_user_data:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Client.PublicUserData'
-      required:
-      - object
-      - id
-      - public_metadata
-      - role
-      - role_name
-      - permissions
-      - created_at
-      - updated_at
-      - organization
-    Client.Organization:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - organization
-        name:
-          type: string
-        slug:
-          type: string
-        image_url:
-          type: string
-        has_image:
-          type: boolean
-        members_count:
-          type: integer
-        pending_invitations_count:
-          type: integer
-        max_allowed_memberships:
-          type: integer
-        admin_delete_enabled:
-          type: boolean
-        public_metadata:
-          type: object
-          additionalProperties: true
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation.
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of last update.
-
-            '
-        logo_url:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: Deprecated. Use `image_url` instead.
-      required:
-      - object
-      - id
-      - name
-      - slug
-      - has_image
-      - max_allowed_memberships
-      - admin_delete_enabled
-      - public_metadata
-      - created_at
-      - updated_at
-    Client.Web3Wallet:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          description: 'String representing the object''s type. Objects of the same type share the same value.
-
-            '
-          enum:
-          - web3_wallet
-        web3_wallet:
-          type: string
-        verification:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
-          - $ref: '#/components/schemas/Stubs.Verification.Admin'
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-      required:
-      - id
-      - object
-      - web3_wallet
-      - verification
-      - created_at
-      - updated_at
-    Stubs.Verification.BackupCode:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_backup_code
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
-          - backup_code
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
     Stubs.Verification.Invitation:
       type: object
       additionalProperties: false
@@ -2185,6 +3166,73 @@ components:
       required:
       - status
       - strategy
+    Client.ClientWrappedOrganizationDomains:
+      type: object
+      additionalProperties: false
+      properties:
+        response:
+          type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Client.OrganizationDomain'
+            total_count:
+              type: integer
+              format: int64
+        client:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/schemas-Client.Client'
+      required:
+      - response
+      - client
+    Client.Passkey:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          description: 'String representing the object''s type. Objects of the same type share the same value.
+
+            '
+          enum:
+          - passkey
+        name:
+          type: string
+        last_used_at:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          description: 'Unix timestamp of when the passkey was last used.
+
+            '
+        verification:
+          type:
+          - object
+          - 'null'
+          oneOf:
+          - $ref: '#/components/schemas/Stubs.Verification.Passkey'
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of update
+
+            '
+      required:
+      - id
+      - object
+      - name
+      - verification
     Stubs.Verification.Link:
       type: object
       properties:
@@ -2216,6 +3264,44 @@ components:
       - status
       - strategy
       - expire_at
+    schemas-Client.Session:
+      allOf:
+      - $ref: '#/components/schemas/schemas-Client.SessionBase'
+      - type: object
+        properties:
+          last_active_organization_id:
+            type:
+            - string
+            - 'null'
+          user:
+            $ref: '#/components/schemas/Client.User'
+          public_user_data:
+            type:
+            - object
+            - 'null'
+            allOf:
+            - $ref: '#/components/schemas/Client.PublicUserData'
+          factor_verification_age:
+            type: array
+            description: Each item represents the minutes that have passed since the last time a first or second factor were verified.
+            items:
+              type: integer
+          created_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of creation.
+            example: 1700690400000
+          updated_at:
+            type: integer
+            format: int64
+            description: Unix timestamp of last update.
+            example: 1700690400000
+        required:
+        - last_active_organization_id
+        - public_user_data
+        - factor_verification_age
+        - created_at
+        - updated_at
     Stubs.Verification.FromOauth:
       type: object
       properties:
@@ -2246,95 +3332,6 @@ components:
       required:
       - status
       - strategy
-    Stubs.Verification.Passkey:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_passkey
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
-          type: string
-          enum:
-          - passkey
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type: integer
-        nonce:
-          type: string
-      required:
-      - status
-      - strategy
-      - expire_at
-    Client.SessionTask:
-      type: object
-      properties:
-        key:
-          type: string
-      required:
-      - key
-    Client.SignUp.Verifications:
-      type: object
-      properties:
-        email_address:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - allOf:
-            - $ref: '#/components/schemas/Stubs.Verification.OTP'
-            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-          - allOf:
-            - $ref: '#/components/schemas/Stubs.Verification.Link'
-            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-          - allOf:
-            - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-          - allOf:
-            - $ref: '#/components/schemas/Stubs.Verification.FromOauth'
-            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-          - allOf:
-            - $ref: '#/components/schemas/Stubs.Verification.SAML'
-            - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-        phone_number:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Stubs.Verification.OTP'
-          - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-        web3_wallet:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Web3Signature'
-          - $ref: '#/components/schemas/Stubs.SignUpVerification.AdditionalFields'
-        external_account:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/Stubs.Verification.Oauth'
-          - $ref: '#/components/schemas/Stubs.Verification.SAML'
-          - $ref: '#/components/schemas/Stubs.Verification.Ticket'
-          - $ref: '#/components/schemas/Stubs.Verification.GoogleOneTap'
-      required:
-      - email_address
-      - phone_number
-      - web3_wallet
-      - external_account
     Client.PhoneNumber:
       type: object
       additionalProperties: false
@@ -2394,165 +3391,65 @@ components:
       - reserved
       - created_at
       - updated_at
-    schemas-Client.Session:
-      allOf:
-      - $ref: '#/components/schemas/schemas-Client.SessionBase'
-      - type: object
-        properties:
-          last_active_organization_id:
-            type:
-            - string
-            - 'null'
-          user:
-            $ref: '#/components/schemas/Client.User'
-          public_user_data:
-            type:
-            - object
-            - 'null'
-            allOf:
-            - $ref: '#/components/schemas/Client.PublicUserData'
-          factor_verification_age:
-            type: array
-            description: Each item represents the minutes that have passed since the last time a first or second factor were verified.
-            items:
-              type: integer
-          created_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of creation.
-            example: 1700690400000
-          updated_at:
-            type: integer
-            format: int64
-            description: Unix timestamp of last update.
-            example: 1700690400000
-        required:
-        - last_active_organization_id
-        - public_user_data
-        - factor_verification_age
-        - created_at
-        - updated_at
-    Client.ClientWrappedDeletedObject:
+    Stubs.SignInFactor:
       type: object
       additionalProperties: false
       properties:
-        response:
-          $ref: '#/components/schemas/Client.DeletedObject'
-        client:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.Client'
-      required:
-      - response
-      - client
-    Stubs.Verification.Password:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_password
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
         strategy:
           type: string
           enum:
+          - ticket
           - password
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
-    Client.OrganizationDomainVerification:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-        strategy:
-          type: string
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    verification_google_one_tap:
-      x-speakeasy-name-override: GoogleOneTap
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_google_one_tap
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
+          - email_code
+          - email_link
+          - phone_code
+          - web3_metamask_signature
+          - web3_base_signature
+          - web3_coinbase_wallet_signature
+          - web3_okx_wallet_signature
+          - web3_solana_signature
+          - totp
+          - backup_code
+          - oauth_apple
+          - oauth_google
+          - oauth_facebook
+          - oauth_hubspot
+          - oauth_github
+          - oauth_mock
+          - oauth_custom_mock
+          - oauth_token_mock
+          - saml
+          - enterprise_sso
+          - reset_password_email_code
+          - reset_password_phone_code
+          - passkey
           - google_one_tap
-        expire_at:
+        safe_identifier:
+          type: string
+        enterprise_connection_id:
+          type: string
+        enterprise_connection_name:
+          type: string
+        email_address_id:
+          type: string
+        phone_number_id:
+          type: string
+        web3_wallet_id:
+          type: string
+        passkey_id:
+          type: string
+        primary:
           type:
-          - integer
+          - boolean
           - 'null'
-        attempts:
-          type:
-          - integer
-          - 'null'
-        verified_at_client:
+        external_verification_redirect_url:
           type:
           - string
           - 'null'
-        error:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/ClerkError'
-      required:
-      - status
-      - strategy
-      - attempts
-      - expire_at
-    Client.DeletedObject:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
-        slug:
-          type: string
-        object:
-          type: string
-        deleted:
+        default:
           type: boolean
       required:
-      - object
-      - deleted
+      - strategy
     Client.User:
       type: object
       properties:
@@ -2773,49 +3670,9 @@ components:
       - mfa_enabled_at
       - mfa_disabled_at
       - legal_accepted_at
-    Client.PublicUserData:
+    Client.Organization:
       type: object
       additionalProperties: false
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-        last_name:
-          type:
-          - string
-          - 'null'
-        image_url:
-          type:
-          - string
-          - 'null'
-        has_image:
-          type: boolean
-        identifier:
-          type: string
-        profile_image_url:
-          type:
-          - string
-          - 'null'
-          deprecated: true
-          description: Use `image_url` instead.
-        user_id:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        banned:
-          type: boolean
-      required:
-      - first_name
-      - last_name
-      - identifier
-      - has_image
-    schemas-Client.SessionBase:
-      type: object
       properties:
         id:
           type: string
@@ -2825,286 +3682,7 @@ components:
 
             '
           enum:
-          - session
-        status:
-          type: string
-          enum:
-          - active
-          - revoked
-          - ended
-          - expired
-          - removed
-          - abandoned
-          - pending
-        expire_at:
-          type: integer
-          format: int64
-        abandon_at:
-          type: integer
-          format: int64
-        last_active_at:
-          type: integer
-          format: int64
-        last_active_token:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Token'
-        actor:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        tasks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Client.SessionTask'
-      required:
-      - id
-      - object
-      - status
-      - expire_at
-      - abandon_at
-      - last_active_at
-    Client.ClientWrappedOrganizationDomain:
-      type: object
-      additionalProperties: false
-      properties:
-        response:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Client.OrganizationDomain'
-        client:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.Client'
-      required:
-      - response
-      - client
-    schemas-Client.Client:
-      type:
-      - object
-      - 'null'
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - client
-        id:
-          type: string
-          description: String representing the identifier of the session.
-        sessions:
-          type: array
-          items:
-            $ref: '#/components/schemas/schemas-Client.Session'
-        sign_in:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.SignIn'
-        sign_up:
-          type:
-          - object
-          - 'null'
-          allOf:
-          - $ref: '#/components/schemas/Client.SignUp'
-        last_active_session_id:
-          type:
-          - string
-          - 'null'
-          description: Last active session_id.
-        last_authentication_strategy:
-          type:
-          - string
-          - 'null'
-          description: 'The authentication strategy that was last used to authenticate the user on this client.
-
-            '
-        cookie_expires_at:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          description: Unix timestamp of the cookie expiration.
-        captcha_bypass:
-          type: boolean
-          description: Whether the client can bypass CAPTCHA.
-        created_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of creation.
-        updated_at:
-          type: integer
-          format: int64
-          description: Unix timestamp of last update.
-      required:
-      - object
-      - id
-      - sessions
-      - sign_in
-      - sign_up
-      - last_active_session_id
-      - last_authentication_strategy
-      - cookie_expires_at
-      - captcha_bypass
-      - created_at
-      - updated_at
-    Stubs.Verification.OTP:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_otp
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - failed
-          - expired
-        strategy:
-          type: string
-          enum:
-          - phone_code
-          - email_code
-          - reset_password_email_code
-          - reset_password_phone_code
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type: integer
-      required:
-      - status
-      - strategy
-      - expire_at
-    Client.ClientWrappedOrganizationDomains:
-      type: object
-      additionalProperties: false
-      properties:
-        response:
-          type: object
-          properties:
-            data:
-              type: array
-              items:
-                $ref: '#/components/schemas/Client.OrganizationDomain'
-            total_count:
-              type: integer
-              format: int64
-        client:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/schemas-Client.Client'
-      required:
-      - response
-      - client
-    ExternalAccountWithVerification:
-      type: object
-      additionalProperties: true
-      properties:
-        object:
-          type: string
-          description: String representing the object's type. Objects of the same type share the same value.
-          enum:
-          - external_account
-          - facebook_account
-          - google_account
-        id:
-          type: string
-        provider:
-          type: string
-        identification_id:
-          type: string
-        provider_user_id:
-          description: The unique ID of the user in the external provider's system
-          type: string
-        approved_scopes:
-          type: string
-        email_address:
-          type: string
-        email_address_verified:
-          type:
-          - boolean
-          - 'null'
-          description: 'Whether the email was verified by the OAuth provider at creation time. null = unknown (pre-migration data or custom OAuth providers), true = provider confirmed email was verified, false = provider confirmed email was NOT verified
-
-            '
-        first_name:
-          type: string
-        last_name:
-          type: string
-        avatar_url:
-          type: string
-          deprecated: true
-          description: Please use `image_url` instead
-        image_url:
-          type:
-          - string
-          - 'null'
-        username:
-          type:
-          - string
-          - 'null'
-        phone_number:
-          type:
-          - string
-          - 'null'
-        public_metadata:
-          type: object
-          additionalProperties: true
-        label:
-          type:
-          - string
-          - 'null'
-        created_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        updated_at:
-          type: integer
-          format: int64
-          description: 'Unix timestamp of creation
-
-            '
-        verification:
-          type:
-          - object
-          - 'null'
-          oneOf:
-          - $ref: '#/components/schemas/verification_oauth'
-          - $ref: '#/components/schemas/verification_google_one_tap'
-          discriminator:
-            propertyName: object
-      required:
-      - object
-      - id
-      - provider
-      - identification_id
-      - provider_user_id
-      - approved_scopes
-      - email_address
-      - first_name
-      - last_name
-      - public_metadata
-      - created_at
-      - updated_at
-      - verification
-    Client.PublicOrganizationData:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: string
+          - organization
         name:
           type: string
         slug:
@@ -3113,526 +3691,47 @@ components:
           type: string
         has_image:
           type: boolean
+        members_count:
+          type: integer
+        pending_invitations_count:
+          type: integer
+        max_allowed_memberships:
+          type: integer
+        admin_delete_enabled:
+          type: boolean
+        public_metadata:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of creation.
+
+            '
+        updated_at:
+          type: integer
+          format: int64
+          description: 'Unix timestamp of last update.
+
+            '
+        logo_url:
+          type:
+          - string
+          - 'null'
+          deprecated: true
+          description: Deprecated. Use `image_url` instead.
       required:
+      - object
       - id
       - name
       - slug
       - has_image
-    Stubs.Verification.TOTP:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_totp
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-        strategy:
-          type: string
-          enum:
-          - totp
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
-    Stubs.Verification.Ticket:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - verification_ticket
-        status:
-          type: string
-          enum:
-          - unverified
-          - verified
-          - expired
-        strategy:
-          type: string
-          enum:
-          - ticket
-        attempts:
-          type:
-          - integer
-          - 'null'
-        expire_at:
-          type:
-          - integer
-          - 'null'
-      required:
-      - status
-      - strategy
-    PlatformWorkspaceDomainResponse:
-      allOf:
-      - $ref: '#/components/schemas/PlatformDomainResponse'
-      - type: object
-        required:
-        - application
-        - instance
-    PlatformDomainInstanceSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - instance
-        id:
-          type: string
-        environment_type:
-          type: string
-          description: Instance environment type.
-          enum:
-          - production
-          - development
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - object
-      - id
-      - environment_type
+      - max_allowed_memberships
+      - admin_delete_enabled
+      - public_metadata
       - created_at
       - updated_at
-    PlatformUpdateApplicationDomainRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: The domain name.
-        proxy_path:
-          type: string
-          description: Optional proxy path for provider domains.
-      required:
-      - name
-    PlatformListApplicationDomainsResponse:
-      title: List Application Domains Response
-      description: A paginated list of application domains.
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          description: The list of application domains.
-          items:
-            $ref: '#/components/schemas/PlatformDomainResponse'
-        total_count:
-          type: integer
-          format: int64
-          description: The total number of application domains for the application.
-          example: 2
-      required:
-      - data
-      - total_count
-    PlatformDomainStatusResponse:
-      type: object
-      properties:
-        dns:
-          type: object
-          $ref: '#/components/schemas/DNSStatus'
-        ssl:
-          type: object
-          properties:
-            status:
-              type: string
-              enum:
-              - complete
-              - in_process
-              - not_started
-              - failed
-              - incomplete
-            required:
-              type: boolean
-            failure_hints:
-              type:
-              - array
-              - 'null'
-              items:
-                $ref: '#/components/schemas/FailureHint'
-        ssl_hosts:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/SSLStatus'
-        mail:
-          type: object
-          properties:
-            status:
-              type: string
-            required:
-              type: boolean
-          required:
-          - status
-          - required
-        proxy:
-          type: object
-          properties:
-            status:
-              type: string
-            required:
-              type: boolean
-          required:
-          - status
-          - required
-        status:
-          type: string
-          enum:
-          - complete
-          - incomplete
-      required:
-      - dns
-      - ssl
-      - status
-    FailureHint:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    PlatformDeletedObjectResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        deleted:
-          type: boolean
-          description: Whether the object was deleted.
-        object:
-          type: string
-          example: deleted
-        id:
-          type: string
-          description: The ID of the deleted resource.
-      required:
-      - deleted
-      - object
-      - id
-    PlatformDomainApplicationSummary:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - application
-        id:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - object
-      - id
-      - created_at
-      - updated_at
-    PlatformCreateApplicationDomainRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: The provider domain name.
-        proxy_path:
-          type: string
-          description: Optional proxy path for provider domains.
-      required:
-      - name
-    SSLStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-        required:
-          type: boolean
-        failure_hints:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FailureHint'
-      required:
-      - status
-      - required
-      - failure_hints
-    PlatformDNSCheckResponse:
-      description: 'Response from triggering a DNS check. Includes the current domain status
-
-        along with metadata about the check.
-
-        '
-      allOf:
-      - $ref: '#/components/schemas/PlatformDomainStatusResponse'
-      - type: object
-        properties:
-          domain_id:
-            type: string
-            description: The ID of the domain.
-            example: dmn_abcdefghijklmnopqrstuvwxyz0
-          last_run_at:
-            type:
-            - integer
-            - 'null'
-            format: int64
-            description: 'The timestamp in epoch milliseconds of the last DNS check, if any.
-
-              Will be `null` if no check has been performed yet.
-
-              '
-        required:
-        - domain_id
-        - last_run_at
-    PlatformListDomainsResponse:
-      title: List Domains Response
-      description: A paginated list of domains across the workspace.
-      type: object
-      additionalProperties: false
-      properties:
-        data:
-          type: array
-          description: The list of domains.
-          items:
-            $ref: '#/components/schemas/PlatformWorkspaceDomainResponse'
-        total_count:
-          type: integer
-          format: int64
-          description: The total number of domains matching the query.
-          example: 5
-      required:
-      - data
-      - total_count
-    CNAMEStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        actual:
-          type: array
-          items:
-            type: string
-        clerk_subdomain:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-        verified:
-          type: boolean
-        required:
-          type: boolean
-        failure_hints:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/FailureHint'
-      required:
-      - clerk_subdomain
-      - from
-      - to
-      - verified
-      - required
-      - failure_hints
-    PlatformDomainResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        object:
-          type: string
-          enum:
-          - domain
-        id:
-          type: string
-          description: The ID of the domain.
-        name:
-          type: string
-          description: The domain name.
-        is_satellite:
-          type: boolean
-          description: Whether this is a satellite domain.
-        is_provider_domain:
-          type: boolean
-          description: Whether this is a provider domain.
-        frontend_api_url:
-          type: string
-          description: The frontend API URL.
-        development_origin:
-          type: string
-          description: The development origin.
-        accounts_portal_url:
-          type: string
-          description: The accounts portal URL.
-        proxy_url:
-          type: string
-          description: The proxy URL.
-        cname_targets:
-          type: array
-          items:
-            type: object
-            properties:
-              host:
-                type: string
-              value:
-                type: string
-              required:
-                type: boolean
-          description: 'CNAME targets for the domain. Omitted for development domains, which do not use custom-domain DNS setup.
-
-            '
-        created_at:
-          type: string
-          format: date-time
-          description: When the domain was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: When the domain was last updated.
-        application:
-          $ref: '#/components/schemas/PlatformDomainApplicationSummary'
-          description: Included on workspace-wide domain endpoints (`GET /platform/domains`, `GET /platform/domains/{domainIDOrName}`).
-        instance:
-          $ref: '#/components/schemas/PlatformDomainInstanceSummary'
-          description: Included on workspace-wide domain endpoints (`GET /platform/domains`, `GET /platform/domains/{domainIDOrName}`).
-      required:
-      - object
-      - id
-      - name
-      - frontend_api_url
-      - development_origin
-      - created_at
-      - updated_at
-    DNSStatus:
-      type: object
-      additionalProperties: false
-      properties:
-        status:
-          type: string
-          enum:
-          - not_started
-          - in_progress
-          - complete
-        cnames:
-          type: object
-          properties:
-            accounts:
-              $ref: '#/components/schemas/CNAMEStatus'
-            clerk:
-              $ref: '#/components/schemas/CNAMEStatus'
-            clk._domainkey:
-              $ref: '#/components/schemas/CNAMEStatus'
-            clk2._domainkey:
-              $ref: '#/components/schemas/CNAMEStatus'
-            clkmail:
-              $ref: '#/components/schemas/CNAMEStatus'
-      required:
-      - status
-      - cnames
-  responses:
-    UnprocessableEntity:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    DeletedObject:
-      description: Deleted Object
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeletedObject'
-    ResourceNotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    ClerkErrors:
-      description: Request was not successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Domain:
-      description: A domain
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Domain'
-    Domains:
-      description: A list of domains
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Domains'
-    Client.ClientWrappedOrganizationDomain:
-      description: Returns the response for Client wrapped OrganizationDomain object.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.ClientWrappedOrganizationDomain'
-    Client.ClientWrappedOrganizationDomains:
-      description: Returns the response for Client wrapped array of OrganizationDomain objects.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.ClientWrappedOrganizationDomains'
-    Client.DeletedOrganizationDomain:
-      description: Returns a deleted organization domain.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Client.ClientWrappedDeletedObject'
-    AuthenticationInvalid:
-      description: Authentication invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    AuthorizationInvalid:
-      description: Authorization invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
-    Conflict:
-      description: Conflict
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ClerkErrors'
   parameters:
-    LimitParameter:
-      name: limit
-      in: query
-      description: 'Applies a limit to the number of results returned.
-
-        Can be used for paginating the results together with `offset`.'
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 500
     OffsetParameter:
       name: offset
       in: query
@@ -3646,12 +3745,28 @@ components:
         type: integer
         default: 0
         minimum: 0
+    LimitParameter:
+      name: limit
+      in: query
+      description: 'Applies a limit to the number of results returned.
+
+        Can be used for paginating the results together with `offset`.'
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 500
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       description: Secret key, obtained under "API Keys" in the Clerk Dashboard.
       bearerFormat: sk_<environment>_<secret value>
+    platform_api_access_token:
+      type: http
+      scheme: bearer
+      description: Platform API access token.
     ProductionBrowser:
       type: apiKey
       in: cookie
@@ -3692,16 +3807,12 @@ components:
       type: http
       scheme: basic
       description: HTTP Basic Authentication using Client ID as username and Client Secret as password.
-    platform_api_access_token:
-      type: http
-      scheme: bearer
-      description: Platform API access token.
 externalDocs:
   url: https://clerk.com/docs
 x-refined-from:
-- clerk-backend-api-openapi.yml
-- clerk-frontend-api-openapi.yml
+- clerk-com-openapi.json
 - clerk-platform-api-openapi.yml
+- clerk-com-domains-api-openapi.yml
 x-speakeasy-retries:
   strategy: backoff
   backoff:
