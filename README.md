@@ -1,4 +1,4 @@
-# Clerk (clerk-com)
+# Clerk
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,200 +66,366 @@
 
 Clerk is a complete user management and authentication infrastructure platform offering embeddable UI components, flexible APIs, and admin dashboards. It provides full-stack authentication including multi-factor authentication, social sign-on, passkeys, organizations for B2B SaaS, billing, session management, and machine-to-machine authentication, with SDKs spanning Next.js, React, Expo, iOS, Android, Go, Python, Ruby, Java, PHP, and C#.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/clerk-com/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/clerk-com/refs/heads/main/apis.yml)
+**Areas:** Authentication · Authorization · B2B SaaS · CIAM · Identity and Access Management · MFA · OpenID Connect · Organization · Passkeys · SAML · Security · Sessions
 
-## Scope
+## Clerk on APIs.io
 
-- **Type:** Index
+Everything profiled for Clerk is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/clerk-com/](https://apis.io/providers/clerk-com/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (92)
 
-- Authentication
-- Authorization
-- B2B SaaS
-- CIAM
-- Identity Management
-- MFA
-- OAuth
-- OpenID Connect
-- Organizations
-- Passkeys
-- SAML
-- Security
-- Sessions
-- SSO
-- User Management
+- [Clerk Account Portal API](https://apis.io/apis/clerk-com/clerk-com-account-portal-api/) — The Account Portal API from Clerk — 1 operation(s) for account portal.
+- [Clerk Active Sessions API](https://apis.io/apis/clerk-com/clerk-com-active-sessions-api/) — Used to interact with the sessions of the current user.
+- [Clerk Actor Tokens API](https://apis.io/apis/clerk-com/clerk-com-actor-tokens-api/) — Allow your users to sign in on behalf of other users.
+- [Clerk Agent Tasks API](https://apis.io/apis/clerk-com/clerk-com-agent-tasks-api/) — Tasks that allow creating user sessions for agent-based interactions.
+- [Clerk Allow-list / Block-list API](https://apis.io/apis/clerk-com/clerk-com-allow-list-block-list-api/) — Allow-lists and Block-lists allow you to control who can sign up or sign in to your application, by restricting access based on the user's email address or…
+- [Clerk API Keys API](https://apis.io/apis/clerk-com/clerk-com-api-keys-api/) — Endpoints for managing API Keys
+- [Clerk Application Transfers API](https://apis.io/apis/clerk-com/clerk-com-application-transfers-api/) — An object representing a transfer request for an application between workspaces. The high-level flow for application transfer: 1. The initial workspace can…
+- [Clerk Applications API](https://apis.io/apis/clerk-com/clerk-com-applications-api/) — An object representing a Clerk application. Each `application` can have multiple `instances`, typically one for development and one for production, each…
+- [Clerk Backup Codes API](https://apis.io/apis/clerk-com/clerk-com-backup-codes-api/) — Used to interact with the two factor authentication backup codes of the current user.
+- [Clerk Beta Features API](https://apis.io/apis/clerk-com/clerk-com-beta-features-api/) — Modify instance settings that are currently in beta.
+- [Clerk Billing API](https://apis.io/apis/clerk-com/clerk-com-billing-api/) — Billing-related endpoints for managing statements and payment attempts.
+- [Clerk Checkouts API](https://apis.io/apis/clerk-com/clerk-com-checkouts-api/) — Used to interact with the checkout flow.
+- [Clerk Clear Site Data API](https://apis.io/apis/clerk-com/clerk-com-clear-site-data-api/) — The Clear Site Data API from Clerk — 1 operation(s) for clear site data.
+- [Clerk Client API](https://apis.io/apis/clerk-com/clerk-com-client-api/) — Used to interact with the Client Object.
+- [Clerk Clients API](https://apis.io/apis/clerk-com/clerk-com-clients-api/) — The Client object tracks sessions, as well as the state of any sign in and sign up attempts, for a given device.
+- [Clerk Config API](https://apis.io/apis/clerk-com/clerk-com-config-api/) — Operations for managing instance configuration. The config API provides a unified interface for reading and updating instance settings, including…
+- [Clerk Dev Browser API](https://apis.io/apis/clerk-com/clerk-com-dev-browser-api/) — The Dev Browser API from Clerk — 2 operation(s) for dev browser.
+- [Clerk Domains API](https://apis.io/apis/clerk-com/clerk-com-domains-api/) — Domains represent each instance's URLs and DNS setup.
+- [Clerk Email Addresses API](https://apis.io/apis/clerk-com/clerk-com-email-addresses-api/) — A user can be associated with one or more email addresses, which allows them to be contacted via email.
+- [Clerk Email & SMS Templates API](https://apis.io/apis/clerk-com/clerk-com-email-sms-templates-api/) — Email & SMS templates allow you to customize the theming and wording of emails & SMS messages that are sent by your instance.
+- [Clerk Enterprise Connections API](https://apis.io/apis/clerk-com/clerk-com-enterprise-connections-api/) — An Enterprise Connection holds configuration data required for facilitating an enterprise SSO flow between your Clerk instance and an identity provider.
+- [Clerk Environment API](https://apis.io/apis/clerk-com/clerk-com-environment-api/) — Used to get and update the current Environment
+- [Clerk External Accounts API](https://apis.io/apis/clerk-com/clerk-com-external-accounts-api/) — Used to interact with the external accounts of the current user.
+- [Clerk Health API](https://apis.io/apis/clerk-com/clerk-com-health-api/) — Used to get the health status of the API.
+- [Clerk Instance Settings API](https://apis.io/apis/clerk-com/clerk-com-instance-settings-api/) — Modify the settings of your instance.
+- [Clerk Invitations API](https://apis.io/apis/clerk-com/clerk-com-invitations-api/) — Invitations allow you to invite someone to sign up to your application, via email.
+- [Clerk JWKS API](https://apis.io/apis/clerk-com/clerk-com-jwks-api/) — Retrieve the JSON Web Key Set which can be used to verify the token signatures of the instance.
+- [Clerk JWT Templates API](https://apis.io/apis/clerk-com/clerk-com-jwt-templates-api/) — JWT Templates allow you to generate custom authentication tokens tied to authenticated sessions, enabling you to integrate with third-party services.
+- [Clerk M2M Tokens API](https://apis.io/apis/clerk-com/clerk-com-m2m-tokens-api/) — Machine to Machine Tokens are used to manage authentication between Machines.
+- [Clerk Machines API](https://apis.io/apis/clerk-com/clerk-com-machines-api/) — A Machine represents a machine/server/service which can be used in machine-to-machine authentication.
+- [Clerk Members API](https://apis.io/apis/clerk-com/clerk-com-members-api/) — Used to interact with the members of an organization. The current user must be an administrator to access them.
+- [Clerk Membership Requests API](https://apis.io/apis/clerk-com/clerk-com-membership-requests-api/) — Used to interact with the members of an organization. The current user must be an administrator to access them.
+- [Clerk Miscellaneous API](https://apis.io/apis/clerk-com/clerk-com-miscellaneous-api/) — Various endpoints that do not belong in any particular category.
+- [Clerk OAuth Access Tokens API](https://apis.io/apis/clerk-com/clerk-com-oauth-access-tokens-api/) — Endpoints for managing OAuth Access Tokens, which are credentials to access protected resources on behalf of a user.
+- [Clerk OAuth Applications API](https://apis.io/apis/clerk-com/clerk-com-oauth-applications-api/) — OAuth applications contain data for clients using Clerk as an OAuth2 identity provider.
+- [Clerk OAuth2 Callbacks API](https://apis.io/apis/clerk-com/clerk-com-oauth2-callbacks-api/) — Used to receive callbacks from successful OAuth attempts.
+- [Clerk OAuth2 Identity Provider API](https://apis.io/apis/clerk-com/clerk-com-oauth2-identity-provider-api/) — Requests for the OAuth2 authorization flow.
+- [Clerk Organization API](https://apis.io/apis/clerk-com/clerk-com-organization-api/) — Used to interact with an organization and its properties. The current user must be an administrator to access them.
+- [Clerk Organization Creation Defaults API](https://apis.io/apis/clerk-com/clerk-com-organization-creation-defaults-api/) — Used to get suggested defaults when creating a new organization.
+- [Clerk Organization Domains API](https://apis.io/apis/clerk-com/clerk-com-organization-domains-api/) — Manage organization domains.
+- [Clerk Organization Invitations API](https://apis.io/apis/clerk-com/clerk-com-organization-invitations-api/) — Invite users to an organization.
+- [Clerk Organization Memberships API](https://apis.io/apis/clerk-com/clerk-com-organization-memberships-api/) — Manage member roles in an organization.
+- [Clerk Organization Permissions API](https://apis.io/apis/clerk-com/clerk-com-organization-permissions-api/) — Manage organization permissions that define what members can do within an organization.
+- [Clerk Organization Roles API](https://apis.io/apis/clerk-com/clerk-com-organization-roles-api/) — Manage custom roles in an organization.
+- [Clerk Organizations API](https://apis.io/apis/clerk-com/clerk-com-organizations-api/) — Organizations are used to group members under a common entity and provide shared access to resources.
+- [Clerk Organizations Memberships API](https://apis.io/apis/clerk-com/clerk-com-organizations-memberships-api/) — Used to interact with the current user's organization memberships, invitations and suggestions.
+- [Clerk Passkeys API](https://apis.io/apis/clerk-com/clerk-com-passkeys-api/) — Used to interact with the passkeys of the logged in user.
+- [Clerk Payment Attempts API](https://apis.io/apis/clerk-com/clerk-com-payment-attempts-api/) — Used to interact with payment attempts for users and organizations.
+- [Clerk Payment Methods API](https://apis.io/apis/clerk-com/clerk-com-payment-methods-api/) — Used to interact with payment methods belonging to users and organizations.
+- [Clerk Phone Numbers API](https://apis.io/apis/clerk-com/clerk-com-phone-numbers-api/) — A user can be associated with one or more phone numbers, which allows them to be contacted via SMS.
+- [Clerk Plans API](https://apis.io/apis/clerk-com/clerk-com-plans-api/) — Used to interact with plans that users and organizations can purchase.
+- [Clerk Proxy Checks API](https://apis.io/apis/clerk-com/clerk-com-proxy-checks-api/) — Check if a user is using a proxy.
+- [Clerk Proxy Health API](https://apis.io/apis/clerk-com/clerk-com-proxy-health-api/) — The Proxy Health API from Clerk — 1 operation(s) for proxy health.
+- [Clerk Redirect API](https://apis.io/apis/clerk-com/clerk-com-redirect-api/) — The Redirect API from Clerk — 1 operation(s) for redirect.
+- [Clerk Redirect URLs API](https://apis.io/apis/clerk-com/clerk-com-redirect-urls-api/) — Redirect URLs are whitelisted URLs that facilitate secure authentication flows in native applications (e.g. React Native, Expo). In these contexts, Clerk…
+- [Clerk Role Sets API](https://apis.io/apis/clerk-com/clerk-com-role-sets-api/) — Role sets define collections of roles that can be assigned to organization members. Each organization uses one role set to determine the available roles for…
+- [Clerk Roles API](https://apis.io/apis/clerk-com/clerk-com-roles-api/) — The Roles API from Clerk — 1 operation(s) for roles.
+- [Clerk SAML API](https://apis.io/apis/clerk-com/clerk-com-saml-api/) — Used in authentication flows using SAML.
+- [Clerk SAML Connections API](https://apis.io/apis/clerk-com/clerk-com-saml-connections-api/) — A SAML Connection holds configuration data required for facilitating a SAML SSO flow between your Clerk Instance (SP) and a particular SAML IdP.
+- [Clerk Sessions API](https://apis.io/apis/clerk-com/clerk-com-sessions-api/) — The Session object is an abstraction over an HTTP session. It models the period of information exchange between a user and the server. Sessions are created…
+- [Clerk Sign-in Tokens API](https://apis.io/apis/clerk-com/clerk-com-sign-in-tokens-api/) — Sign-in tokens are JWTs that can be used to sign in to an application without specifying any credentials. A sign-in token can be used at most once and they…
+- [Clerk Sign Ins API](https://apis.io/apis/clerk-com/clerk-com-sign-ins-api/) — Used to sign in a user in the current client.
+- [Clerk Statements API](https://apis.io/apis/clerk-com/clerk-com-statements-api/) — Used to interact with billing statements for users and organizations.
+- [Clerk Subscription Items API](https://apis.io/apis/clerk-com/clerk-com-subscription-items-api/) — Used to interact with subscription items belonging to users and organizations.
+- [Clerk Subscriptions API](https://apis.io/apis/clerk-com/clerk-com-subscriptions-api/) — Used to interact with subscriptions belonging to users and organizations.
+- [Clerk Testing Tokens API](https://apis.io/apis/clerk-com/clerk-com-testing-tokens-api/) — Tokens meant for use by end-to-end test suites in requests to the Frontend API, so as to bypass bot detection measures.
+- [Clerk TOTP API](https://apis.io/apis/clerk-com/clerk-com-totp-api/) — Used to interact with One Time Password authenticators of the current user.
+- [Clerk User API](https://apis.io/apis/clerk-com/clerk-com-user-api/) — Used to interact with the properties of the current user.
+- [Clerk Users API](https://apis.io/apis/clerk-com/clerk-com-users-api/) — The user object represents a user that has successfully signed up to your application.
+- [Clerk Waitlist API](https://apis.io/apis/clerk-com/clerk-com-waitlist-api/) — Used to interact with the waitlist.
+- [Clerk Waitlist Entries API](https://apis.io/apis/clerk-com/clerk-com-waitlist-entries-api/) — Manage waitlist entries.
+- [Clerk Web3 Wallets API](https://apis.io/apis/clerk-com/clerk-com-web3-wallets-api/) — Used to interact with the web3 wallets of the logged in user.
+- [Clerk Webhooks API](https://apis.io/apis/clerk-com/clerk-com-webhooks-api/) — You can configure webhooks to be notified about various events that happen on your instance.
+- [Clerk Well Known API](https://apis.io/apis/clerk-com/clerk-com-well-known-api/) — Well-known endpoints like JWKS, deep linking, and openid-configuration.
+- [Clerk Frontend API](https://apis.io/apis/clerk-com/frontend-api/) — Browser-facing API consumed by Clerk's frontend SDKs and ClerkJS for sign-up, sign-in, session refresh, and user profile mutations. Endpoint is…
+- [Clerk Webhooks (Svix)](https://apis.io/apis/clerk-com/webhooks/) — Webhook events delivered via Svix for user, session, organization, email, SMS, and role lifecycle changes. Customers configure endpoints in the dashboard…
+- [Clerk JavaScript SDK](https://apis.io/apis/clerk-com/javascript/) — Official ClerkJS browser library and monorepo of framework adapters (Next.js, React, Expo, React Router, Astro, Chrome Extension, TanStack). Powers Clerk's…
+- [Clerk Next.js SDK](https://apis.io/apis/clerk-com/sdk-nextjs/) — Next.js integration covering App Router and Pages Router, middleware, route handlers, server components, and server actions. Distributed from the…
+- [Clerk React SDK](https://apis.io/apis/clerk-com/sdk-react/) — React components, hooks, and providers from the @clerk/clerk-react package for plain React SPAs.
+- [Clerk Expo SDK](https://apis.io/apis/clerk-com/sdk-expo/) — Expo / React Native bindings for Clerk supporting OAuth via deep links, secure session storage, and biometrics.
+- [Clerk React Router SDK](https://apis.io/apis/clerk-com/sdk-react-router/) — Adapter for React Router v7 (Remix successor) covering loaders, actions, and server-rendered authentication.
+- [Clerk Astro SDK](https://apis.io/apis/clerk-com/sdk-astro/) — Adapter for the Astro framework with components and middleware.
+- [Clerk TanStack Start SDK](https://apis.io/apis/clerk-com/sdk-tanstack-start/) — Adapter for TanStack Start (React full-stack framework) with route-level authentication helpers.
+- [Clerk Node.js SDK](https://apis.io/apis/clerk-com/sdk-node/) — Backend SDK for Node.js (@clerk/backend / @clerk/express / @clerk/fastify) that wraps the Backend API and verifies session JWTs.
+- [Clerk Go SDK](https://apis.io/apis/clerk-com/sdk-go/) — Official Go SDK for the Clerk Backend API.
+- [Clerk Python SDK](https://apis.io/apis/clerk-com/sdk-python/) — Official Python SDK for the Clerk Backend API.
+- [Clerk Ruby SDK](https://apis.io/apis/clerk-com/sdk-ruby/) — Official Ruby SDK for the Clerk Backend API, with a Rails integration.
+- [Clerk Java SDK](https://apis.io/apis/clerk-com/sdk-java/) — Official Java SDK for the Clerk Backend API.
+- [Clerk PHP SDK](https://apis.io/apis/clerk-com/sdk-php/) — Official PHP SDK for the Clerk Backend API.
+- [Clerk C# / .NET SDK](https://apis.io/apis/clerk-com/sdk-csharp/) — Official C# / .NET SDK for the Clerk Backend API.
+- [Clerk OpenAPI Specifications](https://apis.io/apis/clerk-com/openapi-specs/) — Public repository of OpenAPI specifications for Clerk's APIs, used as the source for generated SDKs and documentation.
+- [Clerk Signups API](https://apis.io/apis/clerk-com/clerk-com-signups-api/) — Sign-up objects track the progress of a sign-up attempt and store any field collected from user input.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-22
-- **Modified:** 2026-05-22
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Clerk Backend API
+Model Context Protocol servers that expose the API to agents.
 
-The Clerk Backend API is a REST API meant to be accessed by backend servers. It exposes resources for managing users, sessions, organizations, invitations, JWT templates, OAuth applications, SAML connections, M2M tokens, API keys, and billing — wrapped by every official Clerk backend SDK.
+- [clerk-com](https://apis.io/servers/clerk-com/clerk-com/)
 
-- **Human URL:** [https://clerk.com/docs/reference/backend-api](https://clerk.com/docs/reference/backend-api)
-- **Base URL:** `https://api.clerk.com/v1`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Authentication
-- Backend
-- Identity Management
-- REST
-- User Management
+- [Clerk Com Agentic Access](https://apis.io/agentic-access/clerk-com/clerk-com-agentic-access/)
 
-#### Properties
+#### JSON Schema (14)
 
-- [Documentation](https://clerk.com/docs/reference/backend-api)
-- [API Reference](https://clerk.com/docs/reference/backend-api)
-- [OpenAPI](openapi/clerk-backend-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/clerk-backend-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/clerk-backend-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Getting Started](https://clerk.com/docs/quickstarts/overview)
-- [Authentication](https://clerk.com/docs/backend-requests/making/jwt-templates)
-- [Spectral Ruleset](rules/clerk-rules.yml)
+The data models the API reads and writes.
 
-### Clerk Frontend API
+- [Clerk ActorToken](https://apis.io/schemas/clerk-com/clerk-actortoken/)
+- [Clerk Client](https://apis.io/schemas/clerk-com/clerk-client/)
+- [Clerk EmailAddress](https://apis.io/schemas/clerk-com/clerk-emailaddress/)
+- [Clerk Invitation](https://apis.io/schemas/clerk-com/clerk-invitation/)
+- [Clerk JWTTemplate](https://apis.io/schemas/clerk-com/clerk-jwttemplate/)
+- [Clerk OAuthApplication](https://apis.io/schemas/clerk-com/clerk-oauthapplication/)
+- [Clerk Organization](https://apis.io/schemas/clerk-com/clerk-organization/)
+- [Clerk OrganizationInvitation](https://apis.io/schemas/clerk-com/clerk-organizationinvitation/)
+- [Clerk OrganizationMembership](https://apis.io/schemas/clerk-com/clerk-organizationmembership/)
+- [Clerk PhoneNumber](https://apis.io/schemas/clerk-com/clerk-phonenumber/)
+- [Clerk SAMLConnection](https://apis.io/schemas/clerk-com/clerk-samlconnection/)
+- [Clerk Session](https://apis.io/schemas/clerk-com/clerk-session/)
+- [Clerk SignInToken](https://apis.io/schemas/clerk-com/clerk-signintoken/)
+- [Clerk User](https://apis.io/schemas/clerk-com/clerk-user/)
 
-The Clerk Frontend API powers Clerk's prebuilt UI components and JavaScript SDKs. It handles sign-in, sign-up, session, organization, passkey, multi-factor, billing, and waitlist flows directly from browser, mobile, and chrome-extension contexts.
+#### JSON Structure (14)
 
-- **Human URL:** [https://clerk.com/docs](https://clerk.com/docs)
-- **Base URL:** `https://{domain}.clerk.accounts.dev`
+Data models expressed in JSON Structure.
 
-#### Tags
+- [Clerk Actortoken Structure](https://apis.io/json-structure/clerk-com/clerk-actortoken-structure/)
+- [Clerk Client Structure](https://apis.io/json-structure/clerk-com/clerk-client-structure/)
+- [Clerk Emailaddress Structure](https://apis.io/json-structure/clerk-com/clerk-emailaddress-structure/)
+- [Clerk Invitation Structure](https://apis.io/json-structure/clerk-com/clerk-invitation-structure/)
+- [Clerk Jwttemplate Structure](https://apis.io/json-structure/clerk-com/clerk-jwttemplate-structure/)
+- [Clerk Oauthapplication Structure](https://apis.io/json-structure/clerk-com/clerk-oauthapplication-structure/)
+- [Clerk Organization Structure](https://apis.io/json-structure/clerk-com/clerk-organization-structure/)
+- [Clerk Organizationinvitation Structure](https://apis.io/json-structure/clerk-com/clerk-organizationinvitation-structure/)
+- [Clerk Organizationmembership Structure](https://apis.io/json-structure/clerk-com/clerk-organizationmembership-structure/)
+- [Clerk Phonenumber Structure](https://apis.io/json-structure/clerk-com/clerk-phonenumber-structure/)
+- [Clerk Samlconnection Structure](https://apis.io/json-structure/clerk-com/clerk-samlconnection-structure/)
+- [Clerk Session Structure](https://apis.io/json-structure/clerk-com/clerk-session-structure/)
+- [Clerk Signintoken Structure](https://apis.io/json-structure/clerk-com/clerk-signintoken-structure/)
+- [Clerk User Structure](https://apis.io/json-structure/clerk-com/clerk-user-structure/)
 
-- Authentication
-- Frontend
-- JavaScript
-- Sessions
-- Sign-In
-- Sign-Up
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
+- [Clerk Com Context](https://apis.io/jsonld/clerk-com/clerk-com-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Clerk Vocabulary](https://apis.io/vocabularies/clerk-com/clerk-com-vocabulary/)
+
+#### Examples (26)
+
+Example requests and responses.
+
+- [Clerk Actortoken Example](https://apis.io/examples/clerk-com/clerk-actortoken-example/)
+- [Clerk Backend Api Getapikeys 200](https://apis.io/examples/clerk-com/clerk-backend-api-getapikeys-200/)
+- [Clerk Backend Api Getm2Mtokens 200](https://apis.io/examples/clerk-com/clerk-backend-api-getm2mtokens-200/)
+- [Clerk Backend Api Verifyoauthaccesstoken 200](https://apis.io/examples/clerk-com/clerk-backend-api-verifyoauthaccesstoken-200/)
+- [Clerk Client Example](https://apis.io/examples/clerk-com/clerk-client-example/)
+- [Clerk Emailaddress Example](https://apis.io/examples/clerk-com/clerk-emailaddress-example/)
+- [Clerk Frontend Api Getapikeys 200](https://apis.io/examples/clerk-com/clerk-frontend-api-getapikeys-200/)
+- [Clerk Frontend Api Gethealth 200](https://apis.io/examples/clerk-com/clerk-frontend-api-gethealth-200/)
+- [Clerk Frontend Api Getorganizationcreationdefaults 200](https://apis.io/examples/clerk-com/clerk-frontend-api-getorganizationcreationdefaults-200/)
+- [Clerk Invitation Example](https://apis.io/examples/clerk-com/clerk-invitation-example/)
+- [Clerk Jwttemplate Example](https://apis.io/examples/clerk-com/clerk-jwttemplate-example/)
+- [Clerk Oauthapplication Example](https://apis.io/examples/clerk-com/clerk-oauthapplication-example/)
+- [Clerk Organization Example](https://apis.io/examples/clerk-com/clerk-organization-example/)
+- [Clerk Organizationinvitation Example](https://apis.io/examples/clerk-com/clerk-organizationinvitation-example/)
+- [Clerk Organizationmembership Example](https://apis.io/examples/clerk-com/clerk-organizationmembership-example/)
+- [Clerk Phonenumber Example](https://apis.io/examples/clerk-com/clerk-phonenumber-example/)
+- [Clerk Platform Api Platformgetconfig 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformgetconfig-200/)
+- [Clerk Platform Api Platformlistapplicationdomains 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistapplicationdomains-200/)
+- [Clerk Platform Api Platformlistapplications 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistapplications-200/)
+- [Clerk Platform Api Platformlistapplicationtransfers 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistapplicationtransfers-200/)
+- [Clerk Platform Api Platformlistinstanceusers 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistinstanceusers-200/)
+- [Clerk Platform Api Platformlistjwttemplates 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistjwttemplates-200/)
+- [Clerk Platform Api Platformlistredirecturls 200](https://apis.io/examples/clerk-com/clerk-platform-api-platformlistredirecturls-200/)
+- [Clerk Session Example](https://apis.io/examples/clerk-com/clerk-session-example/)
+- [Clerk Signintoken Example](https://apis.io/examples/clerk-com/clerk-signintoken-example/)
+- …and 1 more published on APIs.io
+
+#### Collections (156)
+
+Postman and Open Collection request collections.
+
+- [Clerk Backend API](https://apis.io/collections/clerk-com/open-clerk-backend-api/)
+- [Clerk Backend Account Portal API](https://apis.io/collections/clerk-com/open-clerk-com-account-portal-api/)
+- [Clerk Backend Account Portal Active Sessions API](https://apis.io/collections/clerk-com/open-clerk-com-active-sessions-api/)
+- [Clerk Backend Account Portal Actor Tokens API](https://apis.io/collections/clerk-com/open-clerk-com-actor-tokens-api/)
+- [Clerk Backend Account Portal Agent Tasks API](https://apis.io/collections/clerk-com/open-clerk-com-agent-tasks-api/)
+- [Clerk Backend Account Portal Allow-list / Block-list API](https://apis.io/collections/clerk-com/open-clerk-com-allow-list-block-list-api/)
+- [Clerk Backend Account Portal API Keys API](https://apis.io/collections/clerk-com/open-clerk-com-api-keys-api/)
+- [Clerk Backend Account Portal Application Transfers API](https://apis.io/collections/clerk-com/open-clerk-com-application-transfers-api/)
+- [Clerk Backend Account Portal Applications API](https://apis.io/collections/clerk-com/open-clerk-com-applications-api/)
+- [Clerk Backend Account Portal Backup Codes API](https://apis.io/collections/clerk-com/open-clerk-com-backup-codes-api/)
+- [Clerk Backend Account Portal Beta Features API](https://apis.io/collections/clerk-com/open-clerk-com-beta-features-api/)
+- [Clerk Backend Account Portal Billing API](https://apis.io/collections/clerk-com/open-clerk-com-billing-api/)
+- [Clerk Backend Account Portal Checkouts API](https://apis.io/collections/clerk-com/open-clerk-com-checkouts-api/)
+- [Clerk Backend Account Portal Clear Site Data API](https://apis.io/collections/clerk-com/open-clerk-com-clear-site-data-api/)
+- [Clerk Backend Account Portal Client API](https://apis.io/collections/clerk-com/open-clerk-com-client-api/)
+- [Clerk Backend Account Portal Clients API](https://apis.io/collections/clerk-com/open-clerk-com-clients-api/)
+- [Clerk Backend Account Portal Config API](https://apis.io/collections/clerk-com/open-clerk-com-config-api/)
+- [Clerk Backend Account Portal Dev Browser API](https://apis.io/collections/clerk-com/open-clerk-com-dev-browser-api/)
+- [Clerk Backend Account Portal DevBrowser API](https://apis.io/collections/clerk-com/open-clerk-com-devbrowser-api/)
+- [Clerk Backend Account Portal Domains API](https://apis.io/collections/clerk-com/open-clerk-com-domains-api/)
+- [Clerk Backend Account Portal Email Addresses API](https://apis.io/collections/clerk-com/open-clerk-com-email-addresses-api/)
+- [Clerk Backend Account Portal Email & SMS Templates API](https://apis.io/collections/clerk-com/open-clerk-com-email-sms-templates-api/)
+- [Clerk Backend Account Portal Enterprise Connections API](https://apis.io/collections/clerk-com/open-clerk-com-enterprise-connections-api/)
+- [Clerk Backend Account Portal Environment API](https://apis.io/collections/clerk-com/open-clerk-com-environment-api/)
+- [Clerk Backend Account Portal External Accounts API](https://apis.io/collections/clerk-com/open-clerk-com-external-accounts-api/)
+- …and 131 more published on APIs.io
+
+#### Overlays (75)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Clerk Com Account Portal Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-account-portal-api-phrasing-overlay/)
+- [Clerk Com Active Sessions Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-active-sessions-api-phrasing-overlay/)
+- [Clerk Com Actor Tokens Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-actor-tokens-api-phrasing-overlay/)
+- [Clerk Com Agent Tasks Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-agent-tasks-api-phrasing-overlay/)
+- [Clerk Com Allow List Block List Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-allow-list-block-list-api-phrasing-overlay/)
+- [Clerk Com Api Keys Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-api-keys-api-phrasing-overlay/)
+- [Clerk Com Application Transfers Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-application-transfers-api-phrasing-overlay/)
+- [Clerk Com Applications Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-applications-api-phrasing-overlay/)
+- [Clerk Com Backup Codes Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-backup-codes-api-phrasing-overlay/)
+- [Clerk Com Beta Features Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-beta-features-api-phrasing-overlay/)
+- [Clerk Com Billing Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-billing-api-phrasing-overlay/)
+- [Clerk Com Checkouts Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-checkouts-api-phrasing-overlay/)
+- [Clerk Com Clear Site Data Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-clear-site-data-api-phrasing-overlay/)
+- [Clerk Com Client Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-client-api-phrasing-overlay/)
+- [Clerk Com Clients Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-clients-api-phrasing-overlay/)
+- [Clerk Com Config Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-config-api-phrasing-overlay/)
+- [Clerk Com Dev Browser Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-dev-browser-api-phrasing-overlay/)
+- [Clerk Com Domains Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-domains-api-phrasing-overlay/)
+- [Clerk Com Email Addresses Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-email-addresses-api-phrasing-overlay/)
+- [Clerk Com Email Sms Templates Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-email-sms-templates-api-phrasing-overlay/)
+- [Clerk Com Enterprise Connections Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-enterprise-connections-api-phrasing-overlay/)
+- [Clerk Com Environment Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-environment-api-phrasing-overlay/)
+- [Clerk Com External Accounts Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-external-accounts-api-phrasing-overlay/)
+- [Clerk Com Health Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-health-api-phrasing-overlay/)
+- [Clerk Com Instance Settings Api Phrasing Overlay](https://apis.io/overlays/clerk-com/clerk-com-instance-settings-api-phrasing-overlay/)
+- …and 50 more published on APIs.io
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Clerk — jsonschema rules](https://apis.io/rules/clerk-com/clerk-com-jsonschema-spectral-rules/)
+- [Clerk — clerk rules](https://apis.io/rules/clerk-com/clerk-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Clerk Com Authentication](https://apis.io/security/clerk-com/clerk-com-authentication/)
+- [Clerk Com Domain Security](https://apis.io/security/clerk-com/clerk-com-domain-security/)
+- [Clerk Com Vulnerability Disclosure](https://apis.io/security/clerk-com/clerk-com-vulnerability-disclosure/)
+
+#### Plans and pricing (2)
+
+Published plans, tiers and prices.
+
+- [Clerk Com Plans Pricing](https://apis.io/plans/clerk-com/clerk-com-plans-pricing/)
+- [Clerk Com Price Estimates](https://apis.io/plans/clerk-com/clerk-com-price-estimates/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Clerk Com Rate Limits](https://apis.io/rate-limits/clerk-com/clerk-com-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Clerk Com Finops](https://apis.io/finops/clerk-com/clerk-com-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://clerk.com)
 - [Documentation](https://clerk.com/docs)
-- [OpenAPI](openapi/clerk-frontend-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/clerk-frontend-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/clerk-frontend-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Clerk Platform API
-
-The Clerk Platform API (beta) is a partner / reseller surface for programmatically creating and managing Clerk applications, domains, application transfers, users, JWT templates, redirect URLs, and platform configuration on behalf of end customers.
-
-- **Human URL:** [https://clerk.com/docs](https://clerk.com/docs)
-- **Base URL:** `https://api.clerk.com/v1`
-
-#### Tags
-
-- Applications
-- Beta
-- Multi-Tenant
-- Partner
-- Platform
-
-#### Properties
-
-- [Documentation](https://clerk.com/docs)
-- [OpenAPI](openapi/clerk-platform-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/clerk-platform-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/clerk-platform-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Clerk Webhooks
-
-Clerk Webhooks deliver real-time events for users, sessions, organizations, invitations, email, SMS, and SAML changes via Svix, allowing applications to react asynchronously to identity lifecycle events.
-
-- **Human URL:** [https://clerk.com/docs/webhooks/overview](https://clerk.com/docs/webhooks/overview)
-- **Base URL:** `https://api.clerk.dev/v1`
-
-#### Tags
-
-- Events
-- Svix
-- Webhooks
-
-#### Properties
-
-- [Documentation](https://clerk.com/docs/webhooks/overview)
-- [OpenAPI](openapi/clerk-webhooks-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Open Collection](collections/clerk-webhooks.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Homepage](https://clerk.com)
-- [Documentation](https://clerk.com/docs)
-- [Sign Up](https://dashboard.clerk.com/sign-up)
-- [Sign In](https://dashboard.clerk.com/sign-in)
 - [Pricing](https://clerk.com/pricing)
-- [Terms of Service](https://clerk.com/terms)
-- [Privacy Policy](https://clerk.com/privacy)
-- [Security](https://clerk.com/security)
-- [Blog](https://clerk.com/blog)
-- [Changelog](https://clerk.com/changelog)
-- [Changelog R S S](https://clerk.com/changelog/atom.xml)
-- [Status Page](https://status.clerk.com)
 - [Support](https://clerk.com/support)
-- [Git Hub](https://github.com/clerk)
-- [Open A P I Repository](https://github.com/clerk/openapi-specs)
-- [X (Twitter)](https://x.com/ClerkDev)
-- [SDK](https://github.com/clerk/javascript)
-- [SDK](https://github.com/clerk/clerk-sdk-go)
-- [SDK](https://github.com/clerk/clerk-sdk-python)
-- [SDK](https://github.com/clerk/clerk-sdk-ruby)
-- [SDK](https://github.com/clerk/clerk-sdk-java)
-- [SDK](https://github.com/clerk/clerk-sdk-php)
-- [SDK](https://github.com/clerk/clerk-sdk-csharp)
-- [SDK](https://github.com/clerk/clerk-ios)
-- [SDK](https://github.com/clerk/clerk-android)
-- [SDK](https://github.com/clerk/clerk-sdk-flutter)
-- [C L I](https://github.com/clerk/cli)
-- [C L I](https://github.com/clerk/protect-cli)
-- [Integration](https://clerk.com/docs/integrations/databases/supabase)
-- [Integration](https://clerk.com/docs/integrations/databases/convex)
-- [Integration](https://vercel.com/integrations/clerk)
-- [Tool](https://github.com/clerk/agent-toolkit-example)
-- [Tool](https://github.com/clerk/agentpass)
-- [Tool](https://github.com/clerk/mcp-tools)
-- [Tool](https://github.com/clerk/migration-tool)
-- [Plans](plans/clerk-com-plans-pricing.yml)
-- [Rate Limits](rate-limits/clerk-com-rate-limits.yml)
-- [Fin Ops](finops/clerk-com-finops.yml)
-- [Vocabulary](vocabulary/clerk-com-vocabulary.yml)
-- [JSON-LD](json-ld/clerk-com-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/clerk-user-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-user-structure.json)
-- [JSON Schema](json-schema/clerk-session-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-session-structure.json)
-- [JSON Schema](json-schema/clerk-organization-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-organization-structure.json)
-- [JSON Schema](json-schema/clerk-organizationmembership-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-organizationmembership-structure.json)
-- [JSON Schema](json-schema/clerk-organizationinvitation-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-organizationinvitation-structure.json)
-- [JSON Schema](json-schema/clerk-invitation-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-invitation-structure.json)
-- [JSON Schema](json-schema/clerk-emailaddress-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-emailaddress-structure.json)
-- [JSON Schema](json-schema/clerk-phonenumber-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-phonenumber-structure.json)
-- [JSON Schema](json-schema/clerk-client-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-client-structure.json)
-- [JSON Schema](json-schema/clerk-oauthapplication-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-oauthapplication-structure.json)
-- [JSON Schema](json-schema/clerk-samlconnection-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-samlconnection-structure.json)
-- [JSON Schema](json-schema/clerk-jwttemplate-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-jwttemplate-structure.json)
-- [JSON Schema](json-schema/clerk-signintoken-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-signintoken-structure.json)
-- [JSON Schema](json-schema/clerk-actortoken-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/clerk-actortoken-structure.json)
-- [L L Ms Txt](https://clerk.com/llms.txt)
+- [Changelog](https://clerk.com/changelog)
+- [Blog](https://clerk.com/blog)
+- [Security](https://clerk.com/security)
+- [Terms of service](https://clerk.com/terms)
+- [Privacy policy](https://clerk.com/privacy)
+- [Status](https://status.clerk.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 70.5** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 70.2 |
+| Contract governance | 27.3 |
+| Operational transparency | 68.4 |
+| Developer ergonomics | 72.6 |
+| Access clarity | 69.7 |
+
+**Agent readiness 45.1** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/clerk-com/](https://apis.io/providers/clerk-com/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Clerk: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/clerk-com/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
